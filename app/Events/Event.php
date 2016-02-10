@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace Gladiator\Events;
 
 abstract class Event
 {
