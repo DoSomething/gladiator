@@ -11,11 +11,29 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(Gladiator\Models\User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
+        'first_name' => $faker->firstName,
+        'last_name' => $faker->lastName,
         'email' => $faker->email,
         'password' => bcrypt(str_random(10)),
         'remember_token' => str_random(10),
+    ];
+});
+
+$factory->define(Gladiator\Models\Contestant::class, function (Faker\Generator $faker) {
+    return [
+        'first_name' => $faker->firstName,
+        'last_name' => $faker->lastName,
+        'email' => $faker->email,
+        'dosomething_id' => $faker->numberBetween(1000, 9000),
+    ];
+});
+
+$factory->define(Gladiator\Models\Competition::class, function (Faker\Generator $faker) {
+    return [
+        'start_date' => $faker->dateTimeBetween('-5 weeks', 'now'),
+        'end_date' => $faker->dateTimeBetween('now', '+10 weeks'),
+        'campaign_run_id' => $faker->numberBetween(10, 300),
     ];
 });
