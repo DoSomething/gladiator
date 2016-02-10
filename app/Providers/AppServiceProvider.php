@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace Gladiator\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
