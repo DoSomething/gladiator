@@ -16,8 +16,8 @@ class CreateCompetitionsTable extends Migration
             $table->increments('id');
             $table->integer('campaign_id')->unsigned()->index();
             $table->integer('campaign_run_id')->unsigned()->index();
-            $table->date('start_at');
-            $table->date('end_at');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }

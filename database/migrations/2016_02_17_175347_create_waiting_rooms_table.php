@@ -16,8 +16,8 @@ class CreateWaitingRoomsTable extends Migration
             $table->increments('id');
             $table->integer('campaign_id')->unsigned()->index();
             $table->integer('campaign_run_id')->unsigned()->index();
-            $table->date('signup_start_at');
-            $table->date('signup_end_at');
+            $table->date('signup_start_date');
+            $table->date('signup_end_date');
             $table->timestamps();
         });
     }
