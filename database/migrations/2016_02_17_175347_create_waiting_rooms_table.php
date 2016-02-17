@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateContestantsTable extends Migration
+class CreateWaitingRoomsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,12 @@ class CreateContestantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('contestants', function (Blueprint $table) {
+        Schema::create('waiting_room', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('email')->unique();
-            $table->integer('dosomething_id')->unsigned()->index();
+            $table->integer('campaign_id')->unsigned()->index();
+            $table->integer('campaign_run_id')->unsigned()->index();
+            $table->date('signup_start_at');
+            $table->date('signup_end_at');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateContestantsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('contestants');
+        Schema::drop('waiting_room');
     }
 }
