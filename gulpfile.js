@@ -12,5 +12,6 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss');
+    mix.copy('node_modules/@dosomething/forge/dist', 'public/assets/vendor/forge');
+    mix.copy('node_modules/dosomething-modal/dist', 'public/assets/vendor/modal');
 });
