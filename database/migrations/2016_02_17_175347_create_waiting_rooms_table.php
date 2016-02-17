@@ -12,7 +12,7 @@ class CreateWaitingRoomsTable extends Migration
      */
     public function up()
     {
-        Schema::create('waiting_room', function (Blueprint $table) {
+        Schema::create('waiting_rooms', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('campaign_id')->unsigned()->index();
             $table->integer('campaign_run_id')->unsigned()->index();

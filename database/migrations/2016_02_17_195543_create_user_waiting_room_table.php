@@ -14,10 +14,10 @@ class CreateUserWaitingRoomTable extends Migration
     {
         Schema::create('user_waiting_room', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned()->index();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('user_id')->index();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->integer('waiting_room_id')->unsigned()->index();
-            $table->foreign('waiting_room_id')->references('id')->on('waiting_rooms')->onDelete('cascade');
+            $table->foreign('waiting_room_id')->references('id')->on('waiting_rooms');
         });
     }
 
