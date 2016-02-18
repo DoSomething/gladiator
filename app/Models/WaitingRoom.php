@@ -5,7 +5,7 @@ namespace Gladiator\Models;
 use Gladiator\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
-class Competition extends Model
+class WaitingRoom extends Model
 {
     public function users()
     {
