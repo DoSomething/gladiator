@@ -13,7 +13,6 @@ class CreateUserWaitingRoomTable extends Migration
     public function up()
     {
         Schema::create('user_waiting_room', function (Blueprint $table) {
-            $table->increments('id');
             $table->string('user_id')->index();
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('waiting_room_id')->unsigned()->index();
