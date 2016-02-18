@@ -13,7 +13,6 @@ class CreateCompetitionUserTable extends Migration
     public function up()
     {
         Schema::create('competition_user', function (Blueprint $table) {
-            $table->increments('id');
             $table->integer('competition_id')->unsigned()->index();
             $table->foreign('competition_id')->references('id')->on('competitions');
             $table->string('user_id')->index();

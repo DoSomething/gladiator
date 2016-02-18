@@ -29,6 +29,6 @@ class CreateWaitingRoomsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('waiting_room');
+        Schema::drop('waiting_rooms');
     }
 }
