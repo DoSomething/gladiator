@@ -1,6 +1,5 @@
 <?php
 
-use Faker\Factory;
 use Gladiator\Models\User;
 use Gladiator\Models\WaitingRoom;
 use Illuminate\Database\Seeder;
@@ -15,8 +14,6 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         // Add Admin Users
-        $faker = Factory::create();
-
         for ($i = 0; $i < 2; $i++) {
             User::create([
                 'id' => str_random(24),
