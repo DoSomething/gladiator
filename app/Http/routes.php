@@ -1,4 +1,5 @@
 <?php
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -10,14 +11,22 @@
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    Route::get('/', function () {
-        return view('pages.home');
-    });
+Route::get('/', function () {
+    return view('pages.home');
+});
 
-    Route::resource('competitions', 'CompetitionsController');
+Route::group(['middleware' => ['web']], function () {
+
+    // Authentication
+    Route::get('auth/login', 'Auth\AuthController@getLogin');
+    Route::post('auth/login', 'Auth\AuthController@postLogin');
+    Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
     // Waiting rooms routes.
     Route::model('waitingrooms', 'Gladiator\Models\WaitingRoom');
     Route::resource('waitingrooms', 'WaitingRoomsController');
+
+    // Competitions
+    Route::resource('competitions', 'CompetitionsController');
+
 });

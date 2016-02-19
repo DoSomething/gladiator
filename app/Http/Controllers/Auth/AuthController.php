@@ -2,8 +2,8 @@
 
 namespace Gladiator\Http\Controllers\Auth;
 
-use Gladiator\User;
 use Validator;
+use Gladiator\User;
 use Gladiator\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -28,7 +28,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new authentication controller instance.
