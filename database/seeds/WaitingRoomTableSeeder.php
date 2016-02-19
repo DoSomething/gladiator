@@ -1,8 +1,9 @@
 <?php
 
+use Gladiator\Models\WaitingRoom;
 use Illuminate\Database\Seeder;
 
-class CompetitionTableSeeder extends Seeder
+class WaitingRoomTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +12,6 @@ class CompetitionTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Gladiator\Models\Competition::class, 3)->create();
+        factory(WaitingRoom::class, 3)->create();
     }
 }
