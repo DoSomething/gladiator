@@ -86,11 +86,11 @@
 <table x="477" y="457" name="competition_user">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="competitions" row="id" />
-</row>
+<default>NULL</default></row>
 <row name="competition_id" null="1" autoincrement="0">
 <datatype>INTEGER(10)</datatype>
-<default>NULL</default></row>
+<default>NULL</default><relation table="competitions" row="id" />
+</row>
 <row name="user_id" null="1" autoincrement="0">
 <datatype>INTEGER(10)</datatype>
 <default>NULL</default><relation table="users" row="id" />
