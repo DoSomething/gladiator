@@ -26,8 +26,8 @@ $factory->define(WaitingRoom::class, function (Generator $faker) {
     return [
         'campaign_id' => $faker->numberBetween(10, 300),
         'campaign_run_id' => $faker->numberBetween(1000, 3000),
-        'signup_start_date' => $faker->dateTimeBetween('-3 weeks', 'now'),
-        'signup_end_date' => $faker->dateTimeBetween('now', '+3 weeks'),
+        'signup_start_date' => $faker->dateTimeBetween('-7 days', '-1 day'),
+        'signup_end_date' => $faker->dateTimeBetween('+1 day', '+7 days'),
     ];
 });
 
