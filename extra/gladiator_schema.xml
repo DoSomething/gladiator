@@ -37,38 +37,38 @@
     <type label="SET" length="1" sql="SET" quote=""/>
     <type label="Bit" length="0" sql="bit" quote=""/>
   </group>
-</datatypes><table x="317" y="549" name="competitions">
+</datatypes><table x="219" y="108" name="competitions">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="start" null="1" autoincrement="0">
-<datatype>DATETIME</datatype>
-<default>NULL</default></row>
-<row name="end" null="1" autoincrement="0">
-<datatype>DATETIME</datatype>
-<default>NULL</default></row>
 <row name="campaign_id" null="1" autoincrement="0">
 <datatype>INTEGER(10)</datatype>
+<default>NULL</default></row>
+<row name="campaign_run_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="start_date" null="1" autoincrement="0">
+<datatype>DATETIME</datatype>
+<default>NULL</default></row>
+<row name="end_date" null="1" autoincrement="0">
+<datatype>DATETIME</datatype>
+<default>NULL</default></row>
+<row name="created_at" null="1" autoincrement="0">
+<datatype>TIMESTAMP</datatype>
+<default>NULL</default></row>
+<row name="updated_at" null="1" autoincrement="0">
+<datatype>TIMESTAMP</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="77" y="65" name="users">
+<table x="753" y="47" name="users">
 <row name="id" null="1" autoincrement="1">
-<datatype>INTEGER</datatype>
+<datatype>VARCHAR</datatype>
 <default>NULL</default></row>
-<row name="first_name" null="1" autoincrement="0">
-<datatype>VARCHAR(255)</datatype>
-<default>NULL</default></row>
-<row name="last_name" null="1" autoincrement="0">
-<datatype>VARCHAR(255)</datatype>
-<default>NULL</default></row>
-<row name="email" null="1" autoincrement="0">
-<datatype>VARCHAR(255)</datatype>
-<default>NULL</default></row>
-<row name="password" null="1" autoincrement="0">
-<datatype>VARCHAR(60)</datatype>
+<row name="role" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
 <default>NULL</default></row>
 <row name="remember_token" null="1" autoincrement="0">
 <datatype>VARCHAR(100)</datatype>
@@ -83,38 +83,60 @@
 <part>id</part>
 </key>
 </table>
-<table x="572" y="424" name="competition_contestant">
+<table x="477" y="457" name="competition_user">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<row name="competition_id" null="1" autoincrement="0">
-<datatype>INTEGER(10)</datatype>
 <default>NULL</default><relation table="competitions" row="id" />
 </row>
-<row name="contestant_id" null="1" autoincrement="0">
+<row name="competition_id" null="1" autoincrement="0">
 <datatype>INTEGER(10)</datatype>
-<default>NULL</default><relation table="contestants" row="id" />
+<default>NULL</default></row>
+<row name="user_id" null="1" autoincrement="0">
+<datatype>INTEGER(10)</datatype>
+<default>NULL</default><relation table="users" row="id" />
 </row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="910" y="556" name="contestants">
+<table x="1231" y="101" name="waiting_rooms">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="first_name" null="1" autoincrement="0">
-<datatype>VARCHAR(255)</datatype>
+<row name="campaign_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="last_name" null="1" autoincrement="0">
-<datatype>VARCHAR(255)</datatype>
+<row name="campaign_run_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="email" null="1" autoincrement="0">
-<datatype>VARCHAR(255)</datatype>
+<row name="signup_start_date" null="1" autoincrement="0">
+<datatype>DATE</datatype>
 <default>NULL</default></row>
-<row name="dosomething_id" null="1" autoincrement="0">
-<datatype>INTEGER(10)</datatype>
+<row name="signup_end_date" null="1" autoincrement="0">
+<datatype>DATE</datatype>
 <default>NULL</default></row>
+<row name="created_at" null="1" autoincrement="0">
+<datatype>TIMESTAMP</datatype>
+<default>NULL</default></row>
+<row name="updated_at" null="1" autoincrement="0">
+<datatype>TIMESTAMP</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="720" y="456" name="user_waiting_room">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="user_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="users" row="id" />
+</row>
+<row name="waiting_room_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="waiting_rooms" row="id" />
+</row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
