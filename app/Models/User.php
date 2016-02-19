@@ -4,10 +4,18 @@ namespace Gladiator\Models;
 
 use Gladiator\Models\Competition;
 use Gladiator\Models\WaitingRoom;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Foundation\Auth\User as BaseUser;
 
-class User extends Authenticatable
+class User extends BaseUser
 {
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
+
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -17,11 +25,17 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    /**
+     * A User belongs to many Competitions
+     */
     public function competitions()
     {
         return $this->belongsToMany(Competition::class);
     }
 
+    /**
+     * A User belongs to many WaitingRooms.
+     */
     public function waitingRooms()
     {
         return $this->belongsToMany(WaitingRoom::class);
