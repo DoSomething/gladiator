@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserWaitingRoomTable extends Migration
+class CreateUserWaitingRoomPivotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateUserWaitingRoomTable extends Migration
     public function up()
     {
         Schema::create('user_waiting_room', function (Blueprint $table) {
-            $table->string('user_id')->index();
+            $table->string('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('waiting_room_id')->unsigned()->index();
+            $table->integer('waiting_room_id')->unsigned();
             $table->foreign('waiting_room_id')->references('id')->on('waiting_rooms');
         });
     }

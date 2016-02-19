@@ -13,8 +13,8 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->string('role');
+            $table->string('id', 48)->primary();
+            $table->string('role')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

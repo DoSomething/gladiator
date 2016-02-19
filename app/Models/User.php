@@ -2,18 +2,19 @@
 
 namespace Gladiator\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Gladiator\Models\Competition;
+use Gladiator\Models\WaitingRoom;
+use Illuminate\Foundation\Auth\User as BaseUser;
 
-class User extends Authenticatable
+class User extends BaseUser
 {
+
     /**
-     * The attributes that are mass assignable.
+     * Indicates if the IDs are auto-incrementing.
      *
-     * @var array
+     * @var bool
      */
-    protected $fillable = [
-        'first_name', 'last_name', 'email', 'password',
-    ];
+    public $incrementing = false;
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -21,6 +22,22 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'remember_token',
     ];
+
+    /**
+     * A User belongs to many Competitions
+     */
+    public function competitions()
+    {
+        return $this->belongsToMany(Competition::class);
+    }
+
+    /**
+     * A User belongs to many WaitingRooms.
+     */
+    public function waitingRooms()
+    {
+        return $this->belongsToMany(WaitingRoom::class);
+    }
 }

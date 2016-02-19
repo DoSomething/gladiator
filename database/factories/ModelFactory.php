@@ -1,5 +1,9 @@
 <?php
 
+use Faker\Generator;
+use Gladiator\Models\User;
+use Gladiator\Models\WaitingRoom;
+
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -11,29 +15,19 @@
 |
 */
 
-$factory->define(Gladiator\Models\User::class, function (Faker\Generator $faker) {
+$factory->define(User::class, function (Generator $faker) {
     return [
-        'first_name' => $faker->firstName,
-        'last_name' => $faker->lastName,
-        'email' => $faker->email,
-        'password' => bcrypt(str_random(10)),
-        'remember_token' => str_random(10),
+        'id' => str_random(24),
+        'role' => null,
     ];
 });
 
-$factory->define(Gladiator\Models\Contestant::class, function (Faker\Generator $faker) {
+$factory->define(WaitingRoom::class, function (Generator $faker) {
     return [
-        'first_name' => $faker->firstName,
-        'last_name' => $faker->lastName,
-        'email' => $faker->email,
-        'dosomething_id' => $faker->numberBetween(1000, 9000),
+        'campaign_id' => $faker->numberBetween(10, 300),
+        'campaign_run_id' => $faker->numberBetween(1000, 3000),
+        'signup_start_date' => $faker->dateTimeBetween('-7 days', '-1 day'),
+        'signup_end_date' => $faker->dateTimeBetween('+1 day', '+7 days'),
     ];
 });
 
-$factory->define(Gladiator\Models\Competition::class, function (Faker\Generator $faker) {
-    return [
-        'start_date' => $faker->dateTimeBetween('-5 weeks', 'now'),
-        'end_date' => $faker->dateTimeBetween('now', '+10 weeks'),
-        'campaign_run_id' => $faker->numberBetween(10, 300),
-    ];
-});

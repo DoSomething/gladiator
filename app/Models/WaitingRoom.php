@@ -5,10 +5,10 @@ namespace Gladiator\Models;
 use Gladiator\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
-class Competition extends Model
+class WaitingRoom extends Model
 {
     /**
-     * A Competition belongs to many Users.
+     * A WaitingRoom belongs to many Users.
      */
     public function users()
     {
