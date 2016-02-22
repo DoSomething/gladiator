@@ -6,9 +6,18 @@ use Illuminate\Http\Request;
 
 use Gladiator\Http\Requests;
 use Gladiator\Http\Controllers\Controller;
+use Gladiator\Models\Competition;
 
 class CompetitionsController extends Controller
 {
+
+    private $validation_rules = [
+        'campaign_id' => 'required|alpha_num',
+        'campaign_run_id' => 'required|alpha_num',
+        'start_date' => 'required|date',
+        'end_date' => 'required|date',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +25,8 @@ class CompetitionsController extends Controller
      */
     public function index()
     {
-        return view('competitions.index');
+        $competitions = Competition::all();
+        return view('competitions.index')->withCompetitions($competitions);
     }
 
     /**
@@ -37,7 +47,10 @@ class CompetitionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, $this->validation_rules);
+        $input = $request->all();
+        Competition::create($input);
+        return redirect('/competitions');
     }
 
     /**
