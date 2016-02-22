@@ -14,6 +14,13 @@ class User extends BaseUser
     public $incrementing = false;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    public $fillable = ['id', 'role'];
+
+    /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array

@@ -26,6 +26,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
 
-        //
+        app('auth')->extend('northstar', function() {
+            return new \Gladiator\Auth\NorthstarUserProvider($this->app['hash'], config('auth.providers.users.model'));
+        });
     }
 }

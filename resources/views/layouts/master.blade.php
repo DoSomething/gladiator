@@ -6,7 +6,7 @@
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>DoSomething Competitions</title>
+        <title>Gladiator | DoSomething Competitions</title>
 
         <link rel="icon" type="image/ico" href="/favicon.ico?v1">
 
@@ -39,6 +39,7 @@
             </div>
         </div>
 
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="{{ asset('/assets/vendor/forge/forge.js') }}"></script>
         <script src="{{ asset('/assets/vendor/modal/modal.js') }}"></script>
     </body>
