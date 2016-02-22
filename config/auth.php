@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'api',
+        'guard' => 'web',
         'passwords' => 'users',
     ],
 
@@ -36,14 +36,14 @@ return [
     */
 
     'guards' => [
-        // 'web' => [
-        //     'driver' => 'session',
-        //     'provider' => 'users',
-        // ],
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'northstar',
+        ],
 
         'api' => [
-            'driver' => 'northstar-token',
-            'provider' => 'users',
+            'driver' => 'token',
+            'provider' => 'northstar',
         ],
     ],
 
@@ -67,6 +67,10 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
+            'model' => Gladiator\Models\User::class,
+        ],
+        'northstar' => [
+            'driver' => 'northstar',
             'model' => Gladiator\Models\User::class,
         ],
 

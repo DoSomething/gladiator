@@ -5,6 +5,8 @@ namespace Gladiator\Providers;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
+use Gladiator\Northstar\NorthstarUserProvider;
+
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -26,8 +28,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
 
-        app('auth')->extend('northstar', function() {
-            return new \Gladiator\Auth\NorthstarUserProvider($this->app['hash'], config('auth.providers.users.model'));
+        app('auth')->provider('northstar', function() {
+            return new NorthstarUserProvider($this->app['hash'], config('auth.providers.northstar.model'));
         });
     }
 }
