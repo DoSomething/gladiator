@@ -2,11 +2,10 @@
 
 namespace Gladiator\Northstar;
 
-use Illuminate\Contracts\Auth\Authenticatable;
+use Gladiator\Northstar\Northstar;
 use Illuminate\Auth\EloquentUserProvider;
 use Illuminate\Contracts\Auth\UserProvider;
-
-use Gladiator\Northstar\Northstar;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 class NorthstarUserProvider extends EloquentUserProvider implements UserProvider
 {
@@ -20,7 +19,10 @@ class NorthstarUserProvider extends EloquentUserProvider implements UserProvider
     {
         $northstar = app(Northstar::class);
 
-        $user = false; //$northstar->getUser('email', $credentials['email']);
+
+        $user = $northstar->getUser($credentials['email']);
+
+        dd($$user);
 
         if (! $user) {
             return null;
@@ -41,6 +43,7 @@ class NorthstarUserProvider extends EloquentUserProvider implements UserProvider
      */
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
+        dd('validating');
         $northstar = app(Northstar::class);
 
         $user = null; //$northstar->verify($credentials);
