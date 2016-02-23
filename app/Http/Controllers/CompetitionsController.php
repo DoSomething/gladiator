@@ -61,7 +61,8 @@ class CompetitionsController extends Controller
      */
     public function show($id)
     {
-        //
+        $comp = Competition::findOrFail($id);
+        return view('competitions.show')->withCompetition($comp);
     }
 
     /**
@@ -72,7 +73,8 @@ class CompetitionsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $comp = Competition::findOrFail($id);
+        return view('competitions.edit')->withCompetition($comp);
     }
 
     /**
@@ -84,7 +86,11 @@ class CompetitionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, $this->validation_rules);
+        $comp = Competition::findOrFail($id);
+        $input = $request->all();
+        $comp->fill($input)->save();
+        return view('competitions.show')->withCompetition($comp);
     }
 
     /**
@@ -95,6 +101,8 @@ class CompetitionsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comp = Competition::findOrFail($id);
+        $comp->delete();
+        return redirect('/competitions');
     }
 }
