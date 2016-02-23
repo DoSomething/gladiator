@@ -6,29 +6,29 @@
 
     <div class='container__block'>
         <div class='wrapper'>
-            {!! Form::open(array('route' => 'competitions.store')) !!}
+            {!! Form::open(['route' => 'competitions.store']) !!}
                 <div class="form-item">
-                    {{ Form::label('campaign_id', 'Campaign ID:', array('class' => 'field-label')) }}
-                    {{ Form::text('campaign_id', NULL, array('class' => 'text-field')) }}
+                    {{ Form::label('campaign_id', 'Campaign ID:', ['class' => 'field-label']) }}
+                    {{ Form::text('campaign_id', NULL, ['class' => 'text-field']) }}
                 </div>
 
                 <div class="form-item">
-                    {{ Form::label('campaign_run_id', 'Run ID:', array('class' => 'field-label')) }}
-                    {{ Form::text('campaign_run_id', NULL, array('class' => 'text-field')) }}
+                    {{ Form::label('campaign_run_id', 'Run ID:', ['class' => 'field-label']) }}
+                    {{ Form::text('campaign_run_id', NULL, ['class' => 'text-field']) }}
                 </div>
 
                 <div class="form-item">
-                    {{ Form::label('start_date', 'Start date:', array('class' => 'field-label')) }}
-                    {{ Form::input('date', 'start_date', NULL, array('class' => 'text-field')) }}
+                    {{ Form::label('start_date', 'Start date:', ['class' => 'field-label']) }}
+                    {{ Form::input('date', 'start_date', NULL, ['class' => 'text-field']) }}
                 </div>
 
                 <div class="form-item">
-                    {{ Form::label('end_date', 'End date:', array('class' => 'field-label')) }}
-                    {{ Form::input('date', 'end_date', NULL, array('class' => 'text-field')) }}
+                    {{ Form::label('end_date', 'End date:', ['class' => 'field-label']) }}
+                    {{ Form::input('date', 'end_date', NULL, ['class' => 'text-field']) }}
                 </div>
 
                 <div class="form-item">
-                    {{ Form::submit('Submit', array('class' => 'button')) }}
+                    {{ Form::submit('Submit', ['class' => 'button']) }}
                 </div>
             {!! Form::close() !!}
         </div>

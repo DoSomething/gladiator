@@ -11,9 +11,9 @@ use Gladiator\Models\Competition;
 class CompetitionsController extends Controller
 {
 
-    private $validation_rules = [
-        'campaign_id' => 'required|alpha_num',
-        'campaign_run_id' => 'required|alpha_num',
+    private $validationRules = [
+        'campaign_id' => 'required|numeric',
+        'campaign_run_id' => 'required|numeric',
         'start_date' => 'required|date',
         'end_date' => 'required|date',
     ];
@@ -47,10 +47,9 @@ class CompetitionsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, $this->validation_rules);
-        $input = $request->all();
-        Competition::create($input);
-        return redirect('/competitions');
+        $this->validate($request, $this->$validationRules);
+        Competition::create($request->all());
+        return redirect()->route('competitions.index');
     }
 
     /**
@@ -61,8 +60,8 @@ class CompetitionsController extends Controller
      */
     public function show($id)
     {
-        $comp = Competition::findOrFail($id);
-        return view('competitions.show')->withCompetition($comp);
+        $competition = Competition::findOrFail($id);
+        return view('competitions.show')->withCompetition($competition);
     }
 
     /**
@@ -73,8 +72,8 @@ class CompetitionsController extends Controller
      */
     public function edit($id)
     {
-        $comp = Competition::findOrFail($id);
-        return view('competitions.edit')->withCompetition($comp);
+        $competition = Competition::findOrFail($id);
+        return view('competitions.edit')->withCompetition($competition);
     }
 
     /**
@@ -86,11 +85,10 @@ class CompetitionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, $this->validation_rules);
-        $comp = Competition::findOrFail($id);
-        $input = $request->all();
-        $comp->fill($input)->save();
-        return view('competitions.show')->withCompetition($comp);
+        $this->validate($request, $this->$validationRules);
+        $competition = Competition::findOrFail($id);
+        $competition->fill($request->all())->save();
+        return view('competitions.show')->withCompetition($competition);
     }
 
     /**
@@ -101,8 +99,8 @@ class CompetitionsController extends Controller
      */
     public function destroy($id)
     {
-        $comp = Competition::findOrFail($id);
-        $comp->delete();
-        return redirect('/competitions');
+        $competition = Competition::findOrFail($id);
+        $competition->delete();
+        return redirect()->route('competitions.index');
     }
 }
