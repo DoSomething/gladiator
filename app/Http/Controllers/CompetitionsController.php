@@ -3,9 +3,6 @@
 namespace Gladiator\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use Gladiator\Http\Requests;
-use Gladiator\Http\Controllers\Controller;
 use Gladiator\Models\Competition;
 
 class CompetitionsController extends Controller
