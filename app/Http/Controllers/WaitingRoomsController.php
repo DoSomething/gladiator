@@ -63,7 +63,9 @@ class WaitingRoomsController extends Controller
      */
     public function show($id)
     {
-        echo "show";
+        $room = WaitingRoom::find($id);
+
+        return view('waitingrooms.show')->withRoom($room);
     }
 
     /**
