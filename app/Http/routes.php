@@ -29,6 +29,7 @@ Route::get('/', function () {
 Route::group(['middleware' => ['web']], function () {
 
     Route::resource('competitions', 'CompetitionsController');
+    Route::resource('waitingrooms', 'WaitingRoomsController');
 
     // Route::get('leaderboards', 'LeaderboardsController');
 
