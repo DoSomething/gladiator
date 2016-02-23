@@ -38,12 +38,12 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'northstar',
+            'provider' => 'gladiator',
         ],
 
         'api' => [
             'driver' => 'token',
-            'provider' => 'northstar',
+            'provider' => 'gladiator',
         ],
     ],
 
@@ -69,8 +69,8 @@ return [
             'driver' => 'eloquent',
             'model' => Gladiator\Models\User::class,
         ],
-        'northstar' => [
-            'driver' => 'northstar',
+        'gladiator' => [
+            'driver' => 'gladiator',
             'model' => Gladiator\Models\User::class,
         ],
 

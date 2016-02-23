@@ -34,7 +34,7 @@ class RestApiClient
      */
     public function delete()
     {
-
+        // delete request
     }
 
     /**
@@ -54,9 +54,13 @@ class RestApiClient
     /**
      * @return [type]
      */
-    public function post()
+    public function post($path, $body = [])
     {
+        $response = $this->send('POST', $path, [
+            'body' => $this->makeJson($body),
+        ]);
 
+        return is_null($response) ? false : $this->getJson($response);
     }
 
     /**
@@ -64,7 +68,7 @@ class RestApiClient
      */
     public function put()
     {
-
+        // put request
     }
 
     /**
@@ -78,11 +82,12 @@ class RestApiClient
     }
 
     /**
+     * @param  [type]
      * @return [type]
      */
-    public function makeJson()
+    public function makeJson($data)
     {
-        // Do the thing. Win the points.
+        return json_encode($data);
     }
 
     /**
@@ -95,7 +100,14 @@ class RestApiClient
         try {
             return $this->client->request($method, $path, $options);
         } catch (RequestException $error) {
+
             if ($error->getCode() === 404) {
+                // fill out error bag for showing errors to user
+                return null;
+            }
+
+            if ($error->getCode() === 401) {
+                // fill out error bag for showing errors to user
                 return null;
             }
         }

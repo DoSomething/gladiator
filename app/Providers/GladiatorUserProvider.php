@@ -1,13 +1,13 @@
 <?php
 
-namespace Gladiator\Northstar;
+namespace Gladiator\Providers;
 
 use Gladiator\Northstar\Northstar;
 use Illuminate\Auth\EloquentUserProvider;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Auth\Authenticatable;
 
-class NorthstarUserProvider extends EloquentUserProvider implements UserProvider
+class GladiatorUserProvider extends EloquentUserProvider implements UserProvider
 {
     /**
      * Retrieve a user by the given credentials.
@@ -19,19 +19,15 @@ class NorthstarUserProvider extends EloquentUserProvider implements UserProvider
     {
         $northstar = app(Northstar::class);
 
-
         $user = $northstar->getUser($credentials['email']);
-
-        dd($$user);
 
         if (! $user) {
             return null;
         }
 
-        // // If a matching user is found, find or create local Aurora user.
-        // return $this->createModel()->firstOrCreate([
-        //     'northstar_id' => $user->id,
-        // ]);
+        // If a matching Northstar user is found, try to find corresponding Gladiator user.
+        // return $this->createModel()->firstOrCreate(['id' => $user->id]);
+        return $this->createModel()->where('id', $user->id)->first();
     }
 
     /**
@@ -43,11 +39,8 @@ class NorthstarUserProvider extends EloquentUserProvider implements UserProvider
      */
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
-        dd('validating');
         $northstar = app(Northstar::class);
 
-        $user = null; //$northstar->verify($credentials);
-
-        return ! is_null($user);
+        return $northstar->verifyUser($credentials);
     }
 }
