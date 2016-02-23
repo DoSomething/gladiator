@@ -8,6 +8,12 @@ use Gladiator\Models\WaitingRoom;
 
 class WaitingRoomsController extends Controller
 {
+    private $validationRules = [
+        'campaign_id' => 'required|numeric',
+        'campaign_run_id' => 'required|numeric',
+        'signup_start_date' => 'required|date',
+        'signup_end_date' => 'required|date'
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -38,7 +44,15 @@ class WaitingRoomsController extends Controller
      */
     public function store(Request $request)
     {
-        echo "store";
+        $this->validate($request, $this->validationRules);
+
+        $input = $request->all();
+
+        WaitingRoom::create($input);
+
+        $request->session()->flash('status', 'Message has been saved!');
+
+        return redirect()->back();
     }
 
     /**
