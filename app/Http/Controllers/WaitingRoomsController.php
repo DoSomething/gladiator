@@ -76,7 +76,13 @@ class WaitingRoomsController extends Controller
      */
     public function edit($id)
     {
-        echo "edit";
+        $room = WaitingRoom::findOrFail($id);
+
+        // Convert the dates to Date objects so we can use them as default values.
+        $room->signup_start_date = new \DateTime($room->signup_start_date);
+        $room->signup_end_date = new \DateTime($room->signup_end_date);
+
+        return view('waitingrooms.edit')->withRoom($room);
     }
 
     /**
@@ -88,7 +94,17 @@ class WaitingRoomsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        echo "update";
+        $room = WaitingRoom::findOrFail($id);
+
+        $this->validate($request, $this->validationRules);
+
+        $input = $request->all();
+
+        $room->fill($input)->save();
+
+        $request->session()->flash('status', 'Waiting room has been saved!');
+
+        return redirect()->back();
     }
 
     /**

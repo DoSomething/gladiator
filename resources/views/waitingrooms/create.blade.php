@@ -19,12 +19,12 @@
 
             <div class="form-item">
                 {!! Form::label('signup_start_date', 'Signup Start Date: ', array('class' => 'field-label')) !!}
-                {!! Form::date('signup_start_date', NULL, ['class' => 'text-field', 'placeholder' => 'MM/DD/YYYY']) !!}
+                {!! Form::date('signup_start_date', NULL, ['class' => 'text-field']) !!}
             </div>
 
             <div class="form-item">
                 {!! Form::label('signup_end_date', 'Signup End Date: ', array('class' => 'field-label')) !!}
-                {!! Form::date('signup_end_date', NULL, ['class' => 'text-field', 'placeholder' => 'MM/DD/YYYY']) !!}
+                {!! Form::date('signup_end_date', NULL, ['class' => 'text-field']) !!}
             </div>
 
             <div class="form-item">
