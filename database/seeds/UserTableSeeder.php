@@ -21,7 +21,6 @@ class UserTableSeeder extends Seeder
             ]);
         }
 
-
         // Add Contestant Users
         $waitingRooms = WaitingRoom::all();
         $totalRooms = count($waitingRooms);

@@ -3,8 +3,8 @@
 namespace Gladiator\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Gladiator\Http\Controllers\Controller;
 use Gladiator\Models\WaitingRoom;
+use Gladiator\Http\Controllers\Controller;
 
 class WaitingRoomsController extends Controller
 {
@@ -12,8 +12,9 @@ class WaitingRoomsController extends Controller
         'campaign_id' => 'required|numeric',
         'campaign_run_id' => 'required|numeric',
         'signup_start_date' => 'required|date',
-        'signup_end_date' => 'required|date'
+        'signup_end_date' => 'required|date',
     ];
+
     /**
      * Display a listing of the resource.
      *
