@@ -50,9 +50,7 @@ class WaitingRoomsController extends Controller
 
         WaitingRoom::create($input);
 
-        $request->session()->flash('status', 'Waiting room has been saved!');
-
-        return redirect()->back();
+        return redirect()->back()->with('status', 'Waiting room has been saved!');
     }
 
     /**
@@ -98,13 +96,9 @@ class WaitingRoomsController extends Controller
 
         $this->validate($request, $this->validationRules);
 
-        $input = $request->all();
+        $room->fill($request->all())->save();
 
-        $room->fill($input)->save();
-
-        $request->session()->flash('status', 'Waiting room has been saved!');
-
-        return redirect()->back();
+        return redirect()->back()->with('status', 'Waiting room has been updated!');
     }
 
     /**
@@ -119,8 +113,6 @@ class WaitingRoomsController extends Controller
 
         $room->delete();
 
-        $request->session()->flash('status', 'Waiting Room has been deleted!');
-
-        return redirect()->route('waitingrooms.index');
+        return redirect()->route('waitingrooms.index')->with('status', 'Waiting Room has been deleted!');
     }
 }
