@@ -124,7 +124,6 @@ class RestApiClient
         try {
             return $this->client->request($method, $path, $options);
         } catch (RequestException $error) {
-
             if ($error->getCode() === 404) {
                 // fill out error bag for showing errors to user
                 return;
