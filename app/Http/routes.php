@@ -22,11 +22,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('auth/login', 'Auth\AuthController@login');
     Route::get('auth/logout', 'Auth\AuthController@logout');
 
+    // Competitions
+    Route::resource('competitions', 'CompetitionsController');
+
     // Waiting rooms routes.
     Route::model('waitingrooms', 'Gladiator\Models\WaitingRoom');
     Route::resource('waitingrooms', 'WaitingRoomsController');
-
-    // Competitions
-    Route::resource('competitions', 'CompetitionsController');
 
 });

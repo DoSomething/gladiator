@@ -2,7 +2,6 @@
 
 namespace Gladiator\Providers;
 
-use Gladiator\Providers\GladiatorUserProvider;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -28,7 +27,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
 
-        app('auth')->provider('gladiator', function() {
+        app('auth')->provider('gladiator', function () {
             return new GladiatorUserProvider($this->app['hash'], config('auth.providers.gladiator.model'));
         });
     }

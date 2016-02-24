@@ -22,7 +22,7 @@ class GladiatorUserProvider extends EloquentUserProvider implements UserProvider
         $user = $northstar->getUser($credentials['email']);
 
         if (! $user) {
-            return null;
+            return;
         }
 
         // If a matching Northstar user is found, try to find corresponding Gladiator user.

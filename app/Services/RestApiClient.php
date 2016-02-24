@@ -119,19 +119,20 @@ class RestApiClient
      * @param  array  $options
      * @return Response|null
      */
-    protected function send($method, $path, $options = []) {
+    protected function send($method, $path, $options = [])
+    {
         try {
             return $this->client->request($method, $path, $options);
         } catch (RequestException $error) {
 
             if ($error->getCode() === 404) {
                 // fill out error bag for showing errors to user
-                return null;
+                return;
             }
 
             if ($error->getCode() === 401) {
                 // fill out error bag for showing errors to user
-                return null;
+                return;
             }
         }
     }

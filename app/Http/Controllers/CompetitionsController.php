@@ -7,7 +7,6 @@ use Gladiator\Models\Competition;
 
 class CompetitionsController extends Controller
 {
-
     private $validationRules = [
         'campaign_id' => 'required|numeric',
         'campaign_run_id' => 'required|numeric',
