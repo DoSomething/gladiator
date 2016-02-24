@@ -14,9 +14,9 @@ class CreateUserWaitingRoomPivotTable extends Migration
     {
         Schema::create('user_waiting_room', function (Blueprint $table) {
             $table->string('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('waiting_room_id')->unsigned();
-            $table->foreign('waiting_room_id')->references('id')->on('waiting_rooms');
+            $table->foreign('waiting_room_id')->references('id')->on('waiting_rooms')->onDelete('cascade');
         });
     }
 

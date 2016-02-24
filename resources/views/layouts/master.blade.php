@@ -19,14 +19,17 @@
     <body>
         <div class="chrome">
             <div class="wrapper">
+                @include('layouts.navigation')
+                @include('layouts.header')
 
                 <div class="container">
-
-                    @yield('main_content')
-
+                    <div class="wrapper">
+                        <div class="container__block">
+                            @include('errors.status')
+                            @yield('main_content')
+                        </div>
+                    </div>
                 </div>
-
-                {{-- @include('layouts.navigation') // Commenting out for now. --}}
 
             </div>
         </div>

@@ -1,8 +1,8 @@
 @extends('layouts.master')
 
-@section('main_content')
+@section('title', 'All you base are belong to us!')
 
-    @include('layouts.header', ['header' => 'All you base are belong to us!'])
+@section('main_content')
 
     <div class="container -padded">
         <div class="wrapper">

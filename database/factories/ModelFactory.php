@@ -30,4 +30,3 @@ $factory->define(WaitingRoom::class, function (Generator $faker) {
         'signup_end_date' => $faker->dateTimeBetween('+1 day', '+7 days'),
     ];
 });
-
