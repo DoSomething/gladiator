@@ -7,12 +7,22 @@ use Gladiator\Models\Competition;
 
 class CompetitionsController extends Controller
 {
+
     private $validationRules = [
         'campaign_id' => 'required|numeric',
         'campaign_run_id' => 'required|numeric',
         'start_date' => 'required|date',
         'end_date' => 'required|date',
     ];
+
+    /**
+     * Create new CompetitionsController instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin,staff');
+    }
 
     /**
      * Display a listing of the resource.

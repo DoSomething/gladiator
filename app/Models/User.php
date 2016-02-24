@@ -37,4 +37,11 @@ class User extends BaseUser
     {
         return $this->belongsToMany(WaitingRoom::class);
     }
+
+    public function hasRole($roles)
+    {
+        $roles = is_array($roles) ? $roles : [$roles];
+
+        return in_array($this->role, $roles);
+    }
 }
