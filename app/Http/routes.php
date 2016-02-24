@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -17,8 +16,8 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     Route::resource('competitions', 'CompetitionsController');
+
+    // Waiting rooms routes.
+    Route::model('waitingrooms', 'Gladiator\Models\WaitingRoom');
     Route::resource('waitingrooms', 'WaitingRoomsController');
-
-    // Route::get('leaderboards', 'LeaderboardsController');
-
 });

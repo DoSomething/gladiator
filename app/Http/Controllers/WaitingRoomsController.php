@@ -59,10 +59,8 @@ class WaitingRoomsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(WaitingRoom $room)
     {
-        $room = WaitingRoom::find($id);
-
         return view('waitingrooms.show')->withRoom($room);
     }
 
@@ -72,10 +70,8 @@ class WaitingRoomsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(WaitingRoom $room)
     {
-        $room = WaitingRoom::findOrFail($id);
-
         // Convert the dates to Date objects so we can use them as default values.
         $room->signup_start_date = new \DateTime($room->signup_start_date);
         $room->signup_end_date = new \DateTime($room->signup_end_date);
@@ -90,10 +86,8 @@ class WaitingRoomsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, WaitingRoom $room)
     {
-        $room = WaitingRoom::findOrFail($id);
-
         $this->validate($request, $this->validationRules);
 
         $room->fill($request->all())->save();
@@ -107,10 +101,8 @@ class WaitingRoomsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, Request $request)
+    public function destroy(WaitingRoom $room, Request $request)
     {
-        $room = WaitingRoom::findOrFail($id);
-
         $room->delete();
 
         return redirect()->route('waitingrooms.index')->with('status', 'Waiting Room has been deleted!');
