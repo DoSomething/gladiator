@@ -8,7 +8,6 @@ use Illuminate\Foundation\Auth\User as BaseUser;
 
 class User extends BaseUser
 {
-
     /**
      * Indicates if the IDs are auto-incrementing.
      *
