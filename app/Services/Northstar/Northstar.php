@@ -1,6 +1,6 @@
 <?php
 
-namespace Gladiator\Northstar;
+namespace Gladiator\Services\Northstar;
 
 use Gladiator\Services\RestApiClient;
 
