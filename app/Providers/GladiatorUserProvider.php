@@ -2,10 +2,10 @@
 
 namespace Gladiator\Providers;
 
-use Gladiator\Northstar\Northstar;
+use Gladiator\Services\Northstar\Northstar;
 use Illuminate\Auth\EloquentUserProvider;
-use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\UserProvider;
 
 class GladiatorUserProvider extends EloquentUserProvider implements UserProvider
 {
@@ -26,7 +26,6 @@ class GladiatorUserProvider extends EloquentUserProvider implements UserProvider
         }
 
         // If a matching Northstar user is found, try to find corresponding Gladiator user.
-        // return $this->createModel()->firstOrCreate(['id' => $user->id]);
         return $this->createModel()->where('id', $user->id)->first();
     }
 
