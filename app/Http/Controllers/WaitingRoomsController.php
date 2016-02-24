@@ -50,7 +50,7 @@ class WaitingRoomsController extends Controller
 
         WaitingRoom::create($input);
 
-        $request->session()->flash('status', 'Message has been saved!');
+        $request->session()->flash('status', 'Waiting room has been saved!');
 
         return redirect()->back();
     }

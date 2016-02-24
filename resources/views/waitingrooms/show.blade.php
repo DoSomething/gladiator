@@ -1,10 +1,11 @@
 @extends('layouts.master')
 
+@section('title', 'Waiting Room ' . $room->id)
+
 @section('main_content')
 
 <div class='container__block'>
     <div class='wrapper'>
-        <h2 class="heading -gamma"><span>Waiting Room {{ $room->id }}</span></h2>
         <p>Campaign ID: {{ $room->campaign_id }}</p>
         <p>Campaign Run ID: {{ $room->campaign_run_id }}</p>
         <p>Signup Start Date: {{ $room->signup_start_date }}</p>

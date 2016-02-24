@@ -1,11 +1,11 @@
 @extends('layouts.master')
 
+@section('title', 'Create a Waiting Room')
+
 @section('main_content')
 
 <div class='container__block'>
     <div class='wrapper'>
-        <h1>Create a Waiting Room</h1>
-        <hr>
         {!! Form::open(array('route' => 'waitingrooms.store')) !!}
             <div class="form-item">
                 {{ Form::label('campaign_id', 'Campaign ID (node id):', array('class' => 'field-label')) }}

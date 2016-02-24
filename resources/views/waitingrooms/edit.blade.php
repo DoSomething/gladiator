@@ -1,11 +1,9 @@
 @extends('layouts.master')
 
+@section('title', 'Edit Waiting Room ' . $room->id)
+
 @section('main_content')
-<div class='container__block'>
-    <div class='wrapper'>
-        <p>Edit this waiting room below. <a href="{{ route('waitingrooms.index') }}">Go back to all waiting room.</a></p>
-    </div>
-</div>
+
 <div class='container__block'>
     <div class='wrapper'>
         {!! Form::model($room, ['method' => 'PATCH','route' => ['waitingrooms.update', $room->id]]) !!}

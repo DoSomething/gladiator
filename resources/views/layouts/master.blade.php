@@ -19,27 +19,17 @@
     <body>
         <div class="chrome">
             <div class="wrapper">
+                @include('layouts.navigation')
+                @include('layouts.header')
 
                 <div class="container">
-
-                    <!-- TODO: move to partial, will be used to show any messages -->
-                    @if (Session::has('status'))
-                        <div>{{ Session::get('status') }}</div>
-                    @endif
-
-                    @if($errors->any())
-                    <div class="alert alert-danger">
-                        @foreach($errors->all() as $error)
-                            <p>{{ $error }}</p>
-                        @endforeach
+                    <div class="wrapper">
+                        <div class="container__block">
+                            @include('errors.status')
+                            @yield('main_content')
+                        </div>
                     </div>
-                    @endif
-
-                    @yield('main_content')
-
                 </div>
-
-                {{-- @include('layouts.navigation') // Commenting out for now. --}}
 
             </div>
         </div>
