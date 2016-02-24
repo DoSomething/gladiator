@@ -2,8 +2,6 @@
 
 namespace Gladiator\Models;
 
-use Gladiator\Models\Competition;
-use Gladiator\Models\WaitingRoom;
 use Illuminate\Foundation\Auth\User as BaseUser;
 
 class User extends BaseUser

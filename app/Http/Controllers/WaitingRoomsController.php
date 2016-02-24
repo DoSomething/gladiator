@@ -4,7 +4,6 @@ namespace Gladiator\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Gladiator\Models\WaitingRoom;
-use Gladiator\Http\Controllers\Controller;
 
 class WaitingRoomsController extends Controller
 {
