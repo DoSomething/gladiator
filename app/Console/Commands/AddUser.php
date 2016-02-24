@@ -60,10 +60,10 @@ class AddUser extends Command
         $gladiatorUser = User::find($northstarUser->id);
 
         if (is_null($gladiatorUser)) {
-            User::create([
-                'id' => $northstarUser->id,
-                'role' => $role,
-            ]);
+            $user = new User;
+            $user->id = $northstarUser->id;
+            $user->role = $role;
+            $user->save();
 
             return $this->comment(PHP_EOL . $email . ' added as a new "' . $role . '" user with id: ' . $northstarUser->id . PHP_EOL);
         }
