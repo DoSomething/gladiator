@@ -18,9 +18,9 @@ Route::get('/', function () {
 Route::group(['middleware' => ['web']], function () {
 
     // Authentication
-    Route::get('auth/login', 'Auth\AuthController@getLogin');
-    Route::post('auth/login', 'Auth\AuthController@postLogin');
-    Route::get('auth/logout', 'Auth\AuthController@getLogout');
+    Route::get('auth/login', 'Auth\AuthController@showLoginForm');
+    Route::post('auth/login', 'Auth\AuthController@login');
+    Route::get('auth/logout', 'Auth\AuthController@logout');
 
     // Waiting rooms routes.
     Route::model('waitingrooms', 'Gladiator\Models\WaitingRoom');
