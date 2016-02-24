@@ -10,8 +10,10 @@ class RestApiClient
     protected $client;
 
     /**
-     * @param [type]
-     * @param array
+     * RestApiClient constructor.
+     *
+     * @param string  $base_uri
+     * @param array  $headers
      */
     public function __construct($base_uri, $headers = [])
     {
@@ -30,17 +32,23 @@ class RestApiClient
     }
 
     /**
-     * @return [type]
+     * Send a DELETE request to the given path URI.
+     *
+     * @param  string  $path
+     * @return bool
      */
-    public function delete()
+    public function delete($path)
     {
         // delete request
+        // return bool
     }
 
     /**
-     * @param  [type]
-     * @param  array
-     * @return [type]
+     * Send a GET request to the given path URI.
+     *
+     * @param  string  $path
+     * @param  array  $query
+     * @return object|null
      */
     public function get($path, $query = [])
     {
@@ -52,7 +60,11 @@ class RestApiClient
     }
 
     /**
-     * @return [type]
+     * Send a POST request to the given path URI.
+     *
+     * @param  string  $path
+     * @param  array  $body
+     * @return object|false
      */
     public function post($path, $body = [])
     {
@@ -64,17 +76,24 @@ class RestApiClient
     }
 
     /**
-     * @return [type]
+     * Send a PUT request to the given path URI.
+     *
+     * @param  string  $path
+     * @param  array  $body
+     * @return object
      */
-    public function put()
+    public function put($path, $body = [])
     {
         // put request
+        // return object
     }
 
     /**
-     * @param  [type]
-     * @param  boolean
-     * @return [type]
+     * Get JSON object from the response.
+     *
+     * @param  object  $response
+     * @param  bool  $asArray
+     * @return object
      */
     public function getJson($response, $asArray = false)
     {
@@ -82,8 +101,10 @@ class RestApiClient
     }
 
     /**
-     * @param  [type]
-     * @return [type]
+     * Make JSON object string from the supplied data.
+     *
+     * @param  object  $data
+     * @return string
      */
     public function makeJson($data)
     {
@@ -91,10 +112,12 @@ class RestApiClient
     }
 
     /**
-     * @param  [type]
-     * @param  [type]
-     * @param  array
-     * @return [type]
+     * Send an API request and parse any returned errors or status codes.
+     *
+     * @param  string  $method
+     * @param  string  $path
+     * @param  array  $options
+     * @return Response|null
      */
     protected function send($method, $path, $options = []) {
         try {

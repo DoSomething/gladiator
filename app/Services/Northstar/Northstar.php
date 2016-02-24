@@ -21,9 +21,11 @@ class Northstar extends RestApiClient
     }
 
     /**
-     * @param  [type]
-     * @param  string
-     * @return [type]
+     * Send a GET request to return a user with the specified id.
+     *
+     * @param  string  $id
+     * @param  string  $type
+     * @return object
      */
     public function getUser($id, $type = 'email')
     {
@@ -32,6 +34,12 @@ class Northstar extends RestApiClient
         return is_null($response) ? null : $response;
     }
 
+    /**
+     * Send a POST request to verify user with specified credentials.
+     *
+     * @param  object $credentials
+     * @return bool
+     */
     public function verifyUser($credentials)
     {
         $response = $this->post('auth/verify', $credentials);
