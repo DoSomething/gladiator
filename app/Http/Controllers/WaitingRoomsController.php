@@ -113,8 +113,14 @@ class WaitingRoomsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        echo "destroy";
+        $room = WaitingRoom::findOrFail($id);
+
+        $room->delete();
+
+        $request->session()->flash('status', 'Waiting Room has been deleted!');
+
+        return redirect()->route('waitingrooms.index');
     }
 }
