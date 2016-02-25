@@ -55,9 +55,7 @@ class WaitingRoomsController extends Controller
     {
         $this->validate($request, $this->validationRules);
 
-        $input = $request->all();
-
-        WaitingRoom::create($input);
+        WaitingRoom::create($request->all());
 
         return redirect()->back()->with('status', 'Waiting room has been saved!');
     }
@@ -65,7 +63,7 @@ class WaitingRoomsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \Gladiator\Models\WaitingRoom  $room
      * @return \Illuminate\Http\Response
      */
     public function show(WaitingRoom $room)
@@ -76,7 +74,7 @@ class WaitingRoomsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \Gladiator\Models\WaitingRoom  $room
      * @return \Illuminate\Http\Response
      */
     public function edit(WaitingRoom $room)
@@ -92,7 +90,7 @@ class WaitingRoomsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Gladiator\Models\WaitingRoom  $room
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, WaitingRoom $room)
@@ -107,10 +105,10 @@ class WaitingRoomsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \Gladiator\Models\WaitingRoom  $room
      * @return \Illuminate\Http\Response
      */
-    public function destroy(WaitingRoom $room, Request $request)
+    public function destroy(WaitingRoom $room)
     {
         $room->delete();
 

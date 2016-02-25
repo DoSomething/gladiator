@@ -32,7 +32,7 @@ class CompetitionsController extends Controller
     {
         $competitions = Competition::all();
 
-        return view('competitions.index')->withCompetitions($competitions);
+        return view('competitions.index', compact('competitions'));
     }
 
     /**
@@ -63,40 +63,40 @@ class CompetitionsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \Gladiator\Models\Competition  $competition
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Competition $competition)
     {
-        $competition = Competition::findOrFail($id);
-
-        return view('competitions.show')->withCompetition($competition);
+        return view('competitions.show', compact('competition'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \Gladiator\Models\Competition  $competition
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Competition $competition)
     {
-        $competition = Competition::findOrFail($id);
+        // Convert the dates to Date objects so we can use them as default values.
+        $competition->start_date = new \DateTime($competition->start_date);
+        $competition->end_date = new \DateTime($competition->end_date);
 
-        return view('competitions.edit')->withCompetition($competition);
+        return view('competitions.edit', compact('competition'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Gladiator\Models\Competition  $competition
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Competition $competition)
     {
         $this->validate($request, $this->$validationRules);
-        $competition = Competition::findOrFail($id);
+
         $competition->fill($request->all())->save();
 
         return view('competitions.show')->withCompetition($competition);
@@ -105,12 +105,11 @@ class CompetitionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \Gladiator\Models\Competition  $competition
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Competition $competition)
     {
-        $competition = Competition::findOrFail($id);
         $competition->delete();
 
         return redirect()->route('competitions.index');
