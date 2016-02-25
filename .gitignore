@@ -6,4 +6,4 @@ Homestead.json
 
 .DS_Store
 
-public/assets/vendor
+public/assets/*

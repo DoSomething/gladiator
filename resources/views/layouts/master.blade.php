@@ -14,6 +14,7 @@
 
         <link rel="stylesheet" href="{{ asset('assets/vendor/forge/forge.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/vendor/modal/modal.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
     </head>
 
     <body>
