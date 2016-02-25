@@ -10,7 +10,7 @@
     <div class="container">
         <div class="wrapper">
             <div class="container__block -narrow">
-                {!! Form::open(array('route' => 'waitingrooms.store')) !!}
+                {!! Form::open(['route' => 'waitingrooms.store']) !!}
 
                     @include('waitingrooms.partials._form_waitingrooms')
 
