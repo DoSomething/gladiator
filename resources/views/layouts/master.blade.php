@@ -25,19 +25,6 @@
 
                 @include('layouts.navigation')
 
-                {{--
-                @include('layouts.header')
-                <div class="container">
-                    <div class="wrapper">
-                        <div class="container__block">
-
-                            @include('errors.status')
-
-                        </div>
-                    </div>
-                </div>
-                --}}
-
                 @yield('main_content')
 
             </div>
