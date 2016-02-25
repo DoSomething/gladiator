@@ -23,6 +23,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('auth/logout', 'Auth\AuthController@logout');
 
     // Competitions
+    Route::model('competitions', 'Gladiator\Models\Competition');
     Route::resource('competitions', 'CompetitionsController');
 
     // Waiting rooms routes.
