@@ -15,6 +15,15 @@ class CompetitionsController extends Controller
     ];
 
     /**
+     * Create new CompetitionsController instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin,staff');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -44,7 +53,8 @@ class CompetitionsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, $this->$validationRules);
+        $this->validate($request, $this->validationRules);
+
         Competition::create($request->all());
 
         return redirect()->route('competitions.index');

@@ -26,6 +26,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
 
-        //
+        app('auth')->provider('gladiator', function () {
+            return new GladiatorUserProvider($this->app['hash'], config('auth.providers.gladiator.model'));
+        });
     }
 }

@@ -14,6 +14,12 @@ return [
     |
     */
 
+    'northstar' => [
+        'uri' => env('NORTHSTAR_URI'),
+        'version' => 'v1',
+        'api_key' => env('NORTHSTAR_API_KEY'),
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),

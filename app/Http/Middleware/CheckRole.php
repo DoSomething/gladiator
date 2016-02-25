@@ -5,23 +5,25 @@ namespace Gladiator\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class Authenticate
+class CheckRole
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param  string|null  $guard
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->guest()) {
+        $roles = array_slice(func_get_args(), 2);
+
+        if (Auth::guest() || ! Auth::user()->hasRole($roles)) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest('auth/login');
+                // @TODO: respond with a more custom unauthorized access page or whatevs.
+                return redirect('/');
             }
         }
 

@@ -2,17 +2,33 @@
 
 @section('main_content')
 
-    <h1>All Competitions</h1>
-    <a href="{{ route('competitions.index') }}"><h3>Create a new competition</h3></a>
-    @foreach($competitions as $competition)
-        <hr>
-        <div>
-            <a href="{{ route('competitions.show', $competition->id) }}"><h1>Competition ID: {{ $competition->id }}</h1></a>
-            <h3>Campaign ID: {{ $competition->campaign_id }}</h3>
-            <h3>Campaign Run ID: {{ $competition->campaign_run_id }}</h3>
-            <h3>Start Date: {{ $competition->start_date }}</h3>
-            <h3>End Date: {{ $competition->end_date }}</h3>
+    @include('layouts.header', [
+        'title' => 'Competitions'
+    ])
+
+    <div class="container">
+        <div class="wrapper">
+            <div class="container__block -narrow">
+                <a class="button" href="{{ route('competitions.create') }}">Add Competition</a>
+            </div>
         </div>
-    @endforeach
+    </div>
+
+    <div class="container">
+        <div class="wrapper">
+            <div class="container__block">
+                @foreach($competitions as $competition)
+                    <hr>
+                    <div>
+                        <h3><a href="{{ route('competitions.show', $competition->id) }}">Competition ID: {{ $competition->id }}</a></h3>
+                        <p>Campaign ID: {{ $competition->campaign_id }}</p>
+                        <p>Campaign Run ID: {{ $competition->campaign_run_id }}</p>
+                        <p>Start Date: {{ $competition->start_date }}</p>
+                        <p>End Date: {{ $competition->end_date }}</p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
 
 @stop

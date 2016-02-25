@@ -38,12 +38,12 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'gladiator',
         ],
 
         'api' => [
             'driver' => 'token',
-            'provider' => 'users',
+            'provider' => 'gladiator',
         ],
     ],
 
@@ -67,6 +67,10 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
+            'model' => Gladiator\Models\User::class,
+        ],
+        'gladiator' => [
+            'driver' => 'gladiator',
             'model' => Gladiator\Models\User::class,
         ],
 
