@@ -1,6 +1,9 @@
 <header role="banner" class="header">
     <div class="wrapper">
-        <h1 class="header__title">@yield('title')</h1>
-        <p class="header__subtitle">@yield('subtitle')</p>
+        <h1 class="header__title">{{ $title }}</h1>
+
+        @if (isset($subtitle))
+            <p class="header__subtitle">{{ $subtitle }}</p>
+        @endif
     </div>
 </header>

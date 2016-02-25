@@ -15,6 +15,15 @@ class WaitingRoomsController extends Controller
     ];
 
     /**
+     * Create new WaitingRoomsController instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin,staff');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -23,7 +32,7 @@ class WaitingRoomsController extends Controller
     {
         $rooms = WaitingRoom::all();
 
-        return view('waitingrooms.index')->with(compact('rooms'));
+        return view('waitingrooms.index', compact('rooms'));
     }
 
     /**
@@ -61,7 +70,7 @@ class WaitingRoomsController extends Controller
      */
     public function show(WaitingRoom $room)
     {
-        return view('waitingrooms.show')->with(compact('room'));
+        return view('waitingrooms.show', compact('room'));
     }
 
     /**
@@ -76,7 +85,7 @@ class WaitingRoomsController extends Controller
         $room->signup_start_date = new \DateTime($room->signup_start_date);
         $room->signup_end_date = new \DateTime($room->signup_end_date);
 
-        return view('waitingrooms.edit')->with(compact('room'));
+        return view('waitingrooms.edit', compact('room'));
     }
 
     /**

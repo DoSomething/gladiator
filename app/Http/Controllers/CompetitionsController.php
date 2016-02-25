@@ -53,7 +53,8 @@ class CompetitionsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, $this->$validationRules);
+        $this->validate($request, $this->validationRules);
+
         Competition::create($request->all());
 
         return redirect()->route('competitions.index');

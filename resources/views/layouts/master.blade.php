@@ -17,24 +17,28 @@
     </head>
 
     <body>
+
+        @include('layouts.status')
+
         <div class="chrome">
             <div class="wrapper">
 
                 @include('layouts.navigation')
 
+                {{--
                 @include('layouts.header')
-
                 <div class="container">
                     <div class="wrapper">
                         <div class="container__block">
 
                             @include('errors.status')
 
-                            @yield('main_content')
-
                         </div>
                     </div>
                 </div>
+                --}}
+
+                @yield('main_content')
 
             </div>
         </div>

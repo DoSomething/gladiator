@@ -1,15 +1,22 @@
 @extends('layouts.master')
 
-@section('title', 'Create a Waiting Room')
-
 @section('main_content')
 
-<div class='container__block'>
-    <div class='wrapper'>
-        {!! Form::open(array('route' => 'waitingrooms.store')) !!}
-            @include('waitingrooms.partials._form_waitingrooms')
-        {!! Form::close() !!}
+    @include('layouts.header', [
+        'title' => 'Waiting Rooms',
+        'subtitle' => 'Add a new waiting room'
+    ])
+
+    <div class="container">
+        <div class="wrapper">
+            <div class="container__block -narrow">
+                {!! Form::open(array('route' => 'waitingrooms.store')) !!}
+
+                    @include('waitingrooms.partials._form_waitingrooms')
+
+                {!! Form::close() !!}
+            </div>
+        </div>
     </div>
-</div>
 
 @stop

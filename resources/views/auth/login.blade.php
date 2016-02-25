@@ -2,7 +2,10 @@
 
 @section('main_content')
 
-    @include('layouts.header', ['header' => 'Gladiator', 'subtitle' => 'Please login to continue.'])
+    @include('layouts.header', [
+        'title' => 'Gladiator',
+        'subtitle' => 'Please login to continue.'
+    ])
 
     <div class="container -padded">
         <div class="wrapper">
@@ -24,7 +27,6 @@
                     </div>
 
                     <input type="submit" class="button" value="Log In" />
-
                 </form>
 
             </div>
