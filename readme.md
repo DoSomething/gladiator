@@ -1,3 +1,60 @@
+# Gladiator [![StyleCI](https://styleci.io/repos/51176505/shield)](https://styleci.io/repos/51176505)
+
+Welcome to **Gladiator**, the admin tool for DoSomething Competitions!
+
+This application is built using the [Laravel](https://laravel.com) Framework.
+
+### Getting Started
+Fork and clone this repository, and set it up as a local app running inside [DS Homestead](https://github.com/DoSomething/ds-homestead) or regular [Homestead](https://github.com/laravel/homestead).
+
+After the initial Homestead installation `ssh` into the vagrant box, head to the project directory and run composer to install all the project dependencies:
+
+```shell
+$ composer install
+```
+
+Once all vendor dependencies are installed, run the migrations to setup the database and seed it:
+
+```shell
+$ php artisan migrate
+$ php artisan db:seed
+```
+
+Next, if you already exist as a DoSomething user within [Northstar]((https://www.github.com/dosomething/northstar), our user and activity API, run the following command to set yourself up as an admin in your local Gladiator instance:
+
+```shell
+$ php artisan add:user username@dosomething.org --role=admin
+```
+
+Finally, to setup the front-end build system, you can either be in the Homestead vagrant box or on your local.
+
+Homestead already comes with `node` and `npm`, but if running on your local you will need to make sure both those dependecies are installed.
+
+You need to install `gulp` globally using:
+
+```shell
+$ npm install --global gulp
+```
+
+Next, install all the `npm` dependencies:
+
+```
+$ npm install
+```
+
+Now you're all set to built the front-end assets by running:
+
+```
+$ gulp
+```
+
+All set!
+
+
+
+---
+
+
 ## Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
