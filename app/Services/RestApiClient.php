@@ -5,7 +5,7 @@ namespace Gladiator\Services;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\MessageBag;
-use Illuminate\Contracts\Validation\ValidationException;
+use Illuminate\Foundation\Validation\ValidationException;
 
 class RestApiClient
 {
