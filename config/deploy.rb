@@ -22,7 +22,6 @@ set :deploy_via, :copy
 set :keep_releases, 1
 
 ssh_options[:keys] = [ENV["CAP_PRIVATE_KEY"]]
-ssh_options[:debug] = verbose
 
 default_run_options[:shell] = '/bin/bash'
 

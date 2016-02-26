@@ -23,6 +23,9 @@ deploy:
     - script:
         name: debug key
         code: echo $WERCKER_APP_KEY_PUBLIC
+    - script:
+        name: debug user
+        code: whoami
     - cap
   after-steps:
       - iansmith9876/pretty-slack-notify:
