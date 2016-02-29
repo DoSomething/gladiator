@@ -13,7 +13,7 @@
   border-radius: 2px;
 }
 
-.table-header {
+.table__header {
   background: $white;
   color: $purple;
   font-weight: $weight-bold;
@@ -24,7 +24,7 @@
   }
 }
 
-.table-row {
+.table__row {
   display: table-row;
   background: white;
 
@@ -34,7 +34,7 @@
   }
 }
 
-.table-cell {
+.table__cell {
   padding: 6px 12px;
   display: table-cell;
 
