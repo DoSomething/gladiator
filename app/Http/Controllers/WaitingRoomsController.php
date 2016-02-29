@@ -31,7 +31,6 @@ class WaitingRoomsController extends Controller
     public function index()
     {
         $rooms = WaitingRoom::all();
-
         return view('waitingrooms.index', compact('rooms'));
     }
 
@@ -113,5 +112,17 @@ class WaitingRoomsController extends Controller
         $room->delete();
 
         return redirect()->route('waitingrooms.index')->with('status', 'Waiting Room has been deleted!');
+    }
+
+    public function showSplitForm(WaitingRoom $room) {
+        $split = $room->getDefaultSplit();
+        return view('waitingrooms.split', compact('split', 'room'));
+    }
+
+    public function split(WaitingRoom $room, Request $request) {
+        $split = $room->getDefaultSplit();
+        $room->saveSplit($competitionInput, $split);
+
+        return redirect()->route('waitingrooms.index')->with('status', 'Waiting Room has been split!');
     }
 }

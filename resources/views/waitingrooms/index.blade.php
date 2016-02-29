@@ -36,6 +36,11 @@
                                 <li>
                                     <a href="{{ route('waitingrooms.edit', $room->id) }}" class="button -secondary">Edit room</a>
                                 </li>
+                                @if (time() - (60 * 60 * 24) <= strtotime($room->signup_end_date))
+                                    <li>
+                                        <a href="{{ route('split', $room->id) }}" class="button">Split room</a>
+                                    </li>
+                                @endif
                             </ul>
                         </div>
                     </div>

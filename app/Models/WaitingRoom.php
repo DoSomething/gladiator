@@ -3,6 +3,7 @@
 namespace Gladiator\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class WaitingRoom extends Model
 {
@@ -15,4 +16,45 @@ class WaitingRoom extends Model
     {
         $this->belongsToMany(User::class);
     }
+
+    public function getDefaultSplit()
+    {
+        $users = DB::table('user_waiting_room')->where('waiting_room_id', $this->attributes['id'])->get();
+
+        // Get the size of the waiting room
+        $roomSize = sizeof($users);
+
+        // Determine the amount of competitions to make
+        $numOfCompetitions = $roomSize / 50;
+
+        // Create the competitions
+        $competitions = [];
+        for ($index = 0; $index < $numOfCompetitions; $index++) {
+            array_push($competitions, []);
+        }
+
+        // Split the users into them
+        $index = 0;
+        foreach ($users as $user) {
+
+            array_push($competitions[$index], $user->user_id);
+
+            // Reset the index once you go past the total number of groups
+            $index++;
+            if ($index >= $numOfCompetitions) {
+                $index = 0;
+            }
+        }
+        return $competitions;
+    }
+
+    public function saveSplit($competitionInput, $split)
+    {
+        foreach ($split as $competition) {
+            foreach ($competition as $user) {
+
+            }
+        }
+    }
+
 }

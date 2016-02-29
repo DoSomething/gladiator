@@ -55,7 +55,7 @@ class RestApiClient
         $response = $this->send('GET', $path, [
             'query' => $query,
         ]);
-
+        
         return is_null($response) ? null : $this->getJson($response);
     }
 
