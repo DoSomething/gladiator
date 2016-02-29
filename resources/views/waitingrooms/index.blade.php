@@ -17,30 +17,29 @@
     <div class="container">
         <div class="wrapper">
             <div class="container__block">
-                @foreach($rooms as $room)
-                    <hr>
-                    <div>
-                        <h3><a href="{{ route('waitingrooms.show', $room->id) }}">{{ $room->campaign_id }}</a></h3>
-                        <div class="container__block message__title">
-                            <h4>Signup Dates:</h4>
-                            <p>Start Date: {{ $room->signup_start_date }}</p>
-                            <p>End Date: {{ $room->signup_end_date }}</p>
-                        </div>
-                        <div class="container__block message__edit">
-                            <ul class="form-actions -inline">
-                                <li>
-                                    {!! Form::open(['method' => 'DELETE','route' => ['waitingrooms.destroy', $room->id]]) !!}
-                                        {!! Form::submit('Delete', array('class' => 'button -secondary delete')) !!}
-                                    {!! Form::close() !!}
-                                </li>
-                                <li>
-                                    <a href="{{ route('waitingrooms.edit', $room->id) }}" class="button -secondary">Edit room</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                @endforeach
 
+                <table id="user-table" class="table">
+                  <thead>
+                    <tr class="row table-header">
+                      <th class="table-cell">ID</th>
+                      <th class="table-cell">Campaign</th>
+                      <th class="table-cell">Campaign Run</th>
+                      <th class="table-cell">Start Date</th>
+                      <th class="table-cell">End Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($rooms as $room)
+                      <tr class="table-row">
+                        <td class="table-cell"><a href="{{ route('waitingrooms.show', $room->id) }}">{{ $room->id }}</a></td>
+                        <td class="table-cell">{{ $room->campaign_id }}</td>
+                        <td class="table-cell">{{ $room->campaign_run_id }}</td>
+                        <td class="table-cell">{{ date('F d, Y', strtotime($room->signup_start_date)) }}</td>
+                        <td class="table-cell">{{ date('F d, Y', strtotime($room->signup_end_date)) }}</td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
             </div>
         </div>
     </div>

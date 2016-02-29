@@ -1,3 +1,56 @@
 .validation-error {
   color: #ff4747;
 }
+
+
+/**
+ * Table
+ */
+.table {
+  display: table;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  border-collapse: separate; /* needed to display border radius on table */
+}
+
+@media screen and (max-width: 580px) {
+  .table {
+    display: block;
+  }
+}
+
+.table-header {
+  background: #ffffff ;
+  color: #4e2b63 ;
+  font-weight: 700;
+  text-align: left;
+}
+
+.table-row {
+  display: table-row;
+  background: white;
+}
+
+.table-row:nth-of-type(odd) {
+  background: #efefef;
+}
+
+@media screen and (max-width: 580px) {
+  .row {
+    padding: 8px 0;
+    display: block;
+  }
+}
+
+.table-cell {
+  padding: 6px 12px;
+  display: table-cell;
+}
+
+@media screen and (max-width: 580px) {
+  .cell {
+    padding: 2px 12px;
+    display: block;
+  }
+}
