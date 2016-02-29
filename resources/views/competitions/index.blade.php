@@ -17,18 +17,31 @@
     <div class="container">
         <div class="wrapper">
             <div class="container__block">
-                @foreach($competitions as $competition)
-                    <hr>
-                    <div>
-                        <h3><a href="{{ route('competitions.show', $competition->id) }}">Competition ID: {{ $competition->id }}</a></h3>
-                        <p>Campaign ID: {{ $competition->campaign_id }}</p>
-                        <p>Campaign Run ID: {{ $competition->campaign_run_id }}</p>
-                        <p>Start Date: {{ $competition->start_date }}</p>
-                        <p>End Date: {{ $competition->end_date }}</p>
-                    </div>
-                @endforeach
+                <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr class="table__header">
+                          <th class="table__cell">ID</th>
+                          <th class="table__cell">Campaign</th>
+                          <th class="table__cell">Campaign Run</th>
+                          <th class="table__cell">Start Date</th>
+                          <th class="table__cell">End Date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($competitions as $competition)
+                          <tr class="table__row">
+                            <td class="table__cell"><a href="{{ route('competitions.show', $competition->id) }}">{{ $competition->id }}</a></td>
+                            <td class="table__cell">{{ $competition->campaign_id }}</td>
+                            <td class="table__cell">{{ $competition->campaign_run_id }}</td>
+                            <td class="table__cell">{{ date('F d, Y', strtotime($competition->start_date)) }}</td>
+                            <td class="table__cell">{{ date('F d, Y', strtotime($competition->end_date)) }}</td>
+                          </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-
 @stop

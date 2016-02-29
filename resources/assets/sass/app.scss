@@ -1,3 +1,9 @@
+// Forge
+@import "../../../node_modules/@dosomething/forge/scss/forge";
+
+// Local patterns
+@import "patterns/tables";
+
 .validation-error {
   color: #ff4747;
 }
