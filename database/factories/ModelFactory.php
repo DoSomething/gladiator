@@ -3,6 +3,7 @@
 use Faker\Generator;
 use Gladiator\Models\User;
 use Gladiator\Models\WaitingRoom;
+use Gladiator\Models\Competition;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,5 +29,14 @@ $factory->define(WaitingRoom::class, function (Generator $faker) {
         'campaign_run_id' => $faker->numberBetween(1000, 3000),
         'signup_start_date' => $faker->dateTimeBetween('-7 days', '-1 day'),
         'signup_end_date' => $faker->dateTimeBetween('+1 day', '+7 days'),
+    ];
+});
+
+$factory->define(Competition::class, function (Generator $faker) {
+    return [
+        'campaign_id' => $faker->numberBetween(10, 300),
+        'campaign_run_id' => $faker->numberBetween(1000, 3000),
+        'start_date' => $faker->dateTimeBetween('-7 days', '-1 day'),
+        'end_date' => $faker->dateTimeBetween('+1 day', '+7 days'),
     ];
 });
