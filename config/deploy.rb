@@ -12,8 +12,8 @@ unless gateway.nil?
   set :gateway, ENV["GATEWAY"]
 end
 
-set :user, "ubuntu"
-set :group, "ubuntu"
+set :user, "dosomething"
+set :group, "dosomething"
 set :use_sudo, false
 
 set :repository, "."
