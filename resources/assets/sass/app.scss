@@ -1,3 +1,5 @@
+@import "../../../node_modules/@dosomething/forge/scss/forge";
+
 .validation-error {
   color: #ff4747;
 }
@@ -6,16 +8,6 @@
 /**
  * Table
  */
-
-$small: "(max-width: 580px)";
-
-// Media query mixin
-@mixin media($breakpoint) {
-  @media #{$breakpoint} {
-    @content;
-  }
-}
-
 .table-responsive {
   width: 100%;
   overflow-x: auto;
