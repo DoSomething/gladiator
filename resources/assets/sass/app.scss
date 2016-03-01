@@ -1,4 +1,7 @@
-// Forge
+// Set up asset pipeline for Forge
+$forge-path: "/assets/vendor/forge/assets/";
+
+// Import Forge modules
 @import "../../../node_modules/@dosomething/forge/scss/forge";
 
 // Local patterns
