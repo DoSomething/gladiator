@@ -4,7 +4,6 @@ namespace Gladiator\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Gladiator\Models\WaitingRoom;
-use Gladiator\Models\Competition;
 
 class WaitingRoomsController extends Controller
 {
@@ -32,6 +31,7 @@ class WaitingRoomsController extends Controller
     public function index()
     {
         $rooms = WaitingRoom::all();
+
         return view('waitingrooms.index', compact('rooms'));
     }
 
@@ -121,8 +121,10 @@ class WaitingRoomsController extends Controller
      * @param  \Gladiator\Models\WaitingRoom  $room
      * @return \Illuminate\Http\Response
      */
-    public function showSplitForm(WaitingRoom $room) {
+    public function showSplitForm(WaitingRoom $room)
+    {
         $split = $room->getDefaultSplit();
+        
         return view('waitingrooms.split', compact('split', 'room'));
     }
 

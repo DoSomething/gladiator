@@ -118,7 +118,8 @@ class CompetitionsController extends Controller
     /**
      * Returns the competition form validators.
      */
-    public static function getValidationRules() {
+    public static function getValidationRules()
+    {
         return self::$validationRules;
     }
 }

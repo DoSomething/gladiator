@@ -26,7 +26,7 @@ class WaitingRoom extends Model
         $users = DB::table('user_waiting_room')->where('waiting_room_id', $this->attributes['id'])->get();
 
         // Get the size of the waiting room
-        $roomSize = sizeof($users);
+        $roomSize = count($users);
 
         // Determine the amount of competitions to make
         $numOfCompetitions = $roomSize / 300;
@@ -40,7 +40,6 @@ class WaitingRoom extends Model
         // Split the users into them
         $index = 0;
         foreach ($users as $user) {
-
             array_push($competitions[$index], $user->user_id);
 
             // Reset the index once you go past the total number of groups
@@ -49,6 +48,7 @@ class WaitingRoom extends Model
                 $index = 0;
             }
         }
+        
         return $competitions;
     }
 
