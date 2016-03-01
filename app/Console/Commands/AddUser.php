@@ -3,7 +3,6 @@
 namespace Gladiator\Console\Commands;
 
 use Gladiator\Models\User;
-use Gladiator\Services\Northstar\Northstar;
 use Illuminate\Console\Command;
 
 class AddUser extends Command
@@ -23,25 +22,6 @@ class AddUser extends Command
     protected $description = 'Adds a new authorized user from Northstar';
 
     /**
-     * The northstar service.
-     *
-     * @var Northstar
-     */
-    protected $northstar;
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct(Northstar $northstar)
-    {
-        parent::__construct();
-
-        $this->northstar = $northstar;
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
@@ -51,13 +31,17 @@ class AddUser extends Command
         $email = $this->argument('email');
         $role = $this->option('role');
 
-        $northstarUser = $this->northstar->getUser($email);
+        if (! matchEmailDomain($email)) {
+            return $this->comment(PHP_EOL . $email . ' is invalid. Admin or Staff require a DoSomething.org email.' . PHP_EOL);
+        }
+
+        $northstarUser = findNorthstarAccount($email, 'email');
 
         if (is_null($northstarUser)) {
             return $this->comment(PHP_EOL . 'No user found on Northstar with email: ' . $email . '. Create an account at https://dosomething.org.' . PHP_EOL);
         }
 
-        $gladiatorUser = User::find($northstarUser->id);
+        $gladiatorUser = findGladiatorAccount($northstarUser->id);
 
         if (is_null($gladiatorUser)) {
             $user = new User;

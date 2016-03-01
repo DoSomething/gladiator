@@ -23,7 +23,7 @@ class User extends BaseUser
     ];
 
     /**
-     * A User belongs to many Competitions
+     * A User belongs to many Competitions.
      */
     public function competitions()
     {
@@ -38,6 +38,12 @@ class User extends BaseUser
         return $this->belongsToMany(WaitingRoom::class);
     }
 
+    /**
+     * Check if user has specified role.
+     *
+     * @param  string|array
+     * @return bool
+     */
     public function hasRole($roles)
     {
         $roles = is_array($roles) ? $roles : [$roles];
