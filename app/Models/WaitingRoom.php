@@ -29,7 +29,7 @@ class WaitingRoom extends Model
         $roomSize = sizeof($users);
 
         // Determine the amount of competitions to make
-        $numOfCompetitions = $roomSize / 50;
+        $numOfCompetitions = $roomSize / 300;
 
         // Create the competitions
         $competitions = [];
