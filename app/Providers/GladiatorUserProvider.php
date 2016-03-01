@@ -19,7 +19,7 @@ class GladiatorUserProvider extends EloquentUserProvider implements UserProvider
     {
         $northstar = app(Northstar::class);
 
-        $user = $northstar->getUser($credentials['email']);
+        $user = $northstar->getUser('email', $credentials['email']);
 
         if (! $user) {
             return;

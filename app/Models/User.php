@@ -2,6 +2,7 @@
 
 namespace Gladiator\Models;
 
+use Gladiator\Services\Northstar\Exceptions\NorthstarUserNotFoundException;
 use Illuminate\Foundation\Auth\User as BaseUser;
 
 class User extends BaseUser
@@ -49,5 +50,40 @@ class User extends BaseUser
         $roles = is_array($roles) ? $roles : [$roles];
 
         return in_array($this->role, $roles);
+    }
+
+    /**
+     * @param  string  $type
+     * @param  string  $id
+     * @return \Gladiator\Models\User|string
+     * @throws \Gladiator\Services\Northstar\Exceptions\NorthstarUserNotFoundException
+     */
+    public static function hasAccountInSystem($type, $id)
+    {
+        $northstarUser = static::hasNorthstarAccount($type, $id);
+
+        if (! $northstarUser) {
+            throw new NorthstarUserNotFoundException;
+        }
+
+        $user = static::find($northstarUser->id);
+
+        if (! $user) {
+            return $northstarUser->id;
+        }
+
+        return $user;
+    }
+
+    /**
+     * @param  string  $type
+     * @param  string  $id
+     * @return object|null
+     */
+    public static function hasNorthstarAccount($type, $id)
+    {
+        $northstar = app('northstar');
+
+        return $northstar->getUser($type, $id);
     }
 }

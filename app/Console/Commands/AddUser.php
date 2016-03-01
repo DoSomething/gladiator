@@ -35,13 +35,13 @@ class AddUser extends Command
             return $this->comment(PHP_EOL . $email . ' is invalid. Admin or Staff require a DoSomething.org email.' . PHP_EOL);
         }
 
-        $northstarUser = findNorthstarAccount($email, 'email');
+        $northstarUser = User::hasNorthstarAccount('email', $email);
 
         if (is_null($northstarUser)) {
             return $this->comment(PHP_EOL . 'No user found on Northstar with email: ' . $email . '. Create an account at https://dosomething.org.' . PHP_EOL);
         }
 
-        $gladiatorUser = findGladiatorAccount($northstarUser->id);
+        $gladiatorUser = User::find($northstarUser->id);
 
         if (is_null($gladiatorUser)) {
             $user = new User;
