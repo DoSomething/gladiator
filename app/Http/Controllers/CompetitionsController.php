@@ -7,7 +7,7 @@ use Gladiator\Models\Competition;
 
 class CompetitionsController extends Controller
 {
-    private $validationRules = [
+    public static $validationRules = [
         'campaign_id' => 'required|numeric',
         'campaign_run_id' => 'required|numeric',
         'start_date' => 'required|date',
@@ -113,5 +113,12 @@ class CompetitionsController extends Controller
         $competition->delete();
 
         return redirect()->route('competitions.index');
+    }
+
+    /**
+     * Returns the competition form validators.
+     */
+    public static function getValidationRules() {
+        return self::$validationRules;
     }
 }

@@ -27,6 +27,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('competitions', 'CompetitionsController');
 
     // Waiting rooms routes.
+    Route::get('waitingrooms/{waitingrooms}/split', 'WaitingRoomsController@showSplitForm')->name('split');
+    Route::post('waitingrooms/{waitingrooms}/split', 'WaitingRoomsController@split')->name('split');
     Route::model('waitingrooms', 'Gladiator\Models\WaitingRoom');
     Route::resource('waitingrooms', 'WaitingRoomsController');
 

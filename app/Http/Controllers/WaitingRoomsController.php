@@ -4,6 +4,7 @@ namespace Gladiator\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Gladiator\Models\WaitingRoom;
+use Gladiator\Models\Competition;
 
 class WaitingRoomsController extends Controller
 {
@@ -31,7 +32,6 @@ class WaitingRoomsController extends Controller
     public function index()
     {
         $rooms = WaitingRoom::all();
-
         return view('waitingrooms.index', compact('rooms'));
     }
 
@@ -113,5 +113,33 @@ class WaitingRoomsController extends Controller
         $room->delete();
 
         return redirect()->route('waitingrooms.index')->with('status', 'Waiting Room has been deleted!');
+    }
+
+    /**
+     * Show the form for splitting the waiting room
+     *
+     * @param  \Gladiator\Models\WaitingRoom  $room
+     * @return \Illuminate\Http\Response
+     */
+    public function showSplitForm(WaitingRoom $room) {
+        $split = $room->getDefaultSplit();
+        return view('waitingrooms.split', compact('split', 'room'));
+    }
+
+    /**
+     * Split the waiting room.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Gladiator\Models\WaitingRoom  $room
+     * @return \Illuminate\Http\Response
+     */
+    public function split(Request $request, WaitingRoom $room)
+    {
+        $this->validate($request, CompetitionsController::getValidationRules());
+
+        $split = $room->getDefaultSplit();
+        $room->saveSplit($request->all(), $split);
+
+        return redirect()->route('waitingrooms.index')->with('status', 'Waiting Room has been split!');
     }
 }
