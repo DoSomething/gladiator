@@ -23,7 +23,7 @@
             </div>
             <div class="container__block -narrow">
                 <h1>Competition details</h1>
-                {!! Form::open(['route' => 'split']) !!}
+                {!! Form::open(['method' => 'POST','route' => ['split', $room->id]]) !!}
 
                     @include('competitions.partials._form_competitions')
 

@@ -119,7 +119,8 @@ class WaitingRoomsController extends Controller
         return view('waitingrooms.split', compact('split', 'room'));
     }
 
-    public function split(WaitingRoom $room, Request $request) {
+    public function split(Request $request, WaitingRoom $room)
+    {
         $split = $room->getDefaultSplit();
         $room->saveSplit($competitionInput, $split);
 
