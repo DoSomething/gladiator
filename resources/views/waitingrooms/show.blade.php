@@ -15,8 +15,8 @@
                 <p>Signup Start Date: {{ $room->signup_start_date }}</p>
                 <p>Signup End Date: {{ $room->signup_end_date }}</p>
 
-                @if (time() - (60 * 60 * 24) <= strtotime($room->signup_end_date))
-                    <a href="{{ route('split', $room->id) }}" class="button">Split room</a>
+                @if (time() - (60 * 60 * 24) >= strtotime($room->signup_end_date))
+                    <a href="{{ route('split', $room->id) }}" class="button -secondary">Split room</a>
                 @endif
 
                 <ul class="form-actions -inline">

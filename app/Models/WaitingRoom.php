@@ -17,6 +17,10 @@ class WaitingRoom extends Model
         return $this->belongsToMany(User::class);
     }
 
+    /*
+     * Equally splits the users of a waiting room into arrays
+     * representing competitions.
+     */
     public function getDefaultSplit()
     {
         $users = DB::table('user_waiting_room')->where('waiting_room_id', $this->attributes['id'])->get();
@@ -48,11 +52,24 @@ class WaitingRoom extends Model
         return $competitions;
     }
 
+    /*
+     * Creates competitions based on the given user split.
+     */
     public function saveSplit($competitionInput, $split)
     {
-        foreach ($split as $competition) {
-            foreach ($competition as $user) {
+        foreach ($split as $competitionGroup) {
+            // For each split, create a competition.
+            $competition = Competition::create($competitionInput);
 
+            // For each user in this group
+            foreach ($competitionGroup as $userId) {
+                $user = User::find($userId);
+
+                // Remove them from the waiting room pivot table
+                $user->waitingRooms()->detach();
+
+                // Add them to the competitions pivot table
+                $user->competitions()->attach($competition->id);
             }
         }
     }
