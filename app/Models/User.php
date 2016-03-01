@@ -42,7 +42,7 @@ class User extends BaseUser
      * Check if user has specified role.
      *
      * @param  string|array
-     * @return boolean
+     * @return bool
      */
     public function hasRole($roles)
     {

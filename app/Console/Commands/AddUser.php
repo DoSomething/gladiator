@@ -35,7 +35,6 @@ class AddUser extends Command
             return $this->comment(PHP_EOL . $email . ' is invalid. Admin or Staff require a DoSomething.org email.' . PHP_EOL);
         }
 
-
         $northstarUser = findNorthstarAccount($email, 'email');
 
         if (is_null($northstarUser)) {

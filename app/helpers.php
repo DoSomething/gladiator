@@ -9,7 +9,7 @@ if (! function_exists('matchEmailDomain')) {
      *
      * @param  string  $email
      * @param  string  $domain
-     * @return boolean
+     * @return bool
      */
     function matchEmailDomain($email, $domain = 'dosomething.org')
     {
@@ -23,14 +23,14 @@ if (! function_exists('matchEmailDomain')) {
     }
 }
 
-if (! function_exists('findUserInSystem')) {
+if (! function_exists('findUserAccountInSystem')) {
     /**
      * @param  string  $id
      * @param  string  $email
      * @return \Gladiator\Models\User|string
      * @throws \Gladiator\Services\Northstar\Exceptions\NorthstarUserNotFoundException
      */
-    function findUserInSystem($id, $type = 'email')
+    function findUserAccountInSystem($id, $type = 'email')
     {
         $northstarUser = findNorthstarAccount($id, $type);
 
