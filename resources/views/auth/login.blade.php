@@ -18,12 +18,12 @@
 
                     <div class="form-item -padded">
                         <label class="field-label" for="email">Email</label>
-                        <input type="text" name="email" id="email" class="text-field" placeholder="kallark&#64;dosomething.org" required>
+                        <input type="text" name="email" id="email" class="text-field" placeholder="kallark&#64;dosomething.org">
                     </div>
 
                     <div class="form-item -padded">
                         <label class="field-label" for="password">Password</label>
-                        <input type="password" name="password" id="password" class="text-field" placeholder="••••••" required>
+                        <input type="password" name="password" id="password" class="text-field" placeholder="••••••">
                     </div>
 
                     <input type="submit" class="button" value="Log In" />

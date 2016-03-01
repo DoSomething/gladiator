@@ -14,7 +14,7 @@ class WaitingRoom extends Model
      */
     public function users()
     {
-        $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class);
     }
 
     public function getDefaultSplit()

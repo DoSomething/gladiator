@@ -4,6 +4,8 @@ namespace Gladiator\Services;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\MessageBag;
+use Illuminate\Foundation\Validation\ValidationException;
 
 class RestApiClient
 {
@@ -56,7 +58,7 @@ class RestApiClient
             'query' => $query,
         ]);
         
-        return is_null($response) ? null : $this->getJson($response);
+        return is_null($response) ? null : $this->getJson($response)->data;
     }
 
     /**
@@ -72,7 +74,7 @@ class RestApiClient
             'body' => $this->makeJson($body),
         ]);
 
-        return is_null($response) ? false : $this->getJson($response);
+        return is_null($response) ? false : $this->getJson($response)->data;
     }
 
     /**
@@ -97,7 +99,7 @@ class RestApiClient
      */
     public function getJson($response, $asArray = false)
     {
-        return json_decode($response->getBody(), $asArray)->data;
+        return json_decode($response->getBody(), $asArray);
     }
 
     /**
@@ -124,15 +126,33 @@ class RestApiClient
         try {
             return $this->client->request($method, $path, $options);
         } catch (RequestException $error) {
+            $response = $this->getJson($error->getResponse());
+
             if ($error->getCode() === 404) {
-                // fill out error bag for showing errors to user
+                $messages = $this->setMessages($response->error);
+
+                // @TODO: maybe abort to 404 page?
                 return;
             }
 
             if ($error->getCode() === 401) {
-                // fill out error bag for showing errors to user
-                return;
+                $messages = $this->setMessages($response->error);
+
+                throw new ValidationException($messages);
             }
+
+            throw new HttpException(500, 'Northstar returned an error for that request.');
         }
+    }
+
+    /**
+     * Set any erorr message within a MessageBag.
+     *
+     * @param object  $error
+     */
+    protected function setMessages($error)
+    {
+        // @TODO: may eventually need to handle an array of errors.
+        return (new MessageBag)->add($error->code, $error->message);
     }
 }

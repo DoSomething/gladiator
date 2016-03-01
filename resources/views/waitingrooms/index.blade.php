@@ -17,35 +17,36 @@
     <div class="container">
         <div class="wrapper">
             <div class="container__block">
-                @foreach($rooms as $room)
-                    <hr>
-                    <div>
-                        <h3><a href="{{ route('waitingrooms.show', $room->id) }}">{{ $room->campaign_id }}</a></h3>
-                        <div class="container__block message__title">
-                            <h4>Signup Dates:</h4>
-                            <p>Start Date: {{ $room->signup_start_date }}</p>
-                            <p>End Date: {{ $room->signup_end_date }}</p>
-                        </div>
-                        <div class="container__block message__edit">
-                            <ul class="form-actions -inline">
-                                <li>
-                                    {!! Form::open(['method' => 'DELETE','route' => ['waitingrooms.destroy', $room->id]]) !!}
-                                        {!! Form::submit('Delete', array('class' => 'button -secondary delete')) !!}
-                                    {!! Form::close() !!}
-                                </li>
-                                <li>
-                                    <a href="{{ route('waitingrooms.edit', $room->id) }}" class="button -secondary">Edit room</a>
-                                </li>
-                                @if (time() - (60 * 60 * 24) <= strtotime($room->signup_end_date))
-                                    <li>
-                                        <a href="{{ route('split', $room->id) }}" class="button">Split room</a>
-                                    </li>
-                                @endif
-                            </ul>
-                        </div>
-                    </div>
-                @endforeach
-
+                <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr class="table__header">
+                          <th class="table__cell">ID</th>
+                          <th class="table__cell">Campaign</th>
+                          <th class="table__cell">Campaign Run</th>
+                          <th class="table__cell">Start Date</th>
+                          <th class="table__cell">End Date</th>
+                          <th class="table__cell">Split</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($rooms as $room)
+                          <tr class="table__row">
+                            <td class="table__cell"><a href="{{ route('waitingrooms.show', $room->id) }}">{{ $room->id }}</a></td>
+                            <td class="table__cell">{{ $room->campaign_id }}</td>
+                            <td class="table__cell">{{ $room->campaign_run_id }}</td>
+                            <td class="table__cell">{{ date('F d, Y', strtotime($room->signup_start_date)) }}</td>
+                            <td class="table__cell">{{ date('F d, Y', strtotime($room->signup_end_date)) }}</td>
+                            @if (time() - (60 * 60 * 24) <= strtotime($room->signup_end_date))
+                                <td class="table__cell">
+                                    <a href="{{ route('split', $room->id) }}" class="button">Split room</a>
+                                </td>
+                            @endif
+                          </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
