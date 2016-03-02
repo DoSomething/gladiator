@@ -37,11 +37,13 @@
                             <td class="table__cell">{{ $room->campaign_run_id }}</td>
                             <td class="table__cell">{{ date('F d, Y', strtotime($room->signup_start_date)) }}</td>
                             <td class="table__cell">{{ date('F d, Y', strtotime($room->signup_end_date)) }}</td>
-                            @if (hasSignupPeriodEnded($room->signup_end_date))
-                                <td class="table__cell">
+                            <td class="table__cell">
+                                @if (hasSignupPeriodEnded($room->signup_end_date))
                                     <a href="{{ route('split', $room->id) }}" class="button -secondary">Split room</a>
-                                </td>
-                            @endif
+                                @else
+                                    <p>N/A</p>
+                                @endif
+                            </td>
                           </tr>
                         @endforeach
                       </tbody>
