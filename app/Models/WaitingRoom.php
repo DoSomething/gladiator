@@ -23,7 +23,7 @@ class WaitingRoom extends Model
      */
     public function getDefaultSplit()
     {
-        $users = DB::table('user_waiting_room')->where('waiting_room_id', $this->attributes['id'])->get();
+        WaitingRoom::with('user')->findOrFail($this->id);
 
         // Get the size of the waiting room
         $roomSize = count($users);
@@ -48,7 +48,7 @@ class WaitingRoom extends Model
                 $index = 0;
             }
         }
-        
+
         return $competitions;
     }
 
