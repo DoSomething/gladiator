@@ -5,7 +5,7 @@ namespace Gladiator\Http\Requests;
 use Gladiator\Http\Requests\Request;
 use Gladiator\Models\Competition;
 
-class StoreCompetitionRequest extends Request
+class CompetitionRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

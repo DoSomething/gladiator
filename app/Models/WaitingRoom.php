@@ -23,7 +23,7 @@ class WaitingRoom extends Model
      */
     public function getDefaultSplit()
     {
-        WaitingRoom::with('user')->findOrFail($this->id);
+        $users = $this->users;
 
         // Get the size of the waiting room
         $roomSize = count($users);
@@ -40,7 +40,7 @@ class WaitingRoom extends Model
         // Split the users into them
         $index = 0;
         foreach ($users as $user) {
-            array_push($competitions[$index], $user->user_id);
+            array_push($competitions[$index], $user->id);
 
             // Reset the index once you go past the total number of groups
             $index++;

@@ -44,7 +44,7 @@ class CompetitionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCompetitionRequest $request)
+    public function store(CompetitionRequest $request)
     {
         Competition::create($request->all());
         return redirect()->route('competitions.index');
@@ -83,7 +83,7 @@ class CompetitionsController extends Controller
      * @param  \Gladiator\Models\Competition  $competition
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreCompetitionRequest $request, Competition $competition)
+    public function update(CompetitionRequest $request, Competition $competition)
     {
         $this->validate($request, $this->$validationRules);
 

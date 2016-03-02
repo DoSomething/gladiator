@@ -4,6 +4,7 @@ namespace Gladiator\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Gladiator\Models\WaitingRoom;
+use Gladiator\app\Http\Requests\CompetitionRequest;
 
 class WaitingRoomsController extends Controller
 {
@@ -135,7 +136,7 @@ class WaitingRoomsController extends Controller
      * @param  \Gladiator\Models\WaitingRoom  $room
      * @return \Illuminate\Http\Response
      */
-    public function split(StoreCompetitionRequest $request, WaitingRoom $room)
+    public function split(CompetitionRequest $request, WaitingRoom $room)
     {
         $split = $room->getDefaultSplit();
         $room->saveSplit($request->all(), $split);
