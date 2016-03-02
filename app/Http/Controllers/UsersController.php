@@ -2,10 +2,10 @@
 
 namespace Gladiator\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Gladiator\Models\User;
 use Gladiator\Models\WaitingRoom;
 use Gladiator\Http\Requests\UserRequest;
-use Gladiator\Http\Controllers\Controller;
 
 class UsersController extends Controller
 {
@@ -39,8 +39,8 @@ class UsersController extends Controller
      */
     public function store(UserRequest $request)
     {
+        // dd($request->all());
         $account = User::hasAccountInSystem($request->type, $request->key);
-        // dd($account);
 
         if ($account instanceof User) {
             $user = $account;
@@ -48,6 +48,7 @@ class UsersController extends Controller
         else {
             $user = new User;
             $user->id = $account;
+            $user->role = $request->role;
             $user->save();
         }
 

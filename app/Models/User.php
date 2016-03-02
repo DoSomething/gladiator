@@ -53,6 +53,17 @@ class User extends BaseUser
     }
 
     /**
+     * Set the role for the user.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function setRoleAttribute($value)
+    {
+        $this->attributes['role'] = $value === 'member' ? null: $value;
+    }
+
+    /**
      * @param  string  $type
      * @param  string  $id
      * @return \Gladiator\Models\User|string

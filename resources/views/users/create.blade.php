@@ -11,8 +11,6 @@
         <div class="wrapper">
             <div class="container__block">
                 <form method="POST" action="/users">
-                    {{ csrf_field() }}
-
                     @include('users.partials._form_users')
                 </form>
             </div>
