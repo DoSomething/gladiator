@@ -3,7 +3,6 @@
 namespace Gladiator\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use DB;
 
 class WaitingRoom extends Model
 {

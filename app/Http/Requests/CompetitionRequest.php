@@ -2,9 +2,6 @@
 
 namespace Gladiator\Http\Requests;
 
-use Gladiator\Http\Requests\Request;
-use Gladiator\Models\Competition;
-
 class CompetitionRequest extends Request
 {
     /**
