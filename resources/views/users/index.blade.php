@@ -14,29 +14,16 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="wrapper">
-            <div class="container__block">
-                <table class="table">
-                    <thead>
-                        <tr class="table__header">
-                            <th class="table__cell">ID</th>
-                            <th class="table__cell">First Name</th>
-                            <th class="table__cell">Last Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($users as $user)
-                            <tr class="table__row">
-                                <td class="table__cell">{{ $user->id }}</td>
-                                <td class="table__cell">&hellip;</td>
-                                <td class="table__cell">&hellip;</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+    @if (count($admins) > 0)
+        @include('users.partials._table_users', ['users' => $admins, 'role' => 'Admins'])
+    @endif
+
+    @if (count($staff) > 0)
+        @include('users.partials._table_users', ['users' => $staff, 'role' => 'Staffs'])
+    @endif
+
+    @if (count($contestants) > 0)
+        @include('users.partials._table_users', ['users' => $contestants, 'role' => 'Contestants'])
+    @endif
 
 @stop

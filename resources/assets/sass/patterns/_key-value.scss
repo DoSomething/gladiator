@@ -1,0 +1,23 @@
+// @TODO: Will likely turn this into a more fleshed out pattern with definition alignment.
+
+.key-value {
+  @include clearfix;
+
+  margin-bottom: $section-spacing;
+
+  .heading + &,
+  p + & {
+    margin-top: $base-spacing;
+  }
+
+  dt {
+    clear: both;
+    font-weight: 700;
+    float: left;
+    padding-right: 12px;
+  }
+
+  dd {
+    float: left;
+  }
+}

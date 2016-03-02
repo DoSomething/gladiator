@@ -5,13 +5,12 @@ $forge-path: "/assets/vendor/forge/assets/";
 @import "../../../node_modules/@dosomething/forge/scss/forge";
 
 // Local patterns
+@import "patterns/errors";
 @import "patterns/tables";
-
-.validation-error {
-  color: #ff4747;
-}
+@import "patterns/key-value";
 
 .container__split {
   display: inline-block;
   padding: 16px;
 }
+

@@ -1,3 +1,3 @@
 @if (Session::has('status'))
-    <div>{{ Session::get('status') }}</div>
+    <div class="messages">{{ Session::get('status') }}</div>
 @endif

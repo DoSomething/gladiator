@@ -10,15 +10,26 @@ use Gladiator\Http\Requests\UserRequest;
 class UsersController extends Controller
 {
     /**
+     * Create new UsersController instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin,staff');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $users = User::all();
+        $admins = User::where('role', '=', 'admin')->get();
+        $staff = User::where('role', '=', 'staff')->get();
+        $contestants = User::where('role', '=', null)->get();
 
-        return view('users.index', compact('users'));
+        return view('users.index', compact('admins', 'staff', 'contestants'));
     }
 
     /**
@@ -39,28 +50,18 @@ class UsersController extends Controller
      */
     public function store(UserRequest $request)
     {
-        // dd($request->all());
         $account = User::hasAccountInSystem($request->type, $request->key);
 
         if ($account instanceof User) {
             $user = $account;
-        }
-        else {
-            $user = new User;
-            $user->id = $account;
-            $user->role = $request->role;
-            $user->save();
+
+            return redirect()->back()->with('status', 'User already exists!');
         }
 
-        if (isset($request->campaign_id) && isset($request->campaign_run_id)) {
-            $waitingRoom = WaitingRoom::where('campaign_id', '=', $request->campaign_id)
-                                          ->where('campaign_run_id', '=', $request->campaign_run_id)
-                                          ->firstOrFail();
-
-            $waitingRoom->users()->attach($user->id);
-
-            return 'user added to specified waiting room';
-        }
+        $user = new User;
+        $user->id = $account;
+        $user->role = $request->role;
+        $user->save();
 
         return redirect()->back()->with('status', 'User has been added!');
     }
@@ -68,23 +69,25 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \Gladiator\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return view('users.show', compact('user'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \Gladiator\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        dd($user);
+        // dd(app('request'));
+        return view('users.edit', compact('user'));
     }
 
     /**

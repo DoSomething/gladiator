@@ -27,6 +27,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('competitions', 'CompetitionsController');
 
     // Users
+    Route::model('users', 'Gladiator\Models\User');
     Route::resource('users', 'UsersController');
 
     // Waiting rooms routes.

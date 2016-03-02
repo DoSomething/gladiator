@@ -17,7 +17,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/">
+                    <a href="{{ URL::to('users') }}">
                         <strong class="navigation__title">Users</strong>
                         <span class="navigation__subtitle">Admins, Staff, Members</span>
                     </a>

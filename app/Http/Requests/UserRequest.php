@@ -25,6 +25,8 @@ class UserRequest extends Request
     public function rules()
     {
         return [
+            'key' => 'required',
+            'type' => 'required',
             'campaign_id' => 'numeric',
             'campaign_run_id' => 'numeric',
         ];
