@@ -26,6 +26,7 @@
                           <th class="table__cell">Campaign Run</th>
                           <th class="table__cell">Start Date</th>
                           <th class="table__cell">End Date</th>
+                          <th class="table__cell">Split</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -36,6 +37,13 @@
                             <td class="table__cell">{{ $room->campaign_run_id }}</td>
                             <td class="table__cell">{{ date('F d, Y', strtotime($room->signup_start_date)) }}</td>
                             <td class="table__cell">{{ date('F d, Y', strtotime($room->signup_end_date)) }}</td>
+                            <td class="table__cell">
+                                @if (hasSignupPeriodEnded($room->signup_end_date))
+                                    <a href="{{ route('split', $room->id) }}" class="button -secondary">Split room</a>
+                                @else
+                                    <p>N/A</p>
+                                @endif
+                            </td>
                           </tr>
                         @endforeach
                       </tbody>

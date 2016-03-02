@@ -17,3 +17,8 @@ function matchEmailDomain($email, $domain = 'dosomething.org')
 
     return false;
 }
+
+function hasSignupPeriodEnded($signupDate)
+{
+    return time() - (60 * 60 * 24) >= strtotime($signupDate);
+}
