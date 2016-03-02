@@ -2,7 +2,7 @@
 
 namespace Gladiator\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Gladiator\Http\Requests\CompetitionRequest;
 use Gladiator\Models\Competition;
 
 class CompetitionsController extends Controller

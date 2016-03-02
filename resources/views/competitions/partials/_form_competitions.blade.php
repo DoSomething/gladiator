@@ -2,12 +2,12 @@
 
 <div class="form-item -padded">
     {!! Form::label('campaign_id', 'Campaign ID:', ['class' => 'field-label']) !!}
-    {!! Form::text('campaign_id', NULL, ['class' => 'text-field']) !!}
+    {!! Form::text('campaign_id', (isset($room->campaign_id)) ? $room->campaign_id : NULL, ['class' => 'text-field']) !!}
 </div>
 
 <div class="form-item -padded">
     {!! Form::label('campaign_run_id', 'Run ID:', ['class' => 'field-label']) !!}
-    {!! Form::text('campaign_run_id', NULL, ['class' => 'text-field']) !!}
+    {!! Form::text('campaign_run_id', (isset($room->campaign_run_id)) ? $room->campaign_run_id : NULL, ['class' => 'text-field']) !!}
 </div>
 
 <div class="form-item -padded">
