@@ -5,6 +5,8 @@ namespace Gladiator\Http\Controllers;
 use Gladiator\Http\Requests\CompetitionRequest;
 use DB;
 use Gladiator\Models\Competition;
+use Gladiator\Models\User;
+use Gladiator\Services\Northstar\Exceptions\NorthstarUserNotFoundException;
 
 class CompetitionsController extends Controller
 {
@@ -60,7 +62,17 @@ class CompetitionsController extends Controller
      */
     public function show(Competition $competition)
     {
+        //@TODO - Move this to function in the Model?
         $competitionUsers = DB::table('competition_user')->where('competition_id', $competition->id)->get();
+
+        foreach ($competitionUsers as $key => $user) {
+            try {
+                $competitionUsers[$key] = User::hasNorthstarAccount('_id', $user->user_id);
+            }
+            catch (NorthstarUserNotFoundException $e) {
+                //@TODO - do something here.
+            }
+        }
 
         return view('competitions.show', compact('competition', 'competitionUsers'));
     }
