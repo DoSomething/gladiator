@@ -7,13 +7,6 @@ use Gladiator\Models\Competition;
 
 class CompetitionsController extends Controller
 {
-    public static $validationRules = [
-        'campaign_id' => 'required|numeric',
-        'campaign_run_id' => 'required|numeric',
-        'start_date' => 'required|date',
-        'end_date' => 'required|date',
-    ];
-
     /**
      * Create new CompetitionsController instance.
      */
@@ -51,12 +44,9 @@ class CompetitionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCompetitionRequest $request)
     {
-        $this->validate($request, $this->validationRules);
-
         Competition::create($request->all());
-
         return redirect()->route('competitions.index');
     }
 
@@ -93,7 +83,7 @@ class CompetitionsController extends Controller
      * @param  \Gladiator\Models\Competition  $competition
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Competition $competition)
+    public function update(StoreCompetitionRequest $request, Competition $competition)
     {
         $this->validate($request, $this->$validationRules);
 
@@ -113,13 +103,5 @@ class CompetitionsController extends Controller
         $competition->delete();
 
         return redirect()->route('competitions.index');
-    }
-
-    /**
-     * Returns the competition form validators.
-     */
-    public static function getValidationRules()
-    {
-        return self::$validationRules;
     }
 }

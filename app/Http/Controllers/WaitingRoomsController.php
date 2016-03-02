@@ -124,7 +124,7 @@ class WaitingRoomsController extends Controller
     public function showSplitForm(WaitingRoom $room)
     {
         $split = $room->getDefaultSplit();
-        
+
         return view('waitingrooms.split', compact('split', 'room'));
     }
 
@@ -135,10 +135,8 @@ class WaitingRoomsController extends Controller
      * @param  \Gladiator\Models\WaitingRoom  $room
      * @return \Illuminate\Http\Response
      */
-    public function split(Request $request, WaitingRoom $room)
+    public function split(StoreCompetitionRequest $request, WaitingRoom $room)
     {
-        $this->validate($request, CompetitionsController::getValidationRules());
-
         $split = $room->getDefaultSplit();
         $room->saveSplit($request->all(), $split);
 
