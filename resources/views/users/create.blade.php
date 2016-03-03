@@ -10,7 +10,7 @@
     <div class="container">
         <div class="wrapper">
             <div class="container__block">
-                <form method="POST" action="{{ route('users.create') }}">
+                <form method="POST" action="{{ route('users.store') }}">
                     @include('users.partials._form_users')
                 </form>
             </div>
