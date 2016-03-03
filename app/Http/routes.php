@@ -48,6 +48,6 @@ Route::group(['prefix' => 'api/v1'], function () {
         return Gladiator\Models\User::all();
     });
 
-    Route::post('users', 'Api\UsersController@store');
+    // Route::post('users', 'Api\UsersController@store');
 
 });

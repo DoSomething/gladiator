@@ -2,16 +2,26 @@
 
 namespace Gladiator\Http\Controllers\Api;
 
-use Gladiator\Repositories\UserRepository;
+use Gladiator\Http\Requests\UserRequest;
 use Gladiator\Http\Controllers\Controller;
+use Gladiator\Repositories\UserRepository;
 
 class UsersController extends Controller
 {
-    // @TODO: set up a UserRepository to handle a lot of the business logic
-    // that would be shared between the Web UsersController and Api UsersController
-
-    public function store()
+    /**
+     * [store description]
+     * @param  UserRequest $request [description]
+     * @return [type]               [description]
+     */
+    public function store(UserRequest $request)
     {
-        // do stuff.
+        // 1. Find if user has account in DS system
+        // 2. If Gladiator account continue.
+        // 3. If no Gladiator account but NS account, create Gladiator account.
+        // 4. Find the specified waiting room by campaign_id && campaign_run_id
+        // 5. Assign user to that waiting room
+
+
+        return 'do the things win the points!';
     }
 }

@@ -1,8 +1,9 @@
 <?php
 
-class UserRepository
+class UserService
 {
-    // @TODO: Do the thing win the points. Shared User business logic goes here!
+
+
 
     // From UsersController
     // send to custom assignWaitingRoom() method?
@@ -15,4 +16,5 @@ class UserRepository
 
     //     return 'user added to specified waiting room';
     // }
+
 }

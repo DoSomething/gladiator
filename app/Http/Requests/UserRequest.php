@@ -11,7 +11,6 @@ class UserRequest extends Request
      */
     public function authorize()
     {
-        // @TODO: check authorization?
         return true;
     }
 
@@ -22,12 +21,21 @@ class UserRequest extends Request
      */
     public function rules()
     {
-        return [
+        dd('checking');
+
+        $rules = [
             'key' => 'required',
             'type' => 'required',
-            'role' => 'required',
             'campaign_id' => 'numeric',
             'campaign_run_id' => 'numeric',
         ];
+
+        if ($this->ajax()) {
+            return $rules;
+        }
+
+        $rules['role'] = 'required';
+
+        return $rules;
     }
 }
