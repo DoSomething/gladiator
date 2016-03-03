@@ -77,7 +77,7 @@ class CompetitionsController extends Controller
 
         foreach ($competitionUsers as $user) {
             if ($user) {
-                $phoenix->getUserActivity($user->drupal_id);
+                $phoenix->getUserSignupData($user->drupal_id);
             }
         }
         return view('competitions.show', compact('competition', 'competitionUsers'));

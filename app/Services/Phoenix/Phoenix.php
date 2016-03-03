@@ -24,12 +24,12 @@ class Phoenix extends RestApiClient
     }
 
     /**
-     * Send a GET request to return user activity with the specified id.
+     * Send a GET request to return user signup data with the specified id.
      *
      * @param  string  $drupalId
      * @return object
      */
-    public function getUserActivity($drupalId)
+    public function getUserSignupData($drupalId)
     {
         $response = $this->client->request('GET', $this->base_uri . 'signups', [
             'query' => [
@@ -37,7 +37,6 @@ class Phoenix extends RestApiClient
             ]
         ]);
 
-        dd($response->getBody());
-        // return is_null($response) ? null : $response;
+        return is_null($response) ? null : $response;
     }
 }
