@@ -47,10 +47,14 @@
                         @foreach($competitionUsers as $user)
                             @if ($user)
                                 <tr class="table__row">
-                                    <td class="table__cell"><a href="{{ route('users.show', $user->id)}}">{{ $user->first_name }}</a></td>
-                                    <td class="table__cell">{{ $user->email }}</td>
-                                    <td class="table__cell">{{ $user->mobile }}</td>
-                                    <td class="table__cell"><a href="{{ route('users.signup', ['id' => $user->id, 'signup_id' => 1])}}">View Signup</a></td>
+                                    <td class="table__cell"><a href="{{ route('users.show', $user['user']->id)}}">{{ $user['user']->first_name }}</a></td>
+                                    <td class="table__cell">{{ $user['user']->email }}</td>
+                                    <td class="table__cell">{{ $user['user']->mobile }}</td>
+                                    <td class="table__cell">
+                                        @if ($user['signup'])
+                                            <a href="{{ route('users.signup', ['id' => $user['user']->id, 'signup_id' => $user['signup'][0]->id])}}">View Signup</a>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endif
                         @endforeach
@@ -58,7 +62,7 @@
                     </table>
                 </div>
             </div>
+
         </div>
     </div>
-
 @stop

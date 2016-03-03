@@ -70,7 +70,20 @@ class CompetitionsController extends Controller
         $phoenix = app('phoenix');
 
         foreach ($competitionUsers as $key => $user) {
-            $competitionUsers[$key] = User::hasNorthstarAccount('_id', $user->user_id);
+            $northstarUser = User::hasNorthstarAccount('_id', $user->user_id);
+
+            if ($northstarUser) {
+                //@REMINDER - maker sure there is user data.
+                $competitionUsers[$key] = [
+                    'user' => $northstarUser,
+                    // Should this be static function on the user also.
+                    'signup' => $phoenix->getUserSignupData($northstarUser->drupal_id, $competition->campaign_id),
+                ];
+            }
+            // TEMPORARY
+            else {
+                $competitionUsers[$key] = null;
+            }
         }
 
         return view('competitions.show', compact('competition', 'competitionUsers'));
@@ -100,8 +113,6 @@ class CompetitionsController extends Controller
      */
     public function update(CompetitionRequest $request, Competition $competition)
     {
-        $this->validate($request, $this->$validationRules);
-
         $competition->fill($request->all())->save();
 
         return view('competitions.show')->withCompetition($competition);
