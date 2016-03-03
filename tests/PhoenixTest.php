@@ -5,6 +5,8 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 use Gladiator\Services\Phoenix\Phoenix;
+use Gladiator\Models\User;
+use Gladiator\Services\Northstar\Exceptions\NorthstarUserNotFoundException;
 
 class PhoenixTest extends TestCase
 {
@@ -15,10 +17,10 @@ class PhoenixTest extends TestCase
      */
     public function testGettingUserSignupData()
     {
-        $phoenix = new Phoenix();
+        $phoenix = app('phoenix');
 
-        //@TODO - test with a real user from the DB?
-        $response = $phoenix->getUserSignupData('2137661');
+        //@TODO - test with a mock user from phoenix?
+        $response = $phoenix->getUserSignupData('2137661', 40);
 
         $this->assertNotNull($response, 'Response is Null');
     }

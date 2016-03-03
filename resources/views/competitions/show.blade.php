@@ -40,7 +40,6 @@
                           <th class="table__cell">Name</th>
                           <th class="table__cell">Email</th>
                           <th class="table__cell">Phone</th>
-                          <th class="table__cell">Reportbacks</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -50,7 +49,6 @@
                                     <td class="table__cell"><a href="#">{{ $user->first_name }}</a></td>
                                     <td class="table__cell">{{ $user->email }}</td>
                                     <td class="table__cell">{{ $user->mobile }}</td>
-                                    <td class="table__cell"></td>
                                 </tr>
                             @endif
                         @endforeach
