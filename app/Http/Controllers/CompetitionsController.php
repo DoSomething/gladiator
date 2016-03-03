@@ -64,22 +64,15 @@ class CompetitionsController extends Controller
     {
         //@TODO - Move this to function in the Model?
         $competitionUsers = DB::table('competition_user')->where('competition_id', $competition->id)->get();
+
+        User::hasNorthstarAccount('_id', $competitionUsers[0]->user_id);
+
         $phoenix = app('phoenix');
 
         foreach ($competitionUsers as $key => $user) {
-            try {
-                $competitionUsers[$key] = User::hasNorthstarAccount('_id', $user->user_id);
-            }
-            catch (NorthstarUserNotFoundException $e) {
-                //@TODO - do something here.
-            }
+            $competitionUsers[$key] = User::hasNorthstarAccount('_id', $user->user_id);
         }
 
-        foreach ($competitionUsers as $user) {
-            if ($user) {
-                $phoenix->getUserSignupData($user->drupal_id, $competition->campaign_id);
-            }
-        }
         return view('competitions.show', compact('competition', 'competitionUsers'));
     }
 

@@ -40,15 +40,17 @@
                           <th class="table__cell">Name</th>
                           <th class="table__cell">Email</th>
                           <th class="table__cell">Phone</th>
+                          <th class="table__cell">Signup</th>
                         </tr>
                       </thead>
                       <tbody>
                         @foreach($competitionUsers as $user)
                             @if ($user)
                                 <tr class="table__row">
-                                    <td class="table__cell"><a href="#">{{ $user->first_name }}</a></td>
+                                    <td class="table__cell"><a href="{{ route('users.show', $user->id)}}">{{ $user->first_name }}</a></td>
                                     <td class="table__cell">{{ $user->email }}</td>
                                     <td class="table__cell">{{ $user->mobile }}</td>
+                                    <td class="table__cell"><a href="{{ route('users.signup', ['id' => $user->id, 'signup_id' => 1])}}">View Signup</a></td>
                                 </tr>
                             @endif
                         @endforeach

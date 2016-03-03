@@ -29,6 +29,10 @@ Route::group(['middleware' => ['web']], function () {
     // Users
     Route::model('users', 'Gladiator\Models\User');
     Route::resource('users', 'UsersController');
+    Route::get('users/{id}/signup/{signup_id}', [
+        'as' => 'users.signup',
+        'uses' => 'UsersController@showSignup',
+    ]);
 
     // Waiting rooms routes.
     Route::get('waitingrooms/{waitingrooms}/split', 'WaitingRoomsController@showSplitForm')->name('split');

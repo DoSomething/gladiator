@@ -32,8 +32,8 @@ class Phoenix extends RestApiClient
     public function getUserSignupData($drupalID, $campaignID)
     {
         $response = $this->get($this->base_uri . 'signups', [
-            'user' => $drupalID, //optional?
-            'campaigns' => $campaignID, // optional?
+            'user' => $drupalID,
+            'campaigns' => $campaignID,
         ]);
 
         return is_null($response) ? null : $response;

@@ -119,4 +119,11 @@ class UsersController extends Controller
     {
         // @TODO: implement user deletion from Gladiator.
     }
+
+    /**
+     * Show a user's signup information for a specific campaign.
+     */
+    public function showSignup($id, $signup_id) {
+        var_dump('show signup');
+    }
 }
