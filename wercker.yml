@@ -1,0 +1,29 @@
+box: blisteringherb/scholarship@0.0.6
+build:
+    # The steps that will be executed on build
+    steps:
+      # A custom script step, name value is used in the UI
+      # and the code value contains the command that get executed
+      - leipert/composer-install@0.9.1
+      - wercker/bundle-install@1.1.1
+      - script:
+          name: change permissions
+          code: sudo chown -R ubuntu:ubuntu ./
+deploy:
+  steps:
+    - bundle-install
+    - script:
+        name: Make all files readable
+        code: find . -type f -exec chmod 644 {} \;
+    - script:
+        name: write private key env var
+        code: |-
+          export CAP_PRIVATE_KEY=`mktemp`
+          echo -e $WERCKER_APP_KEY_PRIVATE > $CAP_PRIVATE_KEY
+    - cap
+  after-steps:
+      - iansmith9876/pretty-slack-notify:
+          team: dosomething
+          token: $SLACK_TOKEN
+          channel: $SLACK_ROOM
+          username: george
