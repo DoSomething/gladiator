@@ -1,6 +1,17 @@
 <?php
 
 /**
+ * Check if the waiting room signup period ended.
+ *
+ * @param  date  $signupDate
+ * @return bool
+ */
+function hasSignupPeriodEnded($signupDate)
+{
+    return time() - (60 * 60 * 24) >= strtotime($signupDate);
+}
+
+/**
  * Match supplied email against a specific domain or default domain.
  *
  * @param  string  $email
@@ -16,9 +27,4 @@ function matchEmailDomain($email, $domain = 'dosomething.org')
     }
 
     return false;
-}
-
-function hasSignupPeriodEnded($signupDate)
-{
-    return time() - (60 * 60 * 24) >= strtotime($signupDate);
 }

@@ -26,10 +26,28 @@ Route::group(['middleware' => ['web']], function () {
     Route::model('competitions', 'Gladiator\Models\Competition');
     Route::resource('competitions', 'CompetitionsController');
 
+    // Users
+    Route::model('users', 'Gladiator\Models\User');
+    Route::resource('users', 'UsersController');
+
     // Waiting rooms routes.
     Route::get('waitingrooms/{waitingrooms}/split', 'WaitingRoomsController@showSplitForm')->name('split');
     Route::post('waitingrooms/{waitingrooms}/split', 'WaitingRoomsController@split')->name('split');
     Route::model('waitingrooms', 'Gladiator\Models\WaitingRoom');
     Route::resource('waitingrooms', 'WaitingRoomsController');
+
+});
+
+Route::group(['prefix' => 'api/v1'], function () {
+
+    Route::get('/', function () {
+        return 'Gladiator API version 1';
+    });
+
+    Route::get('users', function () {
+        return Gladiator\Models\User::all();
+    });
+
+    Route::post('users', 'Api\UsersController@store');
 
 });

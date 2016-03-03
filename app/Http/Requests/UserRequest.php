@@ -2,7 +2,7 @@
 
 namespace Gladiator\Http\Requests;
 
-class CompetitionRequest extends Request
+class UserRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -11,6 +11,7 @@ class CompetitionRequest extends Request
      */
     public function authorize()
     {
+        // @TODO: check authorization?
         return true;
     }
 
@@ -22,10 +23,11 @@ class CompetitionRequest extends Request
     public function rules()
     {
         return [
-            'campaign_id' => 'required|numeric',
-            'campaign_run_id' => 'required|numeric',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
+            'key' => 'required',
+            'type' => 'required',
+            'role' => 'required',
+            'campaign_id' => 'numeric',
+            'campaign_run_id' => 'numeric',
         ];
     }
 }

@@ -47,6 +47,7 @@ class CompetitionsController extends Controller
     public function store(CompetitionRequest $request)
     {
         Competition::create($request->all());
+
         return redirect()->route('competitions.index');
     }
 
