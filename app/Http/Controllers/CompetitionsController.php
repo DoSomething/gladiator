@@ -3,6 +3,7 @@
 namespace Gladiator\Http\Controllers;
 
 use Gladiator\Http\Requests\CompetitionRequest;
+use DB;
 use Gladiator\Models\Competition;
 
 class CompetitionsController extends Controller
@@ -59,7 +60,9 @@ class CompetitionsController extends Controller
      */
     public function show(Competition $competition)
     {
-        return view('competitions.show', compact('competition'));
+        $competitionUsers = DB::table('competition_user')->where('competition_id', $competition->id)->get();
+
+        return view('competitions.show', compact('competition', 'competitionUsers'));
     }
 
     /**
