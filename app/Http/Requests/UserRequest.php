@@ -2,8 +2,6 @@
 
 namespace Gladiator\Http\Requests;
 
-use Gladiator\Http\Requests\Request;
-
 class UserRequest extends Request
 {
     /**

@@ -40,7 +40,7 @@ Route::group(['middleware' => ['web']], function () {
 
 Route::group(['prefix' => 'api/v1'], function () {
 
-    Route::get('/', function() {
+    Route::get('/', function () {
         return 'Gladiator API version 1';
     });
 

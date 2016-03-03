@@ -2,9 +2,7 @@
 
 namespace Gladiator\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Gladiator\Models\User;
-use Gladiator\Models\WaitingRoom;
 use Gladiator\Http\Requests\UserRequest;
 
 class UsersController extends Controller

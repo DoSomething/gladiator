@@ -28,5 +28,4 @@ class CompetitionRequest extends Request
             'end_date' => 'required|date',
         ];
     }
-
 }

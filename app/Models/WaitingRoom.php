@@ -72,5 +72,4 @@ class WaitingRoom extends Model
             }
         }
     }
-
 }

@@ -60,7 +60,7 @@ class User extends BaseUser
      */
     public function setRoleAttribute($value)
     {
-        $this->attributes['role'] = $value === 'member' ? null: $value;
+        $this->attributes['role'] = $value === 'member' ? null : $value;
     }
 
     /**
