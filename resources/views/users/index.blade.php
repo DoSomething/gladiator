@@ -19,7 +19,7 @@
     @endif
 
     @if (count($staff) > 0)
-        @include('users.partials._table_users', ['users' => $staff, 'role' => 'Staffs'])
+        @include('users.partials._table_users', ['users' => $staff, 'role' => 'Staff'])
     @endif
 
     @if (count($contestants) > 0)

@@ -85,8 +85,6 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        dd($user);
-        // dd(app('request'));
         return view('users.edit', compact('user'));
     }
 
@@ -94,12 +92,15 @@ class UsersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  Gladiator\Http\Requests\UserRequest  $request
-     * @param  int  $id
+     * @param  \Gladiator\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, $id)
+    public function update(UserRequest $request, $user)
     {
-        //
+        $user->role = $request->role;
+        $user->save();
+
+        return redirect()->route('users.index')->with('status', 'User has been updated!');
     }
 
     /**

@@ -27,6 +27,7 @@ class UserRequest extends Request
         return [
             'key' => 'required',
             'type' => 'required',
+            'role' => 'required',
             'campaign_id' => 'numeric',
             'campaign_run_id' => 'numeric',
         ];
