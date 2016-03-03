@@ -15,7 +15,7 @@ class WaitingRoomsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function getWaitingRoom(Request $request)
+    public function show(Request $request)
     {
         $this->validate($request, [
             'campaign_id' => 'required|integer'
