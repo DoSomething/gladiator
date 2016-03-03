@@ -155,6 +155,7 @@ return [
         Gladiator\Providers\AuthServiceProvider::class,
         Gladiator\Providers\EventServiceProvider::class,
         Gladiator\Providers\NorthstarServiceProvider::class,
+        Gladiator\Providers\PhoenixServiceProvider::class,
         Gladiator\Providers\RouteServiceProvider::class,
 
         Collective\Html\HtmlServiceProvider::class,

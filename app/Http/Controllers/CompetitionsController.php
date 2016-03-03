@@ -64,6 +64,7 @@ class CompetitionsController extends Controller
     {
         //@TODO - Move this to function in the Model?
         $competitionUsers = DB::table('competition_user')->where('competition_id', $competition->id)->get();
+        $phoenix = app('phoenix');
 
         foreach ($competitionUsers as $key => $user) {
             try {
@@ -74,6 +75,11 @@ class CompetitionsController extends Controller
             }
         }
 
+        foreach ($competitionUsers as $user) {
+            if ($user) {
+                $phoenix->getUserActivity($user->drupal_id);
+            }
+        }
         return view('competitions.show', compact('competition', 'competitionUsers'));
     }
 
