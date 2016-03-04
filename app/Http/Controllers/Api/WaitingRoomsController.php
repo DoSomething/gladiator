@@ -18,6 +18,6 @@ class WaitingRoomsController extends Controller
     {
         $waiting_room = WaitingRoom::find($request->input('campaign_id'));
 
-        return response()->json($waiting_room, 201);
+        return response()->json($waiting_room, 200);
     }
 }

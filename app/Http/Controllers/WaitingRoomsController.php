@@ -8,13 +8,6 @@ use Gladiator\Http\Requests\WaitingRoomRequest;
 
 class WaitingRoomsController extends Controller
 {
-    private $validationRules = [
-        'campaign_id' => 'required|numeric',
-        'campaign_run_id' => 'required|numeric',
-        'signup_start_date' => 'required|date',
-        'signup_end_date' => 'required|date',
-    ];
-
     /**
      * Create new WaitingRoomsController instance.
      */
