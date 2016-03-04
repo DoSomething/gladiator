@@ -28,11 +28,10 @@ class WaitingRoomRequest extends Request
         }
         else {
             return [
-                'key' => 'required',
-                'type' => 'required',
-                'role' => 'required',
                 'campaign_id' => 'numeric',
                 'campaign_run_id' => 'numeric',
+                'signup_start_date' => 'required|date',
+                'signup_end_date' => 'required|date'
             ];
         }
     }
