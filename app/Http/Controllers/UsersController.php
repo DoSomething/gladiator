@@ -123,7 +123,8 @@ class UsersController extends Controller
     /**
      * Show a user's signup information for a specific campaign.
      */
-    public function showSignup($id, $signup_id) {
+    public function showSignup($id, $signup_id)
+    {
         var_dump('show signup');
     }
 }

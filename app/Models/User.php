@@ -123,8 +123,7 @@ class User extends BaseUser
                 // @TODO - add pertinent signup info.
                 'signup' => null,
             ];
-        }
-        else {
+        } else {
             $info += [
                 'name'  => $user->user_id,
             ];

@@ -3,7 +3,6 @@
 namespace Gladiator\Models;
 
 use DB;
-use Gladiator\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Competition extends Model

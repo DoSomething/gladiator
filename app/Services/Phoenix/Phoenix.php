@@ -17,7 +17,7 @@ class Phoenix extends RestApiClient
 
         $headers = [
            'Content-type' => 'application/json',
-           'Accept' => 'application/json'
+           'Accept' => 'application/json',
         ];
 
         parent::__construct($this->base_uri, $headers);
