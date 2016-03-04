@@ -5,7 +5,6 @@ namespace Gladiator\Http\Controllers;
 use Gladiator\Http\Requests\CompetitionRequest;
 use Gladiator\Models\Competition;
 use Gladiator\Models\User;
-use Gladiator\Services\Northstar\Exceptions\NorthstarUserNotFoundException;
 
 class CompetitionsController extends Controller
 {
