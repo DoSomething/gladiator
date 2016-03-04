@@ -3,15 +3,25 @@
 namespace Gladiator\Http\Controllers;
 
 use Gladiator\Models\User;
+use Gladiator\Services\Registrar;
 use Gladiator\Http\Requests\UserRequest;
 
 class UsersController extends Controller
 {
     /**
+     * Registrar instance.
+     *
+     * @var \Gladiator\Services\Registrar
+     */
+    protected $registrar;
+
+    /**
      * Create new UsersController instance.
      */
-    public function __construct()
+    public function __construct(Registrar $registrar)
     {
+        $this->registrar = $registrar;
+
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
     }
@@ -48,20 +58,9 @@ class UsersController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $account = User::hasAccountInSystem($request->type, $request->key);
+        $this->registrar->findOrCreate($request->all());
 
-        if ($account instanceof User) {
-            $user = $account;
-
-            return redirect()->back()->with('status', 'User already exists!');
-        }
-
-        $user = new User;
-        $user->id = $account;
-        $user->role = $request->role;
-        $user->save();
-
-        return redirect()->back()->with('status', 'User has been added!');
+        return redirect()->route('users.index');
     }
 
     /**
@@ -109,6 +108,6 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // @TODO: implement user deletion from Gladiator.
     }
 }

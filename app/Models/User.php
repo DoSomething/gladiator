@@ -68,6 +68,7 @@ class User extends BaseUser
      * @param  string  $id
      * @return \Gladiator\Models\User|string
      * @throws \Gladiator\Services\Northstar\Exceptions\NorthstarUserNotFoundException
+     * @deprecated
      */
     public static function hasAccountInSystem($type, $id)
     {
@@ -90,6 +91,7 @@ class User extends BaseUser
      * @param  string  $type
      * @param  string  $id
      * @return object|null
+     * @deprecated
      */
     public static function hasNorthstarAccount($type, $id)
     {

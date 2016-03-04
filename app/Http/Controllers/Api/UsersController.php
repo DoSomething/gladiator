@@ -2,6 +2,9 @@
 
 namespace Gladiator\Http\Controllers\Api;
 
+use Gladiator\Models\User;
+use Gladiator\Models\WaitingRoom;
+use Gladiator\Services\Registrar;
 use Gladiator\Http\Requests\UserRequest;
 use Gladiator\Http\Controllers\Controller;
 use Gladiator\Repositories\UserRepository;
@@ -9,19 +12,44 @@ use Gladiator\Repositories\UserRepository;
 class UsersController extends Controller
 {
     /**
-     * [store description]
-     * @param  UserRequest $request [description]
-     * @return [type]               [description]
+     * Registrar instance.
+     *
+     * @var \Gladiator\Services\Registrar
+     */
+    protected $registrar;
+
+    /**
+     * Create new UsersController instance.
+     */
+    public function __construct(Registrar $registrar)
+    {
+        $this->registrar = $registrar;
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  Gladiator\Http\Requests\UserRequest  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(UserRequest $request)
     {
-        // 1. Find if user has account in DS system
-        // 2. If Gladiator account continue.
-        // 3. If no Gladiator account but NS account, create Gladiator account.
-        // 4. Find the specified waiting room by campaign_id && campaign_run_id
-        // 5. Assign user to that waiting room
+        $user = $this->registrar->findOrCreate($request->all());
 
+        $waitingRoom = WaitingRoom::where('campaign_id', '=', $request['campaign_id'])
+                                      ->where('campaign_run_id', '=', $request['campaign_run_id'])
+                                      ->firstOrFail();
 
-        return 'do the things win the points!';
+        $roomAssignment = $user->waitingRooms()->find($waitingRoom->id);
+
+        if ($roomAssignment) {
+            // @TODO: return Transformed response via Fractal
+            return 'User already assigned to this waiting room!';
+        }
+
+        $waitingRoom->users()->attach($user->id);
+
+        // @TODO: return Transformed response via Fractal
+        return 'no waiting room assigned, so lets assign it!';
     }
 }

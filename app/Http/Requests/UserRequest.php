@@ -21,20 +21,23 @@ class UserRequest extends Request
      */
     public function rules()
     {
-        dd('checking');
-
         $rules = [
             'key' => 'required',
             'type' => 'required',
-            'campaign_id' => 'numeric',
-            'campaign_run_id' => 'numeric',
         ];
 
         if ($this->ajax()) {
+            $rules += [
+                'campaign_id' => 'required|numeric',
+                'campaign_run_id' => 'required|numeric',
+            ];
+
             return $rules;
         }
 
-        $rules['role'] = 'required';
+        $rules += [
+            'role' => 'required',
+        ];
 
         return $rules;
     }
