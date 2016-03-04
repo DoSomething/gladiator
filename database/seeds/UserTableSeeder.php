@@ -40,6 +40,8 @@ class UserTableSeeder extends Seeder
             'dlorenzo@dosomething.org',
             'joe@dosomething.org',
             'dfurnes@dosomething.org',
+            'charbur@dosomething.org',
+            'hrobbins@dosomething.org',
         ];
         foreach ($admins as $admin) {
             Artisan::call('add:user', ['email' => $admin, '--role' => 'admin']);
