@@ -33,11 +33,20 @@ class UsersController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $user = $this->registrar->findOrCreate($request->all());
+        $account = $this->registrar->findUserAccount($request->all());
+
+        if (! $account instanceof User) {
+            $credentials = $request->all();
+            $credentials['id'] = $account;
+
+            $user = $this->registrar->createUser($credentials);
+        } else {
+            $user = $account;
+        }
 
         $waitingRoom = WaitingRoom::where('campaign_id', '=', $request['campaign_id'])
-                                      ->where('campaign_run_id', '=', $request['campaign_run_id'])
-                                      ->firstOrFail();
+                                    ->where('campaign_run_id', '=', $request['campaign_run_id'])
+                                    ->firstOrFail();
 
         $roomAssignment = $user->waitingRooms()->find($waitingRoom->id);
 
@@ -49,6 +58,6 @@ class UsersController extends Controller
         $waitingRoom->users()->attach($user->id);
 
         // @TODO: return Transformed response via Fractal
-        return 'no waiting room assigned, so lets assign it!';
+        return 'User was not in waiting room, so they have been assigned to it!';
     }
 }

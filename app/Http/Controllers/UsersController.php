@@ -58,9 +58,18 @@ class UsersController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $this->registrar->findOrCreate($request->all());
+        $account = $this->registrar->findUserAccount($request->all());
 
-        return redirect()->route('users.index');
+        if ($account instanceof User) {
+            return redirect()->route('users.index')->with('status', 'User already exists!');
+        }
+
+        $credentials = $request->all();
+        $credentials['id'] = $account;
+
+        $user = $this->registrar->createUser($credentials);
+
+        return redirect()->route('users.index')->with('status', 'User has been created!');
     }
 
     /**

@@ -26,44 +26,43 @@ class Registrar
     }
 
     /**
-     * Resolve user within system or create new user.
+     * Create a user in Gladiator.
      *
-     * @param  array  $credentials
+     * @param  array $credentials
      * @return \Gladiator\Models\User
      */
-    public function findOrCreate($credentials)
+    public function createUser($credentials)
     {
-        $account = $this->hasAccountInSystem($credentials['type'], $credentials['key']);
-
-        if ($account instanceof User) {
-            $user = $account;
-
-            session()->flash('status', 'User already exists!');
-
-            return $user;
-        }
-
         $user = new User;
-        $user->id = $account;
+        $user->id = $credentials['id'];
         $user->role = isset($credentials['role']) ? $credentials['role'] : null;
         $user->save();
-
-        session()->flash('status', 'User has been created!');
 
         return $user;
     }
 
     /**
-     * Check if user has account within Northstar/Gladiator system.
+     * Check is user has an account in Northstar.
      *
      * @param  string  $type
      * @param  string  $id
+     * @return object|null
+     */
+    public function findNorthstarAccount($type, $id)
+    {
+        return $this->northstar->getUser($type, $id);
+    }
+
+    /**
+     * Resolve user account within Northstar/Gladiator system.
+     *
+     * @param  array  $credentials
      * @return \Gladiator\Models\User|string
      * @throws \Gladiator\Services\Northstar\Exceptions\NorthstarUserNotFoundException
      */
-    public function hasAccountInSystem($type, $id)
+    public function findUserAccount($credentials)
     {
-        $northstarUser = $this->hasNorthstarAccount($type, $id);
+        $northstarUser = $this->findNorthstarAccount($credentials['type'], $credentials['key']);
 
         if (! $northstarUser) {
             throw new NorthstarUserNotFoundException;
@@ -76,17 +75,5 @@ class Registrar
         }
 
         return $user;
-    }
-
-    /**
-     * Check is user has an account in Northstar.
-     *
-     * @param  string  $type
-     * @param  string  $id
-     * @return object|null
-     */
-    public function hasNorthstarAccount($type, $id)
-    {
-        return $this->northstar->getUser($type, $id);
     }
 }
