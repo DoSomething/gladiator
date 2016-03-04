@@ -3,7 +3,6 @@
 namespace Gladiator\Http\Controllers;
 
 use Gladiator\Http\Requests\CompetitionRequest;
-use DB;
 use Gladiator\Models\Competition;
 use Gladiator\Models\User;
 use Gladiator\Services\Northstar\Exceptions\NorthstarUserNotFoundException;
@@ -62,31 +61,13 @@ class CompetitionsController extends Controller
      */
     public function show(Competition $competition)
     {
-        //@TODO - Move this to function in the Model?
-        $competitionUsers = DB::table('competition_user')->where('competition_id', $competition->id)->get();
+        $bracket = Competition::getBracket($competition->id);
 
-        User::hasNorthstarAccount('_id', $competitionUsers[0]->user_id);
-
-        $phoenix = app('phoenix');
-
-        foreach ($competitionUsers as $key => $user) {
-            $northstarUser = User::hasNorthstarAccount('_id', $user->user_id);
-
-            if ($northstarUser) {
-                //@REMINDER - maker sure there is user data.
-                $competitionUsers[$key] = [
-                    'user' => $northstarUser,
-                    // Should this be static function on the user also.
-                    'signup' => $phoenix->getUserSignupData($northstarUser->drupal_id, $competition->campaign_id),
-                ];
-            }
-            // TEMPORARY
-            else {
-                $competitionUsers[$key] = null;
-            }
+        foreach ($bracket as $key => $user) {
+            $bracket[$key] = User::setUserInfo($user);
         }
 
-        return view('competitions.show', compact('competition', 'competitionUsers'));
+        return view('competitions.show', compact('competition', 'bracket'));
     }
 
     /**

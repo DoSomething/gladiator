@@ -99,4 +99,37 @@ class User extends BaseUser
 
         return $northstar->getUser($type, $id);
     }
+
+    /**
+     * Create an array with only the useful user information we need for use in views, etc.
+     */
+    public static function setUserInfo($user)
+    {
+        $info = [
+            'id' => $user->user_id,
+        ];
+
+        // Get northstar account.
+        // @TODO - grab user northstar info from cache.
+        $northstarUser = static::hasNorthstarAccount('_id', $user->user_id);
+
+        if ($northstarUser) {
+            $lastName = ($northstarUser->last_name) ? $northstarUser->last_name : '';
+
+            $info += [
+                'name'  => $northstarUser->first_name . ' ' . $lastName,
+                'email' => $northstarUser->email,
+                'phone' => $northstarUser->mobile,
+                // @TODO - add pertinent signup info.
+                'signup' => null,
+            ];
+        }
+        else {
+            $info += [
+                'name'  => $user->user_id,
+            ];
+        }
+
+        return $info;
+    }
 }

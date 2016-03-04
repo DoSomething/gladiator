@@ -20,7 +20,7 @@ class PhoenixTest extends TestCase
         $phoenix = app('phoenix');
 
         //@TODO - test with a mock user from phoenix?
-        $response = $phoenix->getUserSignupData('2137661', 40);
+        $response = $phoenix->getUserSignupData('1702694', '1173');
 
         $this->assertNotNull($response, 'Response is Null');
     }

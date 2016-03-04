@@ -32,7 +32,7 @@
                 </ul>
             </div>
             <div class="container__block">
-                <h3>Users in this competition ({{ count($competitionUsers) }}):</h3>
+                <h3>Users in this competition ({{ count($bracket) }}):</h3>
                 <div class="table-responsive">
                     <table class="table">
                       <thead>
@@ -44,16 +44,15 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach($competitionUsers as $user)
+                        @foreach($bracket as $user)
                             @if ($user)
                                 <tr class="table__row">
-                                    <td class="table__cell"><a href="{{ route('users.show', $user['user']->id)}}">{{ $user['user']->first_name }}</a></td>
-                                    <td class="table__cell">{{ $user['user']->email }}</td>
-                                    <td class="table__cell">{{ $user['user']->mobile }}</td>
+                                    <td class="table__cell"><a href="{{ route('users.show', $user['id'])}}">{{ $user['name'] }}</a></td>
+                                    <td class="table__cell">{{ $user['email'] or '' }}</td>
+                                    <td class="table__cell">{{ $user['phone'] or ''}}</td>
+                                    <!-- TODO: Link to the users signup data for this competition -->
                                     <td class="table__cell">
-                                        @if ($user['signup'])
-                                            <a href="{{ route('users.signup', ['id' => $user['user']->id, 'signup_id' => $user['signup'][0]->id])}}">View Signup</a>
-                                        @endif
+                                        <a href="#">View Signup</a>
                                     </td>
                                 </tr>
                             @endif
