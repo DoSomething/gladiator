@@ -5,6 +5,7 @@ namespace Gladiator\Http\Controllers;
 use Illuminate\Http\Request;
 use Gladiator\Models\WaitingRoom;
 use Gladiator\Http\Requests\CompetitionRequest;
+use Gladiator\Http\Requests\WaitingRoomRequest;
 
 class WaitingRoomsController extends Controller
 {
@@ -52,10 +53,8 @@ class WaitingRoomsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(WaitingRoomRequest $request)
     {
-        $this->validate($request, $this->validationRules);
-
         WaitingRoom::create($request->all());
 
         return redirect()->back()->with('status', 'Waiting room has been saved!');
@@ -94,10 +93,8 @@ class WaitingRoomsController extends Controller
      * @param  \Gladiator\Models\WaitingRoom  $room
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, WaitingRoom $room)
+    public function update(WaitingRoomRequest $request, WaitingRoom $room)
     {
-        $this->validate($request, $this->validationRules);
-
         $room->fill($request->all())->save();
 
         return redirect()->back()->with('status', 'Waiting room has been updated!');
