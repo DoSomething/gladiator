@@ -50,4 +50,6 @@ Route::group(['prefix' => 'api/v1'], function () {
 
     Route::post('users', 'Api\UsersController@store');
 
+    Route::get('waitingrooms', 'Api\WaitingRoomsController@show');
+
 });
