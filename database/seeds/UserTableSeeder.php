@@ -25,7 +25,6 @@ class UserTableSeeder extends Seeder
         $this->northstar = $northstar;
     }
 
-
     /**
      * Run the database seeds.
      *
@@ -39,7 +38,7 @@ class UserTableSeeder extends Seeder
             'ssmith@dosomething.org',
             'mfantini@dosomething.org',
             'dlorenzo@dosomething.org',
-            'jkent@dosomething.org',
+            'joe@dosomething.org',
             'dfurnes@dosomething.org',
         ];
         foreach ($admins as $admin) {
@@ -56,7 +55,7 @@ class UserTableSeeder extends Seeder
 
             // Using first or create if someone is already an admin.
             $user = User::firstOrCreate([
-                 'id' => $contestant->id
+                 'id' => $contestant->id,
                 ]);
 
             $user->waitingRooms()->save($waitingRooms[$index]);
