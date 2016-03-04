@@ -21,7 +21,7 @@ class WaitingRoomRequest extends Request
      */
     public function rules()
     {
-        if ($this->ajax()) {
+        if ($this->wantsJson()) {
             return [
                 'campaign_id' => 'numeric',
             ];
