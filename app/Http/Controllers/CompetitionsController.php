@@ -60,7 +60,7 @@ class CompetitionsController extends Controller
      */
     public function show(Competition $competition)
     {
-        $bracket = Competition::getBracket($competition->id);
+        $bracket = Competition::getBrackets($competition->id);
 
         foreach ($bracket as $key => $user) {
             $bracket[$key] = User::setUserInfo($user);

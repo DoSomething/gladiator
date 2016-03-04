@@ -26,7 +26,7 @@ class Competition extends Model
      *
      * Once the Bracket table is set up, we should have a bracket model, that defines a query scope to get all users within a bracket.
      */
-    public static function getBracket($competition_id)
+    public static function getBrackets($competition_id)
     {
         return DB::table('competition_user')->where('competition_id', $competition_id)->get();
     }

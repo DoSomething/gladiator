@@ -52,7 +52,7 @@
                                     <td class="table__cell">{{ $user['phone'] or ''}}</td>
                                     <!-- TODO: Link to the users signup data for this competition -->
                                     <td class="table__cell">
-                                        <a href="#">View Signup</a>
+                                        <a href="#">View Activity</a>
                                     </td>
                                 </tr>
                             @endif
