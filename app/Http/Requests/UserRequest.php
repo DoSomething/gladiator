@@ -11,7 +11,6 @@ class UserRequest extends Request
      */
     public function authorize()
     {
-        // @TODO: check authorization?
         return true;
     }
 
@@ -22,12 +21,24 @@ class UserRequest extends Request
      */
     public function rules()
     {
-        return [
+        $rules = [
             'key' => 'required',
             'type' => 'required',
-            'role' => 'required',
-            'campaign_id' => 'numeric',
-            'campaign_run_id' => 'numeric',
         ];
+
+        if ($this->wantsJson()) {
+            $rules += [
+                'campaign_id' => 'required|numeric',
+                'campaign_run_id' => 'required|numeric',
+            ];
+
+            return $rules;
+        }
+
+        $rules += [
+            'role' => 'required',
+        ];
+
+        return $rules;
     }
 }
