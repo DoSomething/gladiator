@@ -4,9 +4,28 @@ use Gladiator\Models\User;
 use Gladiator\Models\WaitingRoom;
 use Illuminate\Database\Seeder;
 use Gladiator\Console\Commands;
+use Gladiator\Services\Northstar\Northstar;
 
 class UserTableSeeder extends Seeder
 {
+    /**
+     * Northstar instance.
+     *
+     * @var \Gladiator\Services\Northstar\Northstar
+     */
+    protected $northstar;
+
+    /**
+     * Create new Registrar instance.
+     *
+     * @param Northstar $northstar
+     */
+    public function __construct(Northstar $northstar)
+    {
+        $this->northstar = $northstar;
+    }
+
+
     /**
      * Run the database seeds.
      *
@@ -30,11 +49,15 @@ class UserTableSeeder extends Seeder
         // Add Contestant Users
         $waitingRooms = WaitingRoom::all();
         $totalRooms = count($waitingRooms);
+        $seedContestants = $this->northstar->getSeedUsers(300);
 
-        for ($i = 0; $i < 300; $i++) {
+        foreach ($seedContestants as $contestant) {
             $index = mt_rand(0, ($totalRooms - 1));
 
-            $user = factory(User::class)->create();
+            // Using first or create if someone is already an admin.
+            $user = User::firstOrCreate([
+                 'id' => $contestant->id
+                ]);
 
             $user->waitingRooms()->save($waitingRooms[$index]);
         }
