@@ -7,7 +7,6 @@ use Gladiator\Models\WaitingRoom;
 use Gladiator\Services\Registrar;
 use Gladiator\Http\Requests\UserRequest;
 use Gladiator\Http\Controllers\Controller;
-use Gladiator\Repositories\UserRepository;
 
 class UsersController extends Controller
 {

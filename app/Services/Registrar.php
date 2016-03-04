@@ -89,5 +89,4 @@ class Registrar
     {
         return $this->northstar->getUser($type, $id);
     }
-
 }
