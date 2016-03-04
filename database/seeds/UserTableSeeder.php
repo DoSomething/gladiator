@@ -3,6 +3,7 @@
 use Gladiator\Models\User;
 use Gladiator\Models\WaitingRoom;
 use Illuminate\Database\Seeder;
+use Gladiator\Console\Commands;
 
 class UserTableSeeder extends Seeder
 {
@@ -14,11 +15,16 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         // Add Admin Users
-        for ($i = 0; $i < 2; $i++) {
-            User::create([
-                'id' => str_random(24),
-                'role' => 'admin',
-            ]);
+        $admins = [
+            'agaither@dosomething.org',
+            'ssmith@dosomething.org',
+            'mfantini@dosomething.org',
+            'dlorenzo@dosomething.org',
+            'jkent@dosomething.org',
+            'dfurnes@dosomething.org',
+        ];
+        foreach ($admins as $admin) {
+            Artisan::call('add:user', ['email' => $admin, '--role' => 'admin']);
         }
 
         // Add Contestant Users
