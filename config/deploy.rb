@@ -51,17 +51,7 @@ namespace :deploy do
     run "ps -ef | grep 'queue:work' | awk '{print $2}' | xargs sudo kill -9"
   end
 
-  task :npm_install do
-    run "cd #{release_path} && npm install"
-  end
-
-  task :gulp do
-    run "cd #{release_path} && gulp"
-  end
-
 end
 
 after "deploy:update", "deploy:cleanup"
 after "deploy:symlink", "deploy:link_folders"
-after "deploy:link_folders", "deploy:npm_install"
-after "deploy:npm_install", "deploy:gulp"
