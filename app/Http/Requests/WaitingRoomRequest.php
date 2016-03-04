@@ -25,13 +25,12 @@ class WaitingRoomRequest extends Request
             return [
                 'campaign_id' => 'numeric',
             ];
-        }
-        else {
+        } else {
             return [
                 'campaign_id' => 'numeric',
                 'campaign_run_id' => 'numeric',
                 'signup_start_date' => 'required|date',
-                'signup_end_date' => 'required|date'
+                'signup_end_date' => 'required|date',
             ];
         }
     }

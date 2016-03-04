@@ -8,7 +8,6 @@ use Gladiator\Models\WaitingRoom;
 
 class WaitingRoomsController extends Controller
 {
-
     /**
      * Get a waiting room for the specified campaign ID
      *
