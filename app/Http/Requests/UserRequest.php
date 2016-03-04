@@ -26,7 +26,7 @@ class UserRequest extends Request
             'type' => 'required',
         ];
 
-        if ($this->ajax()) {
+        if ($this->wantsJson()) {
             $rules += [
                 'campaign_id' => 'required|numeric',
                 'campaign_run_id' => 'required|numeric',
