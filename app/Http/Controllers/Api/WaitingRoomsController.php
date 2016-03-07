@@ -3,10 +3,9 @@
 namespace Gladiator\Http\Controllers\Api;
 
 use Gladiator\Http\Requests\WaitingRoomRequest;
-use Gladiator\Http\Controllers\Controller;
 use Gladiator\Models\WaitingRoom;
 
-class WaitingRoomsController extends Controller
+class WaitingRoomsController extends ApiController
 {
     /**
      * Get a waiting room for the specified campaign ID

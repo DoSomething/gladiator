@@ -6,9 +6,8 @@ use Gladiator\Models\User;
 use Gladiator\Models\WaitingRoom;
 use Gladiator\Services\Registrar;
 use Gladiator\Http\Requests\UserRequest;
-use Gladiator\Http\Controllers\Controller;
 
-class UsersController extends Controller
+class UsersController extends ApiController
 {
     /**
      * Registrar instance.
