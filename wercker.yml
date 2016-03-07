@@ -1,4 +1,4 @@
-box: blisteringherb/scholarship@0.0.6
+box: blisteringherb/scholarship@0.0.8
 build:
     # The steps that will be executed on build
     steps:
@@ -6,6 +6,15 @@ build:
       # and the code value contains the command that get executed
       - leipert/composer-install@0.9.1
       - wercker/bundle-install@1.1.1
+      - script:
+          name: npm install
+          code: |-
+            mkdir -p $WERCKER_CACHE_DIR/wercker/npm
+            npm config set cache $WERCKER_CACHE_DIR/wercker/npm
+            sudo npm install
+      - script:
+          name: gulp
+          code: gulp
       - script:
           name: change permissions
           code: sudo chown -R ubuntu:ubuntu ./
