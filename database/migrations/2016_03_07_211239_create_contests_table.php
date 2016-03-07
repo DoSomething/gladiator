@@ -14,10 +14,9 @@ class CreateContestsTable extends Migration
     {
         Schema::create('contests', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('waiting_room_id')->unsigned()->index();
             $table->integer('campaign_id')->unsigned()->index();
             $table->integer('campaign_run_id')->unsigned()->index();
-            $table->integer('duration');
+            $table->integer('duration')->comment = "Duration of the campaign in days";
             $table->timestamps();
         });
     }
