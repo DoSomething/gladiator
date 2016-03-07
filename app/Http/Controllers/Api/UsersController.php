@@ -6,22 +6,29 @@ use Gladiator\Models\User;
 use Gladiator\Models\WaitingRoom;
 use Gladiator\Services\Registrar;
 use Gladiator\Http\Requests\UserRequest;
+use Gladiator\Http\Transformers\UserTransformer;
 
 class UsersController extends ApiController
 {
     /**
-     * Registrar instance.
-     *
      * @var \Gladiator\Services\Registrar
      */
     protected $registrar;
 
     /**
+     * @var \Gladiator\Http\Transformers\UserTransformer
+     */
+    protected $transformer;
+
+    /**
      * Create new UsersController instance.
      */
-    public function __construct(Registrar $registrar)
+    public function __construct(Registrar $registrar, UserTransformer $transformer)
     {
+        parent::__construct();
+
         $this->registrar = $registrar;
+        $this->transformer = $transformer;
     }
 
     /**
@@ -50,13 +57,12 @@ class UsersController extends ApiController
         $roomAssignment = $user->waitingRooms()->find($waitingRoom->id);
 
         if ($roomAssignment) {
-            // @TODO: return Transformed response via Fractal
-            return 'User already assigned to this waiting room!';
+            // @TODO: maybe add more detail to response to indicate user already in a room?
+            return $this->item($user);
         }
 
         $waitingRoom->users()->attach($user->id);
-
-        // @TODO: return Transformed response via Fractal
-        return 'User was not in waiting room, so they have been assigned to it!';
+            // @TODO: maybe add more detail to response to indicate which room user was added to?
+            return $this->item($user);
     }
 }
