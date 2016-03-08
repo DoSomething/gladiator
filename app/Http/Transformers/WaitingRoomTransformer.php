@@ -26,11 +26,11 @@ class WaitingRoomTransformer extends TransformerAbstract
                 ]
             ],
             'signup_dates' => [
-                'start' => $waitingRoom->signup_start_date,
-                'end' => $waitingRoom->signup_end_date,
+                'start' => $waitingRoom->signup_start_date->toISO8601String(),
+                'end' => $waitingRoom->signup_end_date->toISO8601String(),
             ],
-            'created_at' => $waitingRoom->created_at,
-            'updated_at' => $waitingRoom->updated_at,
+            'created_at' => $waitingRoom->created_at->toISO8601String(),
+            'updated_at' => $waitingRoom->updated_at->toISO8601String(),
         ];
     }
 }
