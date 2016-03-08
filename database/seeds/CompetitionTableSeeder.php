@@ -27,7 +27,7 @@ class CompetitionTableSeeder extends Seeder
             $competition->competition_start_date = Carbon::now()->addWeeks(1)->startOfDay();
             $competition->competition_end_date = Carbon::now()->addWeeks(3)->endOfDay();
 
-            $contest->competition()->save($competition);
+            $contest->competitions()->save($competition);
         }
     }
 }
