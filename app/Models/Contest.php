@@ -24,8 +24,8 @@ class Contest extends Model
     /**
      * Get the competition associated with this contest.
      */
-    public function competition()
+    public function competitions()
     {
-        return $this->hasOne(competition::class);
+        return $this->hasMany(competition::class);
     }
 }
