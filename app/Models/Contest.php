@@ -12,4 +12,12 @@ class Contest extends Model
      * @var array
      */
     protected $fillable = ['campaign_id', 'campaign_run_id', 'duration'];
+
+    /**
+     * Get the waiting room associated with this contest.
+     */
+    public function waitingRoom()
+    {
+        return $this->hasOne(WaitingRoom::class);
+    }
 }
