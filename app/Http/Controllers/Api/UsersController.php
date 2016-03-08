@@ -25,8 +25,6 @@ class UsersController extends ApiController
      */
     public function __construct(Registrar $registrar, UserTransformer $transformer)
     {
-        parent::__construct();
-
         $this->registrar = $registrar;
         $this->transformer = $transformer;
     }

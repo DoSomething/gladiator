@@ -21,20 +21,11 @@ class ApiController extends BaseController
     protected $transformer;
 
     /**
-     * Create new ApiController instance.
-     */
-    public function __construct()
-    {
-        $this->manager = new Manager;
-        $this->manager->setSerializer(new DataArraySerializer);
-    }
-
-    /**
      * Format and return a collection response.
      *
      * @param  object  $data
-     * @param  integer $code
-     * @param  array   $meta
+     * @param  int  $code
+     * @param  array  $meta
      * @param  null|object  $transformer
      * @return \Illuminate\Http\JsonResponse
      */
@@ -49,8 +40,8 @@ class ApiController extends BaseController
      * Format and return a single item response.
      *
      * @param  object  $data
-     * @param  integer $code
-     * @param  array   $meta
+     * @param  int  $code
+     * @param  array  $meta
      * @param  null|object  $transformer
      * @return \Illuminate\Http\JsonResponse
      */
@@ -65,13 +56,16 @@ class ApiController extends BaseController
      * Manage and finalize the data transformation.
      *
      * @param  object  $data
-     * @param  integer $code
-     * @param  array   $meta
+     * @param  int  $code
+     * @param  array  $meta
      * @return \Illuminate\Http\JsonResponse
      */
     public function transform($data, $code = 200, $meta = [])
     {
         $data->setMeta($meta);
+
+        $this->manager = new Manager;
+        $this->manager->setSerializer(new DataArraySerializer);
 
         $response = $this->manager->createData($data)->toArray();
 
@@ -82,6 +76,7 @@ class ApiController extends BaseController
      * Set the Transformer to use otherwise use resource controller default.
      *
      * @param League\Fractal\TransformerAbstract|null $transformer
+     * @return League\Fractal\TransformerAbstract
      */
     private function setTransformer($transformer = null)
     {
