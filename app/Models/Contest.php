@@ -22,7 +22,7 @@ class Contest extends Model
     }
 
     /**
-     * Get the waiting room associated with this contest.
+     * Get the competition associated with this contest.
      */
     public function competition()
     {
