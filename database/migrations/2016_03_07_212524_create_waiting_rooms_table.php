@@ -21,6 +21,7 @@ class CreateWaitingRoomsTable extends Migration
             $table->timestamps();
         });
     }
+
     /**
      * Reverse the migrations.
      *

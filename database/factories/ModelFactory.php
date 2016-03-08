@@ -3,8 +3,6 @@
 use Faker\Generator;
 use Gladiator\Models\User;
 use Gladiator\Models\Contest;
-use Gladiator\Models\WaitingRoom;
-use Gladiator\Models\Competition;
 
 /*
 |--------------------------------------------------------------------------
