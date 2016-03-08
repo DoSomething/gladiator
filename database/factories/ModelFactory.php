@@ -17,6 +17,7 @@ use Gladiator\Models\Competition;
 |
 */
 
+// User Factory.
 $factory->define(User::class, function (Generator $faker) {
     return [
         'id' => str_random(24),
@@ -24,6 +25,7 @@ $factory->define(User::class, function (Generator $faker) {
     ];
 });
 
+// Contest Factory.
 $factory->define(Contest::class, function (Generator $faker) {
     return [
         'campaign_id' => $faker->numberBetween(10, 300),
@@ -32,22 +34,12 @@ $factory->define(Contest::class, function (Generator $faker) {
     ];
 });
 
-// $factory->define(WaitingRoom::class, function (Generator $faker) {
-//     return [
-//         'contest_id' => function () {
-//             return factory(App\Contest::class)->create()->id;
-//         },
-//         'signup_start_date' => $faker->dateTimeBetween('-7 days', '-1 day'),
-//         'signup_end_date' => $faker->dateTimeBetween('+1 day', '+7 days'),
-//     ];
-// });
+// Competition Factory.
+$factory->define(Competition::class, function (Generator $faker) {
 
-// $factory->define(Competition::class, function (Generator $faker) {
-//     return [
-//         'contest_id' => function () {
-//             return factory(App\Contest::class)->create()->id;
-//         },
-//         'competition_start_date' => $faker->dateTimeBetween('-7 days', '-1 day'),
-//         'competition_end_date' => $faker->dateTimeBetween('+1 day', '+7 days'),
-//     ];
-// });
+    return [
+        'contest_id' => 1,
+        'competition_start_date' => $faker->dateTimeBetween('-7 days', '+1 day'),
+        'competition_end_date' => $faker->dateTimeBetween('+1 day', '+7 days'),
+    ];
+});
