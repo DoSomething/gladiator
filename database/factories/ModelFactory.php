@@ -33,13 +33,3 @@ $factory->define(Contest::class, function (Generator $faker) {
         'duration' => $faker->randomElement([30, 60, 365]),
     ];
 });
-
-// Competition Factory.
-$factory->define(Competition::class, function (Generator $faker) {
-
-    return [
-        'contest_id' => 1,
-        'competition_start_date' => $faker->dateTimeBetween('-7 days', '+1 day'),
-        'competition_end_date' => $faker->dateTimeBetween('+1 day', '+7 days'),
-    ];
-});

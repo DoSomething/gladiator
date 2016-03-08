@@ -20,4 +20,12 @@ class Contest extends Model
     {
         return $this->hasOne(WaitingRoom::class);
     }
+
+    /**
+     * Get the waiting room associated with this contest.
+     */
+    public function competition()
+    {
+        return $this->hasOne(competition::class);
+    }
 }
