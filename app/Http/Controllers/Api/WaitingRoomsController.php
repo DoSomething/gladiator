@@ -2,21 +2,43 @@
 
 namespace Gladiator\Http\Controllers\Api;
 
-use Gladiator\Http\Requests\WaitingRoomRequest;
 use Gladiator\Models\WaitingRoom;
+use Gladiator\Http\Requests\WaitingRoomRequest;
+use Gladiator\Http\Controllers\Api\ApiController;
+use Gladiator\Http\Transformers\WaitingRoomTransformer;
 
 class WaitingRoomsController extends ApiController
 {
     /**
-     * Get a waiting room for the specified campaign ID
+     * @var \Gladiator\Http\Transformers\UserTransformer
+     */
+    protected $transformer;
+
+    /**
+     * Create a new WaitingRoomsController instance.
+     */
+    public function __construct(WaitingRoomTransformer $transformer)
+    {
+        $this->transformer = $transformer;
+    }
+
+    /**
+     * Get a collection of waiting rooms.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function show(WaitingRoomRequest $request)
+    public function index(WaitingRoomRequest $request)
     {
-        $waiting_room = WaitingRoom::find($request->input('campaign_id'));
+        // @TODO: see if there's a better way to handle URL params in Laravel.
+        $campaignId = $request->input('campaign_id');
 
-        return response()->json($waiting_room, 200);
+        if (isset($campaignId)) {
+            $waitingRooms = WaitingRoom::where('campaign_id', '=', $request->input('campaign_id'))->get();
+        } else {
+            $waitingRooms = WaitingRoom::all();
+        }
+
+        return $this->collection($waitingRooms);
     }
 }
