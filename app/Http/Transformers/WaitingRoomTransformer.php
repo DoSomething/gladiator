@@ -15,7 +15,7 @@ class WaitingRoomTransformer extends TransformerAbstract
      */
     public function transform(WaitingRoom $waitingRoom)
     {
-        // @TODO: organize response better.
+        // @TODO: organize response better...
 
         return [
             'id' => $waitingRoom->id,
@@ -23,7 +23,7 @@ class WaitingRoomTransformer extends TransformerAbstract
                 'id' => $waitingRoom->campaign_id,
                 'campaign_run' => [
                     'id' => $waitingRoom->campaign_run_id,
-                ]
+                ],
             ],
             'signup_dates' => [
                 'start' => $waitingRoom->signup_start_date->toISO8601String(),

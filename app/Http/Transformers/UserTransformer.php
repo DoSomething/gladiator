@@ -17,7 +17,12 @@ class UserTransformer extends TransformerAbstract
     {
         return [
             'id' => (string) $user->id,
-            'other' => 'sample data',
+            'first_name' => null,
+            'last_name' => null,
+            'email' => null,
+            'mobile' => null,
+            'signup' => null,
+            'reportback' => null,
         ];
     }
 }
