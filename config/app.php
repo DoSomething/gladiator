@@ -153,6 +153,7 @@ return [
          */
         Gladiator\Providers\AppServiceProvider::class,
         Gladiator\Providers\AuthServiceProvider::class,
+        Gladiator\Providers\ContestServiceProvider::class,
         Gladiator\Providers\EventServiceProvider::class,
         Gladiator\Providers\NorthstarServiceProvider::class,
         Gladiator\Providers\PhoenixServiceProvider::class,

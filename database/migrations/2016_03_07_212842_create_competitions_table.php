@@ -14,11 +14,12 @@ class CreateCompetitionsTable extends Migration
     {
         Schema::create('competitions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('campaign_id')->unsigned()->index();
-            $table->integer('campaign_run_id')->unsigned()->index();
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
+            $table->integer('contest_id')->unsigned();
+            $table->foreign('contest_id')->references('id')->on('contests')->onDelete('cascade');
+            $table->dateTime('competition_start_date');
+            $table->dateTime('competition_end_date');
             $table->timestamps();
+
         });
     }
 
