@@ -16,7 +16,7 @@ class CreateContestsTable extends Migration
             $table->increments('id');
             $table->integer('campaign_id')->unsigned()->index();
             $table->integer('campaign_run_id')->unsigned()->index();
-            $table->integer('duration')->comment = 'Duration of the campaign in days';
+            $table->integer('duration')->comment = 'The duration of a competition within this contest in units of days';
             $table->timestamps();
         });
     }
