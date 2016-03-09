@@ -48,12 +48,12 @@ Route::group(['prefix' => 'api/v1'], function () {
         return 'Gladiator API version 1';
     });
 
+    Route::get('contests', 'Api\ContestsController@index');
+
     Route::get('users', function () {
+        // @TODO: temporary, need to remove.
         return Gladiator\Models\User::all();
     });
-
     Route::post('users', 'Api\UsersController@store');
-
-    Route::get('waitingrooms', 'Api\WaitingRoomsController@index');
 
 });
