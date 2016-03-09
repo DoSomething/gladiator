@@ -9,14 +9,6 @@
     <div class="container">
         <div class="wrapper">
             <div class="container__block">
-                <a class="button" href="{{ route('waitingrooms.create') }}">Add Waiting Room</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="wrapper">
-            <div class="container__block">
                 <div class="table-responsive">
                     <table class="table">
                       <thead>
