@@ -4,7 +4,6 @@ namespace Gladiator\Http\Controllers;
 
 use Gladiator\Models\Contest;
 use Gladiator\Http\Requests\ContestRequest;
-use Gladiator\Http\Requests;
 
 class ContestController extends Controller
 {
