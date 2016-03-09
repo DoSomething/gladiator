@@ -13,11 +13,10 @@
                     <table class="table">
                       <thead>
                         <tr class="table__header">
-                          <th class="table__cell">ID</th>
-                          <th class="table__cell">Campaign</th>
-                          <th class="table__cell">Campaign Run</th>
-                          <th class="table__cell">Start Date</th>
-                          <th class="table__cell">End Date</th>
+                          <th class="table__cell">Waiting Room ID</th>
+                          <th class="table__cell">Contest ID</th>
+                          <th class="table__cell">Signup Start Date</th>
+                          <th class="table__cell">Signup End Date</th>
                           <th class="table__cell">Split</th>
                         </tr>
                       </thead>
@@ -25,8 +24,8 @@
                         @foreach($rooms as $room)
                           <tr class="table__row">
                             <td class="table__cell"><a href="{{ route('waitingrooms.show', $room->id) }}">{{ $room->id }}</a></td>
-                            <td class="table__cell">{{ $room->campaign_id }}</td>
-                            <td class="table__cell">{{ $room->campaign_run_id }}</td>
+                            {{-- TODO: Link to contest. --}}
+                            <td class="table__cell"><a href="#">{{ $room->contest_id }}</a></td>
                             <td class="table__cell">{{ date('F d, Y', strtotime($room->signup_start_date)) }}</td>
                             <td class="table__cell">{{ date('F d, Y', strtotime($room->signup_end_date)) }}</td>
                             <td class="table__cell">
