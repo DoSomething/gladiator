@@ -2,6 +2,7 @@
 
 namespace Gladiator\Http\Controllers;
 
+use Gladiator\Models\Contest;
 use Gladiator\Models\WaitingRoom;
 use Gladiator\Http\Requests\CompetitionRequest;
 use Gladiator\Http\Requests\WaitingRoomRequest;
@@ -50,7 +51,9 @@ class WaitingRoomsController extends Controller
      */
     public function show(WaitingRoom $room)
     {
-        return view('waitingrooms.show', compact('room'));
+        $contest = Contest::find($room->contest_id);
+
+        return view('waitingrooms.show', compact('room', 'contest'));
     }
 
     /**

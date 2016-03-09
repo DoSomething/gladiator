@@ -11,14 +11,18 @@
         <div class="wrapper">
             <div class="container__block">
                 <p>Contest ID: {{ $room->contest_id }}</p>
+                <p>Campaign ID: {{ $contest->campaign_id }}</p>
+                <p>Campaign Run ID: {{ $contest->campaign_run_id }}</p>
                 <p>Signup Start Date: {{ $room->signup_start_date }}</p>
                 <p>Signup End Date: {{ $room->signup_end_date }}</p>
 
-                @if (hasSignupPeriodEnded($room->signup_end_date))
-                    <a href="{{ route('split', $room->id) }}" class="button -secondary">Split room</a>
-                @endif
-
                 <ul class="form-actions -inline">
+                    @if (hasSignupPeriodEnded($room->signup_end_date))
+                        <li>
+                            <a href="{{ route('split', $room->id) }}" class="button -secondary">Split room</a>
+                        </li>
+                    @endif
+
                     <li>
                         <a href="{{ route('waitingrooms.edit', $room->id) }}" class="button">Edit</a>
                     </li>
