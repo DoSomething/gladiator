@@ -28,18 +28,4 @@ class Competition extends Model
     {
         $this->belongsToMany(User::class);
     }
-
-    /**
-     * Get all users in a competition.
-     *
-     * @TODO - right now this just gets all the users in the competitions_user table that have the correct competition id
-     * however, I imagine, we would want some sort of "bracket id", so we can list users by their bracket instead of one,
-     * all encompassing list.
-     *
-     * Once the Bracket table is set up, we should have a bracket model, that defines a query scope to get all users within a bracket.
-     */
-    public static function getBrackets($competition_id)
-    {
-        return DB::table('competition_user')->where('competition_id', $competition_id)->get();
-    }
 }

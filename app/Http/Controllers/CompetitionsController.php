@@ -4,6 +4,7 @@ namespace Gladiator\Http\Controllers;
 
 use Gladiator\Http\Requests\CompetitionRequest;
 use Gladiator\Models\Competition;
+use Gladiator\Models\Contest;
 use Gladiator\Models\User;
 
 class CompetitionsController extends Controller
@@ -60,13 +61,9 @@ class CompetitionsController extends Controller
      */
     public function show(Competition $competition)
     {
-        $bracket = Competition::getBrackets($competition->id);
+        $contest = Contest::find($competition->contest_id);
 
-        foreach ($bracket as $key => $user) {
-            $bracket[$key] = User::setUserInfo($user);
-        }
-
-        return view('competitions.show', compact('competition', 'bracket'));
+        return view('competitions.show', compact('competition', 'contest'));
     }
 
     /**
