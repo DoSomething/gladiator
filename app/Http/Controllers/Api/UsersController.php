@@ -4,7 +4,6 @@ namespace Gladiator\Http\Controllers\Api;
 
 use Gladiator\Models\User;
 use Gladiator\Models\Contest;
-use Gladiator\Models\WaitingRoom;
 use Gladiator\Services\Registrar;
 use Gladiator\Http\Requests\UserRequest;
 use Gladiator\Http\Transformers\UserTransformer;

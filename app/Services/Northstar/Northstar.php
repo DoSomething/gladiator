@@ -20,6 +20,12 @@ class Northstar extends RestApiClient
         parent::__construct($base_uri, $headers);
     }
 
+    /**
+     * Get users from Northstar for seeding database.
+     *
+     * @param  string $limit
+     * @return object|null
+     */
     public function getSeedUsers($limit = '300')
     {
         $response = $this->get('users', ['limit' => $limit]);

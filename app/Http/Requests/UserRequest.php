@@ -22,8 +22,8 @@ class UserRequest extends Request
     public function rules()
     {
         $rules = [
-            'key' => 'required',
-            'type' => 'required',
+            'id' => 'required',
+            'term' => 'required',
         ];
 
         if ($this->wantsJson()) {

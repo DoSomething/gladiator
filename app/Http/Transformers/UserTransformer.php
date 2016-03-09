@@ -23,6 +23,8 @@ class UserTransformer extends TransformerAbstract
             'mobile' => null,
             'signup' => null,
             'reportback' => null,
+            'created_at' => $user->created_at->toIso8601String(),
+            'updated_at' => $user->updated_at->toIso8601String(),
         ];
     }
 }

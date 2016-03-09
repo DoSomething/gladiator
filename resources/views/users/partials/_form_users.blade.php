@@ -3,14 +3,14 @@
 {{ csrf_field() }}
 
 <div class="form-item -padded">
-    <label class="field-label" for="key">User identification key:</label>
-    <input type="text" name="key" id="key" class="text-field" placeholder="Email, Mobile Phone Number, Northstar ID or Phoenix ID" value="{{ $user->id or old('key') }}"/>
+    <label class="field-label" for="id">User identification:</label>
+    <input type="text" name="id" id="id" class="text-field" placeholder="Email, Mobile Phone Number, Northstar ID or Phoenix ID" value="{{ $user->id or old('id') }}"/>
 </div>
 
 <div class="form-item -padded">
-    <label class="field-label" for="type">Select user key type:</label>
+    <label class="field-label" for="term">Select user ID type:</label>
     <div class="select">
-        <select name="type">
+        <select name="term" id="term">
             <option value="email" {{! isset($user->id) ? 'selected' : '' }}>Email</option>
             <option value="mobile">Mobile Phone Number</option>
             <option value="id" {{ isset($user->id) ? 'selected' : '' }}>Northstar ID</option>

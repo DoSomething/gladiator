@@ -22,11 +22,11 @@ Content-Type: application/json
 
 ```javascript
 {
-  // Required.
-  key: String
+  // Required. An id for a user, either an email address, drupal_id, mobile phone number or Northstar id.
+  id: String
 
-  // Required. Allowed values: email, drupal_id, mobile, id (Northstar ID)
-  type: String
+  // Required. Allowed values: "email", "drupal_id", "mobile", "id" (Northstar ID)
+  term: String
 
   // Required.
   campaign_id: Number
@@ -42,12 +42,28 @@ Content-Type: application/json
 curl -X POST \
   -H "Content-Type: application/json" \
   -H "Accept: application/json" \
-  -d '{"key":"clee@dosomething.org","type":"email","campaign_id":"362","campaign_run_id":"212"}' \
+  -d '{"key":"kallark@dosomething.org","type":"email","campaign_id":"362","campaign_run_id":"212"}' \
   http://gladiator.dosomething.org/api/v1/users
 ```
 
 **Example Response**
 
-_TBD_
+```javascript
+// 200 Okay
+
+{
+  "data": {
+    "id": "550200bba39awieg467a3cg2",
+    "first_name": null,
+    "last_name": null,
+    "email": null,
+    "mobile": null,
+    "signup": null,
+    "reportback": null,
+    "created_at": "2016-03-08T18:27:10+0000",
+    "updated_at": "2016-03-08T18:27:10+0000"
+  }
+}
+```
 
 
