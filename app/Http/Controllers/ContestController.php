@@ -42,4 +42,15 @@ class ContestController extends Controller
 
         return redirect()->back()->with('status', 'Contest has been saved!');
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \Gladiator\Models\Competition  $competition
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Contest $contest)
+    {
+        return view('contest.show', compact('contest'));
+    }
 }

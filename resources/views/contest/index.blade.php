@@ -30,8 +30,7 @@
                       <tbody>
                         @foreach($contests as $contest)
                           <tr class="table__row">
-                            {{-- <td class="table__cell"><a href="{{ route('competitions.show', $competition->id) }}">{{ $competition->id }}</a></td> --}}
-                            <td class="table__cell">{{ $contest->id }}</td>
+                            <td class="table__cell"><a href="{{ route('contest.show', $contest->id) }}">{{ $contest->id }}</a></td>
                             <td class="table__cell">{{ $contest->campaign_id }}</td>
                             <td class="table__cell">{{ $contest->campaign_run_id }}</td>
                             <td class="table__cell">{{ $contest->duration }}</td>
