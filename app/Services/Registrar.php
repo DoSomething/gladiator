@@ -62,7 +62,7 @@ class Registrar
      */
     public function findUserAccount($credentials)
     {
-        $northstarUser = $this->findNorthstarAccount($credentials['type'], $credentials['key']);
+        $northstarUser = $this->findNorthstarAccount($credentials['term'], $credentials['id']);
 
         if (! $northstarUser) {
             throw new NorthstarUserNotFoundException;
