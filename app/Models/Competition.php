@@ -19,7 +19,7 @@ class Competition extends Model
      *
      * @var array
      */
-    protected $dates = ['start_date', 'end_date'];
+    protected $dates = ['competition_start_date', 'competition_end_date'];
 
     /**
      * A Competition belongs to many Users.

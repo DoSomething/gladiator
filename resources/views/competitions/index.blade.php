@@ -22,8 +22,7 @@
                       <thead>
                         <tr class="table__header">
                           <th class="table__cell">ID</th>
-                          <th class="table__cell">Campaign</th>
-                          <th class="table__cell">Campaign Run</th>
+                          <th class="table__cell">Contest ID</th>
                           <th class="table__cell">Start Date</th>
                           <th class="table__cell">End Date</th>
                         </tr>
@@ -32,10 +31,10 @@
                         @foreach($competitions as $competition)
                           <tr class="table__row">
                             <td class="table__cell"><a href="{{ route('competitions.show', $competition->id) }}">{{ $competition->id }}</a></td>
-                            <td class="table__cell">{{ $competition->campaign_id }}</td>
-                            <td class="table__cell">{{ $competition->campaign_run_id }}</td>
-                            <td class="table__cell">{{ date('F d, Y', strtotime($competition->start_date)) }}</td>
-                            <td class="table__cell">{{ date('F d, Y', strtotime($competition->end_date)) }}</td>
+                            {{-- TODO: Link to contest--}}
+                            <td class="table__cell"><a href="#">{{ $competition->contest_id }}</a></td>
+                            <td class="table__cell">{{ $competition->competition_start_date->format('F d, Y') }}</td>
+                            <td class="table__cell">{{ $competition->competition_end_date->format('F d, Y') }}</td>
                           </tr>
                         @endforeach
                       </tbody>
