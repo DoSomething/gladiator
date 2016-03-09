@@ -23,12 +23,11 @@ class WaitingRoomRequest extends Request
     {
         if ($this->wantsJson()) {
             return [
-                'campaign_id' => 'numeric',
+                'contest_id' => 'required|numeric',
             ];
         } else {
             return [
-                'campaign_id' => 'numeric',
-                'campaign_run_id' => 'numeric',
+                'contest_id' => 'required|numeric',
                 'signup_start_date' => 'required|date',
                 'signup_end_date' => 'required|date',
             ];
