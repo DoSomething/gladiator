@@ -2,7 +2,6 @@
 
 namespace Gladiator\Models;
 
-use DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Competition extends Model

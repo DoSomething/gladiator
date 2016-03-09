@@ -5,7 +5,6 @@ namespace Gladiator\Http\Controllers;
 use Gladiator\Http\Requests\CompetitionRequest;
 use Gladiator\Models\Competition;
 use Gladiator\Models\Contest;
-use Gladiator\Models\User;
 
 class CompetitionsController extends Controller
 {
@@ -89,7 +88,6 @@ class CompetitionsController extends Controller
         $competition->fill($request->all())->save();
 
         return redirect()->route('competitions.show', $competition->id)->with('status', 'Competition has been updated!');
-
     }
 
     /**
