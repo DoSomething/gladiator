@@ -39,7 +39,7 @@ class ContestsController extends Controller
     {
         $contest = Contest::create($request->all());
 
-        return redirect()->action("ContestsController@show", $contest->id)->with('status', 'Contest has been saved!');
+        return redirect()->action('ContestsController@show', $contest->id)->with('status', 'Contest has been saved!');
     }
 
     /**
