@@ -64,10 +64,6 @@ class WaitingRoomsController extends Controller
      */
     public function edit(WaitingRoom $room)
     {
-        // Convert the dates to Date objects so we can use them as default values.
-        $room->signup_start_date = new \DateTime($room->signup_start_date);
-        $room->signup_end_date = new \DateTime($room->signup_end_date);
-
         return view('waitingrooms.edit', compact('room'));
     }
 
