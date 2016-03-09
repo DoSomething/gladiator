@@ -53,4 +53,29 @@ class ContestController extends Controller
     {
         return view('contest.show', compact('contest'));
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \Gladiator\Models\WaitingRoom  $room
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Contest $contest)
+    {
+        return view('contest.edit', compact('contest'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Gladiator\Models\WaitingRoom  $room
+     * @return \Illuminate\Http\Response
+     */
+    public function update(ContestRequest $request, Contest $contest)
+    {
+        $contest->fill($request->all())->save();
+
+        return redirect()->back()->with('status', 'Contest has been updated!');
+    }
 }
