@@ -50,7 +50,7 @@ class CompetitionsController extends Controller
     {
         Competition::create($request->all());
 
-        return redirect()->route('competitions.index');
+        return redirect()->route('competitions.index')->with('status', 'Competition has been saved!');
     }
 
     /**
@@ -88,9 +88,7 @@ class CompetitionsController extends Controller
     {
         $competition->fill($request->all())->save();
 
-        $contest = Contest::find($competition->contest_id);
-
-        return view('competitions.show', compact('competition', 'contest'));
+        return redirect()->route('competitions.show', $competition->id)->with('status', 'Competition has been updated!');
 
     }
 
@@ -104,6 +102,6 @@ class CompetitionsController extends Controller
     {
         $competition->delete();
 
-        return redirect()->route('competitions.index');
+        return redirect()->route('competitions.index')->with('status', 'Competition has been deleted!');
     }
 }
