@@ -21,13 +21,6 @@
 
                 <ul class="form-actions -inline">
                     <li>
-                        {!! Form::open(['method' => 'DELETE','route' => ['waitingrooms.destroy', $room->id]]) !!}
-
-                            {!! Form::submit('Delete', array('class' => 'button delete')) !!}
-
-                        {!! Form::close() !!}
-                    </li>
-                    <li>
                         <a href="{{ route('waitingrooms.edit', $room->id) }}" class="button">Edit</a>
                     </li>
                 </ul>

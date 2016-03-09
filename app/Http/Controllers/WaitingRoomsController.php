@@ -83,19 +83,6 @@ class WaitingRoomsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Gladiator\Models\WaitingRoom  $room
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(WaitingRoom $room)
-    {
-        $room->delete();
-
-        return redirect()->route('waitingrooms.index')->with('status', 'Waiting Room has been deleted!');
-    }
-
-    /**
      * Show the form for splitting the waiting room
      *
      * @param  \Gladiator\Models\WaitingRoom  $room
