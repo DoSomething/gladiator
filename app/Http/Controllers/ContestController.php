@@ -78,4 +78,17 @@ class ContestController extends Controller
 
         return redirect()->back()->with('status', 'Contest has been updated!');
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \Gladiator\Models\WaitingRoom  $room
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Contest $contest)
+    {
+        $contest->delete();
+
+        return redirect()->route('contest.index')->with('status', 'Contest has been deleted!');
+    }
 }

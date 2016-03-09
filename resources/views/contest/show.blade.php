@@ -21,13 +21,13 @@
                     <li>
                         <a href="{{ route('contest.edit', $contest->id) }}" class="button">Edit</a>
                     </li>
-                    {{-- <li>
+                    <li>
                         {!! Form::open(['method' => 'DELETE','route' => ['contest.destroy', $contest->id]]) !!}
 
                             {!! Form::submit('Delete', array('class' => 'button delete')) !!}
 
                         {!! Form::close() !!}
-                    </li> --}}
+                    </li>
                 </ul>
             </div>
         </div>
