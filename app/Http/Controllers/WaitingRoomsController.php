@@ -2,6 +2,7 @@
 
 namespace Gladiator\Http\Controllers;
 
+use Gladiator\Models\Contest;
 use Gladiator\Models\WaitingRoom;
 use Gladiator\Http\Requests\CompetitionRequest;
 use Gladiator\Http\Requests\WaitingRoomRequest;
@@ -30,16 +31,6 @@ class WaitingRoomsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('waitingrooms.create');
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -60,7 +51,9 @@ class WaitingRoomsController extends Controller
      */
     public function show(WaitingRoom $room)
     {
-        return view('waitingrooms.show', compact('room'));
+        $contest = Contest::find($room->contest_id);
+
+        return view('waitingrooms.show', compact('room', 'contest'));
     }
 
     /**
@@ -71,10 +64,6 @@ class WaitingRoomsController extends Controller
      */
     public function edit(WaitingRoom $room)
     {
-        // Convert the dates to Date objects so we can use them as default values.
-        $room->signup_start_date = new \DateTime($room->signup_start_date);
-        $room->signup_end_date = new \DateTime($room->signup_end_date);
-
         return view('waitingrooms.edit', compact('room'));
     }
 
@@ -90,19 +79,6 @@ class WaitingRoomsController extends Controller
         $room->fill($request->all())->save();
 
         return redirect()->back()->with('status', 'Waiting room has been updated!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Gladiator\Models\WaitingRoom  $room
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(WaitingRoom $room)
-    {
-        $room->delete();
-
-        return redirect()->route('waitingrooms.index')->with('status', 'Waiting Room has been deleted!');
     }
 
     /**

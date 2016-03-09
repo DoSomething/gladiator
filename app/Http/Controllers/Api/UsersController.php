@@ -3,19 +3,23 @@
 namespace Gladiator\Http\Controllers\Api;
 
 use Gladiator\Models\User;
+use Gladiator\Models\Contest;
 use Gladiator\Models\WaitingRoom;
 use Gladiator\Services\Registrar;
 use Gladiator\Http\Requests\UserRequest;
-use Gladiator\Http\Controllers\Controller;
+use Gladiator\Http\Transformers\UserTransformer;
 
-class UsersController extends Controller
+class UsersController extends ApiController
 {
     /**
-     * Registrar instance.
-     *
      * @var \Gladiator\Services\Registrar
      */
     protected $registrar;
+
+    /**
+     * @var \Gladiator\Http\Transformers\UserTransformer
+     */
+    protected $transformer;
 
     /**
      * Create new UsersController instance.
@@ -23,6 +27,7 @@ class UsersController extends Controller
     public function __construct(Registrar $registrar)
     {
         $this->registrar = $registrar;
+        $this->transformer = new UserTransformer;
     }
 
     /**
@@ -44,20 +49,21 @@ class UsersController extends Controller
             $user = $account;
         }
 
-        $waitingRoom = WaitingRoom::where('campaign_id', '=', $request['campaign_id'])
-                                    ->where('campaign_run_id', '=', $request['campaign_run_id'])
-                                    ->firstOrFail();
+        // @TODO: Move to a User Repository
+        $contest = Contest::with(['waitingRoom', 'competitions'])->where('campaign_id', '=', $request['campaign_id'])
+                            ->where('campaign_run_id', '=', $request['campaign_run_id'])
+                            ->firstOrFail();
 
-        $roomAssignment = $user->waitingRooms()->find($waitingRoom->id);
+        $roomAssignment = $user->waitingRooms()->find($contest->waitingRoom->id);
 
         if ($roomAssignment) {
-            // @TODO: return Transformed response via Fractal
-            return 'User already assigned to this waiting room!';
+            // @TODO: maybe add more detail to response to indicate user already in a room?
+            return $this->item($user);
         }
 
-        $waitingRoom->users()->attach($user->id);
+        $contest->waitingRoom->users()->attach($user->id);
 
-        // @TODO: return Transformed response via Fractal
-        return 'User was not in waiting room, so they have been assigned to it!';
+        // @TODO: maybe add more detail to response to indicate which room user was added to?
+        return $this->item($user);
     }
 }

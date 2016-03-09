@@ -1,13 +1,8 @@
 @include('layouts.errors')
 
 <div class="form-item -padded">
-    {{ Form::label('campaign_id', 'Campaign ID (node id):', ['class' => 'field-label']) }}
-    {{ Form::text('campaign_id', NULL, ['class' => 'text-field']) }}
-</div>
-
-<div class="form-item -padded">
-    {{ Form::label('campaign_run_id', 'Campaign Run ID:', ['class' => 'field-label']) }}
-    {{ Form::text('campaign_run_id', NULL, ['class' => 'text-field']) }}
+    {{ Form::label('contest_id', 'Contest ID:', ['class' => 'field-label']) }}
+    {{ Form::text('contest_id', NULL, ['class' => 'text-field']) }}
 </div>
 
 <div class="form-item -padded">

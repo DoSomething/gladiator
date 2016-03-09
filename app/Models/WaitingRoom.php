@@ -6,7 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class WaitingRoom extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = ['contest_id', 'signup_start_date', 'signup_end_date'];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['signup_start_date', 'signup_end_date'];
 
     /**
      * A WaitingRoom belongs to many Users.
