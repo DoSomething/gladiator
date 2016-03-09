@@ -22,7 +22,9 @@ class ContestRequest extends Request
     public function rules()
     {
         return [
-
+            'campaign_id' => 'required|numeric',
+            'campaign_run_id' => 'required|numeric',
+            'duration' => 'required|numeric',
         ];
     }
 }

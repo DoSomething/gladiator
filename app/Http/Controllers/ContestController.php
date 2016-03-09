@@ -19,4 +19,27 @@ class ContestController extends Controller
 
         return view('contest.index', compact('contests'));
     }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('contest.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(ContestRequest $request)
+    {
+        Contest::create($request->all());
+
+        return redirect()->back()->with('status', 'Contest has been saved!');
+    }
 }

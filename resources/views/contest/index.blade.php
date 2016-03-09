@@ -8,6 +8,14 @@
 
     <div class="container">
         <div class="wrapper">
+            <div class="container__block -narrow">
+                <a class="button" href="{{ route('contest.create') }}">Add Contest</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="wrapper">
             <div class="container__block">
                 <div class="table-responsive">
                     <table class="table">
