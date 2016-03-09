@@ -18,6 +18,7 @@
                           <th class="table__cell">Signup Start Date</th>
                           <th class="table__cell">Signup End Date</th>
                           <th class="table__cell">Split</th>
+                          <th class="table__cell">Options</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -34,6 +35,9 @@
                                 @else
                                     <p>N/A</p>
                                 @endif
+                            </td>
+                            <td class="table__cell">
+                                <a href="{{ route('waitingrooms.edit', $room->id) }}" class="button -tertiary">Edit</a>
                             </td>
                           </tr>
                         @endforeach
