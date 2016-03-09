@@ -5,7 +5,7 @@
         @if (Auth::user())
             <ul class="navigation__primary">
                 <li>
-                    <a href="{{ URL::to('contest') }}">
+                    <a href="{{ URL::to('contests') }}">
                         <strong class="navigation__title">Contests</strong>
                         <span class="navigation__subtitle">"Death match" -Aaron</span>
                     </a>

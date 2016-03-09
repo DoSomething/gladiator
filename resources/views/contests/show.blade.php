@@ -3,7 +3,7 @@
 @section('main_content')
 
     @include('layouts.header', [
-        'title' => 'Contest',
+        'title' => 'Contests',
         'subtitle' => 'Viewing contest ' . $contest->id
     ])
 
@@ -19,10 +19,10 @@
             <div class="container__block -half">
                 <ul class="form-actions -inline">
                     <li>
-                        <a href="{{ route('contest.edit', $contest->id) }}" class="button">Edit</a>
+                        <a href="{{ route('contests.edit', $contest->id) }}" class="button">Edit</a>
                     </li>
                     <li>
-                        {!! Form::open(['method' => 'DELETE','route' => ['contest.destroy', $contest->id]]) !!}
+                        {!! Form::open(['method' => 'DELETE','route' => ['contests.destroy', $contest->id]]) !!}
 
                             {!! Form::submit('Delete', array('class' => 'button delete')) !!}
 

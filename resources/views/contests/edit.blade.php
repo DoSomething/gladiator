@@ -3,16 +3,16 @@
 @section('main_content')
 
     @include('layouts.header', [
-        'title' => 'Contest',
+        'title' => 'Contests',
         'subtitle' => 'Edit contest ' . $contest->id
     ])
 
     <div class="container">
         <div class="wrapper">
             <div class="container__block">
-                {!! Form::model($contest, ['method' => 'PATCH', 'route' => ['contest.update', $contest->id]]) !!}
+                {!! Form::model($contest, ['method' => 'PATCH', 'route' => ['contests.update', $contest->id]]) !!}
 
-                    @include('contest.partials._form_contest')
+                    @include('contests.partials._form_contest')
 
                 {!! Form::close() !!}
             </div>

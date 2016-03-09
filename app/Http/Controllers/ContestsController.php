@@ -5,7 +5,7 @@ namespace Gladiator\Http\Controllers;
 use Gladiator\Models\Contest;
 use Gladiator\Http\Requests\ContestRequest;
 
-class ContestController extends Controller
+class ContestsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class ContestController extends Controller
     {
         $contests = Contest::all();
 
-        return view('contest.index', compact('contests'));
+        return view('contests.index', compact('contests'));
     }
 
     /**
@@ -26,7 +26,7 @@ class ContestController extends Controller
      */
     public function create()
     {
-        return view('contest.create');
+        return view('contests.create');
     }
 
     /**
@@ -37,9 +37,9 @@ class ContestController extends Controller
      */
     public function store(ContestRequest $request)
     {
-        Contest::create($request->all());
+        $contest = Contest::create($request->all());
 
-        return redirect()->back()->with('status', 'Contest has been saved!');
+        return redirect()->action("ContestsController@show", $contest->id)->with('status', 'Contest has been saved!');
     }
 
     /**
@@ -50,7 +50,7 @@ class ContestController extends Controller
      */
     public function show(Contest $contest)
     {
-        return view('contest.show', compact('contest'));
+        return view('contests.show', compact('contest'));
     }
 
     /**
@@ -61,7 +61,7 @@ class ContestController extends Controller
      */
     public function edit(Contest $contest)
     {
-        return view('contest.edit', compact('contest'));
+        return view('contests.edit', compact('contest'));
     }
 
     /**
@@ -88,6 +88,6 @@ class ContestController extends Controller
     {
         $contest->delete();
 
-        return redirect()->route('contest.index')->with('status', 'Contest has been deleted!');
+        return redirect()->route('contests.index')->with('status', 'Contest has been deleted!');
     }
 }
