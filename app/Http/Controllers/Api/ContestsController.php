@@ -16,9 +16,9 @@ class ContestsController extends ApiController
      *
      * @param \Gladiator\Http\Transformers\ContestTransformer $transformer
      */
-    public function __construct(ContestTransformer $transformer)
+    public function __construct()
     {
-        $this->transformer = $transformer;
+        $this->transformer = new ContestTransformer;
     }
 
     /**

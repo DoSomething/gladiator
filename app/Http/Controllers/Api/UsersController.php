@@ -24,10 +24,10 @@ class UsersController extends ApiController
     /**
      * Create new UsersController instance.
      */
-    public function __construct(Registrar $registrar, UserTransformer $transformer)
+    public function __construct(Registrar $registrar)
     {
         $this->registrar = $registrar;
-        $this->transformer = $transformer;
+        $this->transformer = new UserTransformer;
     }
 
     /**
@@ -62,7 +62,8 @@ class UsersController extends ApiController
         }
 
         $contest->waitingRoom->users()->attach($user->id);
-            // @TODO: maybe add more detail to response to indicate which room user was added to?
-            return $this->item($user);
+
+        // @TODO: maybe add more detail to response to indicate which room user was added to?
+        return $this->item($user);
     }
 }

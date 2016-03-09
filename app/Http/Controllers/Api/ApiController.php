@@ -55,7 +55,7 @@ class ApiController extends BaseController
     /**
      * Manage and finalize the data transformation.
      *
-     * @param  object  $data
+     * @param  \League\Fractal\Resource\Item|\League\Fractal\Resource\Collection  $data
      * @param  int  $code
      * @param  array  $meta
      * @return \Illuminate\Http\JsonResponse
@@ -64,10 +64,10 @@ class ApiController extends BaseController
     {
         $data->setMeta($meta);
 
-        $this->manager = new Manager;
-        $this->manager->setSerializer(new DataArraySerializer);
+        $manager = new Manager;
+        $manager->setSerializer(new DataArraySerializer);
 
-        $response = $this->manager->createData($data)->toArray();
+        $response = $manager->createData($data)->toArray();
 
         return response()->json($response, 200, [], JSON_UNESCAPED_SLASHES);
     }
