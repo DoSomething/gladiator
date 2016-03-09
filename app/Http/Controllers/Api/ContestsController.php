@@ -21,6 +21,9 @@ class ContestsController extends ApiController
         $this->transformer = $transformer;
     }
 
+    /**
+     * Get a collection of waiting rooms.
+     */
     public function index()
     {
         return 'Hello! We need to wait for the Contest CRUD to continue...';
