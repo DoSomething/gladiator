@@ -13,8 +13,8 @@
                 <p>Contest ID: {{ $room->contest_id }}</p>
                 <p>Campaign ID: {{ $contest->campaign_id }}</p>
                 <p>Campaign Run ID: {{ $contest->campaign_run_id }}</p>
-                <p>Signup Start Date: {{ $room->signup_start_date }}</p>
-                <p>Signup End Date: {{ $room->signup_end_date }}</p>
+                <p>Signup Start Date: {{ $room->signup_start_date->format('F d, Y') }}</p>
+                <p>Signup End Date: {{ $room->signup_end_date->format('F d, Y') }}</p>
 
                 <ul class="form-actions -inline">
                     @if (hasSignupPeriodEnded($room->signup_end_date))

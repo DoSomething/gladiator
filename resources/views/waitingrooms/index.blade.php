@@ -27,8 +27,8 @@
                             <td class="table__cell"><a href="{{ route('waitingrooms.show', $room->id) }}">{{ $room->id }}</a></td>
                             {{-- TODO: Link to contest. --}}
                             <td class="table__cell"><a href="#">{{ $room->contest_id }}</a></td>
-                            <td class="table__cell">{{ date('F d, Y', strtotime($room->signup_start_date)) }}</td>
-                            <td class="table__cell">{{ date('F d, Y', strtotime($room->signup_end_date)) }}</td>
+                            <td class="table__cell">{{ $room->signup_start_date->format('F d, Y') }}</td>
+                            <td class="table__cell">{{ $room->signup_end_date->format('F d, Y') }}</td>
                             <td class="table__cell">
                                 @if (hasSignupPeriodEnded($room->signup_end_date))
                                     <a href="{{ route('split', $room->id) }}" class="button -secondary">Split room</a>
