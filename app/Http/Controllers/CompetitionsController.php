@@ -74,10 +74,6 @@ class CompetitionsController extends Controller
      */
     public function edit(Competition $competition)
     {
-        // Convert the dates to Date objects so we can use them as default values.
-        $competition->start_date = new \DateTime($competition->start_date);
-        $competition->end_date = new \DateTime($competition->end_date);
-
         return view('competitions.edit', compact('competition'));
     }
 
@@ -92,7 +88,10 @@ class CompetitionsController extends Controller
     {
         $competition->fill($request->all())->save();
 
-        return view('competitions.show')->withCompetition($competition);
+        $contest = Contest::find($competition->contest_id);
+
+        return view('competitions.show', compact('competition', 'contest'));
+
     }
 
     /**

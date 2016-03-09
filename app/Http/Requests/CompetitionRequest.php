@@ -22,10 +22,9 @@ class CompetitionRequest extends Request
     public function rules()
     {
         return [
-            'campaign_id' => 'required|numeric',
-            'campaign_run_id' => 'required|numeric',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
+            'contest_id' => 'required|numeric',
+            'competition_start_date' => 'required|date',
+            'competition_end_date' => 'required|date',
         ];
     }
 }
