@@ -2,7 +2,7 @@
 
 <div class="form-item -padded">
     {!! Form::label('contest_id', 'Contest ID:', ['class' => 'field-label']) !!}
-    {!! Form::text('contest_id', (isset($competition->contest_id)) ? $competition->contest_id : NULL, ['class' => 'text-field']) !!}
+    {!! Form::text('contest_id', $competition->contest_id or old($competition->contest_id), ['class' => 'text-field']) !!}
 </div>
 
 <div class="form-item -padded">
