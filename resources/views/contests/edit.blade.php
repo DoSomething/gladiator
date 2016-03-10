@@ -10,11 +10,11 @@
     <div class="container">
         <div class="wrapper">
             <div class="container__block">
-                {!! Form::model($contest, ['method' => 'PATCH', 'route' => ['contests.update', $contest->id]]) !!}
+                <form method="POST" action="{{ route('contests.update', $contest->id) }}">
+                    {{ method_field('PATCH') }}
 
                     @include('contests.partials._form_contest')
-
-                {!! Form::close() !!}
+                </form>
             </div>
         </div>
     </div>

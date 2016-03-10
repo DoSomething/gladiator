@@ -10,11 +10,9 @@
     <div class="container">
         <div class="wrapper">
             <div class="container__block -narrow">
-                {!! Form::open(['route' => 'contests.store']) !!}
-
+                <form method="POST" action="{{ route('contests.store') }}">
                     @include('contests.partials._form_contest')
-
-                {!! Form::close() !!}
+                </form>
             </div>
         </div>
     </div>
