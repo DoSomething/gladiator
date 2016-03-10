@@ -35,6 +35,22 @@
                     </li>
                 </ul>
             </div>
+            <div class="container__block">
+                <table class="table">
+                  <thead>
+                    <tr class="table__header">
+                      <th class="table__cell">ID</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($users as $user)
+                      <tr class="table__row">
+                        <td class="table__cell"><a href="{{ route('users.show', $user->id) }}">{{ $user->id }}</td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+            </div>
         </div>
     </div>
 @stop

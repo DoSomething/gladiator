@@ -39,7 +39,10 @@ class CompetitionsController extends Controller
     {
         $contest = Contest::find($competition->contest_id);
 
-        return view('competitions.show', compact('competition', 'contest'));
+        // Get competition users.
+        $users = $competition->users;
+
+        return view('competitions.show', compact('competition', 'contest', 'users'));
     }
 
     /**
