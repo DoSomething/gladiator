@@ -4,7 +4,6 @@ namespace Gladiator\Http\Controllers;
 
 use Gladiator\Models\Contest;
 use Gladiator\Models\WaitingRoom;
-use Gladiator\Http\Requests\CompetitionRequest;
 use Gladiator\Http\Requests\WaitingRoomRequest;
 
 class WaitingRoomsController extends Controller

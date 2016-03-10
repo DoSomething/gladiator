@@ -35,7 +35,6 @@ class WaitingRoom extends Model
      */
     public function getDefaultSplit()
     {
-
         $users = $this->users;
 
         // Get the size of the waiting room

@@ -50,10 +50,21 @@ class UserTableSeeder extends Seeder
         // Add Contestant Users
         $waitingRooms = WaitingRoom::all();
         $totalRooms = count($waitingRooms);
-        $seedContestants = $this->northstar->getSeedUsers(300);
+        // $seedContestants = $this->northstar->getSeedUsers(300);
+
+        // for ($i = 0; $i < 5000; $i++) {
+        //     array_push($seedContestants
+        // }
+
+        $seedContestants = [];
+
+        for ($i = 1; $i < 10; $i++) {
+            $seedContestants = array_merge($seedContestants, $this->northstar->get('users', ['limit' => 100, 'page' => $i]));
+        }
 
         foreach ($seedContestants as $contestant) {
             $index = mt_rand(0, ($totalRooms - 1));
+            $index = 0;
 
             // Using first or create if someone is already an admin.
             $user = User::firstOrCreate([
