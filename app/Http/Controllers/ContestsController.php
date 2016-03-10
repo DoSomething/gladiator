@@ -87,7 +87,7 @@ class ContestsController extends Controller
     public function destroy(Contest $contest)
     {
         $contest->delete();
-
+        
         return redirect()->route('contests.index')->with('status', 'Contest has been deleted!');
     }
 }

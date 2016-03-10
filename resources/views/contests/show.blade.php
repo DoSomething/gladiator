@@ -22,11 +22,12 @@
                         <a href="{{ route('contests.edit', $contest->id) }}" class="button">Edit</a>
                     </li>
                     <li>
-                        {!! Form::open(['method' => 'DELETE','route' => ['contests.destroy', $contest->id]]) !!}
+                        <form method="POST" action="{{ route('contests.destroy', $contest->id) }}">
+                            {{ method_field('DELETE') }}
+                            {{ csrf_field() }}
 
-                            {!! Form::submit('Delete', array('class' => 'button delete')) !!}
-
-                        {!! Form::close() !!}
+                            <input type="submit" class="button" value="Delete" />
+                        </form>
                     </li>
                 </ul>
             </div>
