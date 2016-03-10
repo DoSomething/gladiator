@@ -101,10 +101,11 @@ class WaitingRoomsController extends Controller
      * @param  \Gladiator\Models\WaitingRoom  $room
      * @return \Illuminate\Http\Response
      */
-    public function split(CompetitionRequest $request, WaitingRoom $room)
+    public function split(WaitingRoom $room)
     {
         $split = $room->getDefaultSplit();
-        $room->saveSplit($request->all(), $split);
+        $contest = Contest::find($room->contest_id);
+        $room->saveSplit($contest, $split);
 
         return redirect()->route('waitingrooms.index')->with('status', 'Waiting Room has been split!');
     }

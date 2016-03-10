@@ -2,6 +2,7 @@
 
 namespace Gladiator\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class WaitingRoom extends Model
@@ -34,6 +35,7 @@ class WaitingRoom extends Model
      */
     public function getDefaultSplit()
     {
+
         $users = $this->users;
 
         // Get the size of the waiting room
@@ -66,11 +68,20 @@ class WaitingRoom extends Model
     /*
      * Creates competitions based on the given user split.
      */
-    public function saveSplit($competitionInput, $split)
+    public function saveSplit($contest, $split)
     {
+        $startDate = Carbon::now()->startOfDay();
+        $endDate = Carbon::now()->addDays($contest->duration);
+
         foreach ($split as $competitionGroup) {
             // For each split, create a competition.
-            $competition = Competition::create($competitionInput);
+            $competition = new Competition;
+
+            $competition->contest_id = $contest->getKey();
+            $competition->competition_start_date = $startDate;
+            $competition->competition_end_date = $endDate;
+
+            $contest->competitions()->save($competition);
 
             // For each user in this group
             foreach ($competitionGroup as $userId) {
