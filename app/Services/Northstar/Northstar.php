@@ -21,14 +21,39 @@ class Northstar extends RestApiClient
     }
 
     /**
-     * Get users from Northstar for seeding database.
+     * Send a GET request to return a collection of users.
      *
-     * @param  string $limit
-     * @return object|null
+     * @param  int $limit
+     * @param  int $page
+     * @param  array  $filters
+     * @param  array  $searches
+     * @return object
      */
-    public function getSeedUsers($limit = '300')
+    public function getUsers($limit = null, $page = null, $filters = [], $searches = [])
     {
-        $response = $this->get('users', ['limit' => $limit]);
+        $parameters = [];
+
+        if ($limit) {
+            $parameters['limit'] = $limit;
+        }
+
+        if ($page) {
+            $parameters['page'] = $page;
+        }
+
+        if ($filters) {
+            foreach ($filters as $key => $filter) {
+                $parameters['filter[' . $key . ']'] = $filter;
+            }
+        }
+
+        if ($searches) {
+            foreach ($searches as $key => $search) {
+                $parameters['search[' . $key . ']'] = $search;
+            }
+        }
+
+        $response = $this->get('users', $parameters);
 
         return is_null($response) ? null : $response;
     }
