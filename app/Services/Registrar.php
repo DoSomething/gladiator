@@ -4,6 +4,7 @@ namespace Gladiator\Services;
 
 use Gladiator\Models\User;
 use Gladiator\Services\Northstar\Northstar;
+use Gladiator\Repositories\UserRepositoryInterface;
 use Gladiator\Services\Northstar\Exceptions\NorthstarUserNotFoundException;
 
 class Registrar
@@ -15,14 +16,17 @@ class Registrar
      */
     protected $northstar;
 
+    protected $repository;
+
     /**
      * Create new Registrar instance.
      *
      * @param Northstar $northstar
      */
-    public function __construct(Northstar $northstar)
+    public function __construct(Northstar $northstar, UserRepositoryInterface $repository)
     {
         $this->northstar = $northstar;
+        $this->repository = $repository;
     }
 
     /**
@@ -31,12 +35,18 @@ class Registrar
      * @param  array $credentials
      * @return \Gladiator\Models\User
      */
-    public function createUser($credentials)
+    public function createUser($account)
     {
         $user = new User;
-        $user->id = $credentials['id'];
-        $user->role = isset($credentials['role']) ? $credentials['role'] : null;
+        $user->id = $account->id;
+        $user->role = isset($account->role) ? $account->role : null;
         $user->save();
+
+        $user->first_name = $account->first_name;
+        $user->last_name = $account->last_name;
+        $user->email = $account->email;
+
+        $this->repository->store($user->id, $user);
 
         return $user;
     }
@@ -68,10 +78,10 @@ class Registrar
             throw new NorthstarUserNotFoundException;
         }
 
-        $user = User::find($northstarUser->id);
+        $user = $this->repository->find($northstarUser->id);
 
         if (! $user) {
-            return $northstarUser->id;
+            return $northstarUser;
         }
 
         return $user;
