@@ -50,7 +50,7 @@ class UserTableSeeder extends Seeder
         // Add Contestant Users
         $waitingRooms = WaitingRoom::all();
         $totalRooms = count($waitingRooms);
-        $seedContestants = $this->northstar->getUsers(100);
+        $seedContestants = $this->northstar->getAllUsers(['limit' => 100]);
 
         foreach ($seedContestants as $contestant) {
             $index = mt_rand(0, ($totalRooms - 1));

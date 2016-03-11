@@ -21,39 +21,14 @@ class Northstar extends RestApiClient
     }
 
     /**
-     * Send a GET request to return a collection of users.
+     * Send a GET request to return all users matching a given query from Northstar.
      *
-     * @param  int $limit
-     * @param  int $page
-     * @param  array  $filters
-     * @param  array  $searches
+     * @param  array $inputs - Filter, search, limit or pagination queries
      * @return object
      */
-    public function getUsers($limit = null, $page = null, $filters = [], $searches = [])
+    public function getAllUsers($inputs = [])
     {
-        $parameters = [];
-
-        if ($limit) {
-            $parameters['limit'] = $limit;
-        }
-
-        if ($page) {
-            $parameters['page'] = $page;
-        }
-
-        if ($filters) {
-            foreach ($filters as $key => $filter) {
-                $parameters['filter[' . $key . ']'] = $filter;
-            }
-        }
-
-        if ($searches) {
-            foreach ($searches as $key => $search) {
-                $parameters['search[' . $key . ']'] = $search;
-            }
-        }
-
-        $response = $this->get('users', $parameters);
+        $response = $this->get('users', $inputs);
 
         return is_null($response) ? null : $response;
     }
