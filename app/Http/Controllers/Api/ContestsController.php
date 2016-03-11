@@ -2,7 +2,6 @@
 
 namespace Gladiator\Http\Controllers\Api;
 
-use Carbon\Carbon;
 use Gladiator\Http\Transformers\ContestTransformer;
 use Gladiator\Models\Contest;
 use Gladiator\Models\WaitingRoom;
