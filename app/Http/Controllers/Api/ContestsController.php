@@ -48,7 +48,7 @@ class ContestsController extends ApiController
         $contest = Contest::where('campaign_run_id', $run_nid)->firstOrFail();
 
         // Get waiting room for this contest
-        $waitingRoom = WaitingRoom::where('contest_id', $contest->id)->firstOrFail();
+        $waitingRoom = $contest->waitingRoom;
 
         // Construct a response with all of the data
         $data = [
