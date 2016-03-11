@@ -29,6 +29,20 @@ class WaitingRoom extends Model
         return $this->belongsToMany(User::class);
     }
 
+    /**
+     * Determines if the waiting room is open for signupsOpen
+     *
+     * @return bool whether the room is open or not
+     */
+    public function isOpen()
+    {
+        $start = $this->signup_start_date->startOfDay();
+        $end = $this->signup_end_date->endOfDay();
+        $today = Carbon::now();
+
+        return $today->between($start, $end);
+    }
+
     /*
      * Equally splits the users of a waiting room into arrays
      * representing competitions.
