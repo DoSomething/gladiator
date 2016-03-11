@@ -27,7 +27,7 @@
                         <a href="{{ route('waitingrooms.edit', $room->id) }}" class="button">Edit</a>
                     </li>
                     <li>
-                        <a href="{{ route('export', $room->id) }}" class="button">Export</a>
+                        <a href="{{ route('waitingrooms.export', $room->id) }}" class="button">Export</a>
                     </li>
                 </ul>
             </div>

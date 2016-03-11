@@ -29,7 +29,13 @@ class WaitingRoom extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function getCSVExport() {
+    /**
+     * Gets a CSV export of all the users in this waiting room.
+     *
+     * @return \League\Csv\ $csv
+     */
+    public function getCSVExport()
+    {
         $csv = \League\Csv\Writer::createFromFileObject(new \SplTempFileObject());
 
         $csv->insertOne(['id']);

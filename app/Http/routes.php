@@ -27,6 +27,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('competitions', 'CompetitionsController', ['except' => ['create']]);
 
     // Competitions
+    Route::get('contests/{contest}/export', 'ContestsController@export')->name('contests.export');
     Route::model('contests', 'Gladiator\Models\Contest');
     Route::resource('contests', 'ContestsController');
 
@@ -39,7 +40,7 @@ Route::group(['middleware' => ['web']], function () {
     ]);
 
     // Waiting rooms routes.
-    Route::get('waitingrooms/{waitingrooms}/export', 'WaitingRoomsController@export')->name('export');
+    Route::get('waitingrooms/{waitingrooms}/export', 'WaitingRoomsController@export')->name('waitingrooms.export');
     Route::get('waitingrooms/{waitingrooms}/split', 'WaitingRoomsController@showSplitForm')->name('split');
     Route::post('waitingrooms/{waitingrooms}/split', 'WaitingRoomsController@split')->name('split');
     Route::model('waitingrooms', 'Gladiator\Models\WaitingRoom');
