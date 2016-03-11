@@ -38,13 +38,11 @@ class Contest extends Model
     {
         $csv = \League\Csv\Writer::createFromFileObject(new \SplTempFileObject());
 
-        $csv->insertOne(['competition id', 'total users']);
+        $csv->insertOne(['competition id']);
 
         $competitions = $this->competitions;
         foreach ($competitions as $competition) {
-            $users = $competition->users();
-            
-            $csv->insertOne([$competition->id, $users]);
+            $csv->insertOne($competition->id);
         }
 
         return $csv;
