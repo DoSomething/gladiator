@@ -39,8 +39,7 @@ class WaitingRoom extends Model
         $start = $this->signup_start_date->startOfDay();
         $end = $this->signup_end_date->endOfDay();
         $today = Carbon::now();
-
-        return ($today >= $start) && ($today <= $end);
+        return $today->between($start, $end);
     }
 
     /*

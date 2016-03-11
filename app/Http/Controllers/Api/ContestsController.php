@@ -29,9 +29,9 @@ class ContestsController extends ApiController
      */
     public function index(Request $request)
     {
-        $run_nid = $request->query('run_nid');
-        if (isset($run_nid)) {
-            $contest = Contest::with('waitingRoom')->where('campaign_run_id', $run_nid)->firstOrFail();
+        $campaign_run_nid = $request->query('run_nid');
+        if (isset($campaign_run_nid)) {
+            $contest = Contest::with('waitingRoom')->where('campaign_run_id', $campaign_run_nid)->firstOrFail();
 
             return $this->item($contest);
         }
