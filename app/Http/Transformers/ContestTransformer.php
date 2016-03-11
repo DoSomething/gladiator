@@ -18,8 +18,10 @@ class ContestTransformer extends TransformerAbstract
         return [
             'id' => $contest->id,
             'campaign' => [
-                'campaign_id' => $contest->campaign_id,
-                'campaign_run_id' => $contest->campaign_run_id,
+                'id' => $contest->campaign_id,
+                'campaign_run' => [
+                    'id' => $contest->campaign_run_id,
+                ],
             ],
             'waiting_room' => [
                 'signups_open' => $contest->waitingRoom->isOpen(),
