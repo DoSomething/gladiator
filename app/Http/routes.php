@@ -52,6 +52,7 @@ Route::group(['prefix' => 'api/v1'], function () {
         return 'Gladiator API version 1';
     });
 
+    Route::get('contests/run/{run_nid}', 'Api\ContestsController@getByRunId');
     Route::get('contests', 'Api\ContestsController@index');
 
     Route::get('users', function () {
