@@ -27,7 +27,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('competitions', 'CompetitionsController');
 
     // Users
-    Route::model('users', 'Gladiator\Models\User');
+    // Route::model('users', 'Gladiator\Models\User');
     Route::resource('users', 'UsersController');
     Route::get('users/{id}/signup/{signup_id}', [
         'as' => 'users.signup',
