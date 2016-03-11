@@ -39,6 +39,7 @@ Route::group(['middleware' => ['web']], function () {
     ]);
 
     // Waiting rooms routes.
+    Route::get('waitingrooms/{waitingrooms}/export', 'WaitingRoomsController@export')->name('export');
     Route::get('waitingrooms/{waitingrooms}/split', 'WaitingRoomsController@showSplitForm')->name('split');
     Route::post('waitingrooms/{waitingrooms}/split', 'WaitingRoomsController@split')->name('split');
     Route::model('waitingrooms', 'Gladiator\Models\WaitingRoom');

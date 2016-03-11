@@ -108,4 +108,9 @@ class WaitingRoomsController extends Controller
 
         return redirect()->route('waitingrooms.index')->with('status', 'Waiting Room has been split!');
     }
+
+    public function export(WaitingRoom $room) {
+        $csv = $room->getCSVExport();
+        $csv->output('waitingroom.csv');
+    }
 }

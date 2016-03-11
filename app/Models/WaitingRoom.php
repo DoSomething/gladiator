@@ -29,6 +29,18 @@ class WaitingRoom extends Model
         return $this->belongsToMany(User::class);
     }
 
+    public function getCSVExport() {
+        $csv = \League\Csv\Writer::createFromFileObject(new \SplTempFileObject());
+
+        $csv->insertOne(['id']);
+        $users = $this->users;
+        foreach ($users as $user) {
+            $csv->insertOne($user->id);
+        }
+
+        return $csv;
+    }
+
     /*
      * Equally splits the users of a waiting room into arrays
      * representing competitions.
