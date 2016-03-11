@@ -36,8 +36,8 @@ class WaitingRoom extends Model
      */
     public function isOpen()
     {
-        $start = Carbon::parse($this->signup_start_date)->startOfDay();
-        $end = Carbon::parse($this->signup_end_date)->endOfDay();
+        $start = $this->signup_start_date->startOfDay();
+        $end = $this->signup_end_date->endOfDay();
         $today = Carbon::now();
         return ($today >= $start) && ($today <= $end);
     }
