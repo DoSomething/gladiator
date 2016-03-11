@@ -27,7 +27,7 @@ class ContestTransformer extends TransformerAbstract
                 'signups_open' => $contest->waitingRoom->isOpen(),
                 'signup_start' => $contest->waitingRoom->signup_start_date->toIso8601String(),
                 'signup_end' => $contest->waitingRoom->signup_end_date->toIso8601String(),
-            ]
+            ],
         ];
     }
 }
