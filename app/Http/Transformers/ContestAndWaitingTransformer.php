@@ -15,12 +15,11 @@ class ContestAndWaitingTransformer extends TransformerAbstract
      */
     public function transform($data)
     {
-        $signupsOpen = $data['signupsOpen'];
         $waitingRoom = $data['waitingRoom'];
         $contest = $data['contest'];
 
         return [
-            'signups_open' => $signupsOpen,
+            'signups_open' => $waitingRoom->isOpen(),
             'signup_start' => $waitingRoom->signup_start_date,
             'signup_end' => $waitingRoom->signup_end_date,
             'contest_id' => $contest->id,

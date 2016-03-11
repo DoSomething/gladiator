@@ -47,13 +47,11 @@ class ContestsController extends ApiController
         // Get contest by run nid
         $contest = Contest::where('campaign_run_id', $run_nid)->firstOrFail();
 
-        // Get waiting room for this contest & build carbon dates
+        // Get waiting room for this contest
         $waitingRoom = WaitingRoom::where('contest_id', $contest->id)->firstOrFail();
-        $signupsOpen = $waitingRoom->isOpen();
 
         // Construct a response with all of the data
         $data = [
-            'signupsOpen' => $signupsOpen,
             'waitingRoom' => $waitingRoom,
             'contest' => $contest,
         ];
