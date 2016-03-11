@@ -9,10 +9,11 @@
     <div class="container">
         <div class="wrapper">
             <div class="container__block">
-                <h1 class="heading">First Last</h1>
-                <p><em>Need to grab user first and last name from cache once we cache their Northstar data</em></p>
+                <h1 class="heading">{{ $user->first_name . ' ' . $user->last_name }}</h1>
 
                 <div class="key-value">
+                    <dt>Email:</dt>
+                    <dd>{{ $user->email }}</dd>
                     <dt>ID:</dt>
                     <dd>{{ $user->id }}</dd>
                     <dt>Role:</dt>
@@ -23,6 +24,5 @@
             </div>
         </div>
     </div>
-
 
 @stop

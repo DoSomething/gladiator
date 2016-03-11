@@ -57,6 +57,7 @@ class Registrar
      * @param  string  $type
      * @param  string  $id
      * @return object|null
+     * @deprecated
      */
     public function findNorthstarAccount($type, $id)
     {
@@ -85,5 +86,9 @@ class Registrar
         }
 
         return $user;
+    }
+
+    public function registerAttributes($user, $attributes) {
+        $user->first_name = $account->first_name;
     }
 }
