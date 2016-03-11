@@ -25,6 +25,7 @@ class Northstar extends RestApiClient
      *
      * @param  array $inputs - Filter, search, limit or pagination queries
      * @return object
+     * @see  https://github.com/DoSomething/northstar/blob/dev/documentation/endpoints/users.md#retrieve-all-users
      */
     public function getAllUsers($inputs = [])
     {
