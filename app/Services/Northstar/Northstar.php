@@ -21,14 +21,15 @@ class Northstar extends RestApiClient
     }
 
     /**
-     * Get users from Northstar for seeding database.
+     * Send a GET request to return all users matching a given query from Northstar.
      *
-     * @param  string $limit
-     * @return object|null
+     * @param  array $inputs - Filter, search, limit or pagination queries
+     * @return object
+     * @see  https://github.com/DoSomething/northstar/blob/dev/documentation/endpoints/users.md#retrieve-all-users
      */
-    public function getSeedUsers($limit = '300')
+    public function getAllUsers($inputs = [])
     {
-        $response = $this->get('users', ['limit' => $limit]);
+        $response = $this->get('users', $inputs);
 
         return is_null($response) ? null : $response;
     }

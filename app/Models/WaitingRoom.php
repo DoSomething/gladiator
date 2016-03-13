@@ -2,6 +2,7 @@
 
 namespace Gladiator\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class WaitingRoom extends Model
@@ -26,6 +27,20 @@ class WaitingRoom extends Model
     public function users()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    /**
+     * Determines if the waiting room is open for signupsOpen
+     *
+     * @return bool whether the room is open or not
+     */
+    public function isOpen()
+    {
+        $start = $this->signup_start_date->startOfDay();
+        $end = $this->signup_end_date->endOfDay();
+        $today = Carbon::now();
+
+        return $today->between($start, $end);
     }
 
     /*
@@ -66,11 +81,20 @@ class WaitingRoom extends Model
     /*
      * Creates competitions based on the given user split.
      */
-    public function saveSplit($competitionInput, $split)
+    public function saveSplit($contest, $split)
     {
+        $startDate = Carbon::now()->startOfDay();
+        $endDate = Carbon::now()->addDays($contest->duration)->endOfDay();
+
         foreach ($split as $competitionGroup) {
             // For each split, create a competition.
-            $competition = Competition::create($competitionInput);
+            $competition = new Competition;
+
+            $competition->contest_id = $contest->getKey();
+            $competition->competition_start_date = $startDate;
+            $competition->competition_end_date = $endDate;
+
+            $contest->competitions()->save($competition);
 
             // For each user in this group
             foreach ($competitionGroup as $userId) {

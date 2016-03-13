@@ -8,6 +8,14 @@
 
     <div class="container">
         <div class="wrapper">
+            <div class="container__block -narrow">
+                <form method="POST" action="{{ route('split', $room->id) }}">
+                    {{ method_field('POST') }}
+                    {{ csrf_field() }}
+
+                    <input type="submit" class="button" value="Split" />
+                </form>
+            </div>
             <div class="container__block container__competitions">
                 <h1>Competitions</h1>
                 @foreach($split as $competition)
@@ -20,14 +28,6 @@
                         </ul>
                     </div>
                 @endforeach
-            </div>
-            <div class="container__block -narrow">
-                <h1>Competition details</h1>
-                {!! Form::open(['method' => 'POST','route' => ['split', $room->id]]) !!}
-
-                    @include('competitions.partials._form_competitions')
-
-                {!! Form::close() !!}
             </div>
         </div>
     </div>

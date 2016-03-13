@@ -19,17 +19,17 @@ class UsersController extends Controller
     /**
      * UserRepository instance.
      *
-     * @var \Gladiator\Repositories\UserRepository
+     * @var \Gladiator\Repositories\UserRepositoryInterface
      */
-    protected $user;
+    protected $repository;
 
     /**
      * Create new UsersController instance.
      */
-    public function __construct(Registrar $registrar, UserRepositoryInterface $user)
+    public function __construct(Registrar $registrar, UserRepositoryInterface $repository)
     {
         $this->registrar = $registrar;
-        $this->user = $user;
+        $this->repository = $repository;
 
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
@@ -42,9 +42,11 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = $this->user->getAll();
-        // dd($users);
+        // $admins = $this->repository->getAllByRole('admin');
+        $staff = $this->repository->getAllByRole('staff');
+        // $contestants = $this->repository->getAllByRole(null);
 
+        dd($staff);
         return view('users.index', compact('users'));
     }
 
@@ -82,14 +84,13 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \Gladiator\Models\User  $user
+     * @param  string  $id  Northstar ID
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $user = $this->user->find($id);
+        $user = $this->repository->find($id);
 
-        dd($user);
         return view('users.show', compact('user'));
     }
 

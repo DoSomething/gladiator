@@ -24,7 +24,11 @@ Route::group(['middleware' => ['web']], function () {
 
     // Competitions
     Route::model('competitions', 'Gladiator\Models\Competition');
-    Route::resource('competitions', 'CompetitionsController');
+    Route::resource('competitions', 'CompetitionsController', ['except' => ['create']]);
+
+    // Competitions
+    Route::model('contests', 'Gladiator\Models\Contest');
+    Route::resource('contests', 'ContestsController');
 
     // Users
     // Route::model('users', 'Gladiator\Models\User');
