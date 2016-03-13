@@ -48,9 +48,14 @@ class CacheUserRepository implements UserRepositoryInterface
     public function getAllByRole($role)
     {
         // Need list of user NS ids to check the cache.
-        $userIds = $this->database->getAllByRole('admin');
+        $data = $this->database->getAllByRole($role);
 
-        // $users = Cache::many();
+        dd($data);
+
+        $this->store($role . ':ids', $data['ids']);
+        Cache::putMany($data['users'], 2);
+
+        return $data;
     }
 
     public function store($key, $data, $minutes = 15)

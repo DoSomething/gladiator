@@ -40,28 +40,24 @@ class DatabaseUserRepository implements UserRepositoryInterface
         // $users['admins'] = $this->getAllByRole('admin');
         // $users['staff'] = $this->getAllByRole('staff');
         // $users['contestants'] = $this->getAllByRole(null);
-
         // dd($users);
-
         // return $users;
     }
 
     public function getAllByRole($role)
     {
         $users = User::where('role', '=', $role)->get();
-        $ids = implode(',', $users->pluck('id')->toArray());
+        $ids = $users->pluck('id')->toArray();
 
-        $filters = ['_id' => $ids];
+        $parameters = ['filter[_id]' => implode(',', $ids)];
 
-        $this->northstar->getUsers(null, null, $filters);
+        $accounts = $this->northstar->getAllUsers($parameters);
 
-        dd($users);
-        dd($ids);
-    }
+        $collection = collect($accounts)->keyBy('id')->toArray();
 
-    public function getIdsByRole($role)
-    {
-        // $users = $this->getAllByRole()
-        dd('ready to pluck');
+        return [
+            'ids' => $ids,
+            'users' => $collection,
+        ];
     }
 }

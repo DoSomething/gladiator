@@ -9,7 +9,7 @@
     <div class="container">
         <div class="wrapper">
             <div class="container__block">
-                <h1 class="heading">{{ $user->first_name . ' ' . $user->last_name }}</h1>
+                <h1 class="heading">{{ $user->first_name }} {{ $user->last_name or '' }}</h1>
 
                 <div class="key-value">
                     <dt>Email:</dt>
