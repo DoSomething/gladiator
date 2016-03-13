@@ -3,9 +3,10 @@
 namespace Gladiator\Services;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\MessageBag;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Foundation\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class RestApiClient
 {

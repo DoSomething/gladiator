@@ -3,7 +3,6 @@
 namespace Gladiator\Repositories;
 
 use Illuminate\Support\Facades\Cache;
-use Gladiator\Repositories\UserRepositoryInterface;
 
 class CacheUserRepository implements UserRepositoryInterface
 {
@@ -45,21 +44,59 @@ class CacheUserRepository implements UserRepositoryInterface
         return $users;
     }
 
+    /**
+     * Get collection of users from cache by specified role or default to database lookup.
+     *
+     * @param  string $role
+     * @return \Illuminate\Support\Collection
+     */
     public function getAllByRole($role)
     {
-        // Need list of user NS ids to check the cache.
-        $data = $this->database->getAllByRole($role);
+        $key = $role ? $role : 'contestant';
 
-        dd($data);
+        $ids = $this->retrieve($key . ':ids');
 
-        $this->store($role . ':ids', $data['ids']);
-        Cache::putMany($data['users'], 2);
+        if ($ids) {
+            $users = $this->retrieveMany($ids);
+            // @TODO: Need to check results:
+            // if any are "false" (thus no longer in cache),
+            // need to manually grab that item from NS.
+            // $this->resolveMissingUsers();
+            $users = collect(array_values($users));
 
-        return $data;
+            return $users;
+        }
+
+        $users = $this->database->getAllByRole($role);
+
+        if ($users->count()) {
+            $ids = $users->pluck('id')->toArray();
+            $collection = collect($users)->keyBy('id')->toArray();
+
+            $this->store($key . ':ids', $ids);
+            $this->storeMany($collection);
+        }
+
+        return $users;
     }
 
-    public function store($key, $data, $minutes = 15)
+    protected function retrieve($key)
     {
-        Cache::put($key, $data, $minutes);
+        return Cache::get($key);
+    }
+
+    protected function retrieveMany(array $keys)
+    {
+        return Cache::many($keys);
+    }
+
+    protected function store($key, $value, $minutes = 15)
+    {
+        Cache::put($key, $value, $minutes);
+    }
+
+    protected function storeMany(array $values, $minutes = 15)
+    {
+        Cache::putMany($values, $minutes);
     }
 }

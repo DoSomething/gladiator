@@ -44,20 +44,54 @@ class DatabaseUserRepository implements UserRepositoryInterface
         // return $users;
     }
 
+    /**
+     * Get collection of users by the specified role.
+     *
+     * @param  string $role
+     * @return \Illuminate\Support\Collection
+     */
     public function getAllByRole($role)
     {
         $users = User::where('role', '=', $role)->get();
-        $ids = $users->pluck('id')->toArray();
 
-        $parameters = ['filter[_id]' => implode(',', $ids)];
+        if ($users->count()) {
+            $ids = $users->pluck('id')->toArray();
 
-        $accounts = $this->northstar->getAllUsers($parameters);
+            $accounts = $this->getBatchedCollection($ids);
 
-        $collection = collect($accounts)->keyBy('id')->toArray();
+            return collect($accounts);
+        }
 
-        return [
-            'ids' => $ids,
-            'users' => $collection,
-        ];
+        return $users;
+    }
+
+    /**
+     * Get large number of users in batches from Northstar.
+     *
+     * @param  array  $ids
+     * @param  integer $size
+     * @return array
+     */
+    protected function getBatchedCollection($ids, $size = 50)
+    {
+        // @TODO: Should this be a function in Northstar Client?
+        $count = intval(ceil(count($ids) / 50));
+        $index = 0;
+        $data = [];
+
+        for ($i = 0; $i < $count; $i++) {
+            $batch = array_slice($ids, $index, $size);
+
+            $parameters['limit'] = '50';
+            $parameters['filter[_id]'] = implode(',', $batch);
+
+            $accounts = $this->northstar->getAllUsers($parameters);
+
+            $data = array_merge($data, $accounts);
+
+            $index += $size;
+        }
+
+        return $data;
     }
 }

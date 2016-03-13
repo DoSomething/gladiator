@@ -42,12 +42,11 @@ class UsersController extends Controller
      */
     public function index()
     {
-        // $admins = $this->repository->getAllByRole('admin');
+        $admins = $this->repository->getAllByRole('admin');
         $staff = $this->repository->getAllByRole('staff');
-        // $contestants = $this->repository->getAllByRole(null);
+        $contestants = $this->repository->getAllByRole(null);
 
-        dd($staff);
-        return view('users.index', compact('users'));
+        return view('users.index', compact('admins', 'staff', 'contestants'));
     }
 
     /**
