@@ -110,7 +110,7 @@ class UsersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  Gladiator\Http\Requests\UserRequest  $request
-     * @param  string  $id
+     * @param  string  $id  Northstar ID
      * @return \Illuminate\Http\Response
      */
     public function update(UserRequest $request, $id)
@@ -123,7 +123,7 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string  $id  Northstar ID
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -2,7 +2,6 @@
 
 namespace Gladiator\Providers;
 
-use Gladiator\Services\Registrar;
 use Illuminate\Support\ServiceProvider;
 use Gladiator\Repositories\CacheUserRepository;
 use Gladiator\Repositories\DatabaseUserRepository;

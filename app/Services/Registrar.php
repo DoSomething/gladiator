@@ -16,6 +16,11 @@ class Registrar
      */
     protected $northstar;
 
+    /**
+     * UserRepositoryInterface instance.
+     *
+     * @var \Gladiator\Repositories\UserRepositoryInterface
+     */
     protected $repository;
 
     /**
@@ -33,7 +38,7 @@ class Registrar
      * Create a user in Gladiator.
      *
      * @param  array $credentials
-     * @return \Gladiator\Models\User
+     * @return object
      */
     public function createUser($account)
     {

@@ -7,13 +7,27 @@ use Gladiator\Services\Northstar\Northstar;
 
 class DatabaseUserRepository implements UserRepositoryInterface
 {
+    /**
+     * Northstar instance.
+     *
+     * @var \Gladiator\Services\Northstar\Northstar
+     */
     protected $northstar;
 
+    /**
+     * Create new DatabaseUserRepository instance.
+     */
     public function __construct()
     {
         $this->northstar = new Northstar;
     }
 
+    /**
+     * Create a new user.
+     *
+     * @param  object  $account
+     * @return \Gladiator\Models\User
+     */
     public function create($account)
     {
         $user = new User;
@@ -38,20 +52,11 @@ class DatabaseUserRepository implements UserRepositoryInterface
 
         if ($account) {
             $account->role = $user->role;
+
             return $account;
         }
 
         return $user;
-    }
-
-    public function getAll()
-    {
-        // $users = [];
-        // $users['admins'] = $this->getAllByRole('admin');
-        // $users['staff'] = $this->getAllByRole('staff');
-        // $users['contestants'] = $this->getAllByRole(null);
-        // dd($users);
-        // return $users;
     }
 
     /**
@@ -75,6 +80,13 @@ class DatabaseUserRepository implements UserRepositoryInterface
         return $users;
     }
 
+    /**
+     * Update the specified user's data
+     *
+     * @param  \Gladiator\Http\Requests\UserRequest $request
+     * @param  string $id  Northstar ID
+     * @return \Gladiator\Models\User
+     */
     public function update($request, $id)
     {
         $user = User::findOrFail($id);

@@ -7,13 +7,29 @@ use Illuminate\Support\Facades\Cache;
 
 class CacheUserRepository implements UserRepositoryInterface
 {
+    /**
+     * UserRepositoryInterface instance.
+     *
+     * @var \Gladiator\Repositories\UserRepositoryInterface
+     */
     protected $database;
 
+    /**
+     * Create new CacheUserRepository instance.
+     *
+     * @param UserRepositoryInterface $database
+     */
     public function __construct(UserRepositoryInterface $database)
     {
         $this->database = $database;
     }
 
+    /**
+     * Create and cache a new user.
+     *
+     * @param  object  $account
+     * @return object
+     */
     public function create($account)
     {
         $user = $this->database->create($account);
@@ -42,18 +58,6 @@ class CacheUserRepository implements UserRepositoryInterface
         }
 
         return $user;
-    }
-
-    public function getAll()
-    {
-        $users = Cache::get('users');
-        // $users = Cache::many('users');
-
-        if (! $users) {
-            $users = $this->database->getAll();
-        }
-
-        return $users;
     }
 
     /**
@@ -89,6 +93,13 @@ class CacheUserRepository implements UserRepositoryInterface
         return $users;
     }
 
+    /**
+     * Update the specified user's data and resolve the cache.
+     *
+     * @param  \Gladiator\Http\Requests\UserRequest $request
+     * @param  string $id  Northstar ID
+     * @return object
+     */
     public function update($request, $id)
     {
         $user = $this->database->update($request, $id);
@@ -98,16 +109,35 @@ class CacheUserRepository implements UserRepositoryInterface
         return $user;
     }
 
+    /**
+     * Remove an item from the cache.
+     *
+     * @param  string  $key
+     * @return void
+     * @TODO: Might be best to return a bool like the Laravel class does?
+     */
     protected function forget($key)
     {
         Cache::forget($key);
     }
 
+    /**
+     * Remove all items from the cache.
+     *
+     * @return void
+     */
     protected function flush()
     {
         Cache::flush();
     }
 
+    /**
+     * Parse through cached role ids, and update for specified user.
+     *
+     * @param  string $id  Northstar ID
+     * @param  string $role
+     * @return void
+     */
     protected function resolveUpdatedRoles($id, $role)
     {
         foreach (User::getRoles() as $name => $value) {
@@ -133,6 +163,12 @@ class CacheUserRepository implements UserRepositoryInterface
         }
     }
 
+    /**
+     * Resolving missing cached users in a user cache collection.
+     *
+     * @param  array $users
+     * @return array
+     */
     protected function resolveMissingUsers($users)
     {
         foreach ($users as $key => $value) {
@@ -144,21 +180,50 @@ class CacheUserRepository implements UserRepositoryInterface
         return $users;
     }
 
+    /**
+     * Retrieve an item from the cache by key.
+     *
+     * @param  string  $key
+     * @return mixed
+     */
     protected function retrieve($key)
     {
         return Cache::get($key);
     }
 
+    /**
+     * Retrieve multiple items from the cache by key.
+     *
+     * Items not found in the cache will have a null value.
+     *
+     * @param  array  $keys
+     * @return array
+     */
     protected function retrieveMany(array $keys)
     {
         return Cache::many($keys);
     }
 
+    /**
+     * Store an item in the cache for a given number of minutes.
+     *
+     * @param  string  $key
+     * @param  mixed   $value
+     * @param  int     $minutes
+     * @return void
+     */
     protected function store($key, $value, $minutes = 15)
     {
         Cache::put($key, $value, $minutes);
     }
 
+    /**
+     * Store multiple items in the cache for a given number of minutes.
+     *
+     * @param  array  $values
+     * @param  int  $minutes
+     * @return void
+     */
     protected function storeMany(array $values, $minutes = 15)
     {
         Cache::putMany($values, $minutes);
