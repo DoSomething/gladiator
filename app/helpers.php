@@ -28,3 +28,14 @@ function matchEmailDomain($email, $domain = 'dosomething.org')
 
     return false;
 }
+
+function buildCSV($data)
+{
+    $csv = \League\Csv\Writer::createFromFileObject(new \SplTempFileObject());
+
+    foreach ($data as $row) {
+        $csv->insertOne($row);
+    }
+
+    return $csv;
+}

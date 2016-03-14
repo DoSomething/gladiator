@@ -35,14 +35,14 @@ class Competition extends Model
      */
     public function getCSVExport()
     {
-        $csv = \League\Csv\Writer::createFromFileObject(new \SplTempFileObject());
-
-        $csv->insertOne(['id']);
+        $data = [];
         $users = $this->users;
+
+        array_push($data, ['id']);
         foreach ($users as $user) {
-            $csv->insertOne($user->id);
+            array_push($data, $user->id);
         }
 
-        return $csv;
+        return buildCSV($data);
     }
 }
