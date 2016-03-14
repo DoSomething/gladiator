@@ -23,6 +23,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('auth/logout', 'Auth\AuthController@logout');
 
     // Competitions
+    Route::get('competitions/{competitions}/export', 'CompetitionsController@export')->name('competitions.export');
     Route::model('competitions', 'Gladiator\Models\Competition');
     Route::resource('competitions', 'CompetitionsController', ['except' => ['create']]);
 

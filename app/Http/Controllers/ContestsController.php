@@ -94,12 +94,12 @@ class ContestsController extends Controller
     /**
      * Download the CSV export of all users.
      *
-     * @param  \Gladiator\Models\WaitingRoom  $room
+     * @param  \Gladiator\Models\Contest $contest
      * @return \League\Csv\ $csv
      */
     public function export(Contest $contest)
     {
         $csv = $contest->getCSVExport();
-        $csv->output('waitingroom.csv');
+        $csv->output('contest' . $contest->id . '.csv');
     }
 }
