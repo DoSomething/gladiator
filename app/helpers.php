@@ -28,3 +28,20 @@ function matchEmailDomain($email, $domain = 'dosomething.org')
 
     return false;
 }
+
+/**
+ * Build a CSV from the supplied data.
+ *
+ * @param  array  $data
+ * @return \League\Csv $csv
+ */
+function buildCSV($data)
+{
+    $csv = \League\Csv\Writer::createFromFileObject(new \SplTempFileObject());
+
+    foreach ($data as $row) {
+        $csv->insertOne($row);
+    }
+
+    return $csv;
+}

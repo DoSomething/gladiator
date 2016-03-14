@@ -22,6 +22,9 @@
                         <a href="{{ route('contests.edit', $contest->id) }}" class="button">Edit</a>
                     </li>
                     <li>
+                        <a href="{{ route('contests.export', $contest->id) }}" class="button">Export</a>
+                    </li>
+                    <li>
                         <form method="POST" action="{{ route('contests.destroy', $contest->id) }}">
                             {{ method_field('DELETE') }}
                             {{ csrf_field() }}
