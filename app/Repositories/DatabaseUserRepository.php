@@ -65,7 +65,7 @@ class DatabaseUserRepository implements UserRepositoryInterface
      * @param  string $role
      * @return \Illuminate\Support\Collection
      */
-    public function getAllByRole($role)
+    public function getAllByRole($role = null)
     {
         $users = User::where('role', '=', $role)->get();
 

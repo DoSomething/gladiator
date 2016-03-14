@@ -63,12 +63,12 @@ class CacheUserRepository implements UserRepositoryInterface
     /**
      * Get collection of users from cache by specified role or default to database lookup.
      *
-     * @param  string $role
+     * @param  string|null $role
      * @return \Illuminate\Support\Collection
      */
-    public function getAllByRole($role)
+    public function getAllByRole($role = null)
     {
-        $key = $role ? $role : 'contestant';
+        $key = array_search($role, User::getRoles());
 
         $ids = $this->retrieve($key . ':ids');
 

@@ -44,7 +44,7 @@ class UsersController extends Controller
     {
         $admins = $this->repository->getAllByRole('admin');
         $staff = $this->repository->getAllByRole('staff');
-        $contestants = $this->repository->getAllByRole(null);
+        $contestants = $this->repository->getAllByRole();
 
         return view('users.index', compact('admins', 'staff', 'contestants'));
     }
@@ -109,7 +109,7 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  Gladiator\Http\Requests\UserRequest  $request
+     * @param  \Gladiator\Http\Requests\UserRequest  $request
      * @param  string  $id  Northstar ID
      * @return \Illuminate\Http\Response
      */
