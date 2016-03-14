@@ -76,7 +76,10 @@ class ContestsController extends Controller
      */
     public function update(ContestRequest $request, Contest $contest)
     {
-        $contest->fill($request->all())->save();
+        $dateParams = ['signup_start_date', 'signup_end_date'];
+
+        $contest->fill($request->except($dateParams))->save();
+        $contest->WaitingRoom->fill($request->only($dateParams))->save();
 
         return redirect()->back()->with('status', 'Contest has been updated!');
     }
