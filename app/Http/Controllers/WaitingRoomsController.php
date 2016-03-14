@@ -118,6 +118,6 @@ class WaitingRoomsController extends Controller
     public function export(WaitingRoom $room)
     {
         $csv = $room->getCSVExport();
-        $csv->output('waitingroom.csv');
+        $csv->output('waitingroom' . $room->id . '.csv');
     }
 }
