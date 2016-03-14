@@ -37,18 +37,7 @@ class Registrar
      */
     public function createUser($account)
     {
-        $user = new User;
-        $user->id = $account->id;
-        $user->role = isset($account->role) ? $account->role : null;
-        $user->save();
-
-        $user->first_name = $account->first_name;
-        $user->last_name = $account->last_name;
-        $user->email = $account->email;
-
-        $this->repository->store($user->id, $user);
-
-        return $user;
+        return $this->repository->create($account);
     }
 
     /**
@@ -73,22 +62,21 @@ class Registrar
      */
     public function findUserAccount($credentials)
     {
-        $northstarUser = $this->findNorthstarAccount($credentials['term'], $credentials['id']);
+        $northstarUser = $this->northstar->getUser($credentials['term'], $credentials['id']);
 
         if (! $northstarUser) {
             throw new NorthstarUserNotFoundException;
         }
 
-        $user = $this->repository->find($northstarUser->id);
+        // @TODO: Can't use Repository method below because it throws exception
+        // and here we just need "null" if user not found in Database. Find a
+        // better fix!
+        $user = User::find($northstarUser->id);
 
         if (! $user) {
             return $northstarUser;
         }
 
-        return $user;
-    }
-
-    public function registerAttributes($user, $attributes) {
-        $user->first_name = $account->first_name;
+        return $this->repository->find($user->id);
     }
 }

@@ -14,6 +14,16 @@ class DatabaseUserRepository implements UserRepositoryInterface
         $this->northstar = new Northstar;
     }
 
+    public function create($account)
+    {
+        $user = new User;
+        $user->id = $account->id;
+        $user->role = isset($account->role) ? $account->role : null;
+        $user->save();
+
+        return $user;
+    }
+
     /**
      * Find the specified resource in the database.
      *

@@ -14,6 +14,17 @@ class CacheUserRepository implements UserRepositoryInterface
         $this->database = $database;
     }
 
+    public function create($account)
+    {
+        $user = $this->database->create($account);
+
+        $this->resolveUpdatedRoles($user->id, $user->role);
+
+        $user = $this->find($user->id);
+
+        return $user;
+    }
+
     /**
      * Find the specified resource in cache or default to database lookup.
      *
@@ -59,7 +70,7 @@ class CacheUserRepository implements UserRepositoryInterface
 
         if ($ids) {
             $users = $this->retrieveMany($ids);
-            $users = $this->resolveMissingCache($users);
+            $users = $this->resolveMissingUsers($users);
             $users = collect(array_values($users));
 
             return $users;
@@ -82,7 +93,7 @@ class CacheUserRepository implements UserRepositoryInterface
     {
         $user = $this->database->update($request, $id);
 
-        $this->resolveUpdatedCache($id, $request->role);
+        $this->resolveUpdatedRoles($id, $request->role);
 
         return $user;
     }
@@ -97,7 +108,7 @@ class CacheUserRepository implements UserRepositoryInterface
         Cache::flush();
     }
 
-    protected function resolveUpdatedCache($id, $role)
+    protected function resolveUpdatedRoles($id, $role)
     {
         foreach (User::getRoles() as $name => $value) {
             $key = $name . ':ids';
@@ -109,7 +120,6 @@ class CacheUserRepository implements UserRepositoryInterface
 
                     $this->forget($key);
                     $this->store($key, $ids);
-                    // dd('found and removed from old cache');
                 } else {
                     if ($name === $role) {
                         $this->forget($key);
@@ -117,14 +127,13 @@ class CacheUserRepository implements UserRepositoryInterface
                         $ids[] = $id;
 
                         $this->store($key, $ids);
-                        // dd('added to cache');
                     }
                 }
             }
         }
     }
 
-    protected function resolveMissingCache($users)
+    protected function resolveMissingUsers($users)
     {
         foreach ($users as $key => $value) {
             if ($value === false) {
