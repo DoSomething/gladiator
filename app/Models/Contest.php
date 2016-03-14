@@ -26,7 +26,7 @@ class Contest extends Model
      */
     public function competitions()
     {
-        return $this->hasMany(competition::class);
+        return $this->hasMany(Competition::class);
     }
 
     /**
