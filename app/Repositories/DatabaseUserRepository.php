@@ -22,7 +22,7 @@ class DatabaseUserRepository implements UserRepositoryInterface
      */
     public function find($id)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
 
         $account = $this->northstar->getUser('_id', $user->id);
 
@@ -65,11 +65,20 @@ class DatabaseUserRepository implements UserRepositoryInterface
         return $users;
     }
 
+    public function update($request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->role = $request->role;
+        $user->save();
+
+        return $user;
+    }
+
     /**
      * Get large number of users in batches from Northstar.
      *
      * @param  array  $ids
-     * @param  integer $size
+     * @param  int $size
      * @return array
      */
     protected function getBatchedCollection($ids, $size = 50)

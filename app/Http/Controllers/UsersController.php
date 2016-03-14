@@ -96,12 +96,13 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \Gladiator\Models\User  $user
+     * @param  string  $id  Northstar ID
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        dd('nope');
+        $user = $this->repository->find($id);
+
         return view('users.edit', compact('user'));
     }
 
@@ -109,14 +110,12 @@ class UsersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  Gladiator\Http\Requests\UserRequest  $request
-     * @param  \Gladiator\Models\User  $user
+     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, User $user)
+    public function update(UserRequest $request, $id)
     {
-        dd('nope');
-        $user->role = $request->role;
-        $user->save();
+        $this->repository->update($request, $id);
 
         return redirect()->route('users.index')->with('status', 'User has been updated!');
     }

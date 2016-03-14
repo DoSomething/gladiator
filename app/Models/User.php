@@ -24,6 +24,17 @@ class User extends BaseUser
     ];
 
     /**
+     * Array of available roles.
+     *
+     * @var array
+     */
+    protected $roles = [
+        'admin',
+        'staff',
+        null,
+    ];
+
+    /**
      * A User belongs to many Competitions.
      */
     public function competitions()
@@ -37,6 +48,16 @@ class User extends BaseUser
     public function waitingRooms()
     {
         return $this->belongsToMany(WaitingRoom::class);
+    }
+
+    /**
+     * Get list of available roles.
+     *
+     * @return array
+     */
+    public function getRoles()
+    {
+        return $this->roles;
     }
 
     /**

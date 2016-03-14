@@ -4,7 +4,7 @@
 
     @include('layouts.header',[
         'title' => 'Users',
-        'subtitle' => 'Edit user ' . $user->id
+        'subtitle' => 'Edit this user\'s information'
     ])
 
     <div class="container">

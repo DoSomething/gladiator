@@ -80,6 +80,25 @@ class CacheUserRepository implements UserRepositoryInterface
         return $users;
     }
 
+    public function update($request, $id)
+    {
+        $user = $this->database->update($request, $id);
+
+        $this->forget($user->id);
+
+        return $user;
+    }
+
+    protected function forget($key)
+    {
+        Cache::forget($key);
+    }
+
+    protected function flush()
+    {
+        Cache::flush();
+    }
+
     protected function retrieve($key)
     {
         return Cache::get($key);
