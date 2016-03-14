@@ -37,7 +37,10 @@ class ContestsController extends Controller
      */
     public function store(ContestRequest $request)
     {
-        $contest = Contest::create($request->all());
+        $dateParams = ['signup_start_date', 'signup_end_date'];
+
+        $contest = Contest::create($request->except($dateParams));
+        $contest->WaitingRoom->fill($request->only($dateParams))->save();
 
         return redirect()->action('ContestsController@show', $contest->id)->with('status', 'Contest has been saved!');
     }
