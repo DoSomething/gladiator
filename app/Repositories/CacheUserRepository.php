@@ -2,6 +2,7 @@
 
 namespace Gladiator\Repositories;
 
+use Gladiator\Models\User;
 use Illuminate\Support\Facades\Cache;
 
 class CacheUserRepository implements UserRepositoryInterface
@@ -58,10 +59,7 @@ class CacheUserRepository implements UserRepositoryInterface
 
         if ($ids) {
             $users = $this->retrieveMany($ids);
-            // @TODO: Need to check results:
-            // if any are "false" (thus no longer in cache),
-            // need to manually grab that item from NS.
-            // $this->resolveMissingUsers();
+            $users = $this->resolveMissingCache($users);
             $users = collect(array_values($users));
 
             return $users;
@@ -84,7 +82,7 @@ class CacheUserRepository implements UserRepositoryInterface
     {
         $user = $this->database->update($request, $id);
 
-        $this->forget($user->id);
+        $this->resolveUpdatedCache($id, $request->role);
 
         return $user;
     }
@@ -97,6 +95,44 @@ class CacheUserRepository implements UserRepositoryInterface
     protected function flush()
     {
         Cache::flush();
+    }
+
+    protected function resolveUpdatedCache($id, $role)
+    {
+        foreach (User::getRoles() as $name => $value) {
+            $key = $name . ':ids';
+            $ids = $this->retrieve($key);
+
+            if ($ids) {
+                if (in_array($id, $ids)) {
+                    unset($ids[array_search($id, $ids)]);
+
+                    $this->forget($key);
+                    $this->store($key, $ids);
+                    // dd('found and removed from old cache');
+                } else {
+                    if ($name === $role) {
+                        $this->forget($key);
+
+                        $ids[] = $id;
+
+                        $this->store($key, $ids);
+                        // dd('added to cache');
+                    }
+                }
+            }
+        }
+    }
+
+    protected function resolveMissingCache($users)
+    {
+        foreach ($users as $key => $value) {
+            if ($value === false) {
+                $users[$key] = $this->find($key);
+            }
+        }
+
+        return $users;
     }
 
     protected function retrieve($key)

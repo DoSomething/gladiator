@@ -46,6 +46,7 @@ class UsersController extends Controller
         $staff = $this->repository->getAllByRole('staff');
         $contestants = $this->repository->getAllByRole(null);
 
+        // dd($admins);
         return view('users.index', compact('admins', 'staff', 'contestants'));
     }
 

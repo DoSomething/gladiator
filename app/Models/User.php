@@ -28,10 +28,10 @@ class User extends BaseUser
      *
      * @var array
      */
-    protected $roles = [
-        'admin',
-        'staff',
-        null,
+    protected static $roles = [
+        'admin' => 'admin',
+        'staff' => 'staff',
+        'contestant' => null,
     ];
 
     /**
@@ -48,16 +48,6 @@ class User extends BaseUser
     public function waitingRooms()
     {
         return $this->belongsToMany(WaitingRoom::class);
-    }
-
-    /**
-     * Get list of available roles.
-     *
-     * @return array
-     */
-    public function getRoles()
-    {
-        return $this->roles;
     }
 
     /**
@@ -106,6 +96,16 @@ class User extends BaseUser
         }
 
         return $user;
+    }
+
+    /**
+     * Get list of available roles.
+     *
+     * @return array
+     */
+    public static function getRoles()
+    {
+        return static::$roles;
     }
 
     /**
