@@ -30,6 +30,24 @@ class WaitingRoom extends Model
     }
 
     /**
+     * Gets a CSV export of all the users in this waiting room.
+     *
+     * @return \League\Csv\ $csv
+     */
+    public function getCSVExport()
+    {
+        $data = [];
+        $users = $this->users;
+
+        array_push($data, ['id']);
+        foreach ($users as $user) {
+            array_push($data, $user->id);
+        }
+
+        return buildCSV($data);
+    }
+
+    /*
      * Determines if the waiting room is open for signupsOpen
      *
      * @return bool whether the room is open or not

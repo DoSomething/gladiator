@@ -108,4 +108,16 @@ class WaitingRoomsController extends Controller
 
         return redirect()->route('waitingrooms.index')->with('status', 'Waiting Room has been split!');
     }
+
+    /**
+     * Download the CSV export of all users.
+     *
+     * @param  \Gladiator\Models\WaitingRoom  $room
+     * @return \League\Csv\ $csv
+     */
+    public function export(WaitingRoom $room)
+    {
+        $csv = $room->getCSVExport();
+        $csv->output('waitingroom' . $room->id . '.csv');
+    }
 }

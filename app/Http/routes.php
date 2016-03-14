@@ -23,10 +23,12 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('auth/logout', 'Auth\AuthController@logout');
 
     // Competitions
+    Route::get('competitions/{competitions}/export', 'CompetitionsController@export')->name('competitions.export');
     Route::model('competitions', 'Gladiator\Models\Competition');
     Route::resource('competitions', 'CompetitionsController', ['except' => ['create']]);
 
     // Competitions
+    Route::get('contests/{contest}/export', 'ContestsController@export')->name('contests.export');
     Route::model('contests', 'Gladiator\Models\Contest');
     Route::resource('contests', 'ContestsController');
 
@@ -39,6 +41,7 @@ Route::group(['middleware' => ['web']], function () {
     ]);
 
     // Waiting rooms routes.
+    Route::get('waitingrooms/{waitingrooms}/export', 'WaitingRoomsController@export')->name('waitingrooms.export');
     Route::get('waitingrooms/{waitingrooms}/split', 'WaitingRoomsController@showSplitForm')->name('split');
     Route::post('waitingrooms/{waitingrooms}/split', 'WaitingRoomsController@split')->name('split');
     Route::model('waitingrooms', 'Gladiator\Models\WaitingRoom');

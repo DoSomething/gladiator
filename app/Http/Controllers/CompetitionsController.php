@@ -79,4 +79,16 @@ class CompetitionsController extends Controller
 
         return redirect()->route('competitions.index')->with('status', 'Competition has been deleted!');
     }
+
+    /**
+     * Download the CSV export of all users.
+     *
+     * @param  \Gladiator\Models\Competition  $competition
+     * @return \League\Csv\ $csv
+     */
+    public function export(Competition $competition)
+    {
+        $csv = $competition->getCSVExport();
+        $csv->output('competition' . $competition->id . '.csv');
+    }
 }
