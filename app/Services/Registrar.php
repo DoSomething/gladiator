@@ -4,7 +4,7 @@ namespace Gladiator\Services;
 
 use Gladiator\Models\User;
 use Gladiator\Services\Northstar\Northstar;
-use Gladiator\Repositories\UserRepositoryInterface;
+use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Northstar\Exceptions\NorthstarUserNotFoundException;
 
 class Registrar
@@ -17,9 +17,9 @@ class Registrar
     protected $northstar;
 
     /**
-     * UserRepositoryInterface instance.
+     * UserRepositoryContract instance.
      *
-     * @var \Gladiator\Repositories\UserRepositoryInterface
+     * @var \Gladiator\Repositories\UserRepositoryContract
      */
     protected $repository;
 
@@ -28,7 +28,7 @@ class Registrar
      *
      * @param Northstar $northstar
      */
-    public function __construct(Northstar $northstar, UserRepositoryInterface $repository)
+    public function __construct(Northstar $northstar, UserRepositoryContract $repository)
     {
         $this->northstar = $northstar;
         $this->repository = $repository;

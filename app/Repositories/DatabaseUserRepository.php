@@ -5,7 +5,7 @@ namespace Gladiator\Repositories;
 use Gladiator\Models\User;
 use Gladiator\Services\Northstar\Northstar;
 
-class DatabaseUserRepository implements UserRepositoryInterface
+class DatabaseUserRepository implements UserRepositoryContract
 {
     /**
      * Northstar instance.

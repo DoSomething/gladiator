@@ -5,21 +5,21 @@ namespace Gladiator\Repositories;
 use Gladiator\Models\User;
 use Illuminate\Support\Facades\Cache;
 
-class CacheUserRepository implements UserRepositoryInterface
+class CacheUserRepository implements UserRepositoryContract
 {
     /**
-     * UserRepositoryInterface instance.
+     * UserRepositoryContract instance.
      *
-     * @var \Gladiator\Repositories\UserRepositoryInterface
+     * @var \Gladiator\Repositories\UserRepositoryContract
      */
     protected $database;
 
     /**
      * Create new CacheUserRepository instance.
      *
-     * @param UserRepositoryInterface $database
+     * @param UserRepositoryContract $database
      */
-    public function __construct(UserRepositoryInterface $database)
+    public function __construct(UserRepositoryContract $database)
     {
         $this->database = $database;
     }

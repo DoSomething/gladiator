@@ -5,7 +5,7 @@ namespace Gladiator\Providers;
 use Illuminate\Support\ServiceProvider;
 use Gladiator\Repositories\CacheUserRepository;
 use Gladiator\Repositories\DatabaseUserRepository;
-use Gladiator\Repositories\UserRepositoryInterface;
+use Gladiator\Repositories\UserRepositoryContract;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(UserRepositoryInterface::class, function ($app) {
+        $this->app->bind(UserRepositoryContract::class, function ($app) {
             return new CacheUserRepository(new DatabaseUserRepository);
         });
     }

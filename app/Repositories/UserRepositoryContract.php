@@ -2,7 +2,7 @@
 
 namespace Gladiator\Repositories;
 
-interface UserRepositoryInterface
+interface UserRepositoryContract
 {
     /**
      * Create a new user.

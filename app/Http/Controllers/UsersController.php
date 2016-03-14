@@ -5,7 +5,7 @@ namespace Gladiator\Http\Controllers;
 use Gladiator\Models\User;
 use Gladiator\Services\Registrar;
 use Gladiator\Http\Requests\UserRequest;
-use Gladiator\Repositories\UserRepositoryInterface;
+use Gladiator\Repositories\UserRepositoryContract;
 
 class UsersController extends Controller
 {
@@ -19,14 +19,14 @@ class UsersController extends Controller
     /**
      * UserRepository instance.
      *
-     * @var \Gladiator\Repositories\UserRepositoryInterface
+     * @var \Gladiator\Repositories\UserRepositoryContract
      */
     protected $repository;
 
     /**
      * Create new UsersController instance.
      */
-    public function __construct(Registrar $registrar, UserRepositoryInterface $repository)
+    public function __construct(Registrar $registrar, UserRepositoryContract $repository)
     {
         $this->registrar = $registrar;
         $this->repository = $repository;
