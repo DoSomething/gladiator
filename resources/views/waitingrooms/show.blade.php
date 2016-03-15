@@ -34,22 +34,24 @@
 
             <div class="container__block">
                 <table class="table">
-                  <thead>
-                    <tr class="table__header">
-                      <th class="table__cell">First Name</th>
-                      <th class="table__cell">Email</th>
-                      <th class="table__cell">Phone</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($users as $user)
-                      <tr class="table__row">
-                        <td class="table__cell"><a href="{{ route('users.show', $user->id) }}">{{ $user->first_name }}</td>
-                        <td class="table__cell">{{ $user->email }}</td>
-                        <td class="table__cell">{{ $user->mobile }}</td>
-                      </tr>
-                    @endforeach
-                  </tbody>
+                    <thead>
+                        <tr class="table__header">
+                            <th class="table__cell">First Name</th>
+                            <th class="table__cell">Email</th>
+                            <th class="table__cell">Phone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($users as $key => $user)
+                            @if ($user)
+                                <tr class="table__row">
+                                    <td class="table__cell"><a href="{{ route('users.show', $user->id) }}">{{ $user->first_name or $user->id }}</td>
+                                    <td class="table__cell">{{ $user->email or NULL }}</td>
+                                    <td class="table__cell">{{ $user->mobile or NULL }}</td>
+                                </tr>
+                            @endif
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
         </div>
