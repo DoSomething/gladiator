@@ -5,14 +5,23 @@ namespace Gladiator\Http\Controllers;
 use Gladiator\Http\Requests\CompetitionRequest;
 use Gladiator\Models\Competition;
 use Gladiator\Models\Contest;
+use Gladiator\Repositories\UserRepositoryContract;
 
 class CompetitionsController extends Controller
 {
     /**
+     * UserRepository instance.
+     *
+     * @var \Gladiator\Repositories\UserRepositoryContract
+     */
+    protected $repository;
+
+    /**
      * Create new CompetitionsController instance.
      */
-    public function __construct()
+    public function __construct(UserRepositoryContract $repository)
     {
+        $this->repository = $repository;
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
     }
@@ -39,8 +48,7 @@ class CompetitionsController extends Controller
     {
         $contest = Contest::find($competition->contest_id);
 
-        // Get competition users.
-        $users = $competition->users;
+        $users = $this->repository->getAll($competition->users->lists('id')->toArray());
 
         return view('competitions.show', compact('competition', 'contest', 'users'));
     }
