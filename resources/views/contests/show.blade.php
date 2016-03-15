@@ -25,6 +25,9 @@
                         <a href="{{ route('contests.export', $contest->id) }}" class="button">Export</a>
                     </li>
                     <li>
+                        <a href="{{ route('split', $contest->waitingRoom->id) }}" class="button">Split</a>
+                    </li>
+                    <li>
                         <form method="POST" action="{{ route('contests.destroy', $contest->id) }}">
                             {{ method_field('DELETE') }}
                             {{ csrf_field() }}
