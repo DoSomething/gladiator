@@ -5,14 +5,16 @@ namespace Gladiator\Http\Controllers;
 use Gladiator\Models\Contest;
 use Gladiator\Models\WaitingRoom;
 use Gladiator\Http\Requests\WaitingRoomRequest;
+use Gladiator\Repositories\UserRepositoryContract;
 
 class WaitingRoomsController extends Controller
 {
     /**
      * Create new WaitingRoomsController instance.
      */
-    public function __construct()
+    public function __construct(UserRepositoryContract $repository)
     {
+        $this->repository = $repository;
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
     }
@@ -52,7 +54,9 @@ class WaitingRoomsController extends Controller
     {
         $contest = Contest::find($room->contest_id);
 
-        return view('waitingrooms.show', compact('room', 'contest'));
+        $users = $this->repository->getAll($room->users->pluck('id')->toArray());
+
+        return view('waitingrooms.show', compact('room', 'contest', 'users'));
     }
 
     /**
