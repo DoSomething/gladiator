@@ -233,7 +233,7 @@ class CacheUserRepository implements UserRepositoryContract
      * Items not found in the cache will have a null value.
      *
      * @param  array  $keys
-     * @return array
+     * @return array|null
      */
     protected function retrieveMany(array $keys)
     {
@@ -248,7 +248,7 @@ class CacheUserRepository implements UserRepositoryContract
         }
 
         if (count($retrieved)) {
-            return Cache::many($keys);
+            return $data;
         }
 
         return;
