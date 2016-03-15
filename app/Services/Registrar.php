@@ -37,7 +37,7 @@ class Registrar
     /**
      * Create a user in Gladiator.
      *
-     * @param  array $credentials
+     * @param  array $account
      * @return object
      */
     public function createUser($account)

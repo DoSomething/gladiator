@@ -39,13 +39,14 @@ class UsersController extends ApiController
     {
         $account = $this->registrar->findUserAccount($request->all());
 
-        if (! $account instanceof User) {
-            $credentials = $request->all();
-            $credentials['id'] = $account;
-
-            $user = $this->registrar->createUser($credentials);
-        } else {
+        if ($account instanceof User) {
             $user = $account;
+        } else {
+            $credentials = $request->all();
+            $credentials['id'] = $account->id;
+            unset($credentials['term']);
+
+            $user = $this->registrar->createUser((object) $credentials);
         }
 
         // @TODO: Move to a User Repository

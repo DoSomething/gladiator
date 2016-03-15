@@ -28,15 +28,13 @@ class CacheUserRepository implements UserRepositoryContract
      * Create and cache a new user.
      *
      * @param  object  $account
-     * @return object
+     * @return \Gladiator\Models\User
      */
     public function create($account)
     {
         $user = $this->database->create($account);
 
         $this->resolveUpdatedRoles($user->id, $user->role);
-
-        $user = $this->find($user->id);
 
         return $user;
     }
