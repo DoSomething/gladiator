@@ -12,16 +12,16 @@ class CacheUserRepository implements UserRepositoryContract
      *
      * @var \Gladiator\Repositories\UserRepositoryContract
      */
-    protected $database;
+    protected $repository;
 
     /**
      * Create new CacheUserRepository instance.
      *
-     * @param UserRepositoryContract $database
+     * @param UserRepositoryContract $repository
      */
-    public function __construct(UserRepositoryContract $database)
+    public function __construct(UserRepositoryContract $repository)
     {
-        $this->database = $database;
+        $this->repository = $repository;
     }
 
     /**
@@ -32,7 +32,7 @@ class CacheUserRepository implements UserRepositoryContract
      */
     public function create($account)
     {
-        $user = $this->database->create($account);
+        $user = $this->repository->create($account);
 
         $this->resolveUpdatedRoles($user->id, $user->role);
 
@@ -40,7 +40,8 @@ class CacheUserRepository implements UserRepositoryContract
     }
 
     /**
-     * Find the specified resource in cache or default to database lookup.
+     * Find the specified resource in cache or default to alternate repository
+     * lookup.
      *
      * @param  string  $id  Northstar ID
      * @return object
@@ -50,7 +51,7 @@ class CacheUserRepository implements UserRepositoryContract
         $user = Cache::get($id);
 
         if (! $user) {
-            $user = $this->database->find($id);
+            $user = $this->repository->find($id);
 
             $this->store($user->id, $user);
         }
@@ -59,7 +60,8 @@ class CacheUserRepository implements UserRepositoryContract
     }
 
     /**
-     * Get collection of users from cache by specified role or default to database lookup.
+     * Get collection of users from cache by specified role or default to
+     * alternate repository lookup.
      *
      * @param  string|null $role
      * @return \Illuminate\Support\Collection
@@ -78,7 +80,7 @@ class CacheUserRepository implements UserRepositoryContract
             return $users;
         }
 
-        $users = $this->database->getAllByRole($role);
+        $users = $this->repository->getAllByRole($role);
 
         if ($users->count()) {
             $ids = $users->pluck('id')->toArray();
@@ -100,7 +102,7 @@ class CacheUserRepository implements UserRepositoryContract
      */
     public function update($request, $id)
     {
-        $user = $this->database->update($request, $id);
+        $user = $this->repository->update($request, $id);
 
         $this->resolveUpdatedRoles($id, $request->role);
 
