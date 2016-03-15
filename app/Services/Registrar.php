@@ -62,7 +62,7 @@ class Registrar
      * Resolve user account within Northstar/Gladiator system.
      *
      * @param  array  $credentials
-     * @return \Gladiator\Models\User|string
+     * @return \Gladiator\Models\User|object
      * @throws \Gladiator\Services\Northstar\Exceptions\NorthstarUserNotFoundException
      */
     public function findUserAccount($credentials)
@@ -82,6 +82,6 @@ class Registrar
             return $northstarUser;
         }
 
-        return $this->repository->find($user->id);
+        return $user;
     }
 }
