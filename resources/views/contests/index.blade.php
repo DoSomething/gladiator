@@ -25,7 +25,7 @@
                           <th class="table__cell">Campaign</th>
                           <th class="table__cell">Campaign Run</th>
                           <th class="table__cell">Duration</th>
-                          <th class="table__cell"># in Waiting Room</th>
+                          <th class="table__cell">Contestants in Waiting Room</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -35,7 +35,7 @@
                             <td class="table__cell">{{ $contest->campaign_id }}</td>
                             <td class="table__cell">{{ $contest->campaign_run_id }}</td>
                             <td class="table__cell">{{ $contest->duration }}</td>
-                            <td class="table__cell">{{ count($contest->waitingroom->users) }}</td>
+                            <td class="table__cell">{{ $contest->waitingroom->users->count() }}</td>
                           </tr>
                         @endforeach
                       </tbody>
