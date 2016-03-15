@@ -8,7 +8,7 @@
 ## Create A User
 
 ```
-POST /users
+POST /api/v1/users
 ```
 
 **Headers**
@@ -42,7 +42,7 @@ Content-Type: application/json
 curl -X POST \
   -H "Content-Type: application/json" \
   -H "Accept: application/json" \
-  -d '{"key":"kallark@dosomething.org","type":"email","campaign_id":"362","campaign_run_id":"212"}' \
+  -d '{"id":"kallark@dosomething.org","term":"email","campaign_id":"362","campaign_run_id":"212"}' \
   http://gladiator.dosomething.org/api/v1/users
 ```
 

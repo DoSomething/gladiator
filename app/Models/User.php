@@ -24,6 +24,17 @@ class User extends BaseUser
     ];
 
     /**
+     * Array of available roles.
+     *
+     * @var array
+     */
+    protected static $roles = [
+        'admin' => 'admin',
+        'staff' => 'staff',
+        'contestant' => null,
+    ];
+
+    /**
      * A User belongs to many Competitions.
      */
     public function competitions()
@@ -85,6 +96,16 @@ class User extends BaseUser
         }
 
         return $user;
+    }
+
+    /**
+     * Get list of available roles.
+     *
+     * @return array
+     */
+    public static function getRoles()
+    {
+        return static::$roles;
     }
 
     /**

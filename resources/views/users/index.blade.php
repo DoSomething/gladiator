@@ -14,15 +14,15 @@
         </div>
     </div>
 
-    @if (count($admins) > 0)
+    @if ($admins->count())
         @include('users.partials._table_users', ['users' => $admins, 'role' => 'Admins'])
     @endif
 
-    @if (count($staff) > 0)
+    @if ($staff->count())
         @include('users.partials._table_users', ['users' => $staff, 'role' => 'Staff'])
     @endif
 
-    @if (count($contestants) > 0)
+    @if ($contestants->count())
         @include('users.partials._table_users', ['users' => $contestants, 'role' => 'Contestants'])
     @endif
 

@@ -4,6 +4,7 @@ namespace Gladiator\Services;
 
 use Gladiator\Models\User;
 use Gladiator\Services\Northstar\Northstar;
+use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Northstar\Exceptions\NorthstarUserNotFoundException;
 
 class Registrar
@@ -16,29 +17,32 @@ class Registrar
     protected $northstar;
 
     /**
+     * UserRepositoryContract instance.
+     *
+     * @var \Gladiator\Repositories\UserRepositoryContract
+     */
+    protected $repository;
+
+    /**
      * Create new Registrar instance.
      *
      * @param Northstar $northstar
      */
-    public function __construct(Northstar $northstar)
+    public function __construct(Northstar $northstar, UserRepositoryContract $repository)
     {
         $this->northstar = $northstar;
+        $this->repository = $repository;
     }
 
     /**
      * Create a user in Gladiator.
      *
-     * @param  array $credentials
-     * @return \Gladiator\Models\User
+     * @param  array $account
+     * @return object
      */
-    public function createUser($credentials)
+    public function createUser($account)
     {
-        $user = new User;
-        $user->id = $credentials['id'];
-        $user->role = isset($credentials['role']) ? $credentials['role'] : null;
-        $user->save();
-
-        return $user;
+        return $this->repository->create($account);
     }
 
     /**
@@ -47,6 +51,7 @@ class Registrar
      * @param  string  $type
      * @param  string  $id
      * @return object|null
+     * @deprecated
      */
     public function findNorthstarAccount($type, $id)
     {
@@ -62,18 +67,21 @@ class Registrar
      */
     public function findUserAccount($credentials)
     {
-        $northstarUser = $this->findNorthstarAccount($credentials['term'], $credentials['id']);
+        $northstarUser = $this->northstar->getUser($credentials['term'], $credentials['id']);
 
         if (! $northstarUser) {
             throw new NorthstarUserNotFoundException;
         }
 
+        // @TODO: Can't use Repository method below because it throws exception
+        // and here we just need "null" if user not found in Database. Find a
+        // better fix if necessary!
         $user = User::find($northstarUser->id);
 
         if (! $user) {
-            return $northstarUser->id;
+            return $northstarUser;
         }
 
-        return $user;
+        return $this->repository->find($user->id);
     }
 }

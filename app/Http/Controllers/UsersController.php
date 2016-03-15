@@ -5,6 +5,7 @@ namespace Gladiator\Http\Controllers;
 use Gladiator\Models\User;
 use Gladiator\Services\Registrar;
 use Gladiator\Http\Requests\UserRequest;
+use Gladiator\Repositories\UserRepositoryContract;
 
 class UsersController extends Controller
 {
@@ -16,11 +17,19 @@ class UsersController extends Controller
     protected $registrar;
 
     /**
+     * UserRepository instance.
+     *
+     * @var \Gladiator\Repositories\UserRepositoryContract
+     */
+    protected $repository;
+
+    /**
      * Create new UsersController instance.
      */
-    public function __construct(Registrar $registrar)
+    public function __construct(Registrar $registrar, UserRepositoryContract $repository)
     {
         $this->registrar = $registrar;
+        $this->repository = $repository;
 
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
@@ -33,9 +42,9 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $admins = User::where('role', '=', 'admin')->get();
-        $staff = User::where('role', '=', 'staff')->get();
-        $contestants = User::where('role', '=', null)->get();
+        $admins = $this->repository->getAllByRole('admin');
+        $staff = $this->repository->getAllByRole('staff');
+        $contestants = $this->repository->getAllByRole();
 
         return view('users.index', compact('admins', 'staff', 'contestants'));
     }
@@ -64,10 +73,9 @@ class UsersController extends Controller
             return redirect()->route('users.index')->with('status', 'User already exists!');
         }
 
-        $credentials = $request->all();
-        $credentials['id'] = $account;
+        $account->role = $request->role;
 
-        $user = $this->registrar->createUser($credentials);
+        $user = $this->registrar->createUser($account);
 
         return redirect()->route('users.index')->with('status', 'User has been created!');
     }
@@ -75,36 +83,39 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \Gladiator\Models\User  $user
+     * @param  string  $id  Northstar ID
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
+        $user = $this->repository->find($id);
+
         return view('users.show', compact('user'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \Gladiator\Models\User  $user
+     * @param  string  $id  Northstar ID
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
+        $user = $this->repository->find($id);
+
         return view('users.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  Gladiator\Http\Requests\UserRequest  $request
-     * @param  \Gladiator\Models\User  $user
+     * @param  \Gladiator\Http\Requests\UserRequest  $request
+     * @param  string  $id  Northstar ID
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, $user)
+    public function update(UserRequest $request, $id)
     {
-        $user->role = $request->role;
-        $user->save();
+        $this->repository->update($request, $id);
 
         return redirect()->route('users.index')->with('status', 'User has been updated!');
     }
@@ -112,7 +123,7 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string  $id  Northstar ID
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
