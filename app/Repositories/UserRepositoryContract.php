@@ -21,6 +21,14 @@ interface UserRepositoryContract
     public function find($id);
 
     /**
+     * Get collection of all users or set of users by ids.
+     *
+     * @param  array $ids Northstar IDs
+     * @return \Illuminate\Support\Collection
+     */
+    public function getAll(array $ids = []);
+
+    /**
      * Get collection of users by the specified role.
      *
      * @param  string $role
