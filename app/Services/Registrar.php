@@ -75,7 +75,7 @@ class Registrar
 
         // @TODO: Can't use Repository method below because it throws exception
         // and here we just need "null" if user not found in Database. Find a
-        // better fix!
+        // better fix if necessary!
         $user = User::find($northstarUser->id);
 
         if (! $user) {

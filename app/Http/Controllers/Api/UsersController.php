@@ -49,7 +49,6 @@ class UsersController extends ApiController
             $user = $this->registrar->createUser((object) $credentials);
         }
 
-        // @TODO: Move to a User Repository
         $contest = Contest::with(['waitingRoom', 'competitions'])->where('campaign_id', '=', $request['campaign_id'])
                             ->where('campaign_run_id', '=', $request['campaign_run_id'])
                             ->firstOrFail();

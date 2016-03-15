@@ -8,7 +8,7 @@ interface UserRepositoryContract
      * Create a new user.
      *
      * @param  object  $account
-     * @return \Gladiator\Models\User|object
+     * @return \Gladiator\Models\User
      */
     public function create($account);
 
