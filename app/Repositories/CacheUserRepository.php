@@ -60,6 +60,42 @@ class CacheUserRepository implements UserRepositoryContract
     }
 
     /**
+     * Get collection of all users or set of users by ids from cache or
+     * default to alternate respository lookup.
+     *
+     * @param  array $ids Northstar IDs
+     * @return \Illuminate\Support\Collection
+     */
+    public function getAll(array $ids = [])
+    {
+        // @TODO: This is messy and needs another pass.
+        if ($ids) {
+            $users = $this->retrieveMany($ids);
+
+            if (! $users) {
+                $users = $this->repository->getAll($ids);
+
+                if ($users->count()) {
+                    $group = $users->keyBy('id')->all();
+                    $this->storeMany($group);
+                }
+            } else {
+                $users = $this->resolveMissingUsers($users);
+                $users = collect(array_values($users));
+            }
+
+            return $users;
+        }
+
+        // @TODO: find a better way to retrieve all from cache.
+        // Will resort to just passing off to alternate repository
+        // and grabbing everything from Northstar without caching.
+        $users = $this->repository->getAll();
+
+        return $users;
+    }
+
+    /**
      * Get collection of users from cache by specified role or default to
      * alternate repository lookup.
      *
@@ -201,7 +237,21 @@ class CacheUserRepository implements UserRepositoryContract
      */
     protected function retrieveMany(array $keys)
     {
-        return Cache::many($keys);
+        $retrieved = [];
+
+        $data = Cache::many($keys);
+
+        foreach ($data as $item) {
+            if ($item) {
+                $retrieved[] = $item;
+            }
+        }
+
+        if (count($retrieved)) {
+            return Cache::many($keys);
+        }
+
+        return;
     }
 
     /**

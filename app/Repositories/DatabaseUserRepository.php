@@ -60,6 +60,25 @@ class DatabaseUserRepository implements UserRepositoryContract
     }
 
     /**
+     * Get collection of all users or set of users by ids.
+     *
+     * @param  array $ids Northstar IDs
+     * @return \Illuminate\Support\Collection
+     */
+    public function getAll(array $ids = [])
+    {
+        if ($ids) {
+            $accounts = $this->getBatchedCollection($ids);
+
+            return collect($accounts);
+        }
+
+        $accounts = $this->getBatchedCollection(User::all()->pluck('id')->all());
+
+        return collect($accounts);
+    }
+
+    /**
      * Get collection of users by the specified role.
      *
      * @param  string $role
