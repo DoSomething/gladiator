@@ -250,8 +250,6 @@ class CacheUserRepository implements UserRepositoryContract
         if (count($retrieved)) {
             return $data;
         }
-
-        return;
     }
 
     /**
