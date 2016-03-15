@@ -3,6 +3,16 @@
 {{ csrf_field() }}
 
 <div class="form-item -padded">
+    <label class="field-label" for="signup_start_date">Signup Start Date:</label>
+    <input type="date" name="signup_start_date" id="signup_start_date" class="text-field"></input>
+</div>
+
+<div class="form-item -padded">
+    <label class="field-label" for="signup_end_date">Signup End Date:</label>
+    <input type="date" name="signup_end_date" id="signup_end_date" class="text-field"></input>
+</div>
+
+<div class="form-item -padded">
     <label class="field-label" for="id">Campaign ID:</label>
     <input type="number" name="campaign_id" id="campaign_id" class="text-field" placeholder="1234" value="{{ $contest->campaign_id or old('campaign_id') }}"/>
 </div>
