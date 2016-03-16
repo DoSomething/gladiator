@@ -4,7 +4,6 @@ namespace Gladiator\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Gladiator\Repositories\UserRepositoryContract;
 
 class WaitingRoom extends Model
 {

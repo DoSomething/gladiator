@@ -9,7 +9,6 @@ use Gladiator\Repositories\UserRepositoryContract;
 
 class WaitingRoomsController extends Controller
 {
-
     /**
      * UserRepository instance.
      *
