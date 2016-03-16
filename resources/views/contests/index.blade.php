@@ -37,11 +37,11 @@
                                     <td class="table__cell">{{ $contest->campaign_id }}</td>
                                     <td class="table__cell">{{ $contest->campaign_run_id }}</td>
                                     <td class="table__cell">{{ $contest->duration }}</td>
-                                    <td class="table__cell">{{ $contest->waitingroom->signup_end_date->format('F d, Y') }}</td>
+                                    <td class="table__cell">{{ $contest->waitingRoom->signup_end_date->format('F d, Y') }}</td>
                                     <td class="table__cell"><a href="{{ route('waitingrooms.show', $contest->waitingroom->id) }}">{{ $contest->waitingroom->users->count() }}</td>
                                     <td class="table__cell">
-                                        <span class="status {{ "-" . strtolower($contest->signups_open) }}">
-                                            {{ $contest->signups_open }}
+                                        <span class="status {{ ($contest->waitingRoom->isOpen()) ? '-open' : '-closed' }}">
+                                            {{ ($contest->waitingRoom->isOpen()) ? 'Open' : 'Closed' }}
                                         </span>
                                     </td>
                                 </tr>
