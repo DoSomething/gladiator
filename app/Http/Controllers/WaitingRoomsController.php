@@ -6,7 +6,7 @@ use Gladiator\Models\Contest;
 use Gladiator\Models\WaitingRoom;
 use Gladiator\Http\Requests\WaitingRoomRequest;
 use Gladiator\Repositories\UserRepositoryContract;
-use Gladiator\Services\ContestManager;
+use Gladiator\Services\Manager;
 
 class WaitingRoomsController extends Controller
 {
@@ -18,19 +18,19 @@ class WaitingRoomsController extends Controller
     protected $repository;
 
     /**
-     * ContestManager instance.
+     * manager instance.
      *
      * @var \Gladiator\Services\CompetitionsController
      */
-    protected $contestManager;
+    protected $manager;
 
     /**
      * Create new WaitingRoomsController instance.
      */
-    public function __construct(UserRepositoryContract $repository, ContestManager $contestManager)
+    public function __construct(UserRepositoryContract $repository, Manager $manager)
     {
         $this->repository = $repository;
-        $this->contestManager = $contestManager;
+        $this->manager = $manager;
 
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
@@ -138,7 +138,7 @@ class WaitingRoomsController extends Controller
      */
     public function export(WaitingRoom $room)
     {
-        $csv = $this->contestManager->exportCSV($room);
+        $csv = $this->manager->exportCSV($room);
         $csv->output('waitingroom' . $room->id . '.csv');
     }
 }

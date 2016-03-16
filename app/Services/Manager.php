@@ -4,7 +4,7 @@ namespace Gladiator\Services;
 
 use Gladiator\Repositories\UserRepositoryContract;
 
-class ContestManager
+class Manager
 {
     /**
      * UserRepositoryContract instance.
