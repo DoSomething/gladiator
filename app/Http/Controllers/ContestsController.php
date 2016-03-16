@@ -18,7 +18,7 @@ class ContestsController extends Controller
 
         foreach ($contests as $contest) {
             $contest->signup_end_date = $contest->waitingRoom->signup_end_date;
-            $contest->signups_open = $contest->waitingRoom->isOpen();
+            $contest->signups_open = ($contest->waitingRoom->isOpen()) ? 'Open' : 'Closed';
         }
 
         return view('contests.index', compact('contests'));

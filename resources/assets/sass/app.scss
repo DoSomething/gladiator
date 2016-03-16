@@ -8,6 +8,7 @@ $forge-path: "/assets/vendor/forge/assets/";
 @import "patterns/errors";
 @import "patterns/tables";
 @import "patterns/key-value";
+@import "patterns/status";
 
 .container__split {
   display: inline-block;
