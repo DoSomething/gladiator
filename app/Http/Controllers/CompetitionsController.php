@@ -17,6 +17,11 @@ class CompetitionsController extends Controller
      */
     protected $repository;
 
+    /**
+     * ContestManager instance.
+     *
+     * @var \Gladiator\Services\CompetitionsController
+     */
     protected $contestManager;
 
     /**
