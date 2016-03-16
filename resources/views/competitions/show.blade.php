@@ -36,6 +36,7 @@
                 </ul>
             </div>
             <div class="container__block">
+                <h3>Total Contestants: {{ $competition->users->count() }}</h3>
                 <table class="table">
                     <thead>
                         <tr class="table__header">

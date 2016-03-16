@@ -33,6 +33,7 @@
             </div>
 
             <div class="container__block">
+                <h3>Total Sign Ups: {{ $room->users->count() }}</h3>
                 <table class="table">
                     <thead>
                         <tr class="table__header">
