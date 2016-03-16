@@ -4,6 +4,7 @@ namespace Gladiator\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Gladiator\Repositories\UserRepositoryContract;
 
 class WaitingRoom extends Model
 {
@@ -34,14 +35,15 @@ class WaitingRoom extends Model
      *
      * @return \League\Csv\ $csv
      */
-    public function getCSVExport()
+    public function getCSVExport($repository)
     {
         $data = [];
         $users = $this->users;
 
-        array_push($data, ['id']);
+        array_push($data, ['northstar_id', 'first_name', 'last_name', 'email', 'cell']);
         foreach ($users as $user) {
-            array_push($data, $user->id);
+            $userInfo = $repository->find($user->id);
+            array_push($data, [$user->id, $userInfo->first_name, $userInfo->last_name, $userInfo->email, $userInfo->mobile]);
         }
 
         return buildCSV($data);
