@@ -49,5 +49,4 @@ class ContestManager
 
         return buildCSV($data);
     }
-
 }
