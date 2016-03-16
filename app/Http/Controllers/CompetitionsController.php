@@ -5,14 +5,24 @@ namespace Gladiator\Http\Controllers;
 use Gladiator\Http\Requests\CompetitionRequest;
 use Gladiator\Models\Competition;
 use Gladiator\Models\Contest;
+use Gladiator\Repositories\UserRepositoryContract;
 
 class CompetitionsController extends Controller
 {
     /**
+     * UserRepository instance.
+     *
+     * @var \Gladiator\Repositories\UserRepositoryContract
+     */
+    protected $repository;
+
+    /**
      * Create new CompetitionsController instance.
      */
-    public function __construct()
+    public function __construct(UserRepositoryContract $repository)
     {
+        $this->repository = $repository;
+
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
     }
@@ -88,7 +98,7 @@ class CompetitionsController extends Controller
      */
     public function export(Competition $competition)
     {
-        $csv = $competition->getCSVExport();
+        $csv = $competition->getCSVExport($this->repository);
         $csv->output('competition' . $competition->id . '.csv');
     }
 }

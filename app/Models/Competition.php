@@ -31,16 +31,19 @@ class Competition extends Model
     /**
      * Gets a CSV export of all the users in this competition.
      *
+     * @param \Gladiator\Repositories\UserRepositoryContract $repository
      * @return \League\Csv\ $csv
      */
-    public function getCSVExport()
+    public function getCSVExport($repository)
     {
         $data = [];
         $users = $this->users;
 
-        array_push($data, ['id']);
+        // TODO: Competition/Reportback activity
+        array_push($data, ['northstar_id', 'first_name', 'last_name', 'email', 'cell']);
         foreach ($users as $user) {
-            array_push($data, $user->id);
+            $userInfo = $repository->find($user->id);
+            array_push($data, [$user->id, $userInfo->first_name, $userInfo->last_name, $userInfo->email, $userInfo->mobile]);
         }
 
         return buildCSV($data);

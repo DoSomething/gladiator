@@ -33,6 +33,7 @@ class WaitingRoom extends Model
     /**
      * Gets a CSV export of all the users in this waiting room.
      *
+     * @param \Gladiator\Repositories\UserRepositoryContract $repository
      * @return \League\Csv\ $csv
      */
     public function getCSVExport($repository)
