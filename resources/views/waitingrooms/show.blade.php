@@ -34,4 +34,6 @@
         </div>
     </div>
 
+    @include('users.partials._table_users', ['users' => $users, 'role' => 'Signups: ' . $room->users->count()])
+
 @stop

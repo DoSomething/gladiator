@@ -37,4 +37,6 @@
             </div>
         </div>
     </div>
+
+    @include('users.partials._table_users', ['users' => $users, 'role' => 'Contestants: ' . $competition->users->count()])
 @stop

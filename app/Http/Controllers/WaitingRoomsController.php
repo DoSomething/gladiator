@@ -63,7 +63,9 @@ class WaitingRoomsController extends Controller
     {
         $contest = Contest::find($room->contest_id);
 
-        return view('waitingrooms.show', compact('room', 'contest'));
+        $users = $this->repository->getAll($room->users->pluck('id')->toArray());
+
+        return view('waitingrooms.show', compact('room', 'contest', 'users'));
     }
 
     /**
