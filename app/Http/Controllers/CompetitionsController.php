@@ -6,6 +6,7 @@ use Gladiator\Http\Requests\CompetitionRequest;
 use Gladiator\Models\Competition;
 use Gladiator\Models\Contest;
 use Gladiator\Repositories\UserRepositoryContract;
+use Gladiator\Services\ContestManager;
 
 class CompetitionsController extends Controller
 {
@@ -16,12 +17,15 @@ class CompetitionsController extends Controller
      */
     protected $repository;
 
+    protected $contestManager;
+
     /**
      * Create new CompetitionsController instance.
      */
-    public function __construct(UserRepositoryContract $repository)
+    public function __construct(UserRepositoryContract $repository, ContestManager $contestManager)
     {
         $this->repository = $repository;
+        $this->contestManager = $contestManager;
 
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
@@ -100,7 +104,7 @@ class CompetitionsController extends Controller
      */
     public function export(Competition $competition)
     {
-        $csv = $competition->getCSVExport($this->repository);
+        $csv = $this->contestManager->exportCSV($competition);
         $csv->output('competition' . $competition->id . '.csv');
     }
 }
