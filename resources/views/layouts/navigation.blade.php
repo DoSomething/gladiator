@@ -11,21 +11,15 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ URL::to('competitions') }}">
-                        <strong class="navigation__title">Competitions</strong>
-                        <span class="navigation__subtitle">Contestant groups</span>
-                    </a>
-                </li>
-                <li>
                     <a href="{{ URL::to('users') }}">
                         <strong class="navigation__title">Users</strong>
-                        <span class="navigation__subtitle">Admins, Staff, Members</span>
+                        <span class="navigation__subtitle">Admins, Staff, Contestants</span>
                     </a>
                 </li>
                 <li>
                     <a href="/">
                         <strong class="navigation__title">Settings</strong>
-                        <span class="navigation__subtitle">App configuration</span>
+                        <span class="navigation__subtitle">App Configuration</span>
                     </a>
                 </li>
             </ul>
