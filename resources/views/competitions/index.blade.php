@@ -17,6 +17,7 @@
                           <th class="table__cell">Contest ID</th>
                           <th class="table__cell">Start Date</th>
                           <th class="table__cell">End Date</th>
+                          <th class="table__cell"># of Contestants</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -27,6 +28,7 @@
                             <td class="table__cell"><a href="#">{{ $competition->contest_id }}</a></td>
                             <td class="table__cell">{{ $competition->competition_start_date->format('F d, Y') }}</td>
                             <td class="table__cell">{{ $competition->competition_end_date->format('F d, Y') }}</td>
+                            <td class="table__cell">{{ $competition->users->count() }}
                           </tr>
                         @endforeach
                       </tbody>
