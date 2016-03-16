@@ -36,7 +36,7 @@
                             <td class="table__cell">{{ $contest->campaign_id }}</td>
                             <td class="table__cell">{{ $contest->campaign_run_id }}</td>
                             <td class="table__cell">{{ $contest->duration }}</td>
-                            <td>{{ $contest->waitingroom->signup_end_date->format('F d, Y') }}</td>
+                            <td class="table__cell">{{ $contest->waitingroom->signup_end_date->format('F d, Y') }}</td>
                             <td class="table__cell"><a href="{{ route('waitingrooms.show', $contest->waitingroom->id) }}">{{ $contest->waitingroom->users->count() }}</td>
                           </tr>
                         @endforeach
