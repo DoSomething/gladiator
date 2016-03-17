@@ -45,7 +45,13 @@ class Manager
 
         foreach ($users as $user) {
             $user = $this->repository->find($user->id);
-            $details = [$user->id, $user->first_name, $user->last_name, $user->email, $user->mobile];
+            $details = [
+                $user->id,
+                isset($user->first_name) ? $user->first_name : '',
+                isset($user->last_name) ? $user->last_name : '',
+                isset($user->email) ? $user->email : '',
+                isset($user->mobile) ? $user->mobile : '',
+            ];
             if ($reportbacks) {
                 //TODO
                 array_push($headers, 'some reportback details go here');
