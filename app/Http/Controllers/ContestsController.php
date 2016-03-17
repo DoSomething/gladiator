@@ -11,9 +11,8 @@ class ContestsController extends Controller
     /**
      * Create new ContestsController instance.
      */
-    public function __construct(Manager $manager)//UserRepositoryContract $repository,
+    public function __construct(Manager $manager)
     {
-        // $this->repository = $repository;
         $this->manager = $manager;
 
         $this->middleware('auth');
