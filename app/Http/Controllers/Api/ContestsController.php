@@ -36,6 +36,6 @@ class ContestsController extends ApiController
             return $this->item($contest);
         }
 
-        return 'Hello! We need to wait for the Contest CRUD to continue...';
+        return $this->collection(Contest::all());
     }
 }
