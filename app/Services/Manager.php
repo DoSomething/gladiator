@@ -80,5 +80,4 @@ class Manager
 
         return $contest;
     }
-
 }
