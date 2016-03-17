@@ -208,7 +208,7 @@ class CacheUserRepository implements UserRepositoryContract
     protected function resolveMissingUsers($users)
     {
         foreach ($users as $key => $value) {
-            if ($value === false) {
+            if ($value === false or $value === null) {
                 $users[$key] = $this->find($key);
             }
         }

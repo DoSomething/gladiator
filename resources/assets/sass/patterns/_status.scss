@@ -1,0 +1,11 @@
+.status {
+  font-weight: $weight-bold;
+
+  &.-open {
+    color: #5cbe7f;
+  }
+
+  &.-closed {
+    color: $error-color;
+  }
+}
