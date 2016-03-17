@@ -50,7 +50,7 @@ class Manager
                 isset($user->first_name) ? $user->first_name : '',
                 isset($user->last_name) ? $user->last_name : '',
                 isset($user->email) ? $user->email : '',
-                isset($user->mobile) ? $user->mobile : ''
+                isset($user->mobile) ? $user->mobile : '',
             ];
             if ($reportbacks) {
                 //TODO
