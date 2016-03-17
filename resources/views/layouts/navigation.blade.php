@@ -16,12 +16,6 @@
                         <span class="navigation__subtitle">Admins, Staff, Contestants</span>
                     </a>
                 </li>
-                <li>
-                    <a href="/">
-                        <strong class="navigation__title">Settings</strong>
-                        <span class="navigation__subtitle">App Configuration</span>
-                    </a>
-                </li>
             </ul>
         @endif
 
