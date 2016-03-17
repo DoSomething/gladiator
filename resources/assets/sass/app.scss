@@ -17,10 +17,10 @@ $forge-path: "/assets/vendor/forge/assets/";
 
 .button {
   &.-danger {
-    background-color: #ff4747;
+    background-color: $error-color;
 
     &:hover {
-      background-color: #ff4747;
+      background-color: $error-color;
     }
   }
 }
