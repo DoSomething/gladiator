@@ -3,10 +3,23 @@
 namespace Gladiator\Http\Controllers;
 
 use Gladiator\Models\Contest;
+use Gladiator\Services\Manager;
 use Gladiator\Http\Requests\ContestRequest;
 
 class ContestsController extends Controller
 {
+    /**
+     * Create new ContestsController instance.
+     */
+    public function __construct(Manager $manager)//UserRepositoryContract $repository,
+    {
+        // $this->repository = $repository;
+        $this->manager = $manager;
+
+        $this->middleware('auth');
+        $this->middleware('role:admin,staff');
+    }
+
     /**
      * Display a listing of the resource.
      *
