@@ -45,11 +45,14 @@
         <div class="wrapper">
             <div class="container__block">
                 <h2 class="heading -alpha">Waiting Room</h2>
-                <p>The waiting room currently contains {{ '#' }} contestants.</p>
+                <p>The waiting room for this contest currently contains <strong>{{ $contest->waitingRoom->users->count() }}</strong> {{ $contest->waitingRoom->users->count() === 1 ? 'contestant' : 'contestants'  }}.</p>
+
+                <p><a href="/" class="button -secondary">View Waiting Room</a></p>
             </div>
         </div>
     </div>
 
+    @if ($contest->competitions->count())
     <div class="container">
         <div class="wrapper">
             <div class="container__block">
@@ -59,26 +62,27 @@
                     <table class="table">
                       <thead>
                         <tr class="table__header">
-                          <th class="table__cell">ID</th>
-                          <th class="table__cell">Contest ID</th>
+                          <th class="table__cell">Competition ID</th>
                           <th class="table__cell">Start Date</th>
                           <th class="table__cell">End Date</th>
                           <th class="table__cell"># of Contestants</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr class="table__row">
-                            <td class="table__cell"></td>
-                            <td class="table__cell"></td>
-                            <td class="table__cell"></td>
-                            <td class="table__cell"></td>
-                            <td class="table__cell"></td>
-                        </tr>
+                        @foreach ($contest->competitions as $competition)
+                            <tr class="table__row">
+                                <td class="table__cell">{{ $competition->id }}</td>
+                                <td class="table__cell">{{ $competition->competition_start_date->format('F d, Y') }}</td>
+                                <td class="table__cell">{{ $competition->competition_end_date->format('F d, Y') }}</td>
+                                <td class="table__cell">{{ $competition->users->count() }}</td>
+                            </tr>
+                        @endforeach
                       </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
+    @endif
 
 @stop

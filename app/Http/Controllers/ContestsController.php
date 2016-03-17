@@ -66,6 +66,8 @@ class ContestsController extends Controller
      */
     public function show(Contest $contest)
     {
+        $contest = $this->manager->collectContestInfo($contest->id);
+
         return view('contests.show', compact('contest'));
     }
 

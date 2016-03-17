@@ -2,6 +2,7 @@
 
 namespace Gladiator\Services;
 
+use Gladiator\Models\Contest;
 use Gladiator\Repositories\UserRepositoryContract;
 
 class Manager
@@ -62,4 +63,22 @@ class Manager
 
         return buildCSV($data);
     }
+
+    /**
+     * Collect Contest information with Waiting Room and Competitions.
+     *
+     * @param  string|\Gladiator\Models\Contest $contest
+     * @return \Gladiator\Models\Contest
+     */
+    public function collectContestInfo($data)
+    {
+        if ($data instanceof Contest) {
+            $contest = $data->with('waitingRoom.users', 'competitions.users')->firstOrFail();
+        } else {
+            $contest = Contest::with('waitingRoom.users', 'competitions.users')->findOrFail($data);
+        }
+
+        return $contest;
+    }
+
 }
