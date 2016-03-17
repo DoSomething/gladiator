@@ -15,3 +15,13 @@ $forge-path: "/assets/vendor/forge/assets/";
   padding: 16px;
 }
 
+.button {
+  &.-danger {
+    background-color: $error-color;
+
+    &:hover {
+      background-color: $error-color;
+    }
+  }
+}
+

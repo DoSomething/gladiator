@@ -37,18 +37,6 @@ class CompetitionsController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $competitions = Competition::all();
-
-        return view('competitions.index', compact('competitions'));
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \Gladiator\Models\Competition  $competition
