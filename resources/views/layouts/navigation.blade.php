@@ -7,13 +7,7 @@
                 <li>
                     <a href="{{ URL::to('contests') }}">
                         <strong class="navigation__title">Contests</strong>
-                        <span class="navigation__subtitle">"Death match" -Aaron</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ URL::to('waitingrooms') }}">
-                        <strong class="navigation__title">Waiting Rooms</strong>
-                        <span class="navigation__subtitle">Contestant Limbo</span>
+                        <span class="navigation__subtitle">Open, Close, Split</span>
                     </a>
                 </li>
                 <li>
