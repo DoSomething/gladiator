@@ -63,7 +63,7 @@
                       <tbody>
                         @foreach ($contest->competitions as $competition)
                             <tr class="table__row">
-                                <td class="table__cell">{{ $competition->id }}</td>
+                                <td class="table__cell"><a href="{{ route('competitions.show', $competition->id) }}">{{ $competition->id }}</a></td>
                                 <td class="table__cell">{{ $competition->competition_start_date->format('F d, Y') }}</td>
                                 <td class="table__cell">{{ $competition->competition_end_date->format('F d, Y') }}</td>
                                 <td class="table__cell">{{ $competition->users->count() }}</td>

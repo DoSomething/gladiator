@@ -26,7 +26,7 @@
                           <tr class="table__row">
                             <td class="table__cell"><a href="{{ route('waitingrooms.show', $room->id) }}">{{ $room->id }}</a></td>
                             {{-- TODO: Link to contest. --}}
-                            <td class="table__cell"><a href="#">{{ $room->contest_id }}</a></td>
+                            <td class="table__cell"><a href="{{ route('contests.show', $room->contest_id) }}">{{ $room->contest_id }}</a></td>
                             <td class="table__cell">{{ $room->signup_start_date->format('F d, Y') }}</td>
                             <td class="table__cell">{{ $room->signup_end_date->format('F d, Y') }}</td>
                             <td class="table__cell">
