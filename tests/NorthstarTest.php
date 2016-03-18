@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class PhoenixTest extends TestCase
+class NorthstarTest extends TestCase
 {
     /**
      * Test that user signup data was received.
@@ -13,10 +13,10 @@ class PhoenixTest extends TestCase
      */
     public function testGettingUserSignupData()
     {
-        $phoenix = app('phoenix');
+        $northstar = app('northstar');
 
         //@TODO - test with a mock user from phoenix?
-        $response = $phoenix->getUserSignupData('1702694', '1173');
+        $response = $northstar->getUserSignups("55789de0a59dbf3c7a8b4575", 1690);
 
         $this->assertNotNull($response, 'Response is Null');
     }

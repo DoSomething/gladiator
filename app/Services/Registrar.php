@@ -46,7 +46,7 @@ class Registrar
     }
 
     /**
-     * Check is user has an account in Northstar.
+     * Check if user has an account in Northstar.
      *
      * @param  string  $type
      * @param  string  $id
