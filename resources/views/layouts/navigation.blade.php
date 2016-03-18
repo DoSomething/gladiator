@@ -22,9 +22,9 @@
         <ul class="navigation__secondary">
             <li>
                 @if (Auth::user())
-                    <a href="/auth/logout">Logout</a>
+                    <a href="/auth/logout">Log Out</a>
                 @else
-                    <a href="/auth/login">Login</a>
+                    <a href="/auth/login">Log In</a>
                 @endif
             </li>
         </ul>
