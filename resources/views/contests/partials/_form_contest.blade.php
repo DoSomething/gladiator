@@ -4,12 +4,12 @@
 
 <div class="form-item -padded">
     <label class="field-label" for="signup_start_date">Signup Start Date:</label>
-    <input type="date" name="signup_start_date" id="signup_start_date" value={{ $contest->waitingRoom->signup_start_date or old($contest->waitingRoom->signup_start_date)}} class="text-field"></input>
+    <input type="date" name="signup_start_date" id="signup_start_date" value={{ $contest->waitingRoom->signup_start_date or 'MM/DD/YYYY' }} class="text-field"></input>
 </div>
 
 <div class="form-item -padded">
     <label class="field-label" for="signup_end_date">Signup End Date:</label>
-    <input type="date" name="signup_end_date" id="signup_end_date" value={{ $contest->waitingRoom->signup_end_date or old($contest->waitingRoom->signup_end_date)}} class="text-field"></input>
+    <input type="date" name="signup_end_date" id="signup_end_date" value={{ $contest->waitingRoom->signup_end_date or 'MM/DD/YYYY' }} class="text-field"></input>
 </div>
 
 <div class="form-item -padded">
