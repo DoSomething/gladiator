@@ -13,7 +13,7 @@ class Phoenix extends RestApiClient
      */
     public function __construct()
     {
-        $this->base_uri = config('services.phoenix.uri') . '/api/' . config('services.phoenix.version') . '/';
+        $this->base_uri = config('services.phoenix.uri') . '/api/' . config('services.phoenix.api.version') . '/';
 
         $headers = [
            'Content-type' => 'application/json',
