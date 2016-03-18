@@ -31,10 +31,12 @@
                             </tr>
                         </thead>
                         <tbody>
+
+
                             @foreach($contests as $contest)
                                 <tr class="table__row">
                                     <td class="table__cell"><a href="{{ route('contests.show', $contest->id) }}">{{ $contest->id }}</a></td>
-                                    <td class="table__cell">{{ $contest->campaign_id }}</td>
+                                    <td class="table__cell"> {{ link_to(config('services.phoenix.uri') .'/node/' . $contest->campaign_id, $contest->campaign_id) }} </td>
                                     <td class="table__cell">{{ $contest->campaign_run_id }}</td>
                                     <td class="table__cell">{{ $contest->duration }}</td>
                                     <td class="table__cell">{{ $contest->waitingRoom->signup_end_date->format('F d, Y') }}</td>
