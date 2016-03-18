@@ -67,15 +67,16 @@ class DatabaseUserRepository implements UserRepositoryContract
      */
     public function getAll(array $ids = [])
     {
+        // @TODO: returns collection of users without the role property, but should it be included?
         if ($ids) {
             $accounts = $this->getBatchedCollection($ids);
 
-            return collect($accounts);
+            return $accounts;
         }
 
         $accounts = $this->getBatchedCollection(User::all()->pluck('id')->all());
 
-        return collect($accounts);
+        return $accounts;
     }
 
     /**
@@ -89,9 +90,14 @@ class DatabaseUserRepository implements UserRepositoryContract
         $users = User::where('role', '=', $role)->get();
 
         if ($users->count()) {
-            $ids = $users->pluck('id')->toArray();
+            $users = $users->keyBy('id');
+            $ids = array_keys($users->all());
 
             $accounts = $this->getBatchedCollection($ids);
+
+            foreach ($accounts as $account) {
+                $account = $this->appendRole($account, $users[$account->id]->role);
+            }
 
             return collect($accounts);
         }
@@ -116,11 +122,23 @@ class DatabaseUserRepository implements UserRepositoryContract
     }
 
     /**
+     * Append the user's role to the account object from Northstar.
+     *
+     * @param  object $account
+     * @param  string $role
+     * @return object
+     */
+    protected function appendRole($account, $role)
+    {
+        return $account->role = $role;
+    }
+
+    /**
      * Get large number of users in batches from Northstar.
      *
      * @param  array  $ids
      * @param  int $size
-     * @return array
+     * @return \Illuminate\Support\Collection
      */
     protected function getBatchedCollection($ids, $size = 50)
     {
@@ -136,12 +154,11 @@ class DatabaseUserRepository implements UserRepositoryContract
             $parameters['filter[_id]'] = implode(',', $batch);
 
             $accounts = $this->northstar->getAllUsers($parameters);
-
             $data = array_merge($data, $accounts);
 
             $index += $size;
         }
 
-        return $data;
+        return collect($data);
     }
 }

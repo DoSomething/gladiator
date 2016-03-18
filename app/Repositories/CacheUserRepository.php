@@ -117,10 +117,9 @@ class CacheUserRepository implements UserRepositoryContract
         }
 
         $users = $this->repository->getAllByRole($role);
-
         if ($users->count()) {
             $ids = $users->pluck('id')->toArray();
-            $collection = collect($users)->keyBy('id')->toArray();
+            $collection = $users->keyBy('id')->toArray();
 
             $this->store($key . ':ids', $ids);
             $this->storeMany($collection);
