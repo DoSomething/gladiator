@@ -10,7 +10,7 @@
     <div class="container">
         <div class="wrapper">
             <div class="container__block">
-                <p>Contest ID: <a href="{{ route('contests.show', $room->contest_id) }}"> {{ $room->contest_id }} </a></p>
+                <p>Contest ID: <a href="{{ route('contests.show', $room->contest_id) }}"> {{ $room->contest_id }}</a></p>
                 <p>Campaign ID: {{ $contest->campaign_id }}</p>
                 <p>Campaign Run ID: {{ $contest->campaign_run_id }}</p>
                 <p>Signup Start Date: {{ $room->signup_start_date->format('F d, Y') }}</p>
