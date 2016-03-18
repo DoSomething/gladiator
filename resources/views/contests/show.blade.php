@@ -47,7 +47,7 @@
                 <h2 class="heading -alpha">Waiting Room</h2>
                 <p>The waiting room for this contest currently contains <strong>{{ $contest->waitingRoom->users->count() }}</strong> {{ $contest->waitingRoom->users->count() === 1 ? 'contestant' : 'contestants'  }}.</p>
 
-                <p><a href="/" class="button -secondary">View Waiting Room</a></p>
+                <p><a href="{{ route('waitingrooms.show', $contest->waitingRoom->id) }}" class="button -secondary">View Waiting Room</a></p>
             </div>
         </div>
     </div>
