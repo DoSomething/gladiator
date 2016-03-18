@@ -26,13 +26,6 @@
                     <li>
                         <a href="{{ route('competitions.export', $competition->id) }}" class="button">Export</a>
                     </li>
-                    <li>
-                        {!! Form::open(['method' => 'DELETE','route' => ['competitions.destroy', $competition->id]]) !!}
-
-                            {!! Form::submit('Delete', array('class' => 'button delete')) !!}
-
-                        {!! Form::close() !!}
-                    </li>
                 </ul>
             </div>
         </div>

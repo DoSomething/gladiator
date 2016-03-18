@@ -28,14 +28,6 @@
                     <li>
                         <a href="{{ route('split', $contest->waitingRoom->id) }}" class="button -secondary">Split</a>
                     </li>
-                    <li>
-                        <form method="POST" action="{{ route('contests.destroy', $contest->id) }}">
-                            {{ method_field('DELETE') }}
-                            {{ csrf_field() }}
-
-                            <input type="submit" class="button -danger" value="Delete" />
-                        </form>
-                    </li>
                 </ul>
             </div>
         </div>
