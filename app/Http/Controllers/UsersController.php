@@ -111,6 +111,7 @@ class UsersController extends Controller
             $campaign_run = $competition->contest->campaign_run_id;
 
             $competition->user_signup = $this->manager->getUserSignup($user->id, $campaign, $campaign_run);
+            // dd($competition->user_signup);
         }
 
         return view('users.show', compact('user', 'competitions'));
