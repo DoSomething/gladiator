@@ -35,10 +35,10 @@
                             <th class="table__cell">Contest</th>
                             <th class="table__cell">Competition</th>
                             <th class="table__cell">Reportback</th>
-                            <th class="table__cell">Quantity</th>
-                            <th class="table__cell">Why</th>
                             <th class="table__cell">Items</th>
+                            <th class="table__cell">Quantity</th>
                             <th class="table__cell">Updated At</th>
+                            <th class="table__cell">Flagged</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,10 +59,10 @@
                                     <a href="{{ env('PHOENIX_PROD') . '/admin/reportback/' . $competition->user_signup->reportback->id }}">
                                         {{ $competition->user_signup->reportback->id or 'N/A' }}</td>
                                     </a>
-                                <td class="table__cell">{{ $competition->user_signup->reportback->quantity or 'N/A' }}</td>
-                                <td class="table__cell">{{ $competition->user_signup->reportback->why_participated or 'N/A' }}</td>
                                 <td class="table__cell">{{ $competition->user_signup->reportback->reportback_items->total or 'N/A' }}</td>
+                                <td class="table__cell">{{ $competition->user_signup->reportback->quantity or 'N/A' }}</td>
                                 <td class="table__cell">{{ $competition->user_signup->reportback->updated_at or 'N/A' }}</td>
+                                <td class="table__cell">{{ ($competition->user_signup->reportback->flagged) ? 'Yes' : 'No' }}</td>
                             </tr>
                         @endforeach
                     </tbody>
