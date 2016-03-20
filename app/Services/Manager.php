@@ -4,6 +4,7 @@ namespace Gladiator\Services;
 
 use Gladiator\Models\Contest;
 use Gladiator\Repositories\UserRepositoryContract;
+use Gladiator\Services\Northstar\Northstar;
 
 class Manager
 {
@@ -15,6 +16,13 @@ class Manager
     protected $repository;
 
     /**
+     * Northstar instance.
+     *
+     * @var \Gladiator\Services\Northstar\Northstar
+     */
+    protected $northstar;
+
+    /**
      * Create new Registrar instance.
      *
      * @param Northstar $northstar
@@ -22,6 +30,7 @@ class Manager
     public function __construct(UserRepositoryContract $repository)
     {
         $this->repository = $repository;
+        $this->northstar = new Northstar;
     }
 
     /**
@@ -79,5 +88,27 @@ class Manager
         }
 
         return $contest;
+    }
+
+    /**
+     * Get user signup for a specific campaign and run.
+     *
+     * @param  string|\Gladiator\Models\Contest $contest
+     * @return \Gladiator\Models\Contest
+     */
+    public function getUserSignup($id, $campaign = NULL, $campaign_run = NULL)
+    {
+        $signups = $this->northstar->getUserSignups($id, $campaign);
+
+        // Only return the sign up record for the run that was specified.
+        if ($campaign_run) {
+            foreach ($signups as $key => $signup) {
+                if ($signup->campaign_run->id == $campaign_run) {
+                    $signups = $signups[$key];
+                }
+            }
+        }
+
+        return $signups;
     }
 }

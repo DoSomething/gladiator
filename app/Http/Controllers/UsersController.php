@@ -3,6 +3,8 @@
 namespace Gladiator\Http\Controllers;
 
 use Gladiator\Models\User;
+use Gladiator\Models\Contest;
+use Gladiator\Services\Manager;
 use Gladiator\Services\Registrar;
 use Gladiator\Http\Requests\UserRequest;
 use Gladiator\Repositories\UserRepositoryContract;
@@ -24,12 +26,20 @@ class UsersController extends Controller
     protected $repository;
 
     /**
+     * Manager instance.
+     *
+     * @var Gladiator\Services\Manager;
+     */
+    protected $manager;
+
+    /**
      * Create new UsersController instance.
      */
-    public function __construct(Registrar $registrar, UserRepositoryContract $repository)
+    public function __construct(Registrar $registrar, UserRepositoryContract $repository, Manager $manager)
     {
         $this->registrar = $registrar;
         $this->repository = $repository;
+        $this->manager = $manager;
 
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
@@ -88,9 +98,22 @@ class UsersController extends Controller
      */
     public function show($id)
     {
+        // @TODO - is there a better way to do this?
+        // the repository returns an object, but we need
+        // an instance of User to get the competitions the user is in.
         $user = $this->repository->find($id);
+        $user = User::find($user->id);
 
-        return view('users.show', compact('user'));
+        $competitions = $user->competitions;
+
+        foreach ($competitions as $competition) {
+            $campaign = $competition->contest->campaign_id;
+            $campaign_run = $competition->contest->campaign_run_id;
+
+            $competition->user_signup = $this->manager->getUserSignup($user->id, $campaign, $campaign_run);
+        }
+
+        return view('users.show', compact('user', 'competitions'));
     }
 
     /**

@@ -27,4 +27,12 @@ class Competition extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    /**
+     * A competition belongs to one contest.
+     */
+    public function contest()
+    {
+        return $this->belongsTo(Contest::class);
+    }
 }
