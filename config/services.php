@@ -31,7 +31,7 @@ return [
 
     'phoenix' => [
         'uri' => env('PHOENIX_URI'),
-        'version' => 'v1',
+        'version' => env('PHOENIX_API_VERSION'),
     ],
 
     'ses' => [

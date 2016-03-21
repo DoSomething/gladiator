@@ -29,6 +29,14 @@ class WaitingRoom extends Model
         return $this->belongsToMany(User::class);
     }
 
+    /**
+     * A WaitingRoom belongs to one contest.
+     */
+    public function contest()
+    {
+        return $this->belongsTo(Contest::class);
+    }
+
     /*
      * Determines if the waiting room is open for signupsOpen
      *

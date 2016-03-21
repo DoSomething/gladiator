@@ -97,7 +97,7 @@ class CompetitionsController extends Controller
      */
     public function export(Competition $competition)
     {
-        $csv = $this->manager->exportCSV($competition);
+        $csv = $this->manager->exportCSV($competition, true);
         $csv->output('competition' . $competition->id . '.csv');
     }
 }

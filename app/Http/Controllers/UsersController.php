@@ -3,6 +3,7 @@
 namespace Gladiator\Http\Controllers;
 
 use Gladiator\Models\User;
+use Gladiator\Services\Manager;
 use Gladiator\Services\Registrar;
 use Gladiator\Http\Requests\UserRequest;
 use Gladiator\Repositories\UserRepositoryContract;
@@ -24,12 +25,20 @@ class UsersController extends Controller
     protected $repository;
 
     /**
+     * Manager instance.
+     *
+     * @var Gladiator\Services\Manager;
+     */
+    protected $manager;
+
+    /**
      * Create new UsersController instance.
      */
-    public function __construct(Registrar $registrar, UserRepositoryContract $repository)
+    public function __construct(Registrar $registrar, UserRepositoryContract $repository, Manager $manager)
     {
         $this->registrar = $registrar;
         $this->repository = $repository;
+        $this->manager = $manager;
 
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
@@ -90,7 +99,18 @@ class UsersController extends Controller
     {
         $user = $this->repository->find($id);
 
-        return view('users.show', compact('user'));
+        $competitions = User::find($id)->competitions;
+
+        // Get the user's reportback for each competition they are in.
+        foreach ($competitions as $competition) {
+            $reportback = $this->manager->getUserActivity($id, $competition);
+
+            if ($reportback) {
+                $competition->reportback = $reportback;
+            }
+        }
+
+        return view('users.show', compact('user', 'competitions'));
     }
 
     /**
