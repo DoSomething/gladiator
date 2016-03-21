@@ -98,24 +98,17 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        // @TODO - is there a better way to do this?
-        // the repository returns an object, but we need
-        // an instance of User to get the competitions the user is in.
         $user = $this->repository->find($id);
-        $user = User::find($user->id);
 
-        $competitions = $user->competitions;
+        $user = User::with('competitions.contest')->findOrFail($user->id);
 
-        foreach ($competitions as $competition) {
+        foreach ($user->competitions as $competition) {
             $campaign = $competition->contest->campaign_id;
             $campaign_run = $competition->contest->campaign_run_id;
-
             $competition->user_signup = $this->manager->getUserSignup($user->id, $campaign, $campaign_run);
-
-            // dd($competition->user_signup);
         }
 
-        return view('users.show', compact('user', 'competitions'));
+        return view('users.show', compact('user'));
     }
 
     /**
