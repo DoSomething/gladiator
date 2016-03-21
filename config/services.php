@@ -30,7 +30,7 @@ return [
     ],
 
     'phoenix' => [
-        'uri' => env('PHOENIX_API_URI'),
+        'uri' => env('PHOENIX_URI'),
         'version' => env('PHOENIX_API_VERSION'),
     ],
 

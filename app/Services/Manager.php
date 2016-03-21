@@ -115,7 +115,7 @@ class Manager
         // Only return the sign up record for the run that was specified.
         if ($campaignRun) {
             foreach ($signups as $key => $signup) {
-                if ($signup->campaign_run->id == $campaignRun) {
+                if ($signup->campaign_run->id === (string) $campaignRun) {
                     $signups = $signups[$key];
                 }
             }
