@@ -68,7 +68,7 @@ class Manager
 
                 if ($userSignup && $userSignup->reportback) {
                     array_push($details,
-                        $userSignup->reportback->id,
+                        env('PHOENIX_URI') . '/admin/reportback/' . $userSignup->reportback->id,
                         $userSignup->reportback->quantity,
                         ($userSignup->reportback->flagged) ? 'true' : 'false');
                 }

@@ -55,8 +55,7 @@
                                     </a>
                                 </td>
                                 <td class="table__cell">
-                                    {{-- @TODO need better way of doing this linking --}}
-                                    <a href="{{ env('PHOENIX_PROD') . '/admin/reportback/' . $competition->user_signup->reportback->id }}">
+                                    <a href="{{ env('PHOENIX_URL') . '/admin/reportback/' . $competition->user_signup->reportback->id }}">
                                         {{ $competition->user_signup->reportback->id or 'N/A' }}</td>
                                     </a>
                                 <td class="table__cell">{{ $competition->user_signup->reportback->reportback_items->total or 'N/A' }}</td>
