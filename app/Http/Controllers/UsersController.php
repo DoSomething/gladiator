@@ -101,7 +101,8 @@ class UsersController extends Controller
         $competitions = User::find($id)->competitions;
 
         foreach ($competitions as $competition) {
-            $competition->user_signup = $this->manager->getUserActivity($id, $competition);
+            if ($reportback = $this->manager->getUserActivity($id, $competition))
+            $competition->reportback = $reportback;
         }
 
         return view('users.show', compact('user', 'competitions'));

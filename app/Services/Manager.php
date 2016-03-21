@@ -64,13 +64,13 @@ class Manager
             ];
 
             if ($reportbacks) {
-                $userSignup = $this->getUserActivity($user->id, $model);
+                $reportback = $this->getUserActivity($user->id, $model);
 
-                if ($userSignup && $userSignup->reportback) {
+                if ($reportback) {
                     array_push($details,
-                        env('PHOENIX_URI') . '/admin/reportback/' . $userSignup->reportback->id,
-                        $userSignup->reportback->quantity,
-                        ($userSignup->reportback->flagged) ? 'true' : 'false');
+                        $reportback->admin_url,
+                        $reportback->quantity,
+                        $reportback->flagged);
                 }
             }
 
@@ -130,13 +130,21 @@ class Manager
      * @param  string $id  User ID
      * @param  \Gladiator\Models\Competition|WaitingRoom $model
      *
-     * @return object $signup
+     * @return object $reportback
      */
     public function getUserActivity($id, $model)
     {
         $campaign = $model->contest->campaign_id;
         $campaign_run = $model->contest->campaign_run_id;
+        $signup = $this->getUserSignup($id, $campaign, $campaign_run);
 
-        return $this->getUserSignup($id, $campaign, $campaign_run);
+        if ($signup && $signup->reportback)
+        {
+            $signup->reportback->admin_url = env('PHOENIX_URL') . '/admin/reportback/' . $signup->reportback->id;
+
+            return $signup->reportback;
+        }
+
+        return null;
     }
 }

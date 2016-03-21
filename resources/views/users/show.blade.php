@@ -55,13 +55,18 @@
                                     </a>
                                 </td>
                                 <td class="table__cell">
-                                    <a href="{{ env('PHOENIX_URL') . '/admin/reportback/' . $competition->user_signup->reportback->id }}">
-                                        {{ $competition->user_signup->reportback->id or 'N/A' }}</td>
-                                    </a>
-                                <td class="table__cell">{{ $competition->user_signup->reportback->reportback_items->total or 'N/A' }}</td>
-                                <td class="table__cell">{{ $competition->user_signup->reportback->quantity or 'N/A' }}</td>
-                                <td class="table__cell">{{ $competition->user_signup->reportback->updated_at or 'N/A' }}</td>
-                                <td class="table__cell">{{ ($competition->user_signup->reportback->flagged) ? 'Yes' : 'No' }}</td>
+                                    @if ($competition->reportback)
+                                        <a href="{{ $competition->reportback->admin_url }}">
+                                            {{ $competition->reportback->id }}
+                                        </a>
+                                    @else
+                                        'N/A'
+                                    @endif
+                                </td>
+                                <td class="table__cell">{{ $competition->reportback->reportback_items->total or 'N/A'}}</td>
+                                <td class="table__cell">{{ $competition->reportback->quantity or 'N/A'}}</td>
+                                <td class="table__cell">{{ $competition->reportback->updated_at or 'N/A'}}</td>
+                                <td class="table__cell">{{ $competition->reportback->flagged or 'N/A' }}</td>
                             </tr>
                         @endforeach
                     </tbody>
