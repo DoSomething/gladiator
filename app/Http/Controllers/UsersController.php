@@ -3,7 +3,6 @@
 namespace Gladiator\Http\Controllers;
 
 use Gladiator\Models\User;
-use Gladiator\Models\Contest;
 use Gladiator\Services\Manager;
 use Gladiator\Services\Registrar;
 use Gladiator\Http\Requests\UserRequest;
@@ -99,16 +98,13 @@ class UsersController extends Controller
     public function show($id)
     {
         $user = $this->repository->find($id);
+        $competitions = User::find($id)->competitions;
 
-        $user = User::with('competitions.contest')->findOrFail($user->id);
-
-        foreach ($user->competitions as $competition) {
-            $campaign = $competition->contest->campaign_id;
-            $campaign_run = $competition->contest->campaign_run_id;
-            $competition->user_signup = $this->manager->getUserSignup($user->id, $campaign, $campaign_run);
+        foreach ($competitions as $competition) {
+            $competition->user_signup = $this->manager->getUserActivity($id, $competition);
         }
 
-        return view('users.show', compact('user'));
+        return view('users.show', compact('user', 'competitions'));
     }
 
     /**

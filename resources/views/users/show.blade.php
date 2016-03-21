@@ -42,7 +42,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($user->competitions as $competition)
+                        @foreach ($competitions as $competition)
                             <tr class="table__row">
                                 <td class="table__cell">
                                     <a href="{{ route('contests.show', $competition->contest->id) }}">

@@ -48,7 +48,6 @@ class Manager
         $headers = ['northstar_id', 'first_name', 'last_name', 'email', 'cell'];
 
         if ($reportbacks) {
-            //TODO
             array_push($headers, 'reportback', 'quantity', 'flagged status');
         }
 
@@ -65,10 +64,7 @@ class Manager
             ];
 
             if ($reportbacks) {
-                //@TODO - this can be DRY'ed.
-                $campaign = $model->contest->campaign_id;
-                $campaignRun = $model->contest->campaign_run_id;
-                $userSignup = $this->getUserSignup($user->id, $campaign, $campaignRun);
+                $userSignup = $this->getUserActivity($user->id, $model);
 
                 if ($userSignup && $userSignup->reportback) {
                     array_push($details,
@@ -105,8 +101,11 @@ class Manager
      * Get user signup for a specific campaign and run. If only user id is
      * provided, the send back all user signups.
      *
-     * @param  string|\Gladiator\Models\Contest $contest
-     * @return \Gladiator\Models\Contest
+     * @param  string $id
+     * @param  string $campaign    Campaign ID
+     * @param  string $campaignRun Campaign Run ID
+     *
+     * @return object $signups
      */
     public function getUserSignup($id, $campaign = NULL, $campaignRun = NULL)
     {
@@ -122,5 +121,22 @@ class Manager
         }
 
         return $signups;
+    }
+
+    /**
+     * Get a user's signup/reportback activity for a
+     * particular competition or waiting room.
+     *
+     * @param  string $id  User ID
+     * @param  \Gladiator\Models\Competition|WaitingRoom $model
+     *
+     * @return object $signup
+     */
+    public function getUserActivity($id, $model)
+    {
+        $campaign = $model->contest->campaign_id;
+        $campaign_run = $model->contest->campaign_run_id;
+
+        return $this->getUserSignup($id, $campaign, $campaign_run);
     }
 }
