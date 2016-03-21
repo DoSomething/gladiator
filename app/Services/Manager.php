@@ -41,7 +41,7 @@ class Manager
      * @param bool $reportbacks Should this csv include reportback data?
      * @return \League\Csv $csv
      */
-    public function exportCSV($model, $reportbacks = false)
+    public function exportCSV($model, $hasReportback = false)
     {
         $data = [];
         $users = $model->users;
@@ -64,7 +64,7 @@ class Manager
                 isset($user->mobile) ? $user->mobile : '',
             ];
 
-            if ($reportbacks) {
+            if ($hasReportback) {
                 $reportback = $this->getUserActivity($user->id, $model);
 
                 if ($reportback) {
