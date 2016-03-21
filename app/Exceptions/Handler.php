@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Foundation\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Gladiator\Services\Northstar\Exceptions\NorthstarUserNotFoundException;
 
 class Handler extends ExceptionHandler
 {
@@ -45,10 +46,56 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return $this->json($request, $e);
+        }
+
         if ($e instanceof ValidationException) {
             return redirect()->back()->withInput($request->input())->withErrors($e->validator->getMessages());
         }
 
+        if ($e instanceof NorthstarUserNotFoundException) {
+            return redirect()->back()->with('status', $e->getMessage());
+        }
+
         return parent::render($request, $e);
+    }
+
+    /**
+     * Render an exception into an HTTP JSON response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Exception  $e
+     * @return \Illuminate\Http\Response
+     */
+    public function json($request, Exception $e)
+    {
+        $code = 500;
+
+        if ($e instanceof NorthstarUserNotFoundException) {
+            $code = 404;
+        }
+
+        if ($this->isHttpException($e)) {
+            $code = $e->getStatusCode();
+        }
+
+        $response = [
+            'error' => [
+                'code' => $code,
+                'message' => $e->getMessage(),
+            ],
+        ];
+
+        // Show more information if app is in debug mode.
+        if (config('app.debug')) {
+            $response['debug'] = [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ];
+        }
+
+        return response()->json($response, $code);
     }
 }
