@@ -46,9 +46,10 @@ class Manager
         $users = $model->users;
 
         $headers = ['northstar_id', 'first_name', 'last_name', 'email', 'cell'];
+
         if ($reportbacks) {
             //TODO
-            array_push($headers, 'some reportback headers go here');
+            array_push($headers, 'reportback', 'quantity', 'flagged status');
         }
 
         array_push($data, $headers);
@@ -62,9 +63,19 @@ class Manager
                 isset($user->email) ? $user->email : '',
                 isset($user->mobile) ? $user->mobile : '',
             ];
+
             if ($reportbacks) {
-                //TODO
-                array_push($headers, 'some reportback details go here');
+                //@TODO - this can be DRY'ed.
+                $campaign = $model->contest->campaign_id;
+                $campaignRun = $model->contest->campaign_run_id;
+                $userSignup = $this->getUserSignup($user->id, $campaign, $campaignRun);
+
+                if ($userSignup && $userSignup->reportback) {
+                    array_push($details,
+                        $userSignup->reportback->id,
+                        $userSignup->reportback->quantity,
+                        ($userSignup->reportback->flagged) ? 'true' : 'false');
+                }
             }
 
             array_push($data, $details);
@@ -76,7 +87,7 @@ class Manager
     /**
      * Collect Contest information with Waiting Room and Competitions.
      *
-     * @param  string|\Gladiator\Models\Contest $contest
+     * @param  string|\Gladiator\Models\Contest $data
      * @return \Gladiator\Models\Contest
      */
     public function collectContestInfo($data)
@@ -91,19 +102,20 @@ class Manager
     }
 
     /**
-     * Get user signup for a specific campaign and run.
+     * Get user signup for a specific campaign and run. If only user id is
+     * provided, the send back all user signups.
      *
      * @param  string|\Gladiator\Models\Contest $contest
      * @return \Gladiator\Models\Contest
      */
-    public function getUserSignup($id, $campaign = NULL, $campaign_run = NULL)
+    public function getUserSignup($id, $campaign = NULL, $campaignRun = NULL)
     {
         $signups = $this->northstar->getUserSignups($id, $campaign);
 
         // Only return the sign up record for the run that was specified.
-        if ($campaign_run) {
+        if ($campaignRun) {
             foreach ($signups as $key => $signup) {
-                if ($signup->campaign_run->id == $campaign_run) {
+                if ($signup->campaign_run->id == $campaignRun) {
                     $signups = $signups[$key];
                 }
             }
