@@ -2,6 +2,7 @@
 
 namespace Gladiator\Services;
 
+use Carbon\Carbon;
 use Gladiator\Models\Contest;
 use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Northstar\Northstar;
@@ -141,6 +142,9 @@ class Manager
         if ($signup && $signup->reportback)
         {
             $signup->reportback->admin_url = env('PHOENIX_URL') . '/admin/reportback/' . $signup->reportback->id;
+
+            $signup->reportback->updated_at = new Carbon($signup->reportback->updated_at);
+            $signup->reportback->updated_at = $signup->reportback->updated_at->format('Y-m-d');
 
             return $signup->reportback;
         }
