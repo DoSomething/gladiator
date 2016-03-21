@@ -143,7 +143,7 @@ class Manager
         if ($signup && $signup->reportback)
         {
             // Provide the admin URL to the reportback.
-            $signup->reportback->admin_url = env('PHOENIX_URL') . '/admin/reportback/' . $signup->reportback->id;
+            $signup->reportback->admin_url = env('PHOENIX_URI') . '/admin/reportback/' . $signup->reportback->id;
 
             // Format the update timestamp
             $signup->reportback->updated_at = new Carbon($signup->reportback->updated_at);
