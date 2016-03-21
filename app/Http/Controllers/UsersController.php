@@ -98,11 +98,16 @@ class UsersController extends Controller
     public function show($id)
     {
         $user = $this->repository->find($id);
+
         $competitions = User::find($id)->competitions;
 
+        // Get the user's reportback for each competition they are in.
         foreach ($competitions as $competition) {
-            if ($reportback = $this->manager->getUserActivity($id, $competition))
-            $competition->reportback = $reportback;
+            $reportback = $this->manager->getUserActivity($id, $competition);
+
+            if ($reportback) {
+                $competition->reportback = $reportback;
+            }
         }
 
         return view('users.show', compact('user', 'competitions'));

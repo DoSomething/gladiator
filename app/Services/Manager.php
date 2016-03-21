@@ -126,7 +126,7 @@ class Manager
 
     /**
      * Get a user's signup/reportback activity for a
-     * particular competition or waiting room.
+     * competition or waiting room.
      *
      * @param  string $id  User ID
      * @param  \Gladiator\Models\Competition|WaitingRoom $model
@@ -137,18 +137,23 @@ class Manager
     {
         $campaign = $model->contest->campaign_id;
         $campaign_run = $model->contest->campaign_run_id;
+
         $signup = $this->getUserSignup($id, $campaign, $campaign_run);
 
         if ($signup && $signup->reportback)
         {
+            // Provide the admin URL to the reportback.
             $signup->reportback->admin_url = env('PHOENIX_URL') . '/admin/reportback/' . $signup->reportback->id;
 
+            // Format the update timestamp
             $signup->reportback->updated_at = new Carbon($signup->reportback->updated_at);
             $signup->reportback->updated_at = $signup->reportback->updated_at->format('Y-m-d');
 
+            // Return the reportback.
             return $signup->reportback;
         }
 
+        // If the user has no activity for this competition or waiting room.
         return null;
     }
 }
