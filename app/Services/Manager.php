@@ -104,7 +104,7 @@ class Manager
      *
      * @param  string $id
      * @param  string $campaign    Campaign ID
-     * @param  string $campaignRun Campaign Run ID
+     * @param  int    $campaignRun Campaign Run ID
      *
      * @return object $signups
      */
