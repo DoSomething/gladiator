@@ -108,7 +108,7 @@ class Manager
      *
      * @return object $signups
      */
-    public function getUserSignup($id, $campaign = NULL, $campaignRun = NULL)
+    public function getUserSignup($id, $campaign = null, $campaignRun = null)
     {
         $signups = $this->northstar->getUserSignups($id, $campaign);
 
@@ -140,8 +140,7 @@ class Manager
 
         $signup = $this->getUserSignup($id, $campaign, $campaign_run);
 
-        if ($signup && $signup->reportback)
-        {
+        if ($signup && $signup->reportback) {
             // Provide the admin URL to the reportback.
             $signup->reportback->admin_url = env('PHOENIX_URI') . '/admin/reportback/' . $signup->reportback->id;
 
