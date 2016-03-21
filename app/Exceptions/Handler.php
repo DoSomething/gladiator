@@ -46,7 +46,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-
         if ($request->ajax() || $request->wantsJson()) {
             return $this->json($request, $e);
         }
@@ -56,7 +55,7 @@ class Handler extends ExceptionHandler
         }
 
         if ($e instanceof NorthstarUserNotFoundException) {
-            return redirect()->back()->with('status', $e->getMessage());
+            return redirect()->back()->withInput($request->input())->with('status', $e->getMessage());
         }
 
         return parent::render($request, $e);
