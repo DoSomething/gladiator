@@ -28,14 +28,6 @@
                     <li>
                         <a href="{{ route('split', $contest->waitingRoom->id) }}" class="button -secondary">Split</a>
                     </li>
-                    <li>
-                        <form method="POST" action="{{ route('contests.destroy', $contest->id) }}">
-                            {{ method_field('DELETE') }}
-                            {{ csrf_field() }}
-
-                            <input type="submit" class="button -danger" value="Delete" />
-                        </form>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -71,7 +63,7 @@
                       <tbody>
                         @foreach ($contest->competitions as $competition)
                             <tr class="table__row">
-                                <td class="table__cell">{{ $competition->id }}</td>
+                                <td class="table__cell"><a href="{{ route('competitions.show', $competition->id) }}">{{ $competition->id }}</a></td>
                                 <td class="table__cell">{{ $competition->competition_start_date->format('F d, Y') }}</td>
                                 <td class="table__cell">{{ $competition->competition_end_date->format('F d, Y') }}</td>
                                 <td class="table__cell">{{ $competition->users->count() }}</td>
