@@ -48,7 +48,7 @@ class Manager
 
         $headers = ['northstar_id', 'first_name', 'last_name', 'email', 'cell'];
 
-        if ($hasReportbacks) {
+        if ($hasReportback) {
             array_push($headers, 'reportback', 'quantity', 'flagged status');
         }
 
