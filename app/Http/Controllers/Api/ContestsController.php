@@ -38,7 +38,7 @@ class ContestsController extends ApiController
 
         // @TODO: below is temporary fix until Phoenix GET request updates run_nid param to run_id.
         // We want to aim to not have any proprietary Drupal id names :P
-        if (!$campaignRunId) {
+        if (! $campaignRunId) {
             $campaignRunId = $request->query('run_nid');
         }
 
