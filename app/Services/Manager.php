@@ -148,6 +148,9 @@ class Manager
             $signup->reportback->updated_at = new Carbon($signup->reportback->updated_at);
             $signup->reportback->updated_at = $signup->reportback->updated_at->format('Y-m-d');
 
+            // Return set flagged status to 'pending' if it is false.
+            $signup->reportback->flagged = ($signup->reportback->flagged) ? $signup->reportback->flagged : 'pending';
+
             // Return the reportback.
             return $signup->reportback;
         }
