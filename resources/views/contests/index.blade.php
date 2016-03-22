@@ -28,6 +28,7 @@
                                 <th class="table__cell">Signup End Date</th>
                                 <th class="table__cell">Signups</th>
                                 <th class="table__cell">Waiting Room Status</th>
+                                <th class="table__cell">Competitions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,12 +41,13 @@
                                     <td class="table__cell">{{ $contest->campaign_run_id }}</td>
                                     <td class="table__cell">{{ $contest->duration }}</td>
                                     <td class="table__cell">{{ $contest->waitingRoom->signup_end_date->format('F d, Y') }}</td>
-                                    <td class="table__cell"><a href="{{ route('waitingrooms.show', $contest->waitingroom->id) }}">{{ $contest->waitingroom->users->count() }}</td>
+                                    <td class="table__cell"><a href="{{ route('waitingrooms.show', $contest->waitingroom->id) }}">{{ $contest->waitingroom->users->count() }}</a></td>
                                     <td class="table__cell">
                                         <span class="status {{ ($contest->waitingRoom->isOpen()) ? '-open' : '-closed' }}">
                                             {{ ($contest->waitingRoom->isOpen()) ? 'Open' : 'Closed' }}
                                         </span>
                                     </td>
+                                    <td class="table__cell">{{ $contest->competitions->count() }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
