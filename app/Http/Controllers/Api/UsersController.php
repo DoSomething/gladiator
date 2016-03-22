@@ -27,6 +27,19 @@ class UsersController extends ApiController
     {
         $this->registrar = $registrar;
         $this->transformer = new UserTransformer;
+
+        $this->middleware('auth.api');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        // @TODO: temp for now, likely want to use repository and transform.
+        return User::all();
     }
 
     /**
