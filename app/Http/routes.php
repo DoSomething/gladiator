@@ -56,10 +56,7 @@ Route::group(['prefix' => 'api/v1'], function () {
 
     Route::get('contests', 'Api\ContestsController@index');
 
-    Route::get('users', function () {
-        // @TODO: temporary, need to remove.
-        return Gladiator\Models\User::all();
-    });
+    Route::get('users', 'Api\UsersController@index');
     Route::post('users', 'Api\UsersController@store');
 
 });
