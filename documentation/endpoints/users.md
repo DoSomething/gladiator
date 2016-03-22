@@ -5,6 +5,10 @@
 
 ## Retrieve All Users
 
+```
+GET /api/v1/users
+```
+
 ## Create A User
 
 ```
@@ -16,6 +20,7 @@ POST /api/v1/users
 ```javascript
 Accept: application/json
 Content-Type: application/json
+X-DS-Gladiator-API-Key: gladiatorKey
 ```
 
 **Body Parameters**
@@ -42,6 +47,7 @@ Content-Type: application/json
 curl -X POST \
   -H "Content-Type: application/json" \
   -H "Accept: application/json" \
+  -H "X-DS-Gladiator-API-Key: ${GLADIATOR_API_KEY}" \
   -d '{"id":"kallark@dosomething.org","term":"email","campaign_id":"362","campaign_run_id":"212"}' \
   http://gladiator.dosomething.org/api/v1/users
 ```
