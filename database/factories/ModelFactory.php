@@ -28,6 +28,5 @@ $factory->define(Contest::class, function (Generator $faker) {
     return [
         'campaign_id' => $faker->numberBetween(10, 300),
         'campaign_run_id' => $faker->numberBetween(1000, 3000),
-        'duration' => $faker->randomElement([30, 60, 365]),
     ];
 });
