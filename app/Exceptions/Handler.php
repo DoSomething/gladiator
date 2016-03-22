@@ -72,10 +72,6 @@ class Handler extends ExceptionHandler
     {
         $code = 500;
 
-        // if ($e instanceof NorthstarUserNotFoundException) {
-        //     $code = 404;
-        // }
-
         if ($this->isHttpException($e)) {
             $code = $e->getStatusCode();
         }
