@@ -100,7 +100,7 @@ class WaitingRoom extends Model
 
             $competition->contest_id = $contest->getKey();
             $competition->competition_start_date = $startDate;
-            $competition->competition_end_date = $endDate;
+            $competition->competition_end_date = $endDate->endOfDay();
 
             $contest->competitions()->save($competition);
 
