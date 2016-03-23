@@ -21,7 +21,7 @@
                 </div>
 
                 <div class="container__block">
-                    <h1>Proposed Competitions</h1>
+                    <h1>{{ count($split) . ' Proposed Competition(s)' }}</h1>
                     <table class="table">
                         <thead>
                             <tr class="table__header">
