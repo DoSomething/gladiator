@@ -11,7 +11,7 @@ class Contest extends Model
      *
      * @var array
      */
-    protected $fillable = ['campaign_id', 'campaign_run_id', 'duration'];
+    protected $fillable = ['campaign_id', 'campaign_run_id'];
 
     /**
      * Get the waiting room associated with this contest.

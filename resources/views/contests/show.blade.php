@@ -13,7 +13,6 @@
                 <ul>
                     <li><strong>Campaign ID:</strong> {{ $contest->campaign_id }}</li>
                     <li><strong>Campaign Run ID:</strong> {{ $contest->campaign_run_id }}</li>
-                    <li><strong>Duration:</strong> {{ $contest->duration }}</li>
                 </ul>
             </div>
 
