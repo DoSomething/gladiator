@@ -30,6 +30,5 @@
             </div>
         </div>
     </div>
-
-    @include('users.partials._table_users', ['users' => $users, 'role' => 'Contestants: ' . $competition->users->count()])
+    @include('competitions.partials._leaderboard', ['users' => $users])
 @stop

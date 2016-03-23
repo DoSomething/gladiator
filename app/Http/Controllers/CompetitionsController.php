@@ -46,9 +46,9 @@ class CompetitionsController extends Controller
     {
         $contest = Contest::find($competition->contest_id);
 
-        $this->manager->createLeaderboard($competition);
+        $users = $this->manager->createLeaderboard($competition);
 
-        $users = $this->repository->getAll($competition->users->pluck('id')->toArray());
+        // $users = $this->repository->getAll($competition->users->pluck('id')->toArray());
 
         return view('competitions.show', compact('competition', 'contest', 'users'));
     }

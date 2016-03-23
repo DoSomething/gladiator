@@ -104,6 +104,8 @@ class Manager
          usort($rows, function($a, $b) {
             return $a['quantity'] <= $b['quantity'];
         });
+
+        return $rows;
     }
 
     /**
