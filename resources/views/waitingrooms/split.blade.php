@@ -9,12 +9,13 @@
     <div class="container">
         <div class="wrapper">
             <div class="container__block">
-                <h1>{{ count($split) . ' Proposed Competition(s)' }}</h1>
+                <h1>{{ count($split) . ' Proposed ' . ((count($split) === 1) ? 'Competition' : 'Competitions') }}</h1>
             </div>
             @if (count($split))
                 <form method="POST" action="{{ route('split', $room->id) }}">
                     {{ method_field('POST') }}
                     {{ csrf_field() }}
+
                     <div class="container__block">
                         <div class="form-item -padded">
                             <label class="field-label" for="competition_end_date">End date for these competitions:</label>
