@@ -12,8 +12,8 @@ class Message extends Model
      * @var array
      */
     protected static $types = [
-        'leaderboard_update',
         'leaderboard_final',
+        'leaderboard_update',
         'reminder',
         'reminder_first',
         'reminder_last',
