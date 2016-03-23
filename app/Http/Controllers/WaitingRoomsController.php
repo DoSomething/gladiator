@@ -127,7 +127,7 @@ class WaitingRoomsController extends Controller
         $contest = Contest::find($room->contest_id);
         $room->saveSplit($contest, $split);
 
-        return redirect()->route('waitingrooms.index')->with('status', 'Waiting Room has been split!');
+        return redirect()->route('contests.show', $room->contest_id)->with('status', 'Waiting Room has been split!');
     }
 
     /**
