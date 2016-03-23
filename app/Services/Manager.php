@@ -87,18 +87,23 @@ class Manager
         $rows = [];
 
          foreach ($users as $user) {
-
              $user = $this->repository->find($user->id);
              $reportback = $this->getUserActivity($user->id, $competition);
-             dd($reportback);
-             array_push($rows, ['user' => $user, 'reportback' => $reportback]);
+
+             $quantity = 0;
+             $flagged = "N/A";
+
+             if (isset($reportback)) {
+                 $quantity = $reportback->quantity;
+                 $flagged = $reportback->flagged;
+             }
+
+             array_push($rows, ['user' => $user, 'quantity' => $quantity, 'flagged' => $flagged]);
          }
 
-         dd($rows);
-
-        //  usort($myArray, function($a, $b) {
-        //     return $a['order'] <=> $b['order'];
-        // });
+         usort($rows, function($a, $b) {
+            return $a['quantity'] <= $b['quantity'];
+        });
     }
 
     /**
@@ -157,10 +162,8 @@ class Manager
     {
         $campaign = $model->contest->campaign_id;
         $campaign_run = $model->contest->campaign_run_id;
-        dd($id, $campaign, $campaign_run);
 
         $signup = $this->getUserSignup($id, $campaign, $campaign_run);
-        dd($signup);
 
         if ($signup && $signup->reportback) {
             // Provide the admin URL to the reportback.
@@ -171,7 +174,15 @@ class Manager
             $signup->reportback->updated_at = $signup->reportback->updated_at->format('Y-m-d');
 
             // Return set flagged status to 'pending' if it is false.
-            $signup->reportback->flagged = ($signup->reportback->flagged) ? $signup->reportback->flagged : 'pending';
+            if (!isset($signup->reportback->flagged)) {
+                $signup->reportback->flagged = "pending";
+            }
+            else if ($signup->reportback->flagged) {
+                $signup->reportback->flagged = "flagged";
+            }
+            else {
+                $signup->reportback->flagged = "approved";
+            }
 
             // Return the reportback.
             return $signup->reportback;
