@@ -23,13 +23,13 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('auth/logout', 'Auth\AuthController@logout');
 
     // Competitions
-    Route::get('competitions/{competitions}/export', 'CompetitionsController@export')->name('competitions.export');
     Route::model('competitions', 'Gladiator\Models\Competition');
+    Route::get('competitions/{competitions}/export', 'CompetitionsController@export')->name('competitions.export');
     Route::resource('competitions', 'CompetitionsController', ['except' => ['index', 'create']]);
 
     // Competitions
-    Route::get('contests/{contest}/export', 'ContestsController@export')->name('contests.export');
     Route::model('contests', 'Gladiator\Models\Contest');
+    Route::get('contests/{contest}/export', 'ContestsController@export')->name('contests.export');
     Route::resource('contests', 'ContestsController');
 
     // Users
@@ -40,10 +40,10 @@ Route::group(['middleware' => ['web']], function () {
     ]);
 
     // Waiting rooms routes.
+    Route::model('waitingrooms', 'Gladiator\Models\WaitingRoom');
     Route::get('waitingrooms/{waitingrooms}/export', 'WaitingRoomsController@export')->name('waitingrooms.export');
     Route::get('waitingrooms/{waitingrooms}/split', 'WaitingRoomsController@showSplitForm')->name('split');
     Route::post('waitingrooms/{waitingrooms}/split', 'WaitingRoomsController@split')->name('split');
-    Route::model('waitingrooms', 'Gladiator\Models\WaitingRoom');
     Route::resource('waitingrooms', 'WaitingRoomsController', ['except' => ['create', 'destroy']]);
 
 });
