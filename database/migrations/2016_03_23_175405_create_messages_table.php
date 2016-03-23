@@ -17,7 +17,7 @@ class CreateMessagesTable extends Migration
             $table->integer('contest_id')->unsigned()->index();
             $table->foreign('contest_id')->references('id')->on('contests')->onDelete('cascade');
             $table->string('type')->index();
-            $table->subject('subject')->nullable();
+            $table->string('subject')->nullable();
             $table->longText('body')->nullable();
             $table->timestamps();
         });
