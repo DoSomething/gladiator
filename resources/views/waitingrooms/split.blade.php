@@ -16,20 +16,9 @@
                     <input type="submit" class="button" value="Split" />
                 </form>
             </div>
-            <div class="container__block container__competitions">
-                <h1>Competitions</h1>
-                @foreach($split as $competition)
-                    <div class="container__split">
-                        <h1>{{ count($competition) }} Users</h1>
-                        <ul>
-                            @foreach($competition as $user)
-                                <li>{{ $user }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endforeach
-            </div>
         </div>
     </div>
-
+    @foreach($split as $key => $competition)
+        @include('users.partials._table_users', ['users' => $competition, 'role' => 'Competition ' . ($key + 1) . ' : ' . $competition->count() . ' users'])
+    @endforeach
 @stop

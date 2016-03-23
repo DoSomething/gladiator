@@ -111,6 +111,11 @@ class WaitingRoomsController extends Controller
     {
         $split = $room->getDefaultSplit();
 
+        // Get user info from Northstar.
+        foreach ($split as $key => $users) {
+            $split[$key] = $this->repository->getAll($users);
+        }
+
         return view('waitingrooms.split', compact('split', 'room'));
     }
 
