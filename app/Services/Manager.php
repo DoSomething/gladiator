@@ -81,6 +81,26 @@ class Manager
         return buildCSV($data);
     }
 
+    public function createLeaderboard($competition, $includeOnlyApproved = true)
+    {
+        $users = $competition->users;
+        $rows = [];
+
+         foreach ($users as $user) {
+
+             $user = $this->repository->find($user->id);
+             $reportback = $this->getUserActivity($user->id, $competition);
+             dd($reportback);
+             array_push($rows, ['user' => $user, 'reportback' => $reportback]);
+         }
+
+         dd($rows);
+
+        //  usort($myArray, function($a, $b) {
+        //     return $a['order'] <=> $b['order'];
+        // });
+    }
+
     /**
      * Collect Contest information with Waiting Room and Competitions.
      *
@@ -137,8 +157,10 @@ class Manager
     {
         $campaign = $model->contest->campaign_id;
         $campaign_run = $model->contest->campaign_run_id;
+        dd($id, $campaign, $campaign_run);
 
         $signup = $this->getUserSignup($id, $campaign, $campaign_run);
+        dd($signup);
 
         if ($signup && $signup->reportback) {
             // Provide the admin URL to the reportback.
