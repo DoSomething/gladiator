@@ -7,6 +7,7 @@ use Gladiator\Models\WaitingRoom;
 use Gladiator\Http\Requests\WaitingRoomRequest;
 use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Manager;
+use Gladiator\Http\Requests\SplitRequest;
 
 class WaitingRoomsController extends Controller
 {
@@ -111,11 +112,6 @@ class WaitingRoomsController extends Controller
     {
         $split = $room->getDefaultSplit();
 
-        // Get user info from Northstar.
-        foreach ($split as $key => $users) {
-            $split[$key] = $this->repository->getAll($users);
-        }
-
         return view('waitingrooms.split', compact('split', 'room'));
     }
 
@@ -126,11 +122,11 @@ class WaitingRoomsController extends Controller
      * @param  \Gladiator\Models\WaitingRoom  $room
      * @return \Illuminate\Http\Response
      */
-    public function split(WaitingRoom $room)
+    public function split(SplitRequest $request, WaitingRoom $room)
     {
         $split = $room->getDefaultSplit();
         $contest = Contest::find($room->contest_id);
-        $room->saveSplit($contest, $split);
+        $room->saveSplit($contest, $split, $request->competition_end_date);
 
         return redirect()->route('contests.show', $room->contest_id)->with('status', 'Waiting Room has been split!');
     }

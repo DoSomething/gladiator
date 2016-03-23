@@ -89,10 +89,10 @@ class WaitingRoom extends Model
     /*
      * Creates competitions based on the given user split.
      */
-    public function saveSplit($contest, $split)
+    public function saveSplit($contest, $split, $endDate)
     {
         $startDate = Carbon::now()->startOfDay();
-        $endDate = Carbon::now()->addDays($contest->duration)->endOfDay();
+        $endDate = new Carbon($endDate);
 
         foreach ($split as $competitionGroup) {
             // For each split, create a competition.
