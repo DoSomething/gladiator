@@ -12,8 +12,21 @@ class Message extends Model
      * @var array
      */
     protected static $types = [
+        'leaderboard_update',
+        'leaderboard_final',
         'reminder',
+        'reminder_first',
+        'reminder_last',
+        'welcome',
     ];
+
+    /**
+     * Get the contest associated with this message.
+     */
+    public function contest()
+    {
+        return $this->belongsTo(Contest::class);
+    }
 
     /**
      * Get the list of Message types.

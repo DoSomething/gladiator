@@ -22,11 +22,19 @@ class Contest extends Model
     }
 
     /**
-     * Get the competition associated with this contest.
+     * Get the competitions associated with this contest.
      */
     public function competitions()
     {
         return $this->hasMany(Competition::class);
+    }
+
+    /**
+     * Get the messages associated with this contest.
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
     }
 
     /**
