@@ -140,10 +140,10 @@ class Manager
                     $rank += $increment;
                     $increment = 1;
                 }
-             }
+            }
 
-             // Assign rank to the leaderboard
-             $leaderboard[$index]['rank'] = $rank;
+            // Assign rank to the leaderboard
+            $leaderboard[$index]['rank'] = $rank;
         }
 
         return $leaderboard;
@@ -219,7 +219,7 @@ class Manager
             // Return set flagged status to 'pending' if it is false.
             if (! isset($signup->reportback->flagged)) {
                 $signup->reportback->flagged = 'pending';
-            } else if ($signup->reportback->flagged) {
+            } elseif ($signup->reportback->flagged) {
                 $signup->reportback->flagged = 'flagged';
             } else {
                 $signup->reportback->flagged = 'approved';
