@@ -39,10 +39,6 @@ namespace :deploy do
     run "cd #{release_path} && php artisan migrate --force"
   end
 
-  task :artisan_custom_styles do
-    run "cd #{release_path} && php artisan custom-styles"
-  end
-
   task :artisan_cache_clear do
     run "cd #{release_path} && php artisan cache:clear"
   end
@@ -55,3 +51,4 @@ end
 
 after "deploy:update", "deploy:cleanup"
 after "deploy:symlink", "deploy:link_folders"
+after "deploy:artisan_migrate", "deploy:artisan_cache_clear"
