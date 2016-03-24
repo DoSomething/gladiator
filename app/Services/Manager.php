@@ -86,7 +86,7 @@ class Manager
      *
      * @param WaitingRoom|Competition $model
      * @param int $limit Amount of rows in the leaderboard to return
-     * @return Array $leaderboard
+     * @return array $leaderboard
      */
     public function createLeaderboard($competition, $limit = 10)
     {
@@ -100,7 +100,7 @@ class Manager
             $reportback = $this->getUserActivity($user->id, $competition);
 
             $quantity = 0;
-            $flagged = "N/A";
+            $flagged = 'N/A';
 
             // If the reportback exists, replace the placeholder
             if (isset($reportback)) {
@@ -110,43 +110,43 @@ class Manager
 
             // Push all of the data to a larger array
             array_push($rows, ['user' => $user, 'quantity' => $quantity, 'flagged' => $flagged]);
-         }
+        }
 
-         // Sort all of the rows based on total quantity
-         usort($rows, function($a, $b) {
-             return $a['quantity'] <= $b['quantity'];
-         });
+        // Sort all of the rows based on total quantity
+        usort($rows, function ($a, $b) {
+            return $a['quantity'] <= $b['quantity'];
+        });
 
-         // Now that everything is sorted, only work with the rows we need
-         $leaderboard = array_splice($rows, 0, $limit);
+        // Now that everything is sorted, only work with the rows we need
+        $leaderboard = array_splice($rows, 0, $limit);
 
-         // This is the rank given to the row
-         $rank = 1;
+        // This is the rank given to the row
+        $rank = 1;
 
-         // This is how much the rank is incremented by.
-         // In the case of a tie, this will be more than 1.
-         $increment = 1;
-         foreach ($leaderboard as $index => $row) {
-             // Can't compare agaisnt negative index
-             if ($index > 0) {
+        // This is how much the rank is incremented by.
+        // In the case of a tie, this will be more than 1.
+        $increment = 1;
+        foreach ($leaderboard as $index => $row) {
+            // Can't compare agaisnt negative index
+            if ($index > 0) {
 
-                 // If the current quantity equals the previous row's quantity
-                 if ($row['quantity'] == $leaderboard[$index - 1]['quantity']) {
-                     // Increase the increment amount by 1
-                     $increment++;
-                 }
-                 // Otherwise increase the rank based on the increment & reset
-                 else {
-                     $rank += $increment;
-                     $increment = 1;
-                 }
+                // If the current quantity equals the previous row's quantity
+                if ($row['quantity'] == $leaderboard[$index - 1]['quantity']) {
+                    // Increase the increment amount by 1
+                    $increment++;
+                }
+                // Otherwise increase the rank based on the increment & reset
+                else {
+                    $rank += $increment;
+                    $increment = 1;
+                }
              }
 
              // Assign rank to the leaderboard
              $leaderboard[$index]['rank'] = $rank;
-         }
+        }
 
-         return $leaderboard;
+        return $leaderboard;
     }
 
     /**
@@ -219,11 +219,9 @@ class Manager
             // Return set flagged status to 'pending' if it is false.
             if (!isset($signup->reportback->flagged)) {
                 $signup->reportback->flagged = "pending";
-            }
-            else if ($signup->reportback->flagged) {
+            } else if ($signup->reportback->flagged) {
                 $signup->reportback->flagged = "flagged";
-            }
-            else {
+            } else {
                 $signup->reportback->flagged = "approved";
             }
 
