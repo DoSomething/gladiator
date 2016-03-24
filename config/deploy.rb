@@ -51,4 +51,4 @@ end
 
 after "deploy:update", "deploy:cleanup"
 after "deploy:symlink", "deploy:link_folders"
-after "deploy:artisan_migrate", "deploy:artisan_cache_clear"
+after "deploy:link_folders", "deploy:artisan_migrate"
