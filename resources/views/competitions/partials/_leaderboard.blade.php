@@ -16,10 +16,11 @@
                 <tbody>
                     @foreach ($users as $index => $user)
                         <tr class="table__row">
-                            <td class="table__cell">{{ $index }}</td>
+                            <td class="table__cell">{{ $user['rank'] }}</td>
                             <td class="table__cell"><a href="{{ route('users.show', $user['user']->id) }}">{{ $user['user']->first_name or 'Anonymous' }} {{ $user['user']->last_name or '' }}</a></td>
                             <td class="table__cell">{{ $user['quantity'] or '' }}</td>
                             <td class="table__cell">{{ $user['user']->email or '' }}</td>
+                            <td class="table__cell">{{ $user['flagged'] or '' }}</td>
                         </tr>
                     @endforeach
                 </tbody>

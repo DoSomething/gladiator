@@ -7,6 +7,7 @@ use Gladiator\Models\Competition;
 use Gladiator\Models\Contest;
 use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Manager;
+use Illuminate\Http\Request;
 
 class CompetitionsController extends Controller
 {
@@ -42,13 +43,27 @@ class CompetitionsController extends Controller
      * @param  \Gladiator\Models\Competition  $competition
      * @return \Illuminate\Http\Response
      */
-    public function show(Competition $competition)
+    public function show(Competition $competition, Request $request)
     {
         $contest = Contest::find($competition->contest_id);
 
-        $users = $this->manager->createLeaderboard($competition);
+        // Determine the amount of users to show in the leaderboard
+        $limit = 10;
+        $limitQuery = $request->input('limit');
 
-        // $users = $this->repository->getAll($competition->users->pluck('id')->toArray());
+        if (isset($limitQuery)) {
+            // If they specified all, get total users
+            if ($limitQuery === "all") {
+                $limit = sizeof($competition->users);
+            }
+            // Otherwise use the given number
+            else {
+                $limit = (int)$limitQuery;
+            }
+        }
+
+        // Get the leaderboard
+        $users = $this->manager->createLeaderboard($competition, $limit);
 
         return view('competitions.show', compact('competition', 'contest', 'users'));
     }

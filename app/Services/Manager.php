@@ -81,31 +81,72 @@ class Manager
         return buildCSV($data);
     }
 
-    public function createLeaderboard($competition, $includeOnlyApproved = true)
+    /**
+     * Build a leaderboard for a given Competition
+     *
+     * @param WaitingRoom|Competition $model
+     * @param int $limit Amount of rows in the leaderboard to return
+     * @return Array $leaderboard
+     */
+    public function createLeaderboard($competition, $limit = 10)
     {
         $users = $competition->users;
         $rows = [];
 
-         foreach ($users as $user) {
-             $user = $this->repository->find($user->id);
-             $reportback = $this->getUserActivity($user->id, $competition);
+        // For each user, combine all of the data into a row
+        foreach ($users as $index => $user) {
+            // Get user & reportback data
+            $user = $this->repository->find($user->id);
+            $reportback = $this->getUserActivity($user->id, $competition);
 
-             $quantity = 0;
-             $flagged = "N/A";
+            $quantity = 0;
+            $flagged = "N/A";
 
-             if (isset($reportback)) {
-                 $quantity = $reportback->quantity;
-                 $flagged = $reportback->flagged;
-             }
+            // If the reportback exists, replace the placeholder
+            if (isset($reportback)) {
+                $quantity = $reportback->quantity;
+                $flagged = $reportback->flagged;
+            }
 
-             array_push($rows, ['user' => $user, 'quantity' => $quantity, 'flagged' => $flagged]);
+            // Push all of the data to a larger array
+            array_push($rows, ['user' => $user, 'quantity' => $quantity, 'flagged' => $flagged]);
          }
 
+         // Sort all of the rows based on total quantity
          usort($rows, function($a, $b) {
-            return $a['quantity'] <= $b['quantity'];
-        });
+             return $a['quantity'] <= $b['quantity'];
+         });
 
-        return $rows;
+         // Now that everything is sorted, only work with the rows we need
+         $leaderboard = array_splice($rows, 0, $limit);
+
+         // This is the rank given to the row
+         $rank = 1;
+
+         // This is how much the rank is incremented by.
+         // In the case of a tie, this will be more than 1.
+         $increment = 1;
+         foreach ($leaderboard as $index => $row) {
+             // Can't compare agaisnt negative index
+             if ($index > 0) {
+
+                 // If the current quantity equals the previous row's quantity
+                 if ($row['quantity'] == $leaderboard[$index - 1]['quantity']) {
+                     // Increase the increment amount by 1
+                     $increment++;
+                 }
+                 // Otherwise increase the rank based on the increment & reset
+                 else {
+                     $rank += $increment;
+                     $increment = 1;
+                 }
+             }
+
+             // Assign rank to the leaderboard
+             $leaderboard[$index]['rank'] = $rank;
+         }
+
+         return $leaderboard;
     }
 
     /**
