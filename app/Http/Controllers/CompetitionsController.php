@@ -54,7 +54,7 @@ class CompetitionsController extends Controller
         if (isset($limitQuery)) {
             // If they specified all, get total users
             if ($limitQuery === 'all') {
-                $limit = sizeof($competition->users);
+                $limit = count($competition->users);
             }
             // Otherwise use the given number
             else {
