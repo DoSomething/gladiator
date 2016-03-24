@@ -11,7 +11,7 @@ class Contest extends Model
      *
      * @var array
      */
-    protected $fillable = ['campaign_id', 'campaign_run_id', 'duration'];
+    protected $fillable = ['campaign_id', 'campaign_run_id'];
 
     /**
      * Get the waiting room associated with this contest.
@@ -22,11 +22,19 @@ class Contest extends Model
     }
 
     /**
-     * Get the competition associated with this contest.
+     * Get the competitions associated with this contest.
      */
     public function competitions()
     {
         return $this->hasMany(Competition::class);
+    }
+
+    /**
+     * Get the messages associated with this contest.
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace Gladiator\Http\Requests;
 
-class ContestRequest extends Request
+class SplitRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,7 @@ class ContestRequest extends Request
     public function rules()
     {
         return [
-            'campaign_id' => 'required|numeric',
-            'campaign_run_id' => 'required|numeric',
-            'signup_start_date' => 'required|date',
-            'signup_end_date' => 'required|date',
+            'competition_end_date' => 'required|date|after:today',
         ];
     }
 }
