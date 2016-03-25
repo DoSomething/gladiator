@@ -9,6 +9,11 @@ class QueueMessageRequest extends Event
 {
     use SerializesModels;
 
+    /**
+     * Message instance.
+     *
+     * @var \Gladiator\Models\Message
+     */
     public $message;
 
     /**
