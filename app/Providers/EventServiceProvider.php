@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'Gladiator\Events\SomeEvent' => [
-            'Gladiator\Listeners\EventListener',
+        'Gladiator\Events\QueueMessageRequest' => [
+            'Gladiator\Listeners\QueueMessage',
         ],
     ];
 
