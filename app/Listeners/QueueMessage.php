@@ -2,7 +2,7 @@
 
 namespace Gladiator\Listeners;
 
-use Mail;
+use Illuminate\Mail\Mailer;
 use Gladiator\Events\QueueMessageRequest;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -15,7 +15,7 @@ class QueueMessage implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Mail $mail)
+    public function __construct(Mailer $mail)
     {
         $this->mail = $mail;
     }
@@ -32,7 +32,7 @@ class QueueMessage implements ShouldQueue
 
         $type = $content->type;
 
-        Mail::send('messages.' . $type, ['content' => $content], function ($msg) use ($content) {
+        $this->mail->send('messages.' . $type, ['content' => $content], function ($msg) use ($content) {
 
             // @TODO - Pull from address from contest setting.
             $msg->from('beyonce@app.com', 'Beyonce');
