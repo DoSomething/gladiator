@@ -2,10 +2,8 @@
 
 namespace Gladiator\Events;
 
-use Gladiator\Events\Event;
 use Gladiator\Models\Message;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class QueueMessageRequest extends Event
 {

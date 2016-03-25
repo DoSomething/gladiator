@@ -4,7 +4,6 @@ namespace Gladiator\Listeners;
 
 use Mail;
 use Gladiator\Events\QueueMessageRequest;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 class QueueMessage implements ShouldQueue
