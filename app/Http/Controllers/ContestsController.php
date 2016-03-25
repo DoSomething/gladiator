@@ -49,6 +49,10 @@ class ContestsController extends Controller
      */
     public function store(ContestRequest $request)
     {
+        dd($request->all());
+
+        // (new MessagesController)->store();
+
         $dateParams = ['signup_start_date', 'signup_end_date'];
 
         $contest = Contest::create($request->except($dateParams));

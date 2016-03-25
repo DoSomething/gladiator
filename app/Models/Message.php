@@ -12,6 +12,7 @@ class Message extends Model
      * @var array
      */
     protected static $types = [
+        'general',
         'leaderboard',
         'reminder',
         'welcome',
