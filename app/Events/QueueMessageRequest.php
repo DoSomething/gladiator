@@ -16,6 +16,9 @@ class QueueMessageRequest extends Event
     /**
      * Create a new event instance.
      *
+     * @TODO - this might need also to take in a competition id so we can
+     * pull the users in the competition before sending.
+     *
      * @return void
      */
     public function __construct(Message $message)

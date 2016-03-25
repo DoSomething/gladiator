@@ -35,8 +35,10 @@ class QueueMessage
 
         Mail::send('messages.' . $type, ['content' => $content], function ($msg) use ($content) {
 
+            // @TODO - Pull from address from contest setting.
             $msg->from('beyonce@app.com', 'Beyonce');
 
+            // @TODO - send to users in competition that triggered the send.
             $msg->to('ssmith@dosomething.org', 'shae')->subject($content->subject);
         });
     }
