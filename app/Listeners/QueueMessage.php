@@ -7,7 +7,7 @@ use Gladiator\Events\QueueMessageRequest;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class QueueMessage
+class QueueMessage implements ShouldQueue
 {
     public $mail;
 
@@ -39,6 +39,7 @@ class QueueMessage
             $msg->from('beyonce@app.com', 'Beyonce');
 
             // @TODO - send to users in competition that triggered the send.
+            // can be an array of email addresses.
             $msg->to('ssmith@dosomething.org', 'shae')->subject($content->subject);
         });
     }
