@@ -5,6 +5,7 @@ namespace Gladiator\Http\Controllers;
 use Gladiator\Models\Contest;
 use Gladiator\Services\Manager;
 use Gladiator\Http\Requests\ContestRequest;
+use Gladiator\Repositories\MessageRepository;
 
 class ContestsController extends Controller
 {
@@ -49,14 +50,15 @@ class ContestsController extends Controller
      */
     public function store(ContestRequest $request)
     {
-        dd($request->all());
+        $contest = Contest::create([
+            'campaign_id' => $request->input('campaign_id'),
+            'campaign_run_id' => $request->input('campaign_run_id'),
+        ]);
 
-        // (new MessagesController)->store();
+        $contest->waitingRoom->fill($request->only(['signup_start_date', 'signup_end_date']))->save();
 
-        $dateParams = ['signup_start_date', 'signup_end_date'];
-
-        $contest = Contest::create($request->except($dateParams));
-        $contest->WaitingRoom->fill($request->only($dateParams))->save();
+        $repository = new MessageRepository;
+        $repository->createMessagesForContest($contest, $request->input('messages'));
 
         return redirect()->action('ContestsController@show', $contest->id)->with('status', 'Contest has been saved!');
     }
