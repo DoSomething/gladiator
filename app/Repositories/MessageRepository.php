@@ -15,15 +15,9 @@ class MessageRepository
      */
     public function create($contest, $data)
     {
-        $message = new Message;
-        $message->type = $data['type'];
-        $message->key = $data['key'];
-        $message->subject = $data['subject'];
-        $message->body = $data['body'];
+        $message = new Message($data);
 
-        $contest->messages()->save($message);
-
-        return $message;
+        return $contest->messages()->save($message);
     }
 
     /**

@@ -12,4 +12,6 @@
         <label class="field-label" for="messages[{{ $type }}][{{ $key }}][body]">Body:</label>
         <textarea class="text-field" name="messages[{{ $type }}][{{ $key }}][body]" id="messages[{{ $type }}][{{ $key }}][body]" rows="10"></textarea>
     </div>
+
+    <input type="hidden" name="messages[{{ $type }}][{{ $key }}][label]" value="{{ $label }}" />
 </fieldset>
