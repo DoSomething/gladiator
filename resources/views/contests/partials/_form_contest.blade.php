@@ -19,3 +19,8 @@
     <label class="field-label" for="id">Campaign Run ID:</label>
     <input type="number" name="campaign_run_id" id="campaign_run_id" class="text-field" placeholder="42" value="{{ $contest->campaign_run_id or old('campaign_run_id') }}"/>
 </div>
+
+<div class="form-item -padded">
+    <label class="field-label" for="sender">Messages Sender:</label>
+    <input type="text" name="sender" id="sender" class="text-field" placeholder="kallark&#64;dosomething.org" value="{{ $contest->sender or old('sender') }}" />
+</div>

@@ -53,6 +53,7 @@ class ContestsController extends Controller
         $contest = Contest::create([
             'campaign_id' => $request->input('campaign_id'),
             'campaign_run_id' => $request->input('campaign_run_id'),
+            'sender' => $request->input('sender'),
         ]);
 
         $contest->waitingRoom->fill($request->only(['signup_start_date', 'signup_end_date']))->save();
