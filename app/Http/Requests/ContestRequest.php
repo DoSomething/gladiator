@@ -24,6 +24,7 @@ class ContestRequest extends Request
         return [
             'campaign_id' => 'required|numeric',
             'campaign_run_id' => 'required|numeric',
+            'sender' => 'email',
             'signup_start_date' => 'required|date',
             'signup_end_date' => 'required|date',
         ];

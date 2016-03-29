@@ -64,7 +64,7 @@ class User extends BaseUser
     }
 
     /**
-     * Set the role for the user.
+     * Set the role attribute for the user.
      *
      * @param  string  $value
      * @return string
