@@ -1,7 +1,5 @@
 @include('layouts.errors')
 
-{{ csrf_field() }}
-
 <div class="form-item -padded">
     <label class="field-label" for="signup_start_date">Signup Start Date:</label>
     <input type="date" name="signup_start_date" id="signup_start_date" value={{ $contest->waitingRoom->signup_start_date or old('signup_start_date', 'MM/DD/YYYY')}} class="text-field"></input>
@@ -21,5 +19,3 @@
     <label class="field-label" for="id">Campaign Run ID:</label>
     <input type="number" name="campaign_run_id" id="campaign_run_id" class="text-field" placeholder="42" value="{{ $contest->campaign_run_id or old('campaign_run_id') }}"/>
 </div>
-
-<input type="submit" class="button" value="Submit" />
