@@ -22,5 +22,5 @@
 
 <div class="form-item -padded">
     <label class="field-label" for="sender">Messages Sender:</label>
-    <input type="text" name="sender" id="sender" class="text-field" placeholder="kallark&#64;dosomething.org" />
+    <input type="text" name="sender" id="sender" class="text-field" placeholder="kallark&#64;dosomething.org" value="{{ $contest->sender or old('sender') }}" />
 </div>
