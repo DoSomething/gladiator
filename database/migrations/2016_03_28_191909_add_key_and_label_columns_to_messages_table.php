@@ -12,7 +12,7 @@ class AddKeyAndLabelColumnsToMessagesTable extends Migration
      */
     public function up()
     {
-        Schema::table('messages', function ($table) {
+        Schema::table('messages', function (Blueprint $table) {
             $table->integer('key')->unsigned()->after('type');
             $table->string('label')->nullable()->after('key');
         });
@@ -25,7 +25,7 @@ class AddKeyAndLabelColumnsToMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::table('messages', function ($table) {
+        Schema::table('messages', function (Blueprint $table) {
             $table->dropColumn('key');
             $table->dropColumn('label');
         });

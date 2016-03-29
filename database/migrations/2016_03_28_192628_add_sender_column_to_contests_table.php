@@ -12,7 +12,7 @@ class AddSenderColumnToContestsTable extends Migration
      */
     public function up()
     {
-        Schema::table('contests', function ($table) {
+        Schema::table('contests', function (Blueprint $table) {
             $table->string('sender')->nullable()->after('campaign_run_id');
         });
     }
@@ -24,7 +24,7 @@ class AddSenderColumnToContestsTable extends Migration
      */
     public function down()
     {
-        Schema::table('contests', function ($table) {
+        Schema::table('contests', function (Blueprint $table) {
             $table->dropColumn('sender');
         });
     }

@@ -12,7 +12,7 @@ class DropContestDurationColumn extends Migration
      */
     public function up()
     {
-        Schema::table('contests', function ($table) {
+        Schema::table('contests', function (Blueprint $table) {
             $table->dropColumn('duration');
         });
     }

@@ -14,7 +14,7 @@ class DefaultMessage
                 'label' => 'Welcome',
                 'subject' => 'Welcome, [First Name]!',
                 'body' => "Woohoo, so glad you signed up for my [Campaign Name] competition, [First Name]! Feel free to get a head start on the competition and begin today. \n\rI will be in touch with you with more info in the next few days. Excited to watch you climb the leaderboard and crush the competition! \n\r[Name of Staff]",
-            ]
+            ],
         ],
         'checkin' => [
             '1' => [
