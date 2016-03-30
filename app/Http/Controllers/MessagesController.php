@@ -31,5 +31,7 @@ class MessagesController extends Controller
         $msg = Message::find($id);
 
         event(new QueueMessageRequest($msg));
+
+        return redirect()->route('messages.show', 1)->with('status', 'Fired that right the hell off!');
     }
 }
