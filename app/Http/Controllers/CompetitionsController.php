@@ -7,6 +7,7 @@ use Gladiator\Models\Competition;
 use Gladiator\Models\Contest;
 use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Manager;
+use Gladiator\Models\User;
 
 class CompetitionsController extends Controller
 {
@@ -99,5 +100,19 @@ class CompetitionsController extends Controller
     {
         $csv = $this->manager->exportCSV($competition, true);
         $csv->output('competition' . $competition->id . '.csv');
+    }
+
+    /**
+     * Detach a user from a competition.
+     *
+     * @param  \Gladiator\Models\Competition  $competition
+     * @param  \Gladiator\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function removeUser(Competition $competition, User $user)
+    {
+        $user->competitions()->detach($competition->id);
+
+        return redirect()->back()->with('status', 'User was removed from competition ' . $competition->id);
     }
 }
