@@ -68,7 +68,7 @@
                                 <td class="table__cell">{{ $competition->reportback->quantity or 'N/A'}}</td>
                                 <td class="table__cell">{{ $competition->reportback->updated_at or 'N/A'}}</td>
                                 <td class="table__cell">{{ $competition->reportback->flagged or 'N/A' }}</td>
-                                <td class="table__cell"><a href="{{ route('competitions.users.destroy', ['user' => $user->id, 'competition_id' =>$competition->id]) }}" class="button -danger">Remove</a></td>
+                                <td class="table__cell"><a href="{{ route('competitions.users.destroy', ['user' => $user->id, 'competition' =>$competition->id]) }}" class="button -danger">Remove</a></td>
                             </tr>
                         @endforeach
                     </tbody>
