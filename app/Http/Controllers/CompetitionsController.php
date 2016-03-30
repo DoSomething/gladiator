@@ -108,10 +108,9 @@ class CompetitionsController extends Controller
      * @param  \Gladiator\Models\Competition  $competition
      * @return \League\Csv\ $csv
      */
-    public function removeUser($competition_id, $user_id)
+    public function removeUser($competition_id, User $user)
     {
-        $user = User::find($user_id);
         $user->competitions()->detach($competition_id);
-        // return back with message.
+        return redirect()->back()->with('status', 'User was removed from competition ' . $competition_id);
     }
 }
