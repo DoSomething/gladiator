@@ -27,7 +27,7 @@
                                 <td class="table__cell">{{ $message->label or 'N/A'}}</td>
                                 <td class="table__cell">{{ $message->subject or 'N/A'}}</td>
                                 <td class="table__cell">{{ str_limit($message->body, 100)}}</td>
-                                <td class="table__cell"><a href="{{ route('messages.send', $message->id) }}" class="button -tertiary ">Send</a></td>
+                                <td class="table__cell"><a href="{{ route('messages.send', ['message' => $message->id, 'contest_id' => $message->contest_id]) }}" class="button -tertiary ">Send</a></td>
                             </tr>
                         @endforeach
                     </tbody>

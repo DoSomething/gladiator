@@ -2,6 +2,7 @@
 
 namespace Gladiator\Http\Controllers;
 
+use Gladiator\Models\Contest;
 use Gladiator\Models\Message;
 use Gladiator\Events\QueueMessageRequest;
 
@@ -26,11 +27,11 @@ class MessagesController extends Controller
      *
      * @param int $id
      */
-    public static function sendMessage($id)
+    public static function sendMessage(Message $message)
     {
-        $msg = Message::find($id);
+        $from = Contest::find(request('contest_id'))->sender;
 
-        event(new QueueMessageRequest($msg));
+        event(new QueueMessageRequest($message, $from));
 
         return redirect()->route('messages.show', 1)->with('status', 'Fired that right the hell off!');
     }
