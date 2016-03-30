@@ -112,6 +112,7 @@ class CompetitionsController extends Controller
     public function removeUser(Competition $competition, User $user)
     {
         $user->competitions()->detach($competition->id);
+
         return redirect()->back()->with('status', 'User was removed from competition ' . $competition->id);
     }
 }
