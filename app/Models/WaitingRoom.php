@@ -88,11 +88,15 @@ class WaitingRoom extends Model
 
     /*
      * Creates competitions based on the given user split.
+     *
+     * @param \Gladiator\Models\Contest $contest
+     * @param Array                     $split
+     * @param \Illuminate\Http\Request  $request
      */
-    public function saveSplit($contest, $split, $endDate)
+    public function saveSplit($contest, $split, $request)
     {
         $startDate = Carbon::now()->startOfDay();
-        $endDate = new Carbon($endDate);
+        $endDate = new Carbon($request->competition_end_date);
 
         foreach ($split as $competitionGroup) {
             // For each split, create a competition.
@@ -101,7 +105,7 @@ class WaitingRoom extends Model
             $competition->contest_id = $contest->getKey();
             $competition->competition_start_date = $startDate;
             $competition->competition_end_date = $endDate->endOfDay();
-
+            $competition->leaderboard_msg_day = $request->leaderboard_msg_day;
             $contest->competitions()->save($competition);
 
             // For each user in this group
