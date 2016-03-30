@@ -13,7 +13,7 @@ class Phoenix extends RestApiClient
      */
     public function __construct()
     {
-        $this->base_uri = config('services.phoenix.uri') . '/api/' . config('services.phoenix.api.version') . '/';
+        $this->base_uri = config('services.phoenix.uri') . '/api/' . config('services.phoenix.version') . '/';
 
         $headers = [
            'Content-type' => 'application/json',
@@ -24,17 +24,14 @@ class Phoenix extends RestApiClient
     }
 
     /**
-     * Send a GET request to return user signup data for a specific campaign.
+     * Send a GET request to return a campaign.
      *
-     * @param  string  $drupalId
+     * @param  int $id
      * @return object
      */
-    public function getUserSignupData($drupalID, $campaignID)
+    public function getCampaign($id)
     {
-        $response = $this->get($this->base_uri . 'signups', [
-            'user' => $drupalID,
-            'campaigns' => $campaignID,
-        ]);
+        $response = $this->get($this->base_uri . 'campaigns/' . $id);
 
         return is_null($response) ? null : $response;
     }
