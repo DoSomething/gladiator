@@ -33,6 +33,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('contests/{contest}/export', 'ContestsController@export')->name('contests.export');
     Route::resource('contests', 'ContestsController');
 
+    Route::resource('messages', 'MessagesController');
+    Route::get('messages/{id}/send', 'MessagesController@sendMessage')->name('messages.send');
+
     // Users
     Route::resource('users', 'UsersController');
     Route::get('users/{id}/signup/{signup_id}', [
