@@ -7,6 +7,7 @@ use Gladiator\Models\Competition;
 use Gladiator\Models\Contest;
 use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Manager;
+use Gladiator\Models\User;
 
 class CompetitionsController extends Controller
 {
@@ -99,5 +100,18 @@ class CompetitionsController extends Controller
     {
         $csv = $this->manager->exportCSV($competition, true);
         $csv->output('competition' . $competition->id . '.csv');
+    }
+
+    /**
+     * Download the CSV export of all users.
+     *
+     * @param  \Gladiator\Models\Competition  $competition
+     * @return \League\Csv\ $csv
+     */
+    public function removeUser($competition_id, $user_id)
+    {
+        $user = User::find($user_id);
+        $user->competitions()->detach($competition_id);
+        // return back with message.
     }
 }

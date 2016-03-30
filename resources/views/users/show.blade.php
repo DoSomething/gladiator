@@ -39,6 +39,7 @@
                             <th class="table__cell">Quantity</th>
                             <th class="table__cell">Updated At</th>
                             <th class="table__cell">Flagged</th>
+                            <th class="table__cell">Remove from Competition</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,6 +68,7 @@
                                 <td class="table__cell">{{ $competition->reportback->quantity or 'N/A'}}</td>
                                 <td class="table__cell">{{ $competition->reportback->updated_at or 'N/A'}}</td>
                                 <td class="table__cell">{{ $competition->reportback->flagged or 'N/A' }}</td>
+                                <td class="table__cell"><a href="{{ route('competitions.users.destroy', ['user_id' => $user->id, 'competition_id' =>$competition->id]) }}" class="button -danger">Remove</a></td>
                             </tr>
                         @endforeach
                     </tbody>
