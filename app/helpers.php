@@ -17,9 +17,16 @@ function buildCSV($data)
     return $csv;
 }
 
+/**
+ * Handle message output for forms and default messages.
+ *
+ * @param  array|\Gladiator\Models\Message  $message
+ * @param  string  $field
+ * @return string
+ */
 function correspondence($message = null, $field = null)
 {
-    $correspondence = app('Gladiator\Http\Utilities\Correspondence');
+    $correspondence = app(Gladiator\Http\Utilities\Correspondence::class);
 
     if (func_num_args() === 0) {
         return $correspondence;
