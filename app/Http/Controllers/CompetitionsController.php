@@ -117,7 +117,7 @@ class CompetitionsController extends Controller
         return redirect()->back()->with('status', 'User was removed from competition ' . $competition->id);
     }
 
-        /**
+    /**
      * Detach a user from a competition.
      *
      * @param  \Gladiator\Models\Competition  $competition

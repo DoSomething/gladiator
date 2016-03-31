@@ -42,11 +42,9 @@ class Message extends Model
     {
         //@TODO: I only tested this with competition, is there other things we want to replace?
         $tokens = $model::$tokenizable;
-        foreach ($tokens as $token)
-        {
+        foreach ($tokens as $token) {
             $message->body = str_replace(':'.$token, $model->$token, $message->body);
-            //@TODO: handle the subject
-
+            //@TODO: handle the message subject.
         }
 
         return $message;

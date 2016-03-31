@@ -43,7 +43,7 @@ class Competition extends Model
         return $this->belongsTo(Contest::class);
     }
 
-   /**
+    /**
      * Get the leaderboard day of the week.
      *
      * @param  int  $value
