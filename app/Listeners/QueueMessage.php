@@ -5,6 +5,7 @@ namespace Gladiator\Listeners;
 use Illuminate\Mail\Mailer;
 use Gladiator\Events\QueueMessageRequest;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Gladiator\Models\Message;
 
 class QueueMessage implements ShouldQueue
 {
@@ -28,7 +29,8 @@ class QueueMessage implements ShouldQueue
      */
     public function handle(QueueMessageRequest $event)
     {
-        $content = $event->message;
+        $content = Message::prepareMessage($event->message, $event->competition);
+
         $sender = $event->sender;
         $type = $content->type;
 
