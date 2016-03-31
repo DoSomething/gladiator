@@ -9,6 +9,15 @@ use Gladiator\Events\QueueMessageRequest;
 class MessagesController extends Controller
 {
     /**
+     * Create new MessagesController instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin,staff');
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  string  $id  Contest ID
