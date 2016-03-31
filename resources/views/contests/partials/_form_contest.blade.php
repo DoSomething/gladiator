@@ -1,13 +1,11 @@
-@include('layouts.errors')
-
 <div class="form-item -padded">
     <label class="field-label" for="signup_start_date">Signup Start Date:</label>
-    <input type="date" name="signup_start_date" id="signup_start_date" value={{ $contest->waitingRoom->signup_start_date or old('signup_start_date', 'MM/DD/YYYY')}} class="text-field"></input>
+    <input type="date" name="signup_start_date" id="signup_start_date" class="text-field" value="{{ $contest->waitingRoom->signup_start_date or old('signup_start_date', 'MM/DD/YYYY') }}"></input>
 </div>
 
 <div class="form-item -padded">
     <label class="field-label" for="signup_end_date">Signup End Date:</label>
-    <input type="date" name="signup_end_date" id="signup_end_date" value={{ $contest->waitingRoom->signup_end_date or old('signup_end_date', 'MM/DD/YYYY') }} class="text-field"></input>
+    <input type="date" name="signup_end_date" id="signup_end_date"  class="text-field" value="{{ $contest->waitingRoom->signup_end_date or old('signup_end_date', 'MM/DD/YYYY') }}"></input>
 </div>
 
 <div class="form-item -padded">
