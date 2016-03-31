@@ -15,6 +15,7 @@ class QueueMessageRequest extends Event
      * @var \Gladiator\Models\Message
      */
     public $message;
+    public $sender;
 
     /**
      * Create a new event instance.
@@ -24,9 +25,10 @@ class QueueMessageRequest extends Event
      *
      * @return void
      */
-    public function __construct(Message $message)
+    public function __construct(Message $message, $sender)
     {
         $this->message = $message;
+        $this->sender = $sender;
     }
 
     /**
