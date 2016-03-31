@@ -35,4 +35,16 @@ class Competition extends Model
     {
         return $this->belongsTo(Contest::class);
     }
+
+   /**
+     * Get the leaderboard day of the week.
+     *
+     * @param  int  $value
+     * @return string
+     */
+    public function getLeaderboardMsgDayAttribute($value)
+    {
+        // Return day of the week as a string (Monday-Sunday).
+        return jddayofweek($value, 1);
+    }
 }
