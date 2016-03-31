@@ -4,6 +4,7 @@ namespace Gladiator\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Gladiator\Models\Contest;
+use Gladiator\Models\Competition;
 use Gladiator\Models\Message;
 use Gladiator\Events\QueueMessageRequest;
 use Gladiator\Repositories\MessageRepository;
@@ -81,8 +82,10 @@ class MessagesController extends Controller
         $competition_id = request('competition_id');
 
         $from = Contest::find($contest_id)->sender;
+        $competition = Competition::find($competition_id);
 
-        event(new QueueMessageRequest($message, $from));
+        //@TODO: only pass one thing in here instead of 3 or more.
+        event(new QueueMessageRequest($message, $from, $competition));
 
         return redirect()->route('competitions.message', ['competition' => $competition_id, 'contest' => $contest_id])->with('status', 'Fired that right the hell off!');
     }
