@@ -30,7 +30,6 @@ class QueueMessage implements ShouldQueue
     {
         $content = $event->message;
         $sender = $event->sender;
-;
         $type = $content->type;
 
         $this->mail->send('messages.' . $type, ['content' => $content, 'sender' => $sender], function ($msg) use ($content, $sender) {
