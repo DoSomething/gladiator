@@ -27,6 +27,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('competitions/{competitions}/export', 'CompetitionsController@export')->name('competitions.export');
     Route::resource('competitions', 'CompetitionsController', ['except' => ['index', 'create']]);
     Route::get('competition/{competition}/users/{user}', 'CompetitionsController@removeUser')->name('competitions.users.destroy');
+    Route::get('competitions/{competitions}/messages/{contest}', 'CompetitionsController@message')->name('competitions.message');
 
     // Competitions
     Route::model('contests', 'Gladiator\Models\Contest');

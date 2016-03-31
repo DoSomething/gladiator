@@ -7,6 +7,7 @@ use Gladiator\Models\Competition;
 use Gladiator\Models\Contest;
 use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Manager;
+use Gladiator\Models\Message;
 use Gladiator\Models\User;
 
 class CompetitionsController extends Controller
@@ -114,5 +115,19 @@ class CompetitionsController extends Controller
         $user->competitions()->detach($competition->id);
 
         return redirect()->back()->with('status', 'User was removed from competition ' . $competition->id);
+    }
+
+        /**
+     * Detach a user from a competition.
+     *
+     * @param  \Gladiator\Models\Competition  $competition
+     * @param  \Gladiator\Models\Message  $message
+     * @return \Illuminate\Http\Response
+     */
+    public function message(Competition $competition, Contest $contest)
+    {
+        $messages = Message::where('contest_id', '=', $contest->id)->get();
+
+        return view('messages.show', compact('messages'));
     }
 }
