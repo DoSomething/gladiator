@@ -1,6 +1,41 @@
 <?php
 
 /**
+ * Build a CSV from the supplied data.
+ *
+ * @param  array  $data
+ * @return \League\Csv $csv
+ */
+function buildCSV($data)
+{
+    $csv = \League\Csv\Writer::createFromFileObject(new \SplTempFileObject());
+
+    foreach ($data as $row) {
+        $csv->insertOne($row);
+    }
+
+    return $csv;
+}
+
+/**
+ * Handle message output for forms and default messages.
+ *
+ * @param  array|\Gladiator\Models\Message  $message
+ * @param  string  $field
+ * @return string
+ */
+function correspondence($message = null, $field = null)
+{
+    $correspondence = app(Gladiator\Http\Utilities\Correspondence::class);
+
+    if (func_num_args() === 0) {
+        return $correspondence;
+    }
+
+    return $correspondence->get($message, $field);
+}
+
+/**
  * Check if the waiting room signup period ended.
  *
  * @param  date  $signupDate
@@ -27,21 +62,4 @@ function matchEmailDomain($email, $domain = 'dosomething.org')
     }
 
     return false;
-}
-
-/**
- * Build a CSV from the supplied data.
- *
- * @param  array  $data
- * @return \League\Csv $csv
- */
-function buildCSV($data)
-{
-    $csv = \League\Csv\Writer::createFromFileObject(new \SplTempFileObject());
-
-    foreach ($data as $row) {
-        $csv->insertOne($row);
-    }
-
-    return $csv;
 }
