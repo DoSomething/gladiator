@@ -121,7 +121,7 @@ class CompetitionsController extends Controller
      * Detach a user from a competition.
      *
      * @param  \Gladiator\Models\Competition  $competition
-     * @param  \Gladiator\Models\Message  $message
+     * @param  \Gladiator\Models\Contest  $contest
      * @return \Illuminate\Http\Response
      */
     public function message(Competition $competition, Contest $contest)
