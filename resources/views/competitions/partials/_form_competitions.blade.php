@@ -1,6 +1,6 @@
 @include('layouts.errors')
 
-<form method="PATCH" action="{{ route('competitions.update', $competition->id) }}">
+<form method="POST" action="{{ route('competitions.update', $competition->id) }}">
     {{ method_field('PATCH') }}
     {{ csrf_field() }}
 
