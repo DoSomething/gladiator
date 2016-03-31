@@ -3,7 +3,7 @@
 @section('main_content')
 
     @include('layouts.header', [
-        'title' => 'Competitions',
+        'title' => 'Competitions Messaging',
         'subtitle' => 'Viewing messages in contest ' . $messages[0]->contest_id
     ])
 
@@ -26,8 +26,8 @@
                             <tr class="table__row">
                                 <td class="table__cell">{{ $message->label or 'N/A'}}</td>
                                 <td class="table__cell">{{ $message->subject or 'N/A'}}</td>
-                                <td class="table__cell">{{ str_limit($message->body, 100)}}</td>
-                                <td class="table__cell"><a href="{{ route('messages.send', ['message' => $message->id, 'contest_id' => $message->contest_id]) }}" class="button -tertiary ">Send</a></td>
+                                <td class="table__cell">{{ ($message->body)}}</td>
+                                <td class="table__cell"><a href="{{ route('messages.send', ['message' => $message->id, 'contest_id' => $message->contest_id, 'competition_id' => $competition->id]) }}" class="button -tertiary ">Send</a></td>
                             </tr>
                         @endforeach
                     </tbody>

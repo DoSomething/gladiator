@@ -78,10 +78,12 @@ class MessagesController extends Controller
     public static function sendMessage(Message $message)
     {
         $contest_id = request('contest_id');
+        $competition_id = request('competition_id');
+
         $from = Contest::find($contest_id)->sender;
 
         event(new QueueMessageRequest($message, $from));
 
-        return redirect()->route('messages.show', $contest_id)->with('status', 'Fired that right the hell off!');
+        return redirect()->route('competitions.message', ['competition' => $competition_id, 'contest' => $contest_id])->with('status', 'Fired that right the hell off!');
     }
 }

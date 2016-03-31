@@ -128,6 +128,6 @@ class CompetitionsController extends Controller
     {
         $messages = Message::where('contest_id', '=', $contest->id)->get();
 
-        return view('messages.show', compact('messages'));
+        return view('messages.show', compact('messages', 'competition'));
     }
 }
