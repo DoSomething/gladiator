@@ -74,8 +74,9 @@ class ContestsController extends Controller
     public function show(Contest $contest)
     {
         $contest = $this->manager->collectContestInfo($contest->id);
+        $campaign = $this->manager->getCampaignInfo($contest->campaign_id);
 
-        return view('contests.show', compact('contest'));
+        return view('contests.show', compact('contest', 'campaign'));
     }
 
     /**
