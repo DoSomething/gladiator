@@ -87,7 +87,6 @@ class MessagesController extends Controller
         $email->sender = Contest::find($contestId)->sender;
         $email->competition = Competition::find($competitionId);
 
-        //@TODO: only pass one thing in here instead of 3 or more.
         event(new QueueMessageRequest($email));
 
         return redirect()->route('competitions.message', ['competition' => $competitionId, 'contest' => $contestId])->with('status', 'Fired that right the hell off!');
