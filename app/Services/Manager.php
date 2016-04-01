@@ -169,10 +169,21 @@ class Manager
         return null;
     }
 
-    public function getCampaignInfo($id)
+    //@TODO - move into repository
+    public function getCampaign($id)
     {
         $campaign = $this->phoenix->getCampaign($id);
 
         return $campaign;
+    }
+
+    // @param Array list of campaigns to fetch.
+    public function getCampaigns($ids)
+    {
+        $campaigns = $this->phoenix->getAllCampaigns([
+            'ids' => $ids,
+        ]);
+
+        return $campaigns;  
     }
 }

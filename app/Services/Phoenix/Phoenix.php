@@ -26,7 +26,7 @@ class Phoenix extends RestApiClient
     /**
      * Send a GET request to return a campaign.
      *
-     * @param  int $id
+     * @param  int $ids
      * @return object
      */
     public function getCampaign($id)
@@ -35,4 +35,12 @@ class Phoenix extends RestApiClient
 
         return is_null($response) ? null : $response;
     }
+
+    public function getAllCampaigns($params = [])
+    {
+        $response = $this->get('campaigns', $params);
+
+        return is_null($response) ? null : $response;
+    }
+
 }

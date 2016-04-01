@@ -123,7 +123,7 @@ class RestApiClient
      * @return Response|null
      */
     protected function send($method, $path, $options = [])
-    {
+    {   
         try {
             return $this->client->request($method, $path, $options);
         } catch (RequestException $error) {

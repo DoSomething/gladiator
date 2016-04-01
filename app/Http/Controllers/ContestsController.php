@@ -29,6 +29,18 @@ class ContestsController extends Controller
     {
         $contests = Contest::all();
 
+        // Move into helper function.
+        // $campaignIds = [];
+        foreach ($contests as $contest) 
+        {   
+            // array_push($campaignIds, $contest->campaign_id);
+            $contest->campaign_title = $this->manager->getCampaign($contest->campaign_id)->title;
+        }
+
+        // $campaignIds = implode(',', $campaignIds);
+
+        // $campaigns = $this->manager->getCampaigns($campaignIds);
+
         return view('contests.index', compact('contests'));
     }
 
@@ -74,7 +86,7 @@ class ContestsController extends Controller
     public function show(Contest $contest)
     {
         $contest = $this->manager->collectContestInfo($contest->id);
-        $campaign = $this->manager->getCampaignInfo($contest->campaign_id);
+        $campaign = $this->manager->getCampaign($contest->campaign_id);
 
         return view('contests.show', compact('contest', 'campaign'));
     }

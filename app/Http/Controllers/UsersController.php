@@ -100,7 +100,7 @@ class UsersController extends Controller
         $user = $this->repository->find($id);
 
         $competitions = User::find($id)->competitions;
-
+        
         // Get the user's reportback for each competition they are in.
         foreach ($competitions as $competition) {
             $reportback = $this->manager->getUserActivity($id, $competition);

@@ -11,7 +11,7 @@
         <div class="wrapper">
             <div class="container__block -half">
                 <ul>
-                    <li><strong>Campaign ID:</strong> {{ $contest->campaign_id }}</li>
+                    <li><strong>Campaign:</strong> {{ $campaign->title }}</li>
                     <li><strong>Campaign Run ID:</strong> {{ $contest->campaign_run_id }}</li>
                     <li><strong>Contest ID:</strong> <a href="{{ route('contests.show', $competition->contest_id) }}">{{ $competition->contest_id }}</a></li>
                     <li><strong>Start Date:</strong> {{ $competition->competition_start_date->format('F d, Y') }}</li>

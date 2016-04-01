@@ -33,10 +33,10 @@
                         <tbody>
 
 
-                            @foreach($contests as $contest)
+                            @foreach($contests as $key => $contest)
                                 <tr class="table__row">
                                     <td class="table__cell"><a href="{{ route('contests.show', $contest->id) }}">{{ $contest->id }}</a></td>
-                                    <td class="table__cell"><a href="{{ url(config('services.phoenix.uri') .'/node/' . $contest->campaign_id) }}">{{ $contest->campaign_id }}</a></td>
+                                    <td class="table__cell"><a href="{{ url(config('services.phoenix.uri') .'/node/' . $contest->campaign_id) }}">{{ $contest->campaign_title }}</a></td>
                                     <td class="table__cell">{{ $contest->campaign_run_id }}</td>
                                     <td class="table__cell">{{ $contest->waitingRoom->signup_end_date->format('F d, Y') }}</td>
                                     <td class="table__cell"><a href="{{ route('waitingrooms.show', $contest->waitingroom->id) }}">{{ $contest->waitingroom->users->count() }}</a></td>
