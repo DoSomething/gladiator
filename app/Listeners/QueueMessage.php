@@ -6,6 +6,7 @@ use Illuminate\Mail\Mailer;
 use Gladiator\Events\QueueMessageRequest;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Gladiator\Models\Message;
+use Gladiator\Http\Utilities\Email;
 
 class QueueMessage implements ShouldQueue
 {
@@ -29,9 +30,9 @@ class QueueMessage implements ShouldQueue
      */
     public function handle(QueueMessageRequest $event)
     {
-        $content = Message::prepareMessage($event->message, $event->competition);
+        $content = Email::prepareMessage($event->email->message, $event->email->competition);
 
-        $sender = $event->sender;
+        $sender = $event->email->sender;
         $type = $content->type;
 
         $this->mail->send('messages.' . $type, ['content' => $content, 'sender' => $sender], function ($msg) use ($content, $sender) {
