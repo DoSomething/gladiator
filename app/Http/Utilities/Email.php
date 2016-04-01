@@ -12,6 +12,7 @@ class Email
             $message->body = str_replace(':'.$token, $model->$token, $message->body);
                 //@TODO: handle the message subject.
         }
+
         return $message;
     }
 }
