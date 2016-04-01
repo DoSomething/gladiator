@@ -11,7 +11,7 @@ class Competition extends Model
      *
      * @var array
      */
-    protected $fillable = ['contest_id', 'competition_start_date', 'competition_end_date'];
+    protected $fillable = ['contest_id', 'competition_start_date', 'competition_end_date', 'leaderboard_msg_day'];
 
     /**
      * The attributes that should be mutated to dates.
