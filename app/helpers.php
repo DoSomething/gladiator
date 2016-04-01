@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 /**
  * Build a CSV from the supplied data.
  *
@@ -33,6 +35,32 @@ function correspondence($message = null, $field = null)
     }
 
     return $correspondence->get($message, $field);
+}
+
+/**
+ * Format a Carbon date if available to a simplified format
+ * for form input element. Uses old data if available.
+ *
+ * @param  \Illuminate\Database\Eloquent\Model  $model
+ * @param  string  $field
+ * @param  string  $defaut
+ * @return string
+ */
+function format_date_form_field($model, $field, $defaut = 'MM/DD/YYYY')
+{
+    $oldDate = old($field);
+
+    if ($oldDate) {
+        return $oldDate;
+    }
+
+    $attribute = $model->getAttribute($field);
+
+    if ($attribute && $attribute instanceof Carbon) {
+        return $attribute->format('Y-m-d');
+    }
+
+    return $default;
 }
 
 /**

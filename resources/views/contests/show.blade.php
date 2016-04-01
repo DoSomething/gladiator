@@ -36,7 +36,8 @@
         <div class="wrapper">
             <div class="container__block">
                 <h2 class="heading -alpha">Messaging</h2>
-                <p>The current email assigned as the messages sender is: <em>{{ $contest->sender or 'not assigned' }}</em></p>
+                <p>The current name of the messages sender is: <em>{{ $contest->sender_name or 'not assigned' }}</em></p>
+                <p>The current email assigned for the messages sender is: <em>{{ $contest->sender_email or 'not assigned' }}</em></p>
                 <p><a href="{{ route('contests.messages.edit', $contest->id) }}" class="button -secondary">View &amp; Edit Messages</a></p>
             </div>
         </div>

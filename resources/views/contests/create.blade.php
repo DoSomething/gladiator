@@ -20,7 +20,7 @@
                     @include('contests.partials._form_contest')
 
 
-                    <h2 class="heading -alpha">Messaging Settings</h2>
+                    <h2 class="heading -alpha">Messages</h2>
 
                     @foreach (correspondence()->defaults() as $message)
 
