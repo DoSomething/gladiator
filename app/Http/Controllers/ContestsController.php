@@ -50,7 +50,6 @@ class ContestsController extends Controller
      */
     public function store(ContestRequest $request)
     {
-        // dd($request->all());
         $contest = Contest::create([
             'campaign_id' => $request->input('campaign_id'),
             'campaign_run_id' => $request->input('campaign_run_id'),
