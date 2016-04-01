@@ -18,7 +18,11 @@
         <label class="field-label" for="competition_end_date">End Date:</label>
         <input type="date" name="competition_end_date" id="competition_end_date" value={{ $competition->competition_end_date or old('competition_end_date', 'MM/DD/YYYY') }} class="text-field" ></input>
     </div>
-
+    
+    @include('competitions.partials._form_leaderboard_msg_day_field', [
+        'default' => $competition->leaderboard_msg_day,
+    ])
+    
     <div class="form-item -padded">
         <input type="submit" class="button" value="Submit" />
     </div>
