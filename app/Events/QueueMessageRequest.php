@@ -3,6 +3,7 @@
 namespace Gladiator\Events;
 
 use Gladiator\Models\Message;
+use Gladiator\Models\Competition;
 use Illuminate\Queue\SerializesModels;
 
 class QueueMessageRequest extends Event
@@ -16,6 +17,7 @@ class QueueMessageRequest extends Event
      */
     public $message;
     public $sender;
+    public $competition;
 
     /**
      * Create a new event instance.
@@ -25,10 +27,11 @@ class QueueMessageRequest extends Event
      *
      * @return void
      */
-    public function __construct(Message $message, $sender)
+    public function __construct(Message $message, $sender, Competition $competition)
     {
         $this->message = $message;
         $this->sender = $sender;
+        $this->competition = $competition;
     }
 
     /**

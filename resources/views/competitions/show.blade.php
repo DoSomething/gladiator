@@ -28,7 +28,7 @@
                         <a href="{{ route('competitions.export', $competition->id) }}" class="button">Export</a>
                     </li>
                     <li>
-                        <a href="{{ route('messages.show', $contest->id) }}" class="button">Email</a>
+                        <a href="{{ route('competitions.message', ['competition' => $competition->id,'contest' => $contest->id]) }}" class="button">Email</a>
                     </li>
 
                 </ul>

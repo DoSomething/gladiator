@@ -21,6 +21,13 @@ class Competition extends Model
     protected $dates = ['competition_start_date', 'competition_end_date'];
 
     /**
+     * The attributes that can be tokenized.
+     *
+     * @var array
+     */
+    public static $tokenizable = ['competition_end_date', 'leaderboard_msg_day'];
+
+    /**
      * A Competition belongs to many Users.
      */
     public function users()
@@ -34,5 +41,17 @@ class Competition extends Model
     public function contest()
     {
         return $this->belongsTo(Contest::class);
+    }
+
+    /**
+     * Get the leaderboard day of the week.
+     *
+     * @param  int  $value
+     * @return string
+     */
+    public function getLeaderboardMsgDayAttribute($value)
+    {
+        // Return day of the week as a string (Monday-Sunday).
+        return jddayofweek($value, 1);
     }
 }

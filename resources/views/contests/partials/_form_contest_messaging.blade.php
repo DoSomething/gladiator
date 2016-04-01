@@ -1,5 +1,5 @@
 <fieldset>
-    <h3 class="heading">{{ $message['label'] }} email:</h3>
+    <h3 id={{ $message['type'] . $message['key'] }} class="heading">{{ $message['label'] }} email:</h3>
 
     <div class="form-item -padded">
         <label class="field-label" for="{{ correspondence()->getAttribute($message, 'subject') }}">Subject:</label>
