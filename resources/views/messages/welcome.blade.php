@@ -1,1 +1,1 @@
-<?php echo $content->body ?>
+<?php echo $email->message->body ?>

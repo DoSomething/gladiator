@@ -8,6 +8,7 @@ use Gladiator\Models\Competition;
 use Gladiator\Models\Message;
 use Gladiator\Events\QueueMessageRequest;
 use Gladiator\Repositories\MessageRepository;
+use Gladiator\Http\Utilities\Email;
 
 class MessagesController extends Controller
 {
@@ -78,15 +79,16 @@ class MessagesController extends Controller
      */
     public static function sendMessage(Message $message)
     {
-        $contest_id = request('contest_id');
-        $competition_id = request('competition_id');
+        $contestId = request('contest_id');
+        $competitionId = request('competition_id');
 
-        $from = Contest::find($contest_id)->sender;
-        $competition = Competition::find($competition_id);
+        $email = new Email();
+        $email->message = $message;
+        $email->sender = Contest::find($contestId)->sender;
+        $email->competition = Competition::find($competitionId);
 
-        //@TODO: only pass one thing in here instead of 3 or more.
-        event(new QueueMessageRequest($message, $from, $competition));
+        event(new QueueMessageRequest($email));
 
-        return redirect()->route('competitions.message', ['competition' => $competition_id, 'contest' => $contest_id])->with('status', 'Fired that right the hell off!');
+        return redirect()->route('competitions.message', ['competition' => $competitionId, 'contest' => $contestId])->with('status', 'Fired that right the hell off!');
     }
 }

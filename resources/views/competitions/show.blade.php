@@ -16,7 +16,7 @@
                     <li><strong>Contest ID:</strong> <a href="{{ route('contests.show', $competition->contest_id) }}">{{ $competition->contest_id }}</a></li>
                     <li><strong>Start Date:</strong> {{ $competition->competition_start_date->format('F d, Y') }}</li>
                     <li><strong>End Date:</strong> {{ $competition->competition_end_date->format('F d, Y') }}</li>
-                    <li><strong>Leaderboard Message Sends:</strong> {{ jddayofweek($competition->leaderboard_msg_day, 1) }}</li>
+                    <li><strong>Leaderboard Message Sends:</strong> {{ $competition->leaderboard_msg_day }}</li>
                 </ul>
             </div>
             <div class="container__block -half">
