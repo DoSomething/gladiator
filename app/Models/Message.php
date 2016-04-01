@@ -37,5 +37,4 @@ class Message extends Model
     {
         return static::$types;
     }
-
 }
