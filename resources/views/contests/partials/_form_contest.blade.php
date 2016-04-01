@@ -1,11 +1,11 @@
 <div class="form-item -padded">
     <label class="field-label" for="signup_start_date">Signup Start Date:</label>
-    <input type="date" name="signup_start_date" id="signup_start_date" class="text-field" value="{{ format_date_form_field($contest->waitingRoom, 'signup_start_date') }}"></input>
+    <input type="date" name="signup_start_date" id="signup_start_date" class="text-field" value="{{ isset($contest) ? format_date_form_field($contest->waitingRoom, 'signup_start_date') : '' }}"></input>
 </div>
 
 <div class="form-item -padded">
     <label class="field-label" for="signup_end_date">Signup End Date:</label>
-    <input type="date" name="signup_end_date" id="signup_end_date"  class="text-field" value="{{ format_date_form_field($contest->waitingRoom, 'signup_end_date') }}"></input>
+    <input type="date" name="signup_end_date" id="signup_end_date"  class="text-field" value="{{ isset($contest) ? format_date_form_field($contest->waitingRoom, 'signup_end_date') : '' }}"></input>
 </div>
 
 <div class="form-item -padded">
