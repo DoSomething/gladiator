@@ -11,5 +11,10 @@
         <textarea class="text-field" name="{{ correspondence()->getAttribute($message, 'body') }}" id="{{ correspondence()->getAttribute($message, 'body') }}" rows="10">{{ correspondence($message, 'body') }}</textarea>
     </div>
 
+    @if ($message['type'] === 'leaderboard')
+        <label class="field-label" for="{{ correspondence()->getAttribute($message, 'pro_tip') }}">Pro Tip:</label>
+        <textarea class="text-field" name="{{ correspondence()->getAttribute($message, 'pro_tip') }}" id="{{ correspondence()->getAttribute($message, 'pro_tip') }}" rows="3">{{ correspondence($message, 'pro_tip') }}</textarea>
+    @endif
+
     <input type="hidden" name="{{ correspondence()->getAttribute($message, 'label') }}" value="{{ correspondence($message, 'label') }}" />
 </fieldset>

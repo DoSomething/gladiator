@@ -52,6 +52,7 @@ class MessageRepository
         $message = Message::where('contest_id', '=', $contest->id)->where('type', '=', $data['type'])->where('key', '=', $data['key'])->firstOrFail();
         $message->subject = $data['subject'];
         $message->body = $data['body'];
+        $message->pro_tip = empty($data['pro_tip']) ? null : $data['pro_tip'];
 
         return $message->save();
     }
