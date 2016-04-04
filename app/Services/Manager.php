@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Gladiator\Models\Contest;
 use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Northstar\Northstar;
+use Gladiator\Services\Phoenix\Phoenix;
 
 class Manager
 {
@@ -24,6 +25,13 @@ class Manager
     protected $northstar;
 
     /**
+     * Phoenix instance.
+     *
+     * @var \Gladiator\Services\Phoenix\Phoenix
+     */
+    protected $phoenix;
+
+    /**
      * Create new Registrar instance.
      *
      * @param Northstar $northstar
@@ -32,6 +40,7 @@ class Manager
     {
         $this->repository = $repository;
         $this->northstar = new Northstar;
+        $this->phoenix = new Phoenix;
     }
 
     /**
@@ -92,6 +101,13 @@ class Manager
     {
         $users = $competition->users;
         $rows = [];
+
+        // $signup = $this->northstar->getManyUserSignups(['559442c4a59dbfc9578b4b6a', '559442cfa59dbfc9578b4c14'], '1485');
+        // $signup = $this->northstar->getManyUserSignups(['559442c4a59dbfc9578b4b6a', '559442cfa59dbfc9578b4c14'], '1485');
+        // dd($signup);
+
+        $ids = array_column($users->toArray(), 'id');
+        $signups = $this->northstar->getManyUserSignups($ids, $competition->campaign_id);
 
         // For each user, combine all of the data into a row
         foreach ($users as $index => $user) {
