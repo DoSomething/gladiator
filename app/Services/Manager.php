@@ -169,7 +169,17 @@ class Manager
         return null;
     }
 
-    //@TODO - move into repository
+    /**
+     * Get campaign content from Phoenix.
+     * 
+     * @TODO - Move the api call into a repository. Also first check cache
+     * for campaign info, if it is there use that instead, if not, grab from 
+     * Phoenix.
+     *
+     * @param  string $id  Campaign ID
+     *
+     * @return object $campaign
+     */
     public function getCampaign($id)
     {
         $campaign = $this->phoenix->getCampaign($id);
@@ -177,8 +187,18 @@ class Manager
         return $campaign;
     }
 
-    // @param Array list of campaigns to fetch.
-    public function getCampaigns($ids)
+    /**
+     * Get a group of campaign content from Phoenix.
+     * 
+     * @TODO - Move the api call into a repository. Also first check cache
+     * for campaign info, if it is there use that instead, if not, grab from 
+     * Phoenix.
+     *
+     * @param  array $ids
+     *
+     * @return object $campaigns
+     */
+    public function getCampaigns(array $ids = [])
     {
         $campaigns = $this->phoenix->getAllCampaigns([
             'ids' => $ids,

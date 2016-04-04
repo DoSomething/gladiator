@@ -29,17 +29,11 @@ class ContestsController extends Controller
     {
         $contests = Contest::all();
 
-        // Move into helper function.
-        // $campaignIds = [];
+        // @TODO - Instead of doing this in loop, grab all campaigns at once 
         foreach ($contests as $contest) 
         {   
-            // array_push($campaignIds, $contest->campaign_id);
             $contest->campaign_title = $this->manager->getCampaign($contest->campaign_id)->title;
         }
-
-        // $campaignIds = implode(',', $campaignIds);
-
-        // $campaigns = $this->manager->getCampaigns($campaignIds);
 
         return view('contests.index', compact('contests'));
     }
