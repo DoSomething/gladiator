@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
-    protected $fillable = ['contest_id', 'type', 'key', 'label', 'subject', 'body'];
+    protected $fillable = ['contest_id', 'type', 'key', 'label', 'subject', 'body', 'pro_tip'];
 
     /**
      * Array of available message types.
