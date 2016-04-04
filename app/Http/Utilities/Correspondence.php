@@ -32,7 +32,7 @@ class Correspondence
             'label' => 'Reminder for first submission due',
             'subject' => 'Hey [First Name]!',
             'body' => "Just wanted to send along some more info about the [Campaign Name] Competition you signed up for. The rules are simple: \n\r1. The more [Report Back Noun] [Report Back Verb], the higher you move up the leaderboard \n\r2. You must prove it by uploading a selfie, clearly showing you and all [Report Back Noun] [Report Back Verb] each Sunday night \n\r3. The competitor with the most [Report Back Noun] [Report Back Verb] by the competition deadline of [Competition End Date], wins $100 on an amex gift card. 2nd ­ $50, 3rd ­ $25 \n\rYour first update is due on [Leaderboard Day ­1] before 10pm est. If you have an update for me, and want to see yourself on [Leaderboard Day]’s leaderboard, simply click the blue icon below!",
-            'pro_tip' =>null,
+            'pro_tip' => null,
         ],
         [
             'type' => 'reminder',
