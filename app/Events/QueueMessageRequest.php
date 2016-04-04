@@ -15,15 +15,17 @@ class QueueMessageRequest extends Event
      * @var \Gladiator\Utilities\Email
      */
     public $email;
+    public $user;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($email)
+    public function __construct($email, $user)
     {
         $this->email = $email;
+        $this->user = $user;
     }
 
     /**

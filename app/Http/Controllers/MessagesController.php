@@ -9,6 +9,7 @@ use Gladiator\Models\Message;
 use Gladiator\Events\QueueMessageRequest;
 use Gladiator\Repositories\MessageRepository;
 use Gladiator\Http\Utilities\Email;
+use Gladiator\Repositories\UserRepositoryContract;
 
 class MessagesController extends Controller
 {
@@ -18,6 +19,7 @@ class MessagesController extends Controller
      * @var \Gladiator\Repositories\MessageRepository
      */
     protected $repository;
+
 
     /**
      * Create new MessagesController instance.
