@@ -84,10 +84,19 @@ class MessagesController extends Controller
 
         $email = new Email();
         $email->message = $message;
-        $email->sender = Contest::find($contestId)->sender;
+        $email->contest = Contest::find($contestId);
         $email->competition = Competition::find($competitionId);
 
-        event(new QueueMessageRequest($email));
+        //@TODO: open new user repository and get all users with info
+        // when i used $this, it doesn't work, i think b/c this is a static function.
+        // $users = $this->repository2->getAll($email->competition->users->pluck('id')->toArray());
+
+        // Foreach user, send the email.
+        // I think it makes sense to have users be passed in on their own, since you have
+        // to send to each one, but feel free to change this if it doesn't make sense.
+        // foreach ($email->competition->users as $user) {
+        //     event(new QueueMessageRequest($email, $user));
+        // }
 
         return redirect()->route('competitions.message', ['competition' => $competitionId, 'contest' => $contestId])->with('status', 'Fired that right the hell off!');
     }

@@ -31,18 +31,23 @@ class QueueMessage implements ShouldQueue
     public function handle(QueueMessageRequest $event)
     {
         $email = $event->email;
+        $user = $event->user;
+
         $type = $email->message->type;
-
-        $this->mail->send('messages.' . $type, ['email' => $email], function ($msg) use ($email) {
+            // dd($email->competition->users);
+        $this->mail->send('messages.' . $type, ['email' => $email, 'user' => $user], function ($msg) use ($email, $user) {
             $content = Email::prepareMessage($email->message, $email->competition);
+            $subject = Email::prepareSubject($email->message, $user);
 
-            // @TODO - Pull from name from contest setting.
-            $msg->from($email->sender, 'Beyonce');
+            // $content = Email::prepareMessage($email->message, $email->competition);
+
+            // Pulled from the contest.
+            $msg->from($email->contest->sender_email, $email->contest->sender_name);
 
             // @TODO - send to users in competition that triggered the send.
             // can be an array of email addresses.
             // this is just sending as a test to the person who made the contest.
-            $msg->to($email->sender, 'shae')->subject($email->message->subject);
+            $msg->to($email->contest->sender_email, $email->contest->sender_name)->subject($email->message->subject);
         });
     }
 }
