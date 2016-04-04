@@ -16,6 +16,7 @@ class MessageRepository
     public function create($contest, $data)
     {
         $message = new Message($data);
+        $message->pro_tip = empty($data['pro_tip']) ? null : $data['pro_tip'];
 
         return $contest->messages()->save($message);
     }
