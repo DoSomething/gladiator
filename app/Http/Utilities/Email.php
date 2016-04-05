@@ -82,7 +82,8 @@ class Email
      * @param  \Gladiator\Models\Message $message
      * @return \Gladiator\Models\Message $preparedMessage
      */
-    protected function processMessage($tokens, $message) {
+    protected function processMessage($tokens, $message) 
+    {
         $preparedMessage = clone $message;
 
         // // @TODO - maybe loop through message properties and run the replace on each one.

@@ -18,7 +18,7 @@ class QueueMessage implements ShouldQueue
      * @return void
      */
     public function __construct(Mailer $mail)
-    {   
+    {
         $this->mail = $mail;
     }
 

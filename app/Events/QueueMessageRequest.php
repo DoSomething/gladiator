@@ -2,7 +2,6 @@
 
 namespace Gladiator\Events;
 
-use Gladiator\Models\Message;
 use Illuminate\Queue\SerializesModels;
 
 class QueueMessageRequest extends Event
@@ -22,7 +21,7 @@ class QueueMessageRequest extends Event
      * @return void
      */
     public function __construct($email)
-    {   
+    {
         $this->email = $email;
     }
 
