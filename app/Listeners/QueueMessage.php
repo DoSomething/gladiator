@@ -43,8 +43,12 @@ class QueueMessage implements ShouldQueue
                     $msg->from($email->contest->sender_email, $email->contest->sender_name);
 
                     // Send to user.
-                    // CAREFUL! Make sure you are using dev settings or you could actually send an email.
-                    $msg->to($user->email, $user->first_name)->subject($content->subject);
+                    // If on testing environment, send emails to the contest creator as a test.
+                    if (env('APP_DEBUG')) {
+                        $msg->to($user->email, $user->first_name)->subject($content->subject);
+                    } else {
+                        $msg->to($email->contest->sender_email, $email->contest->sender_name)->subject($content->subject);
+                    }
                 });
             }
         }
