@@ -88,21 +88,26 @@ class MessagesController extends Controller
      */
     public function sendMessage(Message $message)
     {
+        $userRepository = app(\Gladiator\Repositories\UserRepositoryContract::class);
+
         $contestId = request('contest_id');
         $competitionId = request('competition_id');
+        $competition = Competition::find($competitionId);
+        $contest = Contest::find($contestId);
 
-        $email = new Email($message, Contest::find($contestId), Competition::find($competitionId));
-        // dd($email);
+        // @TODO - move this user logic into some sorta helper, we do it a lot.
+        $users = [];
+        $ids = $competition->users->pluck('id')->toArray();
 
-        // $userRepository = app(\Gladiator\Repositories\UserRepositoryContract::class);
+        if ($ids) {
+            $users = $userRepository->getAll($ids);
+        }
 
-        // $users = $userRepository->getAll($email->competition->users->pluck('id')->toArray());
-        $user = $this->userRepository->find('559442cca59dbfc9578b4bf4');
-        // I think it makes sense to have users be passed in on their own, since you have
-        // to send to each one, but feel free to change this if it doesn't make sense.
-        // foreach ($users as $user) {
-            // event(new QueueMessageRequest($email, $user));
-        // }
+        // Build the email.
+        $email = new Email($message, $contest, $competition, $users);
+
+        // Kick off email sending
+        event(new QueueMessageRequest($email));
 
         return redirect()->route('competitions.message', ['competition' => $competitionId, 'contest' => $contestId])->with('status', 'Fired that right the hell off!');
     }

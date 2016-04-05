@@ -18,7 +18,7 @@ class QueueMessage implements ShouldQueue
      * @return void
      */
     public function __construct(Mailer $mail)
-    {
+    {   
         $this->mail = $mail;
     }
 
@@ -31,23 +31,30 @@ class QueueMessage implements ShouldQueue
     public function handle(QueueMessageRequest $event)
     {
         $email = $event->email;
-        $user = $event->user;
 
-        $type = $email->message->type;
-            // dd($email->competition->users);
-        $this->mail->send('messages.' . $type, ['email' => $email, 'user' => $user], function ($msg) use ($email, $user) {
-            $content = Email::prepareMessage($email->message, $email->competition);
-            $subject = Email::prepareSubject($email->message, $user);
+        foreach ($email->allMessages as $message) {
+            $content = $message['message'];
+            $user = $message['user'];
+            $type = $content->type;
 
-            // $content = Email::prepareMessage($email->message, $email->competition);
+            if ($user->email) {
+                $this->mail->queue('messages.' . $type, ['content' => $content], function ($msg) use ($email, $content, $user) {
+                    // $content = Email::prepareMessage($email->message, $email->competition);
+                    // $subject = Email::prepareSubject($email->message, $user);
 
-            // Pulled from the contest.
-            $msg->from($email->contest->sender_email, $email->contest->sender_name);
+                    // $content = Email::prepareMessage($email->message, $email->competition);
 
-            // @TODO - send to users in competition that triggered the send.
-            // can be an array of email addresses.
-            // this is just sending as a test to the person who made the contest.
-            $msg->to($email->contest->sender_email, $email->contest->sender_name)->subject($email->message->subject);
-        });
+                    // Pulled from the contest.
+                    $msg->from($email->contest->sender_email, $email->contest->sender_name);
+
+                    // @TODO - send to users in competition that triggered the send.
+                    // can be an array of email addresses.
+                    // this is just sending as a test to the person who made the contest.
+                    // $msg->to($email->contest->sender_email, $email->contest->sender_name)->subject($email->message->subject);
+
+                    $msg->to($user->email, $user->first_name)->subject($content->subject);
+                });
+            }
+        }
     }
 }

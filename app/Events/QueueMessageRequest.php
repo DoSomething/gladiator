@@ -10,22 +10,20 @@ class QueueMessageRequest extends Event
     use SerializesModels;
 
     /**
-     * Message instance.
+     * Email instance.
      *
      * @var \Gladiator\Utilities\Email
      */
     public $email;
-    public $user;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($email, $user)
-    {
+    public function __construct($email)
+    {   
         $this->email = $email;
-        $this->user = $user;
     }
 
     /**

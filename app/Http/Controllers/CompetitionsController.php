@@ -52,7 +52,7 @@ class CompetitionsController extends Controller
         $ids = $competition->users->pluck('id')->toArray();
 
         if ($ids) {
-            $this->repository->getAll($ids);
+            $users = $this->repository->getAll($ids);
         }
 
         return view('competitions.show', compact('competition', 'contest', 'users'));
