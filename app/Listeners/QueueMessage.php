@@ -44,7 +44,7 @@ class QueueMessage implements ShouldQueue
 
                     // Send to user.
                     // If on testing environment, send emails to the contest creator as a test.
-                    if (env('APP_DEBUG')) {
+                    if (! env('APP_DEBUG')) {
                         $msg->to($user->email, $user->first_name)->subject($content->subject);
                     } else {
                         $msg->to($email->contest->sender_email, $email->contest->sender_name)->subject($content->subject);

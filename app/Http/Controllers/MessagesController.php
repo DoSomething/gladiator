@@ -88,9 +88,6 @@ class MessagesController extends Controller
      */
     public function sendMessage(Message $message)
     {
-        // @TODO - is there a better way of bringing in this repository to this class?
-        $userRepository = app(\Gladiator\Repositories\UserRepositoryContract::class);
-
         $contestId = request('contest_id');
         $competitionId = request('competition_id');
         $competition = Competition::find($competitionId);
@@ -101,7 +98,7 @@ class MessagesController extends Controller
         $ids = $competition->users->pluck('id')->toArray();
 
         if ($ids) {
-            $users = $userRepository->getAll($ids);
+            $users = $this->userRepository->getAll($ids);
         }
 
         // Build the email.
