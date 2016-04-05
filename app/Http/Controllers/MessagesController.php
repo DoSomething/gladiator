@@ -91,10 +91,8 @@ class MessagesController extends Controller
         $contestId = request('contest_id');
         $competitionId = request('competition_id');
 
-        $email = new Email();
-        $email->message = $message;
-        $email->contest = Contest::find($contestId);
-        $email->competition = Competition::find($competitionId);
+        $email = new Email($message, Contest::find($contestId), Competition::find($competitionId));
+        dd($email));
 
         // $userRepository = app(\Gladiator\Repositories\UserRepositoryContract::class);
 

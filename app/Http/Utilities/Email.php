@@ -2,34 +2,44 @@
 
 namespace Gladiator\Http\Utilities;
 
+use Gladiator\Models\Contest;
+use Gladiator\Models\Competition;
+use Gladiator\Models\Message;
 use Gladiator\Repositories\UserRepositoryContract;
-
 
 class Email
 {
+    // @TODO - docblock
+    protected $message;
 
+    // @TODO - docblock
+    protected $contest;
 
-    public static function prepareMessage($message, $model)
+    // @TODO - docblock
+    protected $competition;
+
+    protected $tokens;
+
+    public function __construct(Message $message, Contest $contest, Competition $competition)
     {
-        //@TODO: I only tested this with competition, is there other things we want to replace?
-        $tokens = $model::$tokenizable;
-        foreach ($tokens as $token) {
-            $message->body = str_replace(':'.$token, $model->$token, $message->body);
-        }
+        $this->message = $message;
+        $this->contest = $contest;
+        $this->competition = $competition;
 
-        return $message;
+        $this->defineTokens();
+        $this->prepareMessage();
     }
-    // I moved this into it's own function b/c I figured this has to run for every users
-    // whereas the message is probably? the same for everyone
-    // this might not be true.
-    // Message, and the model should probably be user or userrepocontract?
-    public static function prepareSubject($message, $model)
-    {
-        $tokens = $model::$tokenizable;
-        foreach ($tokens as $token) {
-            $message->subject = str_replace(':'.$token, $model->$token, $message->subject);
-        }
 
-        return $message;
+    protected function defineTokens()
+    {
+        $this->tokens = [
+            ':competition_end_date' => $this->competition->competition_end_date,
+            ':leaderboard_msg_day' => $this->competition->leaderboard_msg_day,
+            ':first_name' => 'Shae',
+        ];
+    }
+
+    public function prepareMessage() { 
+        $this->message->body = str_replace(array_keys($this->tokens), array_values($this->tokens), $this->message->body);
     }
 }
