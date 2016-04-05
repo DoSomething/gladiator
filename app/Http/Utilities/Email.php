@@ -18,6 +18,7 @@ class Email
     // @TODO - docblock
     protected $competition;
 
+    // @TODO - docblock
     protected $tokens;
 
     public function __construct(Message $message, Contest $contest, Competition $competition)
@@ -26,20 +27,34 @@ class Email
         $this->contest = $contest;
         $this->competition = $competition;
 
+        $userRepository = app(\Gladiator\Repositories\UserRepositoryContract::class);
+        $this->user = $userRepository->find('559442cca59dbfc9578b4bf4');
+
         $this->defineTokens();
         $this->prepareMessage();
     }
 
     protected function defineTokens()
     {
+        // @TODO - should we set defaults if things don't resolve?
         $this->tokens = [
             ':competition_end_date' => $this->competition->competition_end_date,
             ':leaderboard_msg_day' => $this->competition->leaderboard_msg_day,
-            ':first_name' => 'Shae',
+            ':first_name' => $this->user->first_name,
         ];
     }
 
     public function prepareMessage() { 
-        $this->message->body = str_replace(array_keys($this->tokens), array_values($this->tokens), $this->message->body);
+        $this->message->body = $this->replaceTokens($this->tokens, $this->message->body);
+        $this->message->subject = $this->replaceTokens($this->tokens, $this->message->subject);
+
+        dd($this->message);
+
+        // dd();
+    }
+
+    protected function replaceTokens($tokens, $string)
+    {
+        return str_replace(array_keys($tokens), array_values($tokens), $string);
     }
 }

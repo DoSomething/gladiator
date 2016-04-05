@@ -92,7 +92,7 @@ class MessagesController extends Controller
         $competitionId = request('competition_id');
 
         $email = new Email($message, Contest::find($contestId), Competition::find($competitionId));
-        dd($email));
+        // dd($email);
 
         // $userRepository = app(\Gladiator\Repositories\UserRepositoryContract::class);
 
@@ -101,7 +101,7 @@ class MessagesController extends Controller
         // I think it makes sense to have users be passed in on their own, since you have
         // to send to each one, but feel free to change this if it doesn't make sense.
         // foreach ($users as $user) {
-            event(new QueueMessageRequest($email, $user));
+            // event(new QueueMessageRequest($email, $user));
         // }
 
         return redirect()->route('competitions.message', ['competition' => $competitionId, 'contest' => $contestId])->with('status', 'Fired that right the hell off!');
