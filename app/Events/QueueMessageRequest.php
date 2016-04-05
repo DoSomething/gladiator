@@ -10,7 +10,7 @@ class QueueMessageRequest extends Event
     use SerializesModels;
 
     /**
-     * Message instance.
+     * Email instance.
      *
      * @var \Gladiator\Utilities\Email
      */
@@ -22,7 +22,7 @@ class QueueMessageRequest extends Event
      * @return void
      */
     public function __construct($email)
-    {
+    {   
         $this->email = $email;
     }
 

@@ -8,6 +8,7 @@ use Gladiator\Models\Competition;
 use Gladiator\Models\Message;
 use Gladiator\Events\QueueMessageRequest;
 use Gladiator\Repositories\MessageRepository;
+use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Http\Utilities\Email;
 
 class MessagesController extends Controller
@@ -17,14 +18,22 @@ class MessagesController extends Controller
      *
      * @var \Gladiator\Repositories\MessageRepository
      */
-    protected $repository;
+    protected $msgRepository;
+
+    /**
+     * UserRepositoryContract instance.
+     *
+     * @var \Gladiator\Repositories\UserRepositoryContract
+     */
+    protected $userRepository;
 
     /**
      * Create new MessagesController instance.
      */
-    public function __construct(MessageRepository $repository)
+    public function __construct(MessageRepository $msgRepository, UserRepositoryContract $userRepository)
     {
-        $this->repository = $repository;
+        $this->msgRepository = $msgRepository;
+        $this->userRepository = $userRepository;
 
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
@@ -54,7 +63,7 @@ class MessagesController extends Controller
     {
         $contest = Contest::findOrFail($id);
 
-        $this->repository->updateMessagesForContest($contest, $request->input('messages'));
+        $this->msgRepository->updateMessagesForContest($contest, $request->input('messages'));
 
         return redirect()->action('ContestsController@show', $contest->id)->with('status', 'Messages have been updated!');
     }
@@ -77,16 +86,28 @@ class MessagesController extends Controller
      *
      * @param int $id
      */
-    public static function sendMessage(Message $message)
+    public function sendMessage(Message $message)
     {
+        // @TODO - is there a better way of bringing in this repository to this class?
+        $userRepository = app(\Gladiator\Repositories\UserRepositoryContract::class);
+
         $contestId = request('contest_id');
         $competitionId = request('competition_id');
+        $competition = Competition::find($competitionId);
+        $contest = Contest::find($contestId);
 
-        $email = new Email();
-        $email->message = $message;
-        $email->sender = Contest::find($contestId)->sender;
-        $email->competition = Competition::find($competitionId);
+        // @TODO - move this user logic into some sorta helper, we do it a lot.
+        $users = [];
+        $ids = $competition->users->pluck('id')->toArray();
 
+        if ($ids) {
+            $users = $userRepository->getAll($ids);
+        }
+
+        // Build the email.
+        $email = new Email($message, $contest, $competition, $users);
+
+        // Kick off email sending
         event(new QueueMessageRequest($email));
 
         return redirect()->route('competitions.message', ['competition' => $competitionId, 'contest' => $contestId])->with('status', 'Fired that right the hell off!');
