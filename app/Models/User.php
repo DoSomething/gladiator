@@ -35,13 +35,6 @@ class User extends BaseUser
     ];
 
     /**
-     * The attributes that can be tokenized.
-     *
-     * @var array
-     */
-    public static $tokenizable = ['name'];
-
-    /**
      * A User belongs to many Competitions.
      */
     public function competitions()

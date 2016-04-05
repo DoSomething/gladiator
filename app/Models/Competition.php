@@ -21,13 +21,6 @@ class Competition extends Model
     protected $dates = ['competition_start_date', 'competition_end_date'];
 
     /**
-     * The attributes that can be tokenized.
-     *
-     * @var array
-     */
-    public static $tokenizable = ['competition_end_date', 'leaderboard_msg_day'];
-
-    /**
      * A Competition belongs to many Users.
      */
     public function users()
