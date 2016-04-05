@@ -88,6 +88,7 @@ class MessagesController extends Controller
      */
     public function sendMessage(Message $message)
     {
+        // @TODO - is there a better way of bringing in this repository to this class?
         $userRepository = app(\Gladiator\Repositories\UserRepositoryContract::class);
 
         $contestId = request('contest_id');

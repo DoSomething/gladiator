@@ -8,21 +8,44 @@ use Gladiator\Models\Message;
 
 class Email
 {
-    // @TODO - docblock
+    /**
+     * Message instance.
+     *
+     * @var \Gladiator\Models\Message
+     */
     protected $message;
 
-    // @TODO - docblock
+    /**
+     * Competition instance.
+     *
+     * @var \Gladiator\Models\Competition
+     */
     protected $competition;
 
-    // @TODO - docblock
+    /**
+     * Northstar user
+     *
+     * @var Object
+     */
     protected $users;
 
-    // @TODO - docblock
+    /**
+     * Contest instance.
+     *
+     * @var \Gladiator\Models\Contest
+     */
     public $contest;
 
-    // @TODO - docblock
+    /**
+     * Array of all processed messages for per user
+     *
+     * @var Array
+     */
     public $allMessages;
 
+    /**
+     * Constructor
+     */
     public function __construct(Message $message, Contest $contest, Competition $competition, $users)
     {
         $this->message = $message;
@@ -33,10 +56,16 @@ class Email
         $this->setupEmail();
     }
 
-    // @TODO - docblock
+    /**
+     * Process all of the tokens for this email. New tokens should be defined here.
+     * @TODO - possibly move token stuff into it's own class.
+     *
+     * @param  object $user
+     * @return Array $tokens
+     */
     protected function defineTokens($user)
     {
-        // @TODO - should we set defaults if things don't resolve?
+        // @TODO - set defaults?
         $tokens = [
             ':competition_end_date' => $this->competition->competition_end_date,
             ':leaderboard_msg_day' => $this->competition->leaderboard_msg_day,
@@ -46,8 +75,14 @@ class Email
         return $tokens;
     }
 
-    // @TODO - docblock
-    protected function replaceMessage($tokens, $message) {
+    /**
+     * Process the message, replacing all tokens with their associated value.
+     *
+     * @param  Array $tokens
+     * @param  \Gladiator\Models\Message $message
+     * @return \Gladiator\Models\Message $preparedMessage
+     */
+    protected function processMessage($tokens, $message) {
         $preparedMessage = clone $message;
 
         // // @TODO - maybe loop through message properties and run the replace on each one.
@@ -57,20 +92,29 @@ class Email
         return $preparedMessage;
     }
 
-    // @TODO - docblock
+    /**
+     * Handles the string replacement
+     *
+     * @param  Array $tokens
+     * @param  string $string
+     * @return string
+     */
     protected function replaceTokens($tokens, $string)
     {
         return str_replace(array_keys($tokens), array_values($tokens), $string);
     }
 
-    // @TODO - docblock
+    /**
+     * Builds the email object.
+     */
     protected function setupEmail()
     {
+        // Each user gets it's own processed message
         foreach ($this->users as $key => $user) {
             $this->allMessages[$key]['user'] = $user;
 
             $tokens = $this->defineTokens($user);
-            $this->allMessages[$key]['message'] = $this->replaceMessage($tokens, $this->message);
+            $this->allMessages[$key]['message'] = $this->processMessage($tokens, $this->message);
         }
     }
 
