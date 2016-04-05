@@ -25,7 +25,7 @@ class Email
     /**
      * Northstar user
      *
-     * @var Object
+     * @var object
      */
     protected $users;
 
@@ -39,7 +39,7 @@ class Email
     /**
      * Array of all processed messages for per user
      *
-     * @var Array
+     * @var array
      */
     public $allMessages;
 
@@ -61,7 +61,7 @@ class Email
      * @TODO - possibly move token stuff into it's own class.
      *
      * @param  object $user
-     * @return Array $tokens
+     * @return array $tokens
      */
     protected function defineTokens($user)
     {
@@ -78,11 +78,11 @@ class Email
     /**
      * Process the message, replacing all tokens with their associated value.
      *
-     * @param  Array $tokens
+     * @param  array $tokens
      * @param  \Gladiator\Models\Message $message
      * @return \Gladiator\Models\Message $preparedMessage
      */
-    protected function processMessage($tokens, $message) 
+    protected function processMessage($tokens, $message)
     {
         $preparedMessage = clone $message;
 
@@ -96,7 +96,7 @@ class Email
     /**
      * Handles the string replacement
      *
-     * @param  Array $tokens
+     * @param  array $tokens
      * @param  string $string
      * @return string
      */
@@ -118,5 +118,4 @@ class Email
             $this->allMessages[$key]['message'] = $this->processMessage($tokens, $this->message);
         }
     }
-
 }
