@@ -2,7 +2,6 @@
 
 namespace Gladiator\Events;
 
-use Gladiator\Models\Message;
 use Illuminate\Queue\SerializesModels;
 
 class QueueMessageRequest extends Event
@@ -10,7 +9,7 @@ class QueueMessageRequest extends Event
     use SerializesModels;
 
     /**
-     * Message instance.
+     * Email instance.
      *
      * @var \Gladiator\Utilities\Email
      */
