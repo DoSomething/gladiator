@@ -42,5 +42,4 @@ class Phoenix extends RestApiClient
 
         return is_null($response) ? null : $response;
     }
-
 }

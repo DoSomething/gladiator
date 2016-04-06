@@ -30,8 +30,8 @@ class ContestsController extends Controller
         $contests = Contest::all();
 
         // @TODO - Instead of doing this in loop, grab all campaigns at once 
-        foreach ($contests as $contest) 
-        {   
+        foreach ($contests as $contest)
+        {
             $contest->campaign_title = $this->manager->getCampaign($contest->campaign_id)->title;
         }
 

@@ -24,7 +24,6 @@ class Manager
      */
     protected $northstar;
 
-
     /**
      * Phoenix instance.
      *
@@ -185,25 +184,5 @@ class Manager
         $campaign = $this->phoenix->getCampaign($id);
 
         return $campaign;
-    }
-
-    /**
-     * Get a group of campaign content from Phoenix.
-     * 
-     * @TODO - Move the api call into a repository. Also first check cache
-     * for campaign info, if it is there use that instead, if not, grab from 
-     * Phoenix.
-     *
-     * @param  array $ids
-     *
-     * @return object $campaigns
-     */
-    public function getCampaigns(array $ids = [])
-    {
-        $campaigns = $this->phoenix->getAllCampaigns([
-            'ids' => $ids,
-        ]);
-
-        return $campaigns;  
     }
 }
