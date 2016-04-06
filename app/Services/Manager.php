@@ -170,9 +170,9 @@ class Manager
 
     /**
      * Get campaign content from Phoenix.
-     * 
+     *
      * @TODO - Move the api call into a repository. Also first check cache
-     * for campaign info, if it is there use that instead, if not, grab from 
+     * for campaign info, if it is there use that instead, if not, grab from
      * Phoenix.
      *
      * @param  string $id  Campaign ID
