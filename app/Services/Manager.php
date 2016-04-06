@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Gladiator\Models\Contest;
 use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Northstar\Northstar;
+use Gladiator\Services\Phoenix\Phoenix;
 
 class Manager
 {
@@ -24,6 +25,13 @@ class Manager
     protected $northstar;
 
     /**
+     * Phoenix instance.
+     *
+     * @var \Gladiator\Services\Phoenix\Phoenix
+     */
+    protected $phoenix;
+
+    /**
      * Create new Registrar instance.
      *
      * @param Northstar $northstar
@@ -32,6 +40,7 @@ class Manager
     {
         $this->repository = $repository;
         $this->northstar = new Northstar;
+        $this->phoenix = new Phoenix;
     }
 
     /**
@@ -157,5 +166,23 @@ class Manager
 
         // If the user has no activity for this competition or waiting room.
         return null;
+    }
+
+    /**
+     * Get campaign content from Phoenix.
+     *
+     * @TODO - Move the api call into a repository. Also first check cache
+     * for campaign info, if it is there use that instead, if not, grab from
+     * Phoenix.
+     *
+     * @param  string $id  Campaign ID
+     *
+     * @return object $campaign
+     */
+    public function getCampaign($id)
+    {
+        $campaign = $this->phoenix->getCampaign($id);
+
+        return $campaign;
     }
 }
