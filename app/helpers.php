@@ -8,7 +8,7 @@ use Carbon\Carbon;
  * @param  array  $data
  * @return \League\Csv $csv
  */
-function buildCSV($data)
+function build_csv($data)
 {
     $csv = \League\Csv\Writer::createFromFileObject(new \SplTempFileObject());
 
@@ -69,7 +69,7 @@ function format_date_form_field($model, $field, $defaut = 'MM/DD/YYYY')
  * @param  date  $signupDate
  * @return bool
  */
-function hasSignupPeriodEnded($signupDate)
+function has_signup_period_ended($signupDate)
 {
     return time() - (60 * 60 * 24) >= strtotime($signupDate);
 }
@@ -81,7 +81,7 @@ function hasSignupPeriodEnded($signupDate)
  * @param  string  $domain
  * @return bool
  */
-function matchEmailDomain($email, $domain = 'dosomething.org')
+function match_email_domain($email, $domain = 'dosomething.org')
 {
     $pieces = explode('@', $email);
 

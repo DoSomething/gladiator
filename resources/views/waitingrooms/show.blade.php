@@ -17,7 +17,7 @@
                 <p>Signup End Date: {{ $room->signup_end_date->format('F d, Y') }}</p>
 
                 <ul class="form-actions -inline">
-                    @if (hasSignupPeriodEnded($room->signup_end_date))
+                    @if (has_signup_period_ended($room->signup_end_date))
                         <li>
                             <a href="{{ route('split', $room->id) }}" class="button -secondary">Split room</a>
                         </li>

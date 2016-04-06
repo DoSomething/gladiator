@@ -78,7 +78,7 @@ class Manager
             array_push($data, $details);
         }
 
-        return buildCSV($data);
+        return build_csv($data);
     }
 
     /**

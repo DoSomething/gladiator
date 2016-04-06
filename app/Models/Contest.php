@@ -53,7 +53,7 @@ class Contest extends Model
             array_push($data, [$competition->id]);
         }
 
-        return buildCSV($data);
+        return build_csv($data);
     }
 
     /**

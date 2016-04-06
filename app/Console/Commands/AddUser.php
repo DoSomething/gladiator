@@ -31,7 +31,7 @@ class AddUser extends Command
         $email = $this->argument('email');
         $role = $this->option('role');
 
-        if (! matchEmailDomain($email)) {
+        if (! match_email_domain($email)) {
             return $this->comment(PHP_EOL . $email . ' is invalid. Admin or Staff require a DoSomething.org email.' . PHP_EOL);
         }
 
