@@ -79,7 +79,7 @@ class Correspondence
             'key' => '2',
             'label' => 'Leaderboard update 2',
             'subject' => 'Leaderboard update #2 for the :campaign_name competition!',
-            'body' => "Hello, competitors-- \n\r1 more week! This :campaign_name competition ends on :end_date, so it’s time to make your mark. \n\rPro tip - :pro_tip \n\r Final photo with your :reportback_noun will be due :leaderboard_msg_day-1 before 10pm EST. \n\rHere is the leaderboard! Top 3 and a shoutouts below: \n\r[Leaderboard] \n\r[1 Random Image w/ comment] \n\r[Top 3 competitor IMAGES w/comment] \n\r[#] more weeks to make your mark and climb up the leaderboard!",
+            'body' => "Hello, competitors-- \n\r1 more week! This :campaign_name competition ends on :end_date, so it’s time to make your mark. \n\rPro tip - :pro_tip \n\r Final photo with your :reportback_noun will be due :leaderboard_msg_day-1 before 10pm EST. \n\rHere is the leaderboard! Top 3 and a shoutouts below: \n\r[#] more weeks to make your mark and climb up the leaderboard!",
             'pro_tip' => null,
         ],
         [
@@ -87,7 +87,7 @@ class Correspondence
             'key' => '3',
             'label' => 'Final leaderboard update',
             'subject' => 'Here are the :campaign_name competition winners!',
-            'body' => "This is it, the final leaderboard and results. Thank you for spending these last 3 weeks, working hard not only to climb the leaderboard, but also to affect lives around you and make the world a better place. \n\rHere is your final leaderboard. Pics, prizes and honorable mentions below: \n\Final photo with your :reportback_noun will be due :leaderboard_msg_day-1 before 10pm EST. \n\rHere is the leaderboard! Top 3 and a shoutouts below: \n\r[Leaderboard] \n\r[1 Random Image w/ comment] \n\r[Top 3 competitor IMAGES w/comment] \n\r[#] more weeks to make your mark and climb up the leaderboard!",
+            'body' => "This is it, the final leaderboard and results. Thank you for spending these last 3 weeks, working hard not only to climb the leaderboard, but also to affect lives around you and make the world a better place. \n\rHere is your final leaderboard. Pics, prizes and honorable mentions below: \n\Final photo with your :reportback_noun will be due :leaderboard_msg_day-1 before 10pm EST. \n\rHere is the leaderboard! Top 3 and a shoutouts below: \n\r[#] more weeks to make your mark and climb up the leaderboard!",
             'pro_tip' => null,
         ],
     ];
