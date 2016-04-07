@@ -47,6 +47,7 @@ class CompetitionsController extends Controller
      */
     public function show(Competition $competition, Request $request)
     {
+        $users = $this->manager->createLeaderboard($competition, 10);
         $contest = Contest::find($competition->contest_id);
         $campaign = $this->manager->getCampaign($contest->campaign_id);
 
