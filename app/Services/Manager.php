@@ -87,7 +87,7 @@ class Manager
             array_push($data, $details);
         }
 
-        return buildCSV($data);
+        return build_csv($data);
     }
 
     /**
@@ -247,5 +247,23 @@ class Manager
 
         // If the user has no activity for this competition or waiting room.
         return null;
+    }
+
+    /**
+     * Get campaign content from Phoenix.
+     *
+     * @TODO - Move the api call into a repository. Also first check cache
+     * for campaign info, if it is there use that instead, if not, grab from
+     * Phoenix.
+     *
+     * @param  string $id  Campaign ID
+     *
+     * @return object $campaign
+     */
+    public function getCampaign($id)
+    {
+        $campaign = $this->phoenix->getCampaign($id);
+
+        return $campaign;
     }
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DropContestDurationColumn extends Migration
+class RenameSenderColumnToSenderEmailAndAddSenderNameColumnToContestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,8 @@ class DropContestDurationColumn extends Migration
     public function up()
     {
         Schema::table('contests', function (Blueprint $table) {
-            $table->dropColumn('duration');
+            $table->string('sender_name')->nullable()->after('sender');
+            $table->renameColumn('sender', 'sender_email');
         });
     }
 
@@ -25,7 +26,8 @@ class DropContestDurationColumn extends Migration
     public function down()
     {
         Schema::table('contests', function (Blueprint $table) {
-            $table->integer('duration')->comment = 'The duration of a competition within this contest in units of days';
+            $table->renameColumn('sender_email', 'sender');
+            $table->dropColumn('sender_name');
         });
     }
 }

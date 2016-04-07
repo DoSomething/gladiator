@@ -8,6 +8,8 @@ use Gladiator\Models\Contest;
 use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Manager;
 use Illuminate\Http\Request;
+use Gladiator\Models\Message;
+use Gladiator\Models\User;
 
 class CompetitionsController extends Controller
 {
@@ -46,26 +48,16 @@ class CompetitionsController extends Controller
     public function show(Competition $competition, Request $request)
     {
         $contest = Contest::find($competition->contest_id);
+        $campaign = $this->manager->getCampaign($contest->campaign_id);
 
-        // Determine the amount of users to show in the leaderboard
-        $limit = 10;
-        $limitQuery = $request->input('limit');
+        $users = [];
+        $ids = $competition->users->pluck('id')->toArray();
 
-        if (isset($limitQuery)) {
-            // If they specified all, get total users
-            if ($limitQuery === 'all') {
-                $limit = count($competition->users);
-            }
-            // Otherwise use the given number
-            else {
-                $limit = (int) $limitQuery;
-            }
+        if ($ids) {
+            $users = $this->repository->getAll($ids);
         }
 
-        // Get the leaderboard
-        $users = $this->manager->createLeaderboard($competition, $limit);
-
-        return view('competitions.show', compact('competition', 'contest', 'users'));
+        return view('competitions.show', compact('competition', 'contest', 'users', 'campaign'));
     }
 
     /**
@@ -116,5 +108,56 @@ class CompetitionsController extends Controller
     {
         $csv = $this->manager->exportCSV($competition, true);
         $csv->output('competition' . $competition->id . '.csv');
+    }
+
+    /**
+     * Detach a user from a competition.
+     *
+     * @param  \Gladiator\Models\Competition  $competition
+     * @param  \Gladiator\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function removeUser(Competition $competition, User $user)
+    {
+        $user->competitions()->detach($competition->id);
+
+        return redirect()->back()->with('status', 'User was removed from competition ' . $competition->id);
+    }
+
+    /**
+     * Show and send messages in a competition.
+     *
+     * @param  \Gladiator\Models\Competition  $competition
+     * @param  \Gladiator\Models\Contest  $contest
+     * @return \Illuminate\Http\Response
+     */
+    public function message(Competition $competition, Contest $contest)
+    {
+        $messages = Message::where('contest_id', '=', $contest->id)->get();
+
+        return view('messages.show', compact('messages', 'competition'));
+    }
+
+    public function leaderboard(Competition $competition, Request $request)
+    {
+        // Determine the amount of users to show in the leaderboard
+        $limit = 10;
+        $limitQuery = $request->input('limit');
+
+        if (isset($limitQuery)) {
+            // If they specified all, get total users
+            if ($limitQuery === 'all') {
+                $limit = count($competition->users);
+            }
+            // Otherwise use the given number
+            else {
+                $limit = (int) $limitQuery;
+            }
+        }
+
+        // Get the leaderboard
+        $users = $this->manager->createLeaderboard($competition, $limit);
+
+        return view('competitions.leaderboard', compact('users'));
     }
 }

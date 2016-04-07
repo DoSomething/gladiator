@@ -11,7 +11,7 @@ class Competition extends Model
      *
      * @var array
      */
-    protected $fillable = ['contest_id', 'competition_start_date', 'competition_end_date'];
+    protected $fillable = ['contest_id', 'competition_start_date', 'competition_end_date', 'leaderboard_msg_day'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -34,5 +34,17 @@ class Competition extends Model
     public function contest()
     {
         return $this->belongsTo(Contest::class);
+    }
+
+    /**
+     * Get the leaderboard day of the week.
+     *
+     * @param  int  $value
+     * @return string
+     */
+    public function getLeaderboardMsgDayAttribute($value)
+    {
+        // Return day of the week as a string (Monday-Sunday).
+        return jddayofweek($value, 1);
     }
 }

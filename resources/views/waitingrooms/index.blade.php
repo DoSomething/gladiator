@@ -30,7 +30,7 @@
                             <td class="table__cell">{{ $room->signup_start_date->format('F d, Y') }}</td>
                             <td class="table__cell">{{ $room->signup_end_date->format('F d, Y') }}</td>
                             <td class="table__cell">
-                                @if (hasSignupPeriodEnded($room->signup_end_date))
+                                @if (has_signup_period_ended($room->signup_end_date))
                                     <a href="{{ route('split', $room->id) }}" class="button -secondary">Split room</a>
                                 @else
                                     <p>N/A</p>

@@ -11,7 +11,7 @@
         <div class="wrapper">
             <div class="container__block -half">
                 <ul>
-                    <li><strong>Campaign ID:</strong> {{ $contest->campaign_id }}</li>
+                    <li><strong>Campaign:</strong> {{ $campaign->title }}</li>
                     <li><strong>Campaign Run ID:</strong> {{ $contest->campaign_run_id }}</li>
                 </ul>
             </div>
@@ -28,6 +28,17 @@
                         <a href="{{ route('split', $contest->waitingRoom->id) }}" class="button -secondary">Split</a>
                     </li>
                 </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="wrapper">
+            <div class="container__block">
+                <h2 class="heading -alpha">Messaging</h2>
+                <p>The current name of the messages sender is: <em>{{ $contest->sender_name or 'not assigned' }}</em></p>
+                <p>The current email assigned for the messages sender is: <em>{{ $contest->sender_email or 'not assigned' }}</em></p>
+                <p><a href="{{ route('contests.messages.edit', $contest->id) }}" class="button -secondary">View &amp; Edit Messages</a></p>
             </div>
         </div>
     </div>

@@ -12,8 +12,13 @@
             <div class="container__block">
                 <form method="POST" action="{{ route('contests.update', $contest->id) }}">
                     {{ method_field('PATCH') }}
+                    {{ csrf_field() }}
+
+                    @include('layouts.errors')
 
                     @include('contests.partials._form_contest')
+
+                    <input type="submit" class="button" value="Submit" />
                 </form>
             </div>
         </div>

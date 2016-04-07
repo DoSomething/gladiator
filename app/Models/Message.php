@@ -6,12 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
+    protected $fillable = ['contest_id', 'type', 'key', 'label', 'subject', 'body', 'pro_tip'];
+
     /**
      * Array of available message types.
      *
      * @var array
      */
     protected static $types = [
+        'checkin',
         'leaderboard',
         'reminder',
         'welcome',

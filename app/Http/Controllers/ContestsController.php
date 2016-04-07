@@ -5,6 +5,7 @@ namespace Gladiator\Http\Controllers;
 use Gladiator\Models\Contest;
 use Gladiator\Services\Manager;
 use Gladiator\Http\Requests\ContestRequest;
+use Gladiator\Repositories\MessageRepository;
 
 class ContestsController extends Controller
 {
@@ -28,6 +29,11 @@ class ContestsController extends Controller
     {
         $contests = Contest::all();
 
+        // @TODO - Instead of doing this in loop, grab all campaigns at once
+        foreach ($contests as $contest) {
+            $contest->campaign_title = $this->manager->getCampaign($contest->campaign_id)->title;
+        }
+
         return view('contests.index', compact('contests'));
     }
 
@@ -49,10 +55,17 @@ class ContestsController extends Controller
      */
     public function store(ContestRequest $request)
     {
-        $dateParams = ['signup_start_date', 'signup_end_date'];
+        $contest = Contest::create([
+            'campaign_id' => $request->input('campaign_id'),
+            'campaign_run_id' => $request->input('campaign_run_id'),
+            'sender_email' => $request->input('sender_email'),
+            'sender_name' => $request->input('sender_name'),
+        ]);
 
-        $contest = Contest::create($request->except($dateParams));
-        $contest->WaitingRoom->fill($request->only($dateParams))->save();
+        $contest->waitingRoom->fill($request->only(['signup_start_date', 'signup_end_date']))->save();
+
+        $repository = new MessageRepository;
+        $repository->createMessagesForContest($contest, $request->input('messages'));
 
         return redirect()->action('ContestsController@show', $contest->id)->with('status', 'Contest has been saved!');
     }
@@ -66,8 +79,9 @@ class ContestsController extends Controller
     public function show(Contest $contest)
     {
         $contest = $this->manager->collectContestInfo($contest->id);
+        $campaign = $this->manager->getCampaign($contest->campaign_id);
 
-        return view('contests.show', compact('contest'));
+        return view('contests.show', compact('contest', 'campaign'));
     }
 
     /**

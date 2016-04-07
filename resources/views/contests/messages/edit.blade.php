@@ -3,26 +3,22 @@
 @section('main_content')
 
     @include('layouts.header', [
-        'title' => 'Contests',
-        'subtitle' => 'Add a new contest'
+        'title' => 'Messages',
+        'subtitle' => 'View messages for contest ID: ' . $contest->id,
     ])
 
     <div class="container">
         <div class="wrapper">
             <div class="container__block -narrow">
-                <form method="POST" action="{{ route('contests.store') }}">
+                <form method="POST" action="{{ route('contests.messages.update', $contest->id) }}">
+                    {{ method_field('PATCH') }}
                     {{ csrf_field() }}
 
                     @include('layouts.errors')
 
-                    <h2 class="heading -alpha">Settings</h2>
+                    <h2 class="heading -alpha">Edit Messages</h2>
 
-                    @include('contests.partials._form_contest')
-
-
-                    <h2 class="heading -alpha">Messages</h2>
-
-                    @foreach (correspondence()->defaults() as $message)
+                    @foreach ($contest->messages as $message)
 
                         @include('contests.partials._form_contest_messaging', ['message' => $message])
 

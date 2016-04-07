@@ -23,6 +23,7 @@ class SplitRequest extends Request
     {
         return [
             'competition_end_date' => 'required|date|after:today',
+            'leaderboard_msg_day' => 'required',
         ];
     }
 }

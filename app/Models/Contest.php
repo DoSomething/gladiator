@@ -11,7 +11,7 @@ class Contest extends Model
      *
      * @var array
      */
-    protected $fillable = ['campaign_id', 'campaign_run_id'];
+    protected $fillable = ['campaign_id', 'campaign_run_id', 'sender_email', 'sender_name'];
 
     /**
      * Get the waiting room associated with this contest.
@@ -48,10 +48,31 @@ class Contest extends Model
         $competitions = $this->competitions;
 
         array_push($data, ['competition id']);
+
         foreach ($competitions as $competition) {
             array_push($data, [$competition->id]);
         }
 
-        return buildCSV($data);
+        return build_csv($data);
+    }
+
+    /**
+     * Set the sender email attribute for the contest.
+     *
+     * @param string $value
+     */
+    public function setSenderEmailAttribute($value)
+    {
+        $this->attributes['sender_email'] = ! empty($value) ? $value : null;
+    }
+
+    /**
+     * Set the sender name attribute for the contest.
+     *
+     * @param string $value
+     */
+    public function setSenderNameAttribute($value)
+    {
+        $this->attributes['sender_name'] = ! empty($value) ? $value : null;
     }
 }

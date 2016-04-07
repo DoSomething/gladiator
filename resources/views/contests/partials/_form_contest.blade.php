@@ -1,15 +1,11 @@
-@include('layouts.errors')
-
-{{ csrf_field() }}
-
 <div class="form-item -padded">
     <label class="field-label" for="signup_start_date">Signup Start Date:</label>
-    <input type="date" name="signup_start_date" id="signup_start_date" value={{ $contest->waitingRoom->signup_start_date or old('signup_start_date', 'MM/DD/YYYY')}} class="text-field"></input>
+    <input type="date" name="signup_start_date" id="signup_start_date" class="text-field" value="{{ isset($contest) ? format_date_form_field($contest->waitingRoom, 'signup_start_date') : '' }}"></input>
 </div>
 
 <div class="form-item -padded">
     <label class="field-label" for="signup_end_date">Signup End Date:</label>
-    <input type="date" name="signup_end_date" id="signup_end_date" value={{ $contest->waitingRoom->signup_end_date or old('signup_end_date', 'MM/DD/YYYY') }} class="text-field"></input>
+    <input type="date" name="signup_end_date" id="signup_end_date"  class="text-field" value="{{ isset($contest) ? format_date_form_field($contest->waitingRoom, 'signup_end_date') : '' }}"></input>
 </div>
 
 <div class="form-item -padded">
@@ -22,4 +18,12 @@
     <input type="number" name="campaign_run_id" id="campaign_run_id" class="text-field" placeholder="42" value="{{ $contest->campaign_run_id or old('campaign_run_id') }}"/>
 </div>
 
-<input type="submit" class="button" value="Submit" />
+<div class="form-item -padded">
+    <label class="field-label" for="sender_email">Messages Sender Email:</label>
+    <input type="text" name="sender_email" id="sender_email" class="text-field" placeholder="kallark&#64;dosomething.org" value="{{ $contest->sender_email or old('sender_email') }}" />
+</div>
+
+<div class="form-item -padded">
+    <label class="field-label" for="sender_name">Messages Sender Name:</label>
+    <input type="text" name="sender_name" id="sender_name" class="text-field" placeholder="Kallark" value="{{ $contest->sender_name or old('sender_name') }}" />
+</div>

@@ -51,7 +51,7 @@ class Handler extends ExceptionHandler
         }
 
         if ($e instanceof ValidationException) {
-            return redirect()->back()->withInput($request->input())->withErrors($e->validator->getMessages());
+            return redirect()->back()->withInput($request->input())->withErrors($e->validator->messages());
         }
 
         if ($e instanceof NorthstarUserNotFoundException) {

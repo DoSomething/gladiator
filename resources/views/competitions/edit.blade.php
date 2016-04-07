@@ -10,11 +10,7 @@
     <div class="container">
         <div class="wrapper">
             <div class="container__block">
-                {!! Form::model($competition, ['method' => 'PATCH', 'route' => ['competitions.update', $competition->id]]) !!}
-
-                    @include('competitions.partials._form_competitions')
-
-                {!! Form::close() !!}
+                @include('competitions.partials._form_competitions')
             </div>
         </div>
     </div>

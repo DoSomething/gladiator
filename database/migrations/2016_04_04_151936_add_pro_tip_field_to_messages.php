@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DropContestDurationColumn extends Migration
+class AddProTipFieldToMessages extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,8 @@ class DropContestDurationColumn extends Migration
      */
     public function up()
     {
-        Schema::table('contests', function (Blueprint $table) {
-            $table->dropColumn('duration');
+        Schema::table('messages', function (Blueprint $table) {
+            $table->longtext('pro_tip')->nullable()->after('body');
         });
     }
 
@@ -24,8 +24,8 @@ class DropContestDurationColumn extends Migration
      */
     public function down()
     {
-        Schema::table('contests', function (Blueprint $table) {
-            $table->integer('duration')->comment = 'The duration of a competition within this contest in units of days';
+        Schema::table('messages', function (Blueprint $table) {
+            $table->dropColumn('pro_tip');
         });
     }
 }

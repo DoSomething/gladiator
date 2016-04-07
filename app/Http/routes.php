@@ -26,11 +26,19 @@ Route::group(['middleware' => ['web']], function () {
     Route::model('competitions', 'Gladiator\Models\Competition');
     Route::get('competitions/{competitions}/export', 'CompetitionsController@export')->name('competitions.export');
     Route::resource('competitions', 'CompetitionsController', ['except' => ['index', 'create']]);
+    Route::get('competition/{competition}/users/{user}', 'CompetitionsController@removeUser')->name('competitions.users.destroy');
+    Route::get('competitions/{competitions}/messages/{contest}', 'CompetitionsController@message')->name('competitions.message');
 
     // Competitions
     Route::model('contests', 'Gladiator\Models\Contest');
     Route::get('contests/{contest}/export', 'ContestsController@export')->name('contests.export');
+    Route::get('/contests/{id}/messages/edit', 'MessagesController@edit')->name('contests.messages.edit');
+    Route::match(['put', 'patch'], '/contests/{id}/messages', 'MessagesController@update')->name('contests.messages.update');
     Route::resource('contests', 'ContestsController');
+
+    // Messages
+    Route::resource('messages', 'MessagesController');
+    Route::get('messages/{message}/send', 'MessagesController@sendMessage')->name('messages.send');
 
     // Users
     Route::resource('users', 'UsersController');
