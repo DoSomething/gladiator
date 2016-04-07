@@ -36,5 +36,14 @@
         </div>
     </div>
 
-    @include('users.partials._table_users', ['users' => $users, 'role' => 'Contestants: ' . $competition->users->count()])
+    @include('competitions.partials._leaderboard', ['users' => $users])
+
+    <div class="container">
+        <div class="wrapper">
+            <div class="form-actions -padded">
+                <a class="button" href="{{ route('competitions.show', ['id' => $competition->id, 'limit' => 'all']) }}">Show All</a>
+            </div>
+        </div>
+    </div>
+
 @stop

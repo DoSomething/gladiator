@@ -7,6 +7,7 @@ use Gladiator\Models\Competition;
 use Gladiator\Models\Contest;
 use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Manager;
+use Illuminate\Http\Request;
 use Gladiator\Models\Message;
 use Gladiator\Models\User;
 
@@ -44,8 +45,9 @@ class CompetitionsController extends Controller
      * @param  \Gladiator\Models\Competition  $competition
      * @return \Illuminate\Http\Response
      */
-    public function show(Competition $competition)
+    public function show(Competition $competition, Request $request)
     {
+        $users = $this->manager->createLeaderboard($competition, 10);
         $contest = Contest::find($competition->contest_id);
         $campaign = $this->manager->getCampaign($contest->campaign_id);
 
@@ -135,5 +137,28 @@ class CompetitionsController extends Controller
         $messages = Message::where('contest_id', '=', $contest->id)->get();
 
         return view('messages.show', compact('messages', 'competition'));
+    }
+
+    public function leaderboard(Competition $competition, Request $request)
+    {
+        // Determine the amount of users to show in the leaderboard
+        $limit = 10;
+        $limitQuery = $request->input('limit');
+
+        if (isset($limitQuery)) {
+            // If they specified all, get total users
+            if ($limitQuery === 'all') {
+                $limit = count($competition->users);
+            }
+            // Otherwise use the given number
+            else {
+                $limit = (int) $limitQuery;
+            }
+        }
+
+        // Get the leaderboard
+        $users = $this->manager->createLeaderboard($competition, $limit);
+
+        return view('competitions.leaderboard', compact('users'));
     }
 }
