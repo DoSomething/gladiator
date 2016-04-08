@@ -94,7 +94,7 @@ class Email
 
         $processedMessage = clone $message;
 
-        foreach($parsableProperties as $prop) {
+        foreach ($parsableProperties as $prop) {
             $processedMessage->$prop = $this->replaceTokens($tokens, $message->$prop);
             $processedMessage->$prop = $this->parseLinks($processedMessage->$prop);
         }
