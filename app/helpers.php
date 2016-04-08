@@ -91,3 +91,14 @@ function match_email_domain($email, $domain = 'dosomething.org')
 
     return false;
 }
+
+/**
+ * Given an integer representing a day of the week, return the string that represents
+ * that day.
+ *
+ * @param int $day
+ */
+function get_day_of_week($day)
+{
+    return jddayofweek($day, 1);
+}

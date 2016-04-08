@@ -37,14 +37,11 @@ class Competition extends Model
     }
 
     /**
-     * Get the leaderboard day of the week.
-     *
-     * @param  int  $value
-     * @return string
+     * Return the leaderboard day of week as an integer
      */
     public function getLeaderboardMsgDayAttribute($value)
     {
-        // Return day of the week as a string (Monday-Sunday).
-        return jddayofweek($value, 1);
+        // Return day of the week as an int
+        return (int) $value;
     }
 }
