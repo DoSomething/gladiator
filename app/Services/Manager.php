@@ -4,6 +4,7 @@ namespace Gladiator\Services;
 
 use Carbon\Carbon;
 use Gladiator\Models\Contest;
+use Gladiator\Models\User;
 use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Northstar\Northstar;
 use Gladiator\Services\Phoenix\Phoenix;
@@ -90,6 +91,52 @@ class Manager
         return build_csv($data);
     }
 
+    public function getLeaderboard($competition) {
+        $rows = [];
+
+        foreach ($competition->users as $user) {
+            try {
+                $user = $this->repository->find($user->id);
+                $reportback = $this->getUserActivity($user->id, $competition);
+            } catch(HttpException $error) {
+                continue;
+            }
+
+            //$quantity = isset($reportback) ? $reportback->quantity : 0;
+            $quantity = rand(1, 20); //test
+            $flagged = isset($reportback) ? $reportback->flagged : 'N/A';
+            array_push($rows, ['user' => $user, 'quantity' => $quantity, 'flagged' => $flagged]);
+        }
+
+        usort($rows, function ($a, $b) {
+            return $a['quantity'] <= $b['quantity'];
+        });
+
+        //test
+        print_r(json_encode($this->rankLeaderboard($rows)));
+        die();
+
+        return $this->rankLeaderboard($rows);
+    }
+
+    private function rankLeaderboard($leaderboard) {
+        $increment = 1;
+        $rank = 1;
+        foreach ($leaderboard as $index => $row) {
+            if ($index > 0) {
+                if ($row['quantity'] == $leaderboard[$index - 1]['quantity']) {
+                    $increment++;
+                } else {
+                    $rank += $increment;
+                    $increment = 1;
+                }
+            }
+            $leaderboard[$index]['rank'] = $rank;
+        }
+
+        return $leaderboard;
+    }
+
     /**
      * Collect Contest information with Waiting Room and Competitions.
      *
@@ -148,6 +195,10 @@ class Manager
         $campaign_run = $model->contest->campaign_run_id;
 
         $signup = $this->getUserSignup($id, $campaign, $campaign_run);
+
+        if (is_array($signup)) {
+            $signup = reset($signup);
+        }
 
         if ($signup && $signup->reportback) {
             // Provide the admin URL to the reportback.
