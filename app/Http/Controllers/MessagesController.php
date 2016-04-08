@@ -108,7 +108,7 @@ class MessagesController extends Controller
             'message' => $message,
             'contest' => $contest,
             'competition' => $competition,
-            'users' => $users
+            'users' => $users,
         ];
 
         // Kick off email sending
