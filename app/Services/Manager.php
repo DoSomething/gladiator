@@ -91,46 +91,69 @@ class Manager
         return build_csv($data);
     }
 
-    public function getLeaderboard($competition) {
+    /**
+     * Build leaderboard data for a given Competition
+     *
+     * @param Competition $competition
+     * @param User $users
+     * @return Array $leaderboard
+     */
+    public function getLeaderboard($competition, $users) {
         $rows = [];
 
-        foreach ($competition->users as $user) {
-            try {
-                $user = $this->repository->find($user->id);
-                $reportback = $this->getUserActivity($user->id, $competition);
-            } catch(HttpException $error) {
-                continue;
-            }
+        // Get all users in bulk
+        $parameters['ids'] = implode(',', $users->pluck('id')->all());
+        $users = $this->northstar->getAllUsers($parameters);
+        $users = collect($users)->keyBy('id')->all();
 
-            //$quantity = isset($reportback) ? $reportback->quantity : 0;
-            $quantity = rand(1, 20); //test
+        foreach ($users as $user) {
+            // For each user get the reportback details
+            $reportback = $this->getUserActivity($user->id, $competition);
+            $quantity = isset($reportback) ? $reportback->quantity : 0;
             $flagged = isset($reportback) ? $reportback->flagged : 'N/A';
+
+            // Give each user a "row" in the leaderboard
             array_push($rows, ['user' => $user, 'quantity' => $quantity, 'flagged' => $flagged]);
         }
 
+        // Sort all of the rows by reportback quantity
         usort($rows, function ($a, $b) {
             return $a['quantity'] <= $b['quantity'];
         });
 
-        //test
-        print_r(json_encode($this->rankLeaderboard($rows)));
-        die();
-
+        // Rank the leaderboard & return
         return $this->rankLeaderboard($rows);
     }
 
+    /**
+     * Rank the leaderboard based on traditional :sports: rules.
+     * If a group of people tie, they each get the same rank.
+     * You then skip to the next rank based on how many people tied.
+     * For example, if 3 people tied for second, they each get third.
+     * The next person would then get 5th place.
+     *
+     * @param Array $leaderboard
+     *  Unranked leaderboard
+     * @return Array $leaderboard
+     *  Ranked leaderboard
+     */
     private function rankLeaderboard($leaderboard) {
         $increment = 1;
         $rank = 1;
+
         foreach ($leaderboard as $index => $row) {
+            // Don't perform this logic on the first element
             if ($index > 0) {
+                // If the last row quantity equals this rows quantity, just increment.
                 if ($row['quantity'] == $leaderboard[$index - 1]['quantity']) {
                     $increment++;
+                // Otherwise apply the increment to the rank and reset it back to 1.
                 } else {
                     $rank += $increment;
                     $increment = 1;
                 }
             }
+            // Give each row a rank
             $leaderboard[$index]['rank'] = $rank;
         }
 
