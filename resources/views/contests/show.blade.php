@@ -11,7 +11,7 @@
         <div class="wrapper">
             <div class="container__block -half">
                 <ul>
-                    <li><strong>Campaign:</strong> {{ $campaign->title }}</li>
+                    <li><strong>Campaign:</strong> {{ $contest->campaign->title or 'No title available' }}</li>
                     <li><strong>Campaign Run ID:</strong> {{ $contest->campaign_run_id }}</li>
                 </ul>
             </div>

@@ -2,12 +2,12 @@
 
 namespace Gladiator\Services;
 
-use Carbon\Carbon;
 use Gladiator\Models\Contest;
-use Gladiator\Models\User;
-use Gladiator\Repositories\UserRepositoryContract;
-use Gladiator\Services\Northstar\Northstar;
 use Gladiator\Services\Phoenix\Phoenix;
+use Gladiator\Services\Northstar\Northstar;
+use Gladiator\Repositories\UserRepositoryContract;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 
 class Manager
 {
@@ -243,20 +243,65 @@ class Manager
     }
 
     /**
-     * Get campaign content from Phoenix.
+     * Append Campaign data to the supplied data if applicable.
      *
-     * @TODO - Move the api call into a repository. Also first check cache
-     * for campaign info, if it is there use that instead, if not, grab from
-     * Phoenix.
-     *
-     * @param  string $id  Campaign ID
-     *
-     * @return object $campaign
+     * @param  mixed $data
+     * @return mixed
      */
-    public function getCampaign($id)
+    public function appendCampaign($data)
     {
-        $campaign = $this->phoenix->getCampaign($id);
+        if ($data instanceof Collection) {
+            return $this->appendCampaignToCollection($data);
+        }
 
-        return $campaign;
+        if ($data instanceof Contest) {
+            return $this->appendCampaignToModel($data);
+        }
+
+        return;
+    }
+
+    /**
+     * Append Campaign data to the supplied collection.
+     *
+     * @param  \Illuminate\Database\Eloquent\Collection  $collection
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    protected function appendCampaignToCollection($collection)
+    {
+        $parameters['ids'] = implode(',', $collection->pluck('campaign_id')->all());
+
+        $campaigns = $this->phoenix->getAllCampaigns($parameters);
+        $campaigns = collect($campaigns)->keyBy('id')->all();
+
+        foreach ($collection as $contest) {
+            if (isset($campaigns[$contest->campaign_id])) {
+                $contest->setAttribute('campaign', $campaigns[$contest->campaign_id]);
+            } else {
+                $contest->setAttribute('campaign', null);
+            }
+        }
+
+        return $collection;
+    }
+
+    /**
+     * Append Campaign data to the supplied model.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    protected function appendCampaignToModel($model)
+    {
+        $campaign = $this->phoenix->getCampaign((string) $model->campaign_id);
+
+        // @TODO: RestApiClient is a bit wonky with Phoenix calls and error responses.
+        if ($campaign) {
+            $model->setAttribute('campaign', $campaign);
+        } else {
+            $model->setAttribute('campaign', null);
+        }
+
+        return $model;
     }
 }

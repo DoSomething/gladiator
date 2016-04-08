@@ -21,10 +21,10 @@ class Northstar extends RestApiClient
     }
 
     /**
-     * Send a GET request to return all users matching a given query from Northstar.
+     * Send a GET request to return all users matching a given query.
      *
      * @param  array $inputs - Filter, search, limit or pagination queries
-     * @return object
+     * @return object|null
      * @see  https://github.com/DoSomething/northstar/blob/dev/documentation/endpoints/users.md#retrieve-all-users
      */
     public function getAllUsers($inputs = [])
@@ -39,7 +39,7 @@ class Northstar extends RestApiClient
      *
      * @param  string  $type
      * @param  string  $id
-     * @return object
+     * @return object|null
      */
     public function getUser($type, $id)
     {
@@ -66,7 +66,7 @@ class Northstar extends RestApiClient
      *
      * @param  string $id
      * @param  string $campaigns
-     * @return bool
+     * @return object|null
      */
     public function getUserSignups($id, $campaigns)
     {

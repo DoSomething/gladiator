@@ -24,21 +24,27 @@ class Phoenix extends RestApiClient
     }
 
     /**
-     * Send a GET request to return a campaign.
+     * Send a GET request to return all campaigns matching a given query.
      *
-     * @param  int $ids
-     * @return object
+     * @param  array  $params
+     * @return object|null
      */
-    public function getCampaign($id)
+    public function getAllCampaigns($params = [])
     {
-        $response = $this->get($this->base_uri . 'campaigns/' . $id);
+        $response = $this->get('campaigns', $params);
 
         return is_null($response) ? null : $response;
     }
 
-    public function getAllCampaigns($params = [])
+    /**
+     * Send a GET request to return a campaign with the specified id.
+     *
+     * @param  string $id
+     * @return object|null
+     */
+    public function getCampaign($id)
     {
-        $response = $this->get('campaigns', $params);
+        $response = $this->get($this->base_uri . 'campaigns/' . $id);
 
         return is_null($response) ? null : $response;
     }

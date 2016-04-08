@@ -48,7 +48,8 @@ class CompetitionsController extends Controller
     {
         $this->manager->getLeaderboard($competition, $competition->users);
         $contest = Contest::find($competition->contest_id);
-        $campaign = $this->manager->getCampaign($contest->campaign_id);
+
+        $contest = $this->manager->appendCampaign($contest);
 
         $users = [];
         $ids = $competition->users->pluck('id')->toArray();
@@ -57,7 +58,7 @@ class CompetitionsController extends Controller
             $users = $this->repository->getAll($ids);
         }
 
-        return view('competitions.show', compact('competition', 'contest', 'users', 'campaign'));
+        return view('competitions.show', compact('competition', 'contest', 'users'));
     }
 
     /**

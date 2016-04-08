@@ -29,10 +29,7 @@ class ContestsController extends Controller
     {
         $contests = Contest::all();
 
-        // @TODO - Instead of doing this in loop, grab all campaigns at once
-        foreach ($contests as $contest) {
-            $contest->campaign_title = $this->manager->getCampaign($contest->campaign_id)->title;
-        }
+        $contests = $this->manager->appendCampaign($contests);
 
         return view('contests.index', compact('contests'));
     }
@@ -79,9 +76,10 @@ class ContestsController extends Controller
     public function show(Contest $contest)
     {
         $contest = $this->manager->collectContestInfo($contest->id);
-        $campaign = $this->manager->getCampaign($contest->campaign_id);
 
-        return view('contests.show', compact('contest', 'campaign'));
+        $contest = $this->manager->appendCampaign($contest);
+
+        return view('contests.show', compact('contest'));
     }
 
     /**
