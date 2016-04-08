@@ -67,9 +67,15 @@ class Email
     {
         // @TODO - set defaults?
         $tokens = [
-            ':competition_end_date' => $this->competition->competition_end_date,
-            ':leaderboard_msg_day' => $this->competition->leaderboard_msg_day,
-            ':first_name' => $user->first_name,
+            ':end_date:'              => $this->competition->competition_end_date->format('F d, Y'),
+            ':leaderboard_msg_day:'   => get_day_of_week($this->competition->leaderboard_msg_day),
+            ':leaderboard_msg_day-1:' => get_day_of_week($this->competition->leaderboard_msg_day - 1),
+            ':first_name:'            => $user->first_name,
+            ':sender_name:'           => $this->contest->sender_name,
+            ':campaign_title:'        => $this->contest->campaign->title,
+            ':reportback_noun:'       => $this->contest->campaign->reportback_info->noun,
+            ':reportback_verb:'       => $this->contest->campaign->reportback_info->verb,
+            ':pro_tip:'               => $this->message->pro_tip,
         ];
 
         return $tokens;
@@ -84,13 +90,16 @@ class Email
      */
     protected function processMessage($tokens, $message)
     {
-        $preparedMessage = clone $message;
+        $parsableProperties = ['subject', 'body', 'pro_tip'];
 
-        // // @TODO - maybe loop through message properties and run the replace on each one.
-        $preparedMessage->body = $this->replaceTokens($tokens, $message->body);
-        $preparedMessage->subject = $this->replaceTokens($tokens, $message->subject);
+        $processedMessage = clone $message;
 
-        return $preparedMessage;
+        foreach ($parsableProperties as $prop) {
+            $processedMessage->$prop = $this->replaceTokens($tokens, $message->$prop);
+            $processedMessage->$prop = $this->parseLinks($processedMessage->$prop);
+        }
+
+        return $processedMessage;
     }
 
     /**
@@ -103,6 +112,16 @@ class Email
     protected function replaceTokens($tokens, $string)
     {
         return str_replace(array_keys($tokens), array_values($tokens), $string);
+    }
+
+    /**
+     * Handles regex replacement that supports a markdown like link syntax.
+     *
+     * @param  string $string
+     */
+    protected function parseLinks($string)
+    {
+        return preg_replace('/\[([^\[]+)\]\(([^\)]+)\)/', '<a href=\'\2\'>\1</a>', $string);
     }
 
     /**

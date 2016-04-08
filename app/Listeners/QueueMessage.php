@@ -30,27 +30,54 @@ class QueueMessage implements ShouldQueue
      */
     public function handle(QueueMessageRequest $event)
     {
-        $email = $event->email;
+        $resources = $event->resources;
 
-        foreach ($email->allMessages as $message) {
-            $content = $message['message'];
-            $user = $message['user'];
-            $type = $content->type;
+        // Build the email.
+        $email = new Email($resources['message'], $resources['contest'], $resources['competition'], $resources['users']);
 
-            if ($user->email) {
-                $this->mail->queue('messages.' . $type, ['body' => $content->body], function ($msg) use ($email, $content, $user) {
-                    // Pulled from the contest.
-                    $msg->from($email->contest->sender_email, $email->contest->sender_name);
+        // If on testing environment, send of the first message to the person who create the contest.
+        // @TODO - Create real test email functionality in the app.
+        if (env('APP_DEBUG')) {
+            $content = $email->allMessages[0]['message'];
 
-                    // Send to user.
-                    // If on testing environment, send emails to the contest creator as a test.
-                    if (! env('APP_DEBUG')) {
-                        $msg->to($user->email, $user->first_name)->subject($content->subject);
-                    } else {
-                        $msg->to($email->contest->sender_email, $email->contest->sender_name)->subject($content->subject);
-                    }
-                });
+            $settings = [
+                'subject' => $content->subject,
+                'from' => $email->contest->sender_email,
+                'from_name' => $email->contest->sender_name,
+                'to' => $email->contest->sender_email,
+                'to_name' =>  $email->contest->sender_name,
+            ];
+
+            $this->sendMail($content, $settings);
+        } else {
+            foreach ($email->allMessages as $message) {
+                $content = $message['message'];
+
+                $settings = [
+                    'subject' => $content->subject,
+                    'from' => $email->contest->sender_email,
+                    'from_name' => $email->contest->sender_name,
+                    'to' => $message['user']->email,
+                    'to_name' => $message['user']->first_name,
+                ];
+
+                $this->sendMail($content, $settings);
             }
         }
+    }
+
+    /*
+     * Queues a message for sending using custom settings.
+     *
+     * @param  \Gladiator\Models\Message  $content
+     * @param  array $settings
+     */
+    public function sendMail($content, $settings)
+    {
+        $this->mail->queue('messages.' . $content->type, ['body' => $content->body], function ($msg) use ($settings) {
+            $msg->from($settings['from'], $settings['from_name']);
+
+            $msg->to($settings['to'], $settings['to_name'])->subject($settings['subject']);
+        });
     }
 }
