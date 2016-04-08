@@ -10,6 +10,7 @@ use Gladiator\Events\QueueMessageRequest;
 use Gladiator\Repositories\MessageRepository;
 use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Http\Utilities\Email;
+use Gladiator\Services\Manager;
 
 class MessagesController extends Controller
 {
@@ -30,8 +31,9 @@ class MessagesController extends Controller
     /**
      * Create new MessagesController instance.
      */
-    public function __construct(MessageRepository $msgRepository, UserRepositoryContract $userRepository)
+    public function __construct(MessageRepository $msgRepository, UserRepositoryContract $userRepository, Manager $manager)
     {
+        $this->manager = $manager;
         $this->msgRepository = $msgRepository;
         $this->userRepository = $userRepository;
 
@@ -92,6 +94,7 @@ class MessagesController extends Controller
         $competitionId = request('competition_id');
         $competition = Competition::find($competitionId);
         $contest = Contest::find($contestId);
+        $contest = $this->manager->appendCampaign($contest);
 
         // @TODO - move this user logic into some sorta helper, we do it a lot.
         $users = [];
