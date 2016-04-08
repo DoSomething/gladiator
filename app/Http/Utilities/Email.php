@@ -76,6 +76,7 @@ class Email
             ':reportback_noun:'       => $this->contest->campaign->reportback_info->noun,
             ':reportback_verb:'       => $this->contest->campaign->reportback_info->verb,
             ':pro_tip:'               => $this->message->pro_tip,
+            ':prove_it_link:'         => url(config('services.phoenix.uri') .'/node/' . $this->contest->campaign_id . '#proveit'),
         ];
 
         return $tokens;
