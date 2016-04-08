@@ -104,8 +104,8 @@ class Manager
         $users = $competition->users;
 
         // Get all users in bulk
-        $users = $this->repository->getAll(array_column($users->toArray(), 'id'));
-        $users = collect($users)->keyBy('id')->all();
+        $users = $this->repository->getAll($users->pluck('id')->all());
+        $users = $users->keyBy('id')->all();
 
         foreach ($users as $user) {
             // For each user get the reportback details
