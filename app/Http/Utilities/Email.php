@@ -75,6 +75,7 @@ class Email
             ':campaign_title'        => $this->contest->campaign->title,
             ':reportback_noun'       => $this->contest->campaign->reportback_info->noun,
             ':reportback_verb'       => $this->contest->campaign->reportback_info->verb,
+            ':pro_tip'               => $this->message->pro_tip,
         ];
 
         return $tokens;
