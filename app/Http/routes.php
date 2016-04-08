@@ -28,6 +28,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('competitions', 'CompetitionsController', ['except' => ['index', 'create']]);
     Route::get('competition/{competition}/users/{user}', 'CompetitionsController@removeUser')->name('competitions.users.destroy');
     Route::get('competitions/{competitions}/messages/{contest}', 'CompetitionsController@message')->name('competitions.message');
+    Route::get('competitions/{competitions}/leaderboard', 'CompetitionsController@leaderboard')->name('competitions.leaderboard');
 
     // Competitions
     Route::model('contests', 'Gladiator\Models\Contest');

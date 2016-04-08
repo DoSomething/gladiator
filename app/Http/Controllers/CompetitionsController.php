@@ -46,7 +46,6 @@ class CompetitionsController extends Controller
      */
     public function show(Competition $competition)
     {
-        $this->manager->getLeaderboard($competition, $competition->users);
         $contest = Contest::find($competition->contest_id);
 
         $contest = $this->manager->appendCampaign($contest);
@@ -137,5 +136,18 @@ class CompetitionsController extends Controller
         $messages = Message::where('contest_id', '=', $contest->id)->get();
 
         return view('messages.show', compact('messages', 'competition'));
+    }
+
+    /**
+     * Display the specified leaderboard.
+     *
+     * @param  \Gladiator\Models\Competition  $competition
+     * @return \Illuminate\Http\Response
+     */
+    public function leaderboard(Competition $competition)
+    {
+        $leaderboard = $this->manager->getLeaderboard($competition, $competition->users);
+
+        return view('competitions.leaderboard', compact('competition', 'leaderboard'));
     }
 }
