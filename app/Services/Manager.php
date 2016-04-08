@@ -96,9 +96,10 @@ class Manager
      *
      * @param Competition $competition
      * @param User $users
-     * @return Array $leaderboard
+     * @return array $leaderboard
      */
-    public function getLeaderboard($competition, $users) {
+    public function getLeaderboard($competition, $users)
+    {
         $rows = [];
 
         // Get all users in bulk
@@ -132,12 +133,13 @@ class Manager
      * For example, if 3 people tied for second, they each get third.
      * The next person would then get 5th place.
      *
-     * @param Array $leaderboard
+     * @param array $leaderboard
      *  Unranked leaderboard
-     * @return Array $leaderboard
+     * @return array $leaderboard
      *  Ranked leaderboard
      */
-    private function rankLeaderboard($leaderboard) {
+    private function rankLeaderboard($leaderboard)
+    {
         $increment = 1;
         $rank = 1;
 
