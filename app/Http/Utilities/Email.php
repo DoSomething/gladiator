@@ -67,11 +67,13 @@ class Email
     {
         // @TODO - set defaults?
         $tokens = [
-            ':end_date' => $this->competition->competition_end_date->format('F d, Y'),
+            ':end_date'            => $this->competition->competition_end_date->format('F d, Y'),
             ':leaderboard_msg_day' => $this->competition->leaderboard_msg_day,
-            ':first_name' => $user->first_name,
-            ':sender_name' => $this->contest->sender_name,
-            ':campaign_title' => $this->contest->campaign->title,
+            ':first_name'          => $user->first_name,
+            ':sender_name'         => $this->contest->sender_name,
+            ':campaign_title'      => $this->contest->campaign->title,
+            ':reportback_noun'     => $this->contest->campaign->reportback_info->noun,
+            ':reportback_verb'     => $this->contest->campaign->reportback_info->verb,
         ];
 
         return $tokens;
