@@ -104,11 +104,15 @@ class MessagesController extends Controller
             $users = $this->userRepository->getAll($ids);
         }
 
-        // Build the email.
-        $email = new Email($message, $contest, $competition, $users);
+        $resources = [
+            'message' => $message,
+            'contest' => $contest,
+            'competition' => $competition,
+            'users' => $users
+        ];
 
         // Kick off email sending
-        event(new QueueMessageRequest($email));
+        event(new QueueMessageRequest($resources));
 
         return redirect()->route('competitions.message', ['competition' => $competitionId, 'contest' => $contestId])->with('status', 'Fired that right the hell off!');
     }

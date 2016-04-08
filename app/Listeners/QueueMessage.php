@@ -30,7 +30,10 @@ class QueueMessage implements ShouldQueue
      */
     public function handle(QueueMessageRequest $event)
     {
-        $email = $event->email;
+        $resources = $event->resources;
+
+        // Build the email.
+        $email = new Email($resources['message'], $resources['contest'], $resources['competition'], $resources['users']);
 
         // If on testing environment, send of the first message to the person who create the contest.
         // @TODO - Create real test email functionality in the app.
