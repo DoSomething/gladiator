@@ -98,13 +98,13 @@ class Manager
      * @param User $users
      * @return array $leaderboard
      */
-    public function getLeaderboard($competition, $users)
+    public function getLeaderboard($competition)
     {
         $rows = [];
+        $users = $competition->users;
 
         // Get all users in bulk
-        $parameters['ids'] = implode(',', $users->pluck('id')->all());
-        $users = $this->northstar->getAllUsers($parameters);
+        $users = $this->repository->getAll(array_column($users->toArray(), 'id'));
         $users = collect($users)->keyBy('id')->all();
 
         foreach ($users as $user) {
