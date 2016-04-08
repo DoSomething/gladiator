@@ -41,7 +41,6 @@ class Competition extends Model
      */
     public function getLeaderboardMsgDayAttribute($value)
     {
-        // Return day of the week as an int
         return (int) $value;
     }
 }

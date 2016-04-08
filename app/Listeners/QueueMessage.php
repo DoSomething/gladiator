@@ -63,6 +63,12 @@ class QueueMessage implements ShouldQueue
         }
     }
 
+    /*
+     * Queues a message for sending using custom settings.
+     *
+     * @param  \Gladiator\Models\Message  $content
+     * @param  array $settings
+     */
     public function sendMail($content, $settings)
     {
         $this->mail->queue('messages.' . $content->type, ['body' => $content->body], function ($msg) use ($settings) {

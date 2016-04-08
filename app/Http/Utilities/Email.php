@@ -115,7 +115,7 @@ class Email
     }
 
     /**
-     * Handles regex replacement supports a markdown like link syntax.
+     * Handles regex replacement that supports a markdown like link syntax.
      *
      * @param  string $string
      */
