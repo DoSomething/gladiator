@@ -92,8 +92,9 @@ class Email
     {
         $preparedMessage = clone $message;
 
-        // // @TODO - maybe loop through message properties and run the replace on each one.
         $preparedMessage->body = $this->replaceTokens($tokens, $message->body);
+        $preparedMessage->body = $this->parseLinks($preparedMessage->body);
+
         $preparedMessage->subject = $this->replaceTokens($tokens, $message->subject);
 
         return $preparedMessage;
@@ -109,6 +110,16 @@ class Email
     protected function replaceTokens($tokens, $string)
     {
         return str_replace(array_keys($tokens), array_values($tokens), $string);
+    }
+
+    /**
+     * Handles regex replacement supports a markdown like link syntax.
+     *
+     * @param  string $string
+     */
+    protected function parseLinks($string)
+    {
+        return preg_replace('/\[([^\[]+)\]\(([^\)]+)\)/', '<a href=\'\2\'>\1</a>', $string);
     }
 
     /**
