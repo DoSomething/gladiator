@@ -90,14 +90,17 @@ class Email
      */
     protected function processMessage($tokens, $message)
     {
-        $preparedMessage = clone $message;
+        $parsableProperties = ['subject', 'body', 'pro_tip'];
 
-        $preparedMessage->body = $this->replaceTokens($tokens, $message->body);
-        $preparedMessage->body = $this->parseLinks($preparedMessage->body);
+        $processedMessage = clone $message;
 
-        $preparedMessage->subject = $this->replaceTokens($tokens, $message->subject);
+        foreach($parsableProperties as $prop)
+        {
+            $processedMessage->$prop = $this->replaceTokens($tokens, $message->$prop);
+            $processedMessage->$prop = $this->parseLinks($processedMessage->$prop);
+        }
 
-        return $preparedMessage;
+        return $processedMessage;
     }
 
     /**
