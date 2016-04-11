@@ -28,7 +28,7 @@
                         <a href="{{ route('competitions.export', $competition->id) }}" class="button">Export</a>
                     </li>
                     <li>
-                        <a href="{{ route('competitions.export', ['competition' => $competition->id, 'hasReportback' => true]) }}" class="button">Export (No RB data)</a>
+                        <a href="{{ route('competitions.export', ['competition' => $competition->id, 'hasReportback' => false]) }}" class="button">Export (No RB data)</a>
                     </li>
                     <li>
                         <a href="{{ route('competitions.message', ['competition' => $competition->id,'contest' => $contest->id]) }}" class="button">Email</a>
