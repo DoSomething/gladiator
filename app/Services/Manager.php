@@ -107,6 +107,9 @@ class Manager
         $users = $this->repository->getAll($users->pluck('id')->all());
         $users = $users->keyBy('id')->all();
 
+        $reportback = $this->getUsersActivity('559442c4a59dbfc9578b4b6a,55479921469c64ed7d8b5065', $competition);
+        print_r(json_encode($reportback));die();
+
         foreach ($users as $user) {
             // For each user get the reportback details
             $reportback = $this->getUserActivity($user->id, $competition);
@@ -189,17 +192,35 @@ class Manager
      *
      * @return object $signups
      */
-    public function getUserSignup($id, $campaign = null, $campaignRun = null)
+    public function getUserSignup($id, $campaign = null, $campaignRun = null, $getMultiple = false)
     {
         $signups = $this->northstar->getUserSignups($id, $campaign);
+
+        if ($getMultiple) {
+            $multipleSignups = [];
+        }
 
         // Only return the sign up record for the run that was specified.
         if ($campaignRun) {
             foreach ($signups as $key => $signup) {
                 if ($signup->campaign_run->id === (string) $campaignRun) {
-                    $signups = $signups[$key];
+                    if ($getMultiple) {
+                        array_push($multipleSignups, $signups[$key]);
+                    } else {
+                        $signups = $signup[$key];
+                    }
                 }
             }
+        }
+
+        if ($getMultiple) {
+            print_r(json_encode($multipleSignups));die();
+            // OK. so we're only getting one user back.
+            // I dont think the problem is with this logic / code here.
+            // We need to point this app to local northstar and debug the response there.
+            // I checked droops and mfantini does have a signup on the correct campaign/run im checking for
+            // this means something isnt being returned right, exploded right, etc on that end
+            return $multipleSignups;
         }
 
         return $signups;
@@ -226,28 +247,42 @@ class Manager
         }
 
         if ($signup && $signup->reportback) {
-            // Provide the admin URL to the reportback.
-            $signup->reportback->admin_url = env('PHOENIX_URI') . '/admin/reportback/' . $signup->reportback->id;
-
-            // Format the update timestamp
-            $signup->reportback->updated_at = new Carbon($signup->reportback->updated_at);
-            $signup->reportback->updated_at = $signup->reportback->updated_at->format('Y-m-d');
-
-            // Set flagged status to 'pending' if it is NULL, otherwise use bool value
-            if (! isset($signup->reportback->flagged)) {
-                $signup->reportback->flagged = 'pending';
-            } elseif ($signup->reportback->flagged) {
-                $signup->reportback->flagged = 'flagged';
-            } else {
-                $signup->reportback->flagged = 'approved';
-            }
-
-            // Return the reportback.
-            return $signup->reportback;
+            return $this->formatReportback($signup);
         }
 
         // If the user has no activity for this competition or waiting room.
         return null;
+    }
+
+    public function getUsersActivity($ids, $model)
+    {
+        $campaign = $model->contest->campaign_id;
+        $campaign_run = $model->contest->campaign_run_id;
+
+        $signup = $this->getUserSignup($ids, $campaign, $campaign_run, true);
+        print_r(json_encode($signup)); die();
+    }
+
+    private function formatReportback($signup)
+    {
+        // Provide the admin URL to the reportback.
+        $signup->reportback->admin_url = env('PHOENIX_URI') . '/admin/reportback/' . $signup->reportback->id;
+
+        // Format the update timestamp
+        $signup->reportback->updated_at = new Carbon($signup->reportback->updated_at);
+        $signup->reportback->updated_at = $signup->reportback->updated_at->format('Y-m-d');
+
+        // Set flagged status to 'pending' if it is NULL, otherwise use bool value
+        if (! isset($signup->reportback->flagged)) {
+            $signup->reportback->flagged = 'pending';
+        } elseif ($signup->reportback->flagged) {
+            $signup->reportback->flagged = 'flagged';
+        } else {
+            $signup->reportback->flagged = 'approved';
+        }
+
+        // Return the reportback.
+        return $signup->reportback;
     }
 
     /**

@@ -71,7 +71,7 @@ class Northstar extends RestApiClient
     public function getUserSignups($id, $campaigns)
     {
         $response = $this->get('signups', [
-            'user' => $id,
+            'users' => $id,
             'campaigns' => $campaigns,
         ]);
 
