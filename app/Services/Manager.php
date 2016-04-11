@@ -92,6 +92,77 @@ class Manager
     }
 
     /**
+     * Build leaderboard data for a given Competition
+     *
+     * @param Competition $competition
+     * @param User $users
+     * @return array $leaderboard
+     */
+    public function getLeaderboard($competition)
+    {
+        $rows = [];
+        $users = $competition->users;
+
+        // Get all users in bulk
+        $users = $this->repository->getAll($users->pluck('id')->all());
+        $users = $users->keyBy('id')->all();
+
+        foreach ($users as $user) {
+            // For each user get the reportback details
+            $reportback = $this->getUserActivity($user->id, $competition);
+            $quantity = isset($reportback) ? $reportback->quantity : 0;
+            $flagged = isset($reportback) ? $reportback->flagged : 'N/A';
+
+            // Give each user a "row" in the leaderboard
+            array_push($rows, ['user' => $user, 'quantity' => $quantity, 'flagged' => $flagged]);
+        }
+
+        // Sort all of the rows by reportback quantity
+        usort($rows, function ($a, $b) {
+            return $a['quantity'] <= $b['quantity'];
+        });
+
+        // Rank the leaderboard & return
+        return $this->rankLeaderboard($rows);
+    }
+
+    /**
+     * Rank the leaderboard based on traditional :sports: rules.
+     * If a group of people tie, they each get the same rank.
+     * You then skip to the next rank based on how many people tied.
+     * For example, if 3 people tied for second, they each get third.
+     * The next person would then get 5th place.
+     *
+     * @param array $leaderboard
+     *  Unranked leaderboard
+     * @return array $leaderboard
+     *  Ranked leaderboard
+     */
+    private function rankLeaderboard($leaderboard)
+    {
+        $increment = 1;
+        $rank = 1;
+
+        foreach ($leaderboard as $index => $row) {
+            // Don't perform this logic on the first element
+            if ($index > 0) {
+                // If the last row quantity equals this rows quantity, just increment.
+                if ($row['quantity'] === $leaderboard[$index - 1]['quantity']) {
+                    $increment++;
+                // Otherwise apply the increment to the rank and reset it back to 1.
+                } else {
+                    $rank += $increment;
+                    $increment = 1;
+                }
+            }
+            // Give each row a rank
+            $leaderboard[$index]['rank'] = $rank;
+        }
+
+        return $leaderboard;
+    }
+
+    /**
      * Collect Contest information with Waiting Room and Competitions.
      *
      * @param  string|\Gladiator\Models\Contest $data
@@ -150,6 +221,10 @@ class Manager
 
         $signup = $this->getUserSignup($id, $campaign, $campaign_run);
 
+        if (is_array($signup)) {
+            $signup = reset($signup);
+        }
+
         if ($signup && $signup->reportback) {
             // Provide the admin URL to the reportback.
             $signup->reportback->admin_url = env('PHOENIX_URI') . '/admin/reportback/' . $signup->reportback->id;
@@ -158,8 +233,14 @@ class Manager
             $signup->reportback->updated_at = new Carbon($signup->reportback->updated_at);
             $signup->reportback->updated_at = $signup->reportback->updated_at->format('Y-m-d');
 
-            // Return set flagged status to 'pending' if it is false.
-            $signup->reportback->flagged = ($signup->reportback->flagged) ? $signup->reportback->flagged : 'pending';
+            // Set flagged status to 'pending' if it is NULL, otherwise use bool value
+            if (! isset($signup->reportback->flagged)) {
+                $signup->reportback->flagged = 'pending';
+            } elseif ($signup->reportback->flagged) {
+                $signup->reportback->flagged = 'flagged';
+            } else {
+                $signup->reportback->flagged = 'approved';
+            }
 
             // Return the reportback.
             return $signup->reportback;

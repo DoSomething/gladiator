@@ -137,4 +137,17 @@ class CompetitionsController extends Controller
 
         return view('messages.show', compact('messages', 'competition'));
     }
+
+    /**
+     * Display the specified leaderboard.
+     *
+     * @param  \Gladiator\Models\Competition  $competition
+     * @return \Illuminate\Http\Response
+     */
+    public function leaderboard(Competition $competition)
+    {
+        $leaderboard = $this->manager->getLeaderboard($competition);
+
+        return view('competitions.leaderboard', compact('competition', 'leaderboard'));
+    }
 }
