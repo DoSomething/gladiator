@@ -292,7 +292,6 @@ class Manager
 
         // First check the campaign cache repository...
 
-
         $parameters['ids'] = implode(',', $campaignIds);
 
         $campaigns = $this->phoenix->getAllCampaigns($parameters);

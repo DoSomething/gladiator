@@ -3,7 +3,6 @@
 namespace Gladiator\Repositories;
 
 use Gladiator\Models\User;
-use Gladiator\Repositories\CacheStorage;
 use Illuminate\Support\Facades\Cache;
 
 class CacheUserRepository implements UserRepositoryContract
