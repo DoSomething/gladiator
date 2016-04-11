@@ -147,7 +147,7 @@ class Manager
             // Don't perform this logic on the first element
             if ($index > 0) {
                 // If the last row quantity equals this rows quantity, just increment.
-                if ($row['quantity'] == $leaderboard[$index - 1]['quantity']) {
+                if ($row['quantity'] === $leaderboard[$index - 1]['quantity']) {
                     $increment++;
                 // Otherwise apply the increment to the rank and reset it back to 1.
                 } else {
