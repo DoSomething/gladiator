@@ -11,11 +11,7 @@ use Carbon\Carbon;
 function build_csv($data)
 {
     $csv = \League\Csv\Writer::createFromFileObject(new \SplTempFileObject());
-
-    foreach ($data as $row) {
-        $csv->insertOne($row);
-    }
-
+    $csv->insertAll($data);
     return $csv;
 }
 
