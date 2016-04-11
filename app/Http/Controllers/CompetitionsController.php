@@ -105,9 +105,9 @@ class CompetitionsController extends Controller
      * @param  \Gladiator\Models\Competition  $competition
      * @return \League\Csv\ $csv
      */
-    public function export(Competition $competition)
+    public function export(Competition $competition, Request $request)
     {
-        $csv = $this->manager->exportCSV($competition, true);
+        $csv = $this->manager->exportCSV($competition, $request->input('hasReportback'));
         $csv->output('competition' . $competition->id . '.csv');
     }
 
@@ -145,9 +145,9 @@ class CompetitionsController extends Controller
      * @param  \Gladiator\Models\Competition  $competition
      * @return \Illuminate\Http\Response
      */
-    public function leaderboard(Competition $competition, Request $request)
+    public function leaderboard(Competition $competition)
     {
-        $leaderboard = $this->manager->getLeaderboard($competition, $request->input('hasReportback'));
+        $leaderboard = $this->manager->getLeaderboard($competition);
 
         return view('competitions.leaderboard', compact('competition', 'leaderboard'));
     }
