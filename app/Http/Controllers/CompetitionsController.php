@@ -9,6 +9,7 @@ use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Manager;
 use Gladiator\Models\Message;
 use Gladiator\Models\User;
+use Illuminate\Http\Request;
 
 class CompetitionsController extends Controller
 {
@@ -144,9 +145,9 @@ class CompetitionsController extends Controller
      * @param  \Gladiator\Models\Competition  $competition
      * @return \Illuminate\Http\Response
      */
-    public function leaderboard(Competition $competition)
+    public function leaderboard(Competition $competition, Request $request)
     {
-        $leaderboard = $this->manager->getLeaderboard($competition);
+        $leaderboard = $this->manager->getLeaderboard($competition, $request->input('hasReportback'));
 
         return view('competitions.leaderboard', compact('competition', 'leaderboard'));
     }
