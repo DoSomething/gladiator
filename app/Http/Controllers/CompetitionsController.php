@@ -9,6 +9,7 @@ use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Manager;
 use Gladiator\Models\Message;
 use Gladiator\Models\User;
+use Illuminate\Http\Request;
 
 class CompetitionsController extends Controller
 {
@@ -104,9 +105,9 @@ class CompetitionsController extends Controller
      * @param  \Gladiator\Models\Competition  $competition
      * @return \League\Csv\ $csv
      */
-    public function export(Competition $competition)
+    public function export(Competition $competition, Request $request)
     {
-        $csv = $this->manager->exportCSV($competition, true);
+        $csv = $this->manager->exportCSV($competition, $request->input('hasReportback'));
         $csv->output('competition' . $competition->id . '.csv');
     }
 
