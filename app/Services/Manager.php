@@ -56,6 +56,9 @@ class Manager
         $data = [];
         $users = $model->users;
 
+        $users = $this->repository->getAll($users->pluck('id')->all());
+        $users = $users->keyBy('id')->all();
+
         $headers = ['northstar_id', 'first_name', 'last_name', 'email', 'cell'];
 
         if ($hasReportback) {
@@ -65,7 +68,6 @@ class Manager
         array_push($data, $headers);
 
         foreach ($users as $user) {
-            $user = $this->repository->find($user->id);
             $details = [
                 $user->id,
                 isset($user->first_name) ? $user->first_name : '',
