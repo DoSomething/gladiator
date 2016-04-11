@@ -48,7 +48,7 @@ class CacheUserRepository implements UserRepositoryContract
      */
     public function find($id)
     {
-        $user = Cache::get($id);
+        $user = $this->retrieve($id);
 
         if (! $user) {
             $user = $this->repository->find($id);

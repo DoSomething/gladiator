@@ -2,7 +2,7 @@
 
 namespace Gladiator\Repositories;
 
-interface UserRepositoryContract
+interface UserRepositoryContract extends RepositoryContract
 {
     /**
      * Create a new user.
@@ -18,7 +18,7 @@ interface UserRepositoryContract
      * @param  string  $id  Northstar ID
      * @return object
      */
-    public function find($id);
+    // public function find($id);
 
     /**
      * Get collection of all users or set of users by ids.
@@ -26,7 +26,7 @@ interface UserRepositoryContract
      * @param  array $ids Northstar IDs
      * @return \Illuminate\Support\Collection
      */
-    public function getAll(array $ids = []);
+    // public function getAll(array $ids = []);
 
     /**
      * Get collection of users by the specified role.

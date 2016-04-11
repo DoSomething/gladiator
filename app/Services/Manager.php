@@ -2,21 +2,29 @@
 
 namespace Gladiator\Services;
 
+use Carbon\Carbon;
 use Gladiator\Models\Contest;
 use Gladiator\Services\Phoenix\Phoenix;
 use Gladiator\Services\Northstar\Northstar;
+use Gladiator\Repositories\CacheCampaignRepository;
 use Gladiator\Repositories\UserRepositoryContract;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 
 class Manager
 {
     /**
+     * CacheCampaignRepository instance.
+     *
+     * @var \Gladiator\Repositories\CacheCampaignRepository
+     */
+    protected $campaignRepository;
+
+    /**
      * UserRepositoryContract instance.
      *
      * @var \Gladiator\Repositories\UserRepositoryContract
      */
-    protected $repository;
+    protected $userRepository;
 
     /**
      * Northstar instance.
@@ -37,9 +45,10 @@ class Manager
      *
      * @param Northstar $northstar
      */
-    public function __construct(UserRepositoryContract $repository)
+    public function __construct(UserRepositoryContract $userRepository, CacheCampaignRepository $campaignRepository)
     {
-        $this->repository = $repository;
+        $this->campaignRepository = $campaignRepository;
+        $this->userRepository = $userRepository;
         $this->northstar = new Northstar;
         $this->phoenix = new Phoenix;
     }
@@ -279,7 +288,12 @@ class Manager
      */
     protected function appendCampaignToCollection($collection)
     {
-        $parameters['ids'] = implode(',', $collection->pluck('campaign_id')->all());
+        $campaignIds = $collection->pluck('campaign_id')->all();
+
+        // First check the campaign cache repository...
+
+
+        $parameters['ids'] = implode(',', $campaignIds);
 
         $campaigns = $this->phoenix->getAllCampaigns($parameters);
         $campaigns = collect($campaigns)->keyBy('id')->all();
