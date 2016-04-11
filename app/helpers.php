@@ -12,6 +12,7 @@ function build_csv($data)
 {
     $csv = \League\Csv\Writer::createFromFileObject(new \SplTempFileObject());
     $csv->insertAll($data);
+    
     return $csv;
 }
 
