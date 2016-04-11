@@ -30,7 +30,9 @@
                     <li>
                         <a href="{{ route('competitions.message', ['competition' => $competition->id,'contest' => $contest->id]) }}" class="button">Email</a>
                     </li>
-
+                    <li>
+                        <a href="{{ route('competitions.leaderboard', ['competition' => $competition->id]) }}" class="button">Leaderboard</a>
+                    </li>
                 </ul>
             </div>
         </div>
