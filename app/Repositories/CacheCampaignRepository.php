@@ -2,35 +2,19 @@
 
 namespace Gladiator\Repositories;
 
+use Gladiator\Repositories\CacheStorage;
+
 class CacheCampaignRepository implements RepositoryContract
 {
+    use CacheStorage;
+
     public function find($id)
     {
-
-    }
-
-    protected function retrieve()
-    {
-
-    }
-
-    protected function retrieveMany()
-    {
-
+        // stuff
     }
 
     public function getAll(array $ids = [])
     {
-
-    }
-
-    protected function store($key, $value, $minutes = 2)
-    {
-
-    }
-
-    protected function storeMany(array $values, $minutes = 2)
-    {
-
+        // stuff
     }
 }
