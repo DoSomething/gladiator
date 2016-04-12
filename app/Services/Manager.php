@@ -261,12 +261,17 @@ class Manager
     }
 
     /**
+     * Get reportbacks for many users & a given competition.
      *
+     * @param array $ids Array of ID's
+     * @param \Gladiator\Models\Competition $competition
+     *
+     * @return collection $signups
      */
-    public function getActivityForAllUsers($ids, $model, $batchSize = 50)
+    public function getActivityForAllUsers($ids, $competition, $batchSize = 50)
     {
-        $campaign = $model->contest->campaign_id;
-        $campaign_run = $model->contest->campaign_run_id;
+        $campaign = $competition->contest->campaign_id;
+        $campaign_run = $competition->contest->campaign_run_id;
 
         $signups = [];
         $count = intval(ceil(count($ids) / $batchSize));
@@ -283,6 +288,12 @@ class Manager
         });
     }
 
+    /**
+     * Formats a given reportback for use in Gladiator.
+     *
+     * @param object $reportback from API response
+     * @return object $reportback
+     */
     private function formatReportback($reportback)
     {
         // Provide the admin URL to the reportback.
