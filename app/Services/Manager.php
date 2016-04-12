@@ -220,7 +220,7 @@ class Manager
                  }
              }
 
-             if (count(explode(",", $ids)) <= 1) {
+             if (countg(explode(',', $ids)) <= 1) {
                  return array_shift($data);
              }
 
