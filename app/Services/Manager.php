@@ -57,7 +57,7 @@ class Manager
         $data = [];
         $users = $model->users;
 
-        $users = $this->repository->getAll($users->pluck('id')->all());
+        $users = $this->userRepository->getAll($users->pluck('id')->all());
         $users = $users->keyBy('id')->all();
 
         $headers = ['northstar_id', 'first_name', 'last_name', 'email', 'cell'];
@@ -107,7 +107,7 @@ class Manager
         $users = $competition->users;
 
         // Get all users in bulk
-        $users = $this->repository->getAll($users->pluck('id')->all());
+        $users = $this->userRepository->getAll($users->pluck('id')->all());
         $users = $users->keyBy('id')->all();
 
         foreach ($users as $user) {
