@@ -4,7 +4,6 @@ namespace Gladiator\Services;
 
 use Carbon\Carbon;
 use Gladiator\Models\Contest;
-use Gladiator\Services\Phoenix\Phoenix;
 use Gladiator\Services\Northstar\Northstar;
 use Gladiator\Repositories\CacheCampaignRepository;
 use Gladiator\Repositories\UserRepositoryContract;
@@ -34,13 +33,6 @@ class Manager
     protected $northstar;
 
     /**
-     * Phoenix instance.
-     *
-     * @var \Gladiator\Services\Phoenix\Phoenix
-     */
-    protected $phoenix;
-
-    /**
      * Create new Registrar instance.
      *
      * @param  $userRepository
@@ -51,7 +43,6 @@ class Manager
         $this->campaignRepository = $campaignRepository;
         $this->userRepository = $userRepository;
         $this->northstar = new Northstar;
-        $this->phoenix = new Phoenix;
     }
 
     /**

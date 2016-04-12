@@ -111,7 +111,7 @@ trait CacheStorage
      * @param  int     $minutes
      * @return void
      */
-    protected function store($key, $value, $minutes = 2)
+    protected function store($key, $value, $minutes = 15)
     {
         Cache::put($key, $value, $minutes);
     }
@@ -123,7 +123,7 @@ trait CacheStorage
      * @param  int  $minutes
      * @return void
      */
-    protected function storeMany(array $values, $minutes = 2)
+    protected function storeMany(array $values, $minutes = 15)
     {
         Cache::putMany($values, $minutes);
     }

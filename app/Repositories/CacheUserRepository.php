@@ -70,7 +70,7 @@ class CacheUserRepository implements UserRepositoryContract
      */
     public function getAll(array $ids = [])
     {
-        // @TODO: This is messy and needs another pass.
+        // @TODO: This is messy and needs another pass to simplify.
         if ($ids) {
             $users = $this->retrieveMany($ids);
 

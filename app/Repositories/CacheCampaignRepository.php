@@ -49,6 +49,7 @@ class CacheCampaignRepository implements RepositoryContract
      */
     public function getAll(array $ids = [])
     {
+        // @TODO: This is messy and needs another pass to simplify.
         if ($ids) {
             $keys = array_map([$this, 'setPrefix'], $ids);
 
@@ -80,7 +81,3 @@ class CacheCampaignRepository implements RepositoryContract
         return null;
     }
 }
-
-// # Notes
-// Make the $minutes a protected property of the trait so it can be overridden
-// if we want to have User cache last 15 min but Campaign cache last 60 min.
