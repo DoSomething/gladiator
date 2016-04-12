@@ -43,7 +43,8 @@ class Manager
     /**
      * Create new Registrar instance.
      *
-     * @param Northstar $northstar
+     * @param  $userRepository
+     * @param  $campaignRepository
      */
     public function __construct(UserRepositoryContract $userRepository, CacheCampaignRepository $campaignRepository)
     {
@@ -290,22 +291,22 @@ class Manager
     {
         $campaignIds = $collection->pluck('campaign_id')->all();
 
-        // First check the campaign cache repository...
+        return $this->campaignRepository->getAll($campaignIds);
 
-        $parameters['ids'] = implode(',', $campaignIds);
+        // $parameters['ids'] = implode(',', $campaignIds);
 
-        $campaigns = $this->phoenix->getAllCampaigns($parameters);
-        $campaigns = collect($campaigns)->keyBy('id')->all();
+        // $campaigns = $this->phoenix->getAllCampaigns($parameters);
+        // $campaigns = collect($campaigns)->keyBy('id')->all();
 
-        foreach ($collection as $contest) {
-            if (isset($campaigns[$contest->campaign_id])) {
-                $contest->setAttribute('campaign', $campaigns[$contest->campaign_id]);
-            } else {
-                $contest->setAttribute('campaign', null);
-            }
-        }
+        // foreach ($collection as $contest) {
+        //     if (isset($campaigns[$contest->campaign_id])) {
+        //         $contest->setAttribute('campaign', $campaigns[$contest->campaign_id]);
+        //     } else {
+        //         $contest->setAttribute('campaign', null);
+        //     }
+        // }
 
-        return $collection;
+        // return $collection;
     }
 
     /**
@@ -316,7 +317,9 @@ class Manager
      */
     protected function appendCampaignToModel($model)
     {
-        $campaign = $this->phoenix->getCampaign((string) $model->campaign_id);
+        $campaignId = (string) $model->campaign_id;
+
+        $campaign = $this->campaignRepository->find($campaignId);
 
         // @TODO: RestApiClient is a bit wonky with Phoenix calls and error responses.
         if ($campaign) {

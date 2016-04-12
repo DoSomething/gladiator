@@ -63,6 +63,11 @@ trait CacheStorage
         }
     }
 
+    protected function setPrefix($string, $prefix)
+    {
+        return $prefix . ':' . $string;
+    }
+
     /**
      * Store an item in the cache for a given number of minutes.
      *
