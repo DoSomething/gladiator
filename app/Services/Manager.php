@@ -98,23 +98,35 @@ class Manager
      * @param User $users
      * @return array $leaderboard
      */
-    public function getLeaderboard($competition)
+    public function getLeaderboard($competition, $ignoreFlagged = false)
     {
         $rows = [];
         $users = $competition->users;
 
         // Get all users in bulk
-        $users = $this->repository->getAll($users->pluck('id')->all());
-        $users = $users->keyBy('id')->all();
-
-        $reportback = $this->getUsersActivity('559442c4a59dbfc9578b4b6a,55479921469c64ed7d8b5065', $competition);
-        print_r(json_encode($reportback));die();
+        $ids = $users->pluck('id')->all();
+        $users = $this->repository->getAll($ids)->keyBy('id')->all();
+        $signups = $this->getUsersActivity($ids, $competition);
 
         foreach ($users as $user) {
+            $id = $user->id;
             // For each user get the reportback details
-            $reportback = $this->getUserActivity($user->id, $competition);
+            if (! $signups->has($id)) {
+                continue;
+            }
+
+            $signup = $signups->get($id);
+            if (! isset($signup->reportback)) {
+                continue;
+            }
+
+            $reportback = $this->formatReportback($signup);
             $quantity = isset($reportback) ? $reportback->quantity : 0;
             $flagged = isset($reportback) ? $reportback->flagged : 'N/A';
+
+            if ($flagged === 'flagged' && $ignoreFlagged) {
+                continue;
+            }
 
             // Give each user a "row" in the leaderboard
             array_push($rows, ['user' => $user, 'quantity' => $quantity, 'flagged' => $flagged]);
@@ -214,12 +226,6 @@ class Manager
         }
 
         if ($getMultiple) {
-            print_r(json_encode($multipleSignups));die();
-            // OK. so we're only getting one user back.
-            // I dont think the problem is with this logic / code here.
-            // We need to point this app to local northstar and debug the response there.
-            // I checked droops and mfantini does have a signup on the correct campaign/run im checking for
-            // this means something isnt being returned right, exploded right, etc on that end
             return $multipleSignups;
         }
 
@@ -259,8 +265,19 @@ class Manager
         $campaign = $model->contest->campaign_id;
         $campaign_run = $model->contest->campaign_run_id;
 
-        $signup = $this->getUserSignup($ids, $campaign, $campaign_run, true);
-        print_r(json_encode($signup)); die();
+        $signups = [];
+        $count = intval(ceil(count($ids) / 50));
+        $index = 0;
+
+        for ($i = 0; $i < $count; $i++) {
+            $batch = array_slice($ids, $index, 50);
+            $signups = array_merge($signups, $this->getUserSignup(implode(',', $batch), $campaign, $campaign_run, true));
+            $index += 50;
+        }
+
+        return collect($signups)->keyBy(function ($item) {
+            return $item->user->id;
+        });
     }
 
     private function formatReportback($signup)
