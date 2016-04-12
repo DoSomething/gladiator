@@ -260,19 +260,19 @@ class Manager
         return null;
     }
 
-    public function getActivityForAllUsers($ids, $model)
+    public function getActivityForAllUsers($ids, $model, $batchSize = 50)
     {
         $campaign = $model->contest->campaign_id;
         $campaign_run = $model->contest->campaign_run_id;
 
         $signups = [];
-        $count = intval(ceil(count($ids) / 50));
+        $count = intval(ceil(count($ids) / $batchSize));
         $index = 0;
 
         for ($i = 0; $i < $count; $i++) {
-            $batch = array_slice($ids, $index, 50);
+            $batch = array_slice($ids, $index, $batchSize);
             $signups = array_merge($signups, $this->getUserSignup(implode(',', $batch), $campaign, $campaign_run, true));
-            $index += 50;
+            $index += $batchSize;
         }
 
         return collect($signups)->keyBy(function ($item) {
