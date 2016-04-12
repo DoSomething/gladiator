@@ -2,21 +2,28 @@
 
 namespace Gladiator\Services;
 
-use Gladiator\Models\Contest;
-use Gladiator\Services\Phoenix\Phoenix;
-use Gladiator\Services\Northstar\Northstar;
-use Gladiator\Repositories\UserRepositoryContract;
 use Carbon\Carbon;
+use Gladiator\Models\Contest;
+use Gladiator\Services\Northstar\Northstar;
+use Gladiator\Repositories\CacheCampaignRepository;
+use Gladiator\Repositories\UserRepositoryContract;
 use Illuminate\Database\Eloquent\Collection;
 
 class Manager
 {
     /**
+     * CacheCampaignRepository instance.
+     *
+     * @var \Gladiator\Repositories\CacheCampaignRepository
+     */
+    protected $campaignRepository;
+
+    /**
      * UserRepositoryContract instance.
      *
      * @var \Gladiator\Repositories\UserRepositoryContract
      */
-    protected $repository;
+    protected $userRepository;
 
     /**
      * Northstar instance.
@@ -26,22 +33,16 @@ class Manager
     protected $northstar;
 
     /**
-     * Phoenix instance.
-     *
-     * @var \Gladiator\Services\Phoenix\Phoenix
-     */
-    protected $phoenix;
-
-    /**
      * Create new Registrar instance.
      *
-     * @param Northstar $northstar
+     * @param  $userRepository
+     * @param  $campaignRepository
      */
-    public function __construct(UserRepositoryContract $repository)
+    public function __construct(UserRepositoryContract $userRepository, CacheCampaignRepository $campaignRepository)
     {
-        $this->repository = $repository;
+        $this->campaignRepository = $campaignRepository;
+        $this->userRepository = $userRepository;
         $this->northstar = new Northstar;
-        $this->phoenix = new Phoenix;
     }
 
     /**
@@ -56,7 +57,7 @@ class Manager
         $data = [];
         $users = $model->users;
 
-        $users = $this->repository->getAll($users->pluck('id')->all());
+        $users = $this->userRepository->getAll($users->pluck('id')->all());
         $users = $users->keyBy('id')->all();
 
         $headers = ['northstar_id', 'first_name', 'last_name', 'email', 'cell'];
@@ -106,7 +107,7 @@ class Manager
         $users = $competition->users;
 
         // Get all users in bulk
-        $users = $this->repository->getAll($users->pluck('id')->all());
+        $users = $this->userRepository->getAll($users->pluck('id')->all());
         $users = $users->keyBy('id')->all();
 
         foreach ($users as $user) {
@@ -279,10 +280,11 @@ class Manager
      */
     protected function appendCampaignToCollection($collection)
     {
-        $parameters['ids'] = implode(',', $collection->pluck('campaign_id')->all());
+        $campaignIds = $collection->pluck('campaign_id')->all();
 
-        $campaigns = $this->phoenix->getAllCampaigns($parameters);
-        $campaigns = collect($campaigns)->keyBy('id')->all();
+        $campaigns = $this->campaignRepository->getAll($campaignIds);
+
+        $campaigns = $campaigns->keyBy('id')->all();
 
         foreach ($collection as $contest) {
             if (isset($campaigns[$contest->campaign_id])) {
@@ -303,7 +305,9 @@ class Manager
      */
     protected function appendCampaignToModel($model)
     {
-        $campaign = $this->phoenix->getCampaign((string) $model->campaign_id);
+        $campaignId = (string) $model->campaign_id;
+
+        $campaign = $this->campaignRepository->find($campaignId);
 
         // @TODO: RestApiClient is a bit wonky with Phoenix calls and error responses.
         if ($campaign) {
