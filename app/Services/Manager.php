@@ -106,7 +106,7 @@ class Manager
         // Get all users in bulk
         $ids = $users->pluck('id')->all();
         $users = $this->repository->getAll($ids)->keyBy('id')->all();
-        $signups = $this->getUsersActivity($ids, $competition);
+        $signups = $this->getActivityForAllUsers($ids, $competition);
 
         foreach ($users as $user) {
             $id = $user->id;
@@ -260,7 +260,7 @@ class Manager
         return null;
     }
 
-    public function getUsersActivity($ids, $model)
+    public function getActivityForAllUsers($ids, $model)
     {
         $campaign = $model->contest->campaign_id;
         $campaign_run = $model->contest->campaign_run_id;
