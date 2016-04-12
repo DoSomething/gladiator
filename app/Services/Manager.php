@@ -120,7 +120,7 @@ class Manager
                 continue;
             }
 
-            $reportback = $this->formatReportback($signup);
+            $reportback = $this->formatReportback($signup->reportback);
             $quantity = isset($reportback) ? $reportback->quantity : 0;
             $flagged = isset($reportback) ? $reportback->flagged : 'N/A';
 
@@ -280,26 +280,26 @@ class Manager
         });
     }
 
-    private function formatReportback($signup)
+    private function formatReportback($reportback)
     {
         // Provide the admin URL to the reportback.
-        $signup->reportback->admin_url = env('PHOENIX_URI') . '/admin/reportback/' . $signup->reportback->id;
+        $reportback->admin_url = env('PHOENIX_URI') . '/admin/reportback/' . $reportback->id;
 
         // Format the update timestamp
-        $signup->reportback->updated_at = new Carbon($signup->reportback->updated_at);
-        $signup->reportback->updated_at = $signup->reportback->updated_at->format('Y-m-d');
+        $reportback->updated_at = new Carbon($reportback->updated_at);
+        $reportback->updated_at = $reportback->updated_at->format('Y-m-d');
 
         // Set flagged status to 'pending' if it is NULL, otherwise use bool value
-        if (! isset($signup->reportback->flagged)) {
-            $signup->reportback->flagged = 'pending';
-        } elseif ($signup->reportback->flagged) {
-            $signup->reportback->flagged = 'flagged';
+        if (! isset($reportback->flagged)) {
+            $reportback->flagged = 'pending';
+        } elseif ($reportback->flagged) {
+            $reportback->flagged = 'flagged';
         } else {
-            $signup->reportback->flagged = 'approved';
+            $reportback->flagged = 'approved';
         }
 
         // Return the reportback.
-        return $signup->reportback;
+        return $reportback;
     }
 
     /**
