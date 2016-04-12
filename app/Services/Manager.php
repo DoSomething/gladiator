@@ -204,11 +204,11 @@ class Manager
      *
      * @return object $signups
      */
-    public function getUserSignup($id, $campaign = null, $campaignRun = null, $getMultiple = false)
+    public function getAllUserSignups($ids, $campaign = null, $campaignRun = null)
     {
-        $signups = $this->northstar->getUserSignups($id, $campaign);
+        $signups = $this->northstar->getAllUserSignups($ids, $campaign);
 
-        if ($getMultiple) {
+        if (is_array($ids)) {
             $multipleSignups = [];
         }
 
@@ -216,7 +216,7 @@ class Manager
         if ($campaignRun) {
             foreach ($signups as $key => $signup) {
                 if ($signup->campaign_run->id === (string) $campaignRun) {
-                    if ($getMultiple) {
+                    if (is_array($ids)) {
                         array_push($multipleSignups, $signups[$key]);
                     } else {
                         $signups = $signup[$key];
@@ -225,7 +225,7 @@ class Manager
             }
         }
 
-        if ($getMultiple) {
+        if (is_array($ids)) {
             return $multipleSignups;
         }
 
@@ -246,7 +246,7 @@ class Manager
         $campaign = $model->contest->campaign_id;
         $campaign_run = $model->contest->campaign_run_id;
 
-        $signup = $this->getUserSignup($id, $campaign, $campaign_run);
+        $signup = $this->getAllUserSignups($id, $campaign, $campaign_run);
 
         if (is_array($signup)) {
             $signup = reset($signup);
@@ -260,6 +260,9 @@ class Manager
         return null;
     }
 
+    /**
+     *
+     */
     public function getActivityForAllUsers($ids, $model, $batchSize = 50)
     {
         $campaign = $model->contest->campaign_id;
@@ -271,7 +274,7 @@ class Manager
 
         for ($i = 0; $i < $count; $i++) {
             $batch = array_slice($ids, $index, $batchSize);
-            $signups = array_merge($signups, $this->getUserSignup(implode(',', $batch), $campaign, $campaign_run, true));
+            $signups = array_merge($signups, $this->getAllUserSignups(implode(',', $batch), $campaign, $campaign_run));
             $index += $batchSize;
         }
 
