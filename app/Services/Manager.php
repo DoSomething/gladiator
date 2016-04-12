@@ -291,22 +291,19 @@ class Manager
     {
         $campaignIds = $collection->pluck('campaign_id')->all();
 
-        return $this->campaignRepository->getAll($campaignIds);
+        $campaigns = $this->campaignRepository->getAll($campaignIds);
 
-        // $parameters['ids'] = implode(',', $campaignIds);
+        $campaigns = $campaigns->keyBy('id')->all();
 
-        // $campaigns = $this->phoenix->getAllCampaigns($parameters);
-        // $campaigns = collect($campaigns)->keyBy('id')->all();
+        foreach ($collection as $contest) {
+            if (isset($campaigns[$contest->campaign_id])) {
+                $contest->setAttribute('campaign', $campaigns[$contest->campaign_id]);
+            } else {
+                $contest->setAttribute('campaign', null);
+            }
+        }
 
-        // foreach ($collection as $contest) {
-        //     if (isset($campaigns[$contest->campaign_id])) {
-        //         $contest->setAttribute('campaign', $campaigns[$contest->campaign_id]);
-        //     } else {
-        //         $contest->setAttribute('campaign', null);
-        //     }
-        // }
-
-        // return $collection;
+        return $collection;
     }
 
     /**

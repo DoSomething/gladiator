@@ -26,7 +26,7 @@ class CacheCampaignRepository implements RepositoryContract
      */
     public function find($id)
     {
-        $key = $this->setPrefix($id, $this->prefix);
+        $key = $this->setPrefix($id);
 
         $campaign = $this->retrieve($key);
 
@@ -40,9 +40,44 @@ class CacheCampaignRepository implements RepositoryContract
         return $campaign;
     }
 
+    /**
+     * Get collection of all campaigns or a set of campaigns by ids from cache or
+     * default to api request.
+     *
+     * @param  array  $ids
+     * @return \Illuminate\Support\Collection
+     */
     public function getAll(array $ids = [])
     {
-        dd($ids);
+        if ($ids) {
+            $keys = array_map([$this, 'setPrefix'], $ids);
+
+            $campaigns = $this->retrieveMany($keys);
+
+            if (! $campaigns) {
+                $parameters['ids'] = implode(',', $ids);
+
+                $campaigns = $this->phoenix->getAllCampaigns($parameters);
+                $campaigns = collect($campaigns);
+
+                if ($campaigns) {
+                    $group = $campaigns->keyBy(function ($item) {
+                        return $this->setPrefix($item->id);
+                    })->all();
+
+                    $this->storeMany($group);
+                }
+            } else {
+                $campaigns = $this->resolveMissingItems($campaigns);
+                $campaigns = collect(array_values($campaigns));
+            }
+
+            return $campaigns;
+        }
+
+        // @TODO: not sure if the following is actually a thing that is possible.
+        // $campaigns = $this->phoenix->getAllCampaigns(['count' => 'all']);
+        return null;
     }
 }
 

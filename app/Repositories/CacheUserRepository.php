@@ -79,6 +79,7 @@ class CacheUserRepository implements UserRepositoryContract
 
                 if ($users->count()) {
                     $group = $users->keyBy('id')->all();
+
                     $this->storeMany($group);
                 }
             } else {

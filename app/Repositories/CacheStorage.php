@@ -29,6 +29,31 @@ trait CacheStorage
     }
 
     /**
+     * Resolving missing cached items in cache collection.
+     *
+     * @param  array $items
+     * @return array
+     */
+    protected function resolveMissingItems($items)
+    {
+        // @TODO: maybe this should run in the retrieveMany() method?
+        // @TODO: May want to check if calling Class has find() method using method_exists($object, $method_name).
+        // @TODO: Might also be faster to collect the missing items and do a getAll() instead of find() for each individually.
+
+        foreach ($items as $key => $value) {
+            if ($value === false || $value === null) {
+                if (property_exists($this, 'prefix')) {
+                    $id = $this->unsetPrefix($key);
+                }
+
+                $items[$key] = $this->find($id);
+            }
+        }
+
+        return $items;
+    }
+
+    /**
      * Retrieve an item from the cache by key.
      *
      * @param  string  $key
@@ -63,9 +88,19 @@ trait CacheStorage
         }
     }
 
-    protected function setPrefix($string, $prefix)
+    /**
+     * Set a prefix on supplied string used as cache key.
+     *
+     * @param  string  $string
+     * @return string
+     */
+    protected function setPrefix($string)
     {
-        return $prefix . ':' . $string;
+        if (property_exists($this, 'prefix')) {
+            return $this->prefix . ':' . $string;
+        } else {
+            return $string;
+        }
     }
 
     /**
@@ -91,5 +126,20 @@ trait CacheStorage
     protected function storeMany(array $values, $minutes = 2)
     {
         Cache::putMany($values, $minutes);
+    }
+
+    /**
+     * Unset a prefix on supplied string used as cache key.
+     *
+     * @param  string  $string
+     * @return string
+     */
+    protected function unsetPrefix($string)
+    {
+        if (property_exists($this, 'prefix')) {
+            return str_replace('campaign:', '', $string);
+        } else {
+            return $string;
+        }
     }
 }
