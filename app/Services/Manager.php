@@ -207,33 +207,28 @@ class Manager
      *
      * @return object $signups
      */
-    public function getAllUserSignups($ids, $campaign = null, $campaignRun = null)
-    {
-        $signups = $this->northstar->getAllUserSignups($ids, $campaign);
+     public function getAllUserSignups($ids, $campaign = null, $campaignRun = null)
+     {
+         $signups = $this->northstar->getUserSignups($ids, $campaign);
 
-        if (is_array($ids)) {
-            $multipleSignups = [];
-        }
+         $data = [];
 
-        // Only return the sign up record for the run that was specified.
-        if ($campaignRun) {
-            foreach ($signups as $key => $signup) {
-                if ($signup->campaign_run->id === (string) $campaignRun) {
-                    if (is_array($ids)) {
-                        array_push($multipleSignups, $signups[$key]);
-                    } else {
-                        $signups = $signup[$key];
-                    }
-                }
-            }
-        }
+         if ($campaignRun) {
+             foreach($signups as $key => $signup) {
+                 if ($signup->campaign_run->id === (string) $campaignRun) {
+                     array_push($data, $signups[$key]);
+                 }
+             }
 
-        if (is_array($ids)) {
-            return $multipleSignups;
-        }
+             if (sizeof(explode(",", $ids)) <= 1) {
+                 return array_shift($data);
+             }
 
-        return $signups;
-    }
+             return $data;
+         }
+
+         return $signups;
+     }
 
     /**
      * Get a user's signup/reportback activity for a
@@ -256,7 +251,7 @@ class Manager
         }
 
         if ($signup && $signup->reportback) {
-            return $this->formatReportback($signup);
+            return $this->formatReportback($signup->reportback);
         }
 
         // If the user has no activity for this competition or waiting room.
