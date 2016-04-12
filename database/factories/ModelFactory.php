@@ -3,6 +3,7 @@
 use Faker\Generator;
 use Gladiator\Models\User;
 use Gladiator\Models\Contest;
+use Gladiator\Services\Phoenix\Phoenix;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +26,16 @@ $factory->define(User::class, function (Generator $faker) {
 
 // Contest Factory.
 $factory->define(Contest::class, function (Generator $faker) {
+
+    $phoenix = new Phoenix;
+
+    $campaignIds = ['1247', '1663', '1581', '1593', '1467', '1334', '362', '46', '1650', '1560', '1222', '1667', '74', '1198', '886', '1492', '850', '1503', '1376', '1665', '955', '31'];
+
+    $campaign = $phoenix->getCampaign($campaignIds[array_rand($campaignIds)]);
+
     return [
-        'campaign_id' => $faker->numberBetween(10, 300),
-        'campaign_run_id' => $faker->numberBetween(1000, 3000),
+        'campaign_id' => $campaign->id,
+        'campaign_run_id' => $campaign->campaign_runs->current->en->id,
         'sender_email' => $faker->safeEmail(),
         'sender_name' => $faker->name(),
     ];
