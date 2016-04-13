@@ -51,12 +51,7 @@ class CompetitionsController extends Controller
 
         $contest = $this->manager->appendCampaign($contest);
 
-        $users = [];
-        $ids = $competition->users->pluck('id')->toArray();
-
-        if ($ids) {
-            $users = $this->repository->getAll($ids);
-        }
+        $users = $this->manager->getModelUsers($competition);
 
         return view('competitions.show', compact('competition', 'contest', 'users'));
     }

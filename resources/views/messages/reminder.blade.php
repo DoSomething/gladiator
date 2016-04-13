@@ -1,1 +1,1 @@
-<?php echo $email->message->body ?>
+{!! $body !!}
