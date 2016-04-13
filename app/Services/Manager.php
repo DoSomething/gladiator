@@ -197,39 +197,6 @@ class Manager
         return $contest;
     }
 
-     /**
-      * Get user signup for a specific campaign and run. If only user id is
-      * provided, the send back all user signups.
-      *
-      * @param  string $id
-      * @param  string $campaign    Campaign ID
-      * @param  int    $campaignRun Campaign Run ID
-      *
-      * @return object $signups
-      */
-     public function getAllUserSignups($ids, $campaign = null, $campaignRun = null)
-     {
-         $signups = $this->northstar->getUserSignups($ids, $campaign);
-
-         $data = [];
-
-         if ($campaignRun) {
-             foreach ($signups as $key => $signup) {
-                 if ($signup->campaign_run->id === (string) $campaignRun) {
-                     array_push($data, $signups[$key]);
-                 }
-             }
-
-             if (count(explode(',', $ids)) <= 1) {
-                 return array_shift($data);
-             }
-
-             return $data;
-         }
-
-         return $signups;
-     }
-
     /**
      * Get a user's signup/reportback activity for a
      * competition or waiting room.
@@ -244,7 +211,7 @@ class Manager
         $campaign = $model->contest->campaign_id;
         $campaign_run = $model->contest->campaign_run_id;
 
-        $signup = $this->getAllUserSignups($id, $campaign, $campaign_run);
+        $signup = $this->northstar->getUserSignups($id, $campaign, $campaign_run);
 
         if (is_array($signup)) {
             $signup = reset($signup);
