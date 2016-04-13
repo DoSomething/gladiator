@@ -57,13 +57,15 @@ class Manager
         $data = [];
         $users = $model->users;
 
-        $users = $this->userRepository->getAll($users->pluck('id')->all());
+        $ids = $users->pluck('id')->all();
+        $users = $this->userRepository->getAll($ids);
         $users = $users->keyBy('id')->all();
 
         $headers = ['northstar_id', 'first_name', 'last_name', 'email', 'cell'];
 
         if ($hasReportback) {
             array_push($headers, 'reportback', 'quantity', 'flagged status');
+            $signups = $this->getActivityForAllUsers($ids, $model);
         }
 
         array_push($data, $headers);
@@ -77,15 +79,13 @@ class Manager
                 isset($user->mobile) ? $user->mobile : '',
             ];
 
-            if ($hasReportback) {
-                $reportback = $this->getUserActivity($user->id, $model);
-
-                if ($reportback) {
-                    array_push($details,
-                        $reportback->admin_url,
-                        $reportback->quantity,
-                        $reportback->flagged);
-                }
+            $signup = $signups->get($user->id);
+            if ($hasReportback && isset($signup->reportback)) {
+                $reportback = $this->formatReportback($signup->reportback);
+                array_push($details,
+                    $reportback->admin_url,
+                    $reportback->quantity,
+                    $reportback->flagged);
             }
 
             array_push($data, $details);
