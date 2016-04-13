@@ -197,7 +197,6 @@ class Manager
         return $contest;
     }
 
-
     /**
      * Get a collection of northstar users that exist on a model.
      *
