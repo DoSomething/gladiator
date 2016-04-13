@@ -111,6 +111,10 @@ class MessagesController extends Controller
             'users' => $users,
         ];
 
+        if (request('test')) {
+            $resources['test'] = request('test');
+        }
+
         // Kick off email sending
         event(new QueueMessageRequest($resources));
 

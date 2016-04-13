@@ -35,9 +35,8 @@ class QueueMessage implements ShouldQueue
         // Build the email.
         $email = new Email($resources['message'], $resources['contest'], $resources['competition'], $resources['users']);
 
-        // If on testing environment, send of the first message to the person who create the contest.
-        // @TODO - Create real test email functionality in the app.
-        if (env('APP_DEBUG')) {
+        // If a test email, send one of the messages to the sender_email on the contest.
+        if ($resources['test']) {
             $content = $email->allMessages[0]['message'];
 
             $settings = [
