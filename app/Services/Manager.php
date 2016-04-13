@@ -98,23 +98,38 @@ class Manager
      * Build leaderboard data for a given Competition
      *
      * @param Competition $competition
-     * @param User $users
+     * @param bool $ignoreFlagged Should we include flagged reportbacks?
      * @return array $leaderboard
      */
-    public function getLeaderboard($competition)
+    public function getLeaderboard($competition, $ignoreFlagged = false)
     {
         $rows = [];
         $users = $competition->users;
 
         // Get all users in bulk
-        $users = $this->userRepository->getAll($users->pluck('id')->all());
-        $users = $users->keyBy('id')->all();
+        $ids = $users->pluck('id')->all();
+        $users = $this->userRepository->getAll($ids)->keyBy('id')->all();
+        $signups = $this->getActivityForAllUsers($ids, $competition);
 
         foreach ($users as $user) {
+            $id = $user->id;
             // For each user get the reportback details
-            $reportback = $this->getUserActivity($user->id, $competition);
+            if (! $signups->has($id)) {
+                continue;
+            }
+
+            $signup = $signups->get($id);
+            if (! isset($signup->reportback)) {
+                continue;
+            }
+
+            $reportback = $this->formatReportback($signup->reportback);
             $quantity = isset($reportback) ? $reportback->quantity : 0;
             $flagged = isset($reportback) ? $reportback->flagged : 'N/A';
+
+            if ($flagged === 'flagged' && $ignoreFlagged) {
+                continue;
+            }
 
             // Give each user a "row" in the leaderboard
             array_push($rows, ['user' => $user, 'quantity' => $quantity, 'flagged' => $flagged]);
@@ -183,32 +198,6 @@ class Manager
     }
 
     /**
-     * Get user signup for a specific campaign and run. If only user id is
-     * provided, the send back all user signups.
-     *
-     * @param  string $id
-     * @param  string $campaign    Campaign ID
-     * @param  int    $campaignRun Campaign Run ID
-     *
-     * @return object $signups
-     */
-    public function getUserSignup($id, $campaign = null, $campaignRun = null)
-    {
-        $signups = $this->northstar->getUserSignups($id, $campaign);
-
-        // Only return the sign up record for the run that was specified.
-        if ($campaignRun) {
-            foreach ($signups as $key => $signup) {
-                if ($signup->campaign_run->id === (string) $campaignRun) {
-                    $signups = $signups[$key];
-                }
-            }
-        }
-
-        return $signups;
-    }
-
-    /**
      * Get a user's signup/reportback activity for a
      * competition or waiting room.
      *
@@ -222,35 +211,74 @@ class Manager
         $campaign = $model->contest->campaign_id;
         $campaign_run = $model->contest->campaign_run_id;
 
-        $signup = $this->getUserSignup($id, $campaign, $campaign_run);
+        $signup = $this->northstar->getUserSignups($id, $campaign, $campaign_run);
 
         if (is_array($signup)) {
             $signup = reset($signup);
         }
 
         if ($signup && $signup->reportback) {
-            // Provide the admin URL to the reportback.
-            $signup->reportback->admin_url = env('PHOENIX_URI') . '/admin/reportback/' . $signup->reportback->id;
-
-            // Format the update timestamp
-            $signup->reportback->updated_at = new Carbon($signup->reportback->updated_at);
-            $signup->reportback->updated_at = $signup->reportback->updated_at->format('Y-m-d');
-
-            // Set flagged status to 'pending' if it is NULL, otherwise use bool value
-            if (! isset($signup->reportback->flagged)) {
-                $signup->reportback->flagged = 'pending';
-            } elseif ($signup->reportback->flagged) {
-                $signup->reportback->flagged = 'flagged';
-            } else {
-                $signup->reportback->flagged = 'approved';
-            }
-
-            // Return the reportback.
-            return $signup->reportback;
+            return $this->formatReportback($signup->reportback);
         }
 
         // If the user has no activity for this competition or waiting room.
         return null;
+    }
+
+    /**
+     * Get reportbacks for many users & a given competition.
+     *
+     * @param array $ids Array of ID's
+     * @param \Gladiator\Models\Competition $competition
+     * @param int $batchSize How many reportbacks to fetch at once
+     * @return collection $signups
+     */
+    public function getActivityForAllUsers($ids, $competition, $batchSize = 50)
+    {
+        $campaign = $competition->contest->campaign_id;
+        $campaign_run = $competition->contest->campaign_run_id;
+
+        $signups = [];
+        $count = intval(ceil(count($ids) / $batchSize));
+        $index = 0;
+
+        for ($i = 0; $i < $count; $i++) {
+            $batch = array_slice($ids, $index, $batchSize);
+            $signups = array_merge($signups, $this->northstar->getUserSignups(implode(',', $batch), $campaign, $campaign_run));
+            $index += $batchSize;
+        }
+
+        return collect($signups)->keyBy(function ($item) {
+            return $item->user->id;
+        });
+    }
+
+    /**
+     * Formats a given reportback for use in Gladiator.
+     *
+     * @param object $reportback from API response
+     * @return object $reportback
+     */
+    private function formatReportback($reportback)
+    {
+        // Provide the admin URL to the reportback.
+        $reportback->admin_url = env('PHOENIX_URI') . '/admin/reportback/' . $reportback->id;
+
+        // Format the update timestamp
+        $reportback->updated_at = new Carbon($reportback->updated_at);
+        $reportback->updated_at = $reportback->updated_at->format('Y-m-d');
+
+        // Set flagged status to 'pending' if it is NULL, otherwise use bool value
+        if (! isset($reportback->flagged)) {
+            $reportback->flagged = 'pending';
+        } elseif ($reportback->flagged) {
+            $reportback->flagged = 'flagged';
+        } else {
+            $reportback->flagged = 'approved';
+        }
+
+        // Return the reportback.
+        return $reportback;
     }
 
     /**

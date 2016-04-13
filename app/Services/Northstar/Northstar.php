@@ -64,15 +64,17 @@ class Northstar extends RestApiClient
     /*
      * Send a GET request to return a user's signups.
      *
-     * @param  string $id
+     * @param  string $ids
      * @param  string $campaigns
+     * @param  int|array $runs
      * @return object|null
      */
-    public function getUserSignups($id, $campaigns)
+    public function getUserSignups($ids, $campaigns, $runs = '')
     {
         $response = $this->get('signups', [
-            'user' => $id,
+            'users' => $ids,
             'campaigns' => $campaigns,
+            'runs' => $runs,
         ]);
 
         return is_null($response) ? null : $response;
