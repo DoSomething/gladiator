@@ -280,7 +280,7 @@ class Manager
             $signups = array_merge($signups, $this->northstar->getUserSignups(implode(',', $batch), $campaign, $campaign_run));
             $index += $batchSize;
         }
-        
+
         return collect($signups)->keyBy(function ($item) {
             return $item->user->id;
         });
