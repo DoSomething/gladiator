@@ -10,6 +10,8 @@
     <div class="container">
         <div class="wrapper">
             <div class="container__block -half">
+                <h2 class="heading">Competition information</h1>
+
                 <ul>
                     <li><strong>Campaign:</strong> {{ $contest->campaign->title or 'No title available' }}</li>
                     <li><strong>Campaign Run ID:</strong> {{ $contest->campaign_run_id }}</li>
@@ -25,17 +27,23 @@
                         <a href="{{ route('competitions.edit', $competition->id) }}" class="button">Edit</a>
                     </li>
                     <li>
-                        <a href="{{ route('competitions.export', ['competition' => $competition->id, 'hasReportback' => true]) }}" class="button">Export</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('competitions.export', ['competition' => $competition->id, 'hasReportback' => false]) }}" class="button">Export (No RB data)</a>
-                    </li>
-                    <li>
                         <a href="{{ route('competitions.message', ['competition' => $competition->id,'contest' => $contest->id]) }}" class="button">Email</a>
                     </li>
                     <li>
                         <a href="{{ route('competitions.leaderboard', ['competition' => $competition->id]) }}" class="button">Leaderboard</a>
                     </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="wrapper">
+            <div class="container__block">
+            <h2 class="heading">Data export options</h1>
+                <ul class="list">
+                    <li><a href="{{ route('competitions.export', ['competition' => $competition->id, 'hasReportback' => false]) }}">&DownArrowBar; Export</a> &mdash; competition users</li>
+                    <li><a href="{{ route('competitions.export', ['competition' => $competition->id, 'hasReportback' => true]) }}">&DownArrowBar; Export</a> &mdash; competition users <em>with</em> reportback data</li>
                 </ul>
             </div>
         </div>
