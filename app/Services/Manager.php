@@ -220,7 +220,7 @@ class Manager
                  }
              }
 
-             if (countg(explode(',', $ids)) <= 1) {
+             if (count(explode(',', $ids)) <= 1) {
                  return array_shift($data);
              }
 
@@ -277,10 +277,10 @@ class Manager
 
         for ($i = 0; $i < $count; $i++) {
             $batch = array_slice($ids, $index, $batchSize);
-            $signups = array_merge($signups, $this->getAllUserSignups(implode(',', $batch), $campaign, $campaign_run));
+            $signups = array_merge($signups, $this->northstar->getUserSignups(implode(',', $batch), $campaign, $campaign_run));
             $index += $batchSize;
         }
-
+        
         return collect($signups)->keyBy(function ($item) {
             return $item->user->id;
         });
