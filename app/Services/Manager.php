@@ -206,14 +206,13 @@ class Manager
      */
     public function getModelUsers($model)
     {
-        $users = [];
         $ids = $model->users->pluck('id')->toArray();
 
         if ($ids) {
-            $users = $this->userRepository->getAll($ids);
+            return $this->userRepository->getAll($ids);
         }
 
-        return $users;
+        return null;
     }
 
     /**

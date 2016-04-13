@@ -104,7 +104,7 @@ class MessagesController extends Controller
                 'email' => $contest->sender_email,
             ];
         } else {
-            $users = $this->manager->getCompetitionUsers($competition);
+            $users = $this->manager->getModelUsers($competition);
         }
 
         $resources = [
