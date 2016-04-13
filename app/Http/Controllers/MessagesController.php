@@ -96,13 +96,13 @@ class MessagesController extends Controller
         $contest = Contest::find($contestId);
         $contest = $this->manager->appendCampaign($contest);
 
+        // If sending test email, create a fake user object with the contets
+        // sender_name and sender_email so we prep and send a message only for the admin.
         if (request('test')) {
-            $users = collect([
-                0 => (object) [
-                    'first_name' => $contest->sender_name,
-                    'email' => $contest->sender_email,
-                ]
-            ]);
+            $users[] = (object) [
+                'first_name' => $contest->sender_name,
+                'email' => $contest->sender_email,
+            ];
         } else {
             // @TODO - move this user logic into some sorta helper, we do it a lot.
             $users = [];
@@ -111,8 +111,6 @@ class MessagesController extends Controller
             if ($ids) {
                 $users = $this->userRepository->getAll($ids);
             }
-
-            dd($users);
         }
 
         $resources = [
