@@ -104,13 +104,7 @@ class MessagesController extends Controller
                 'email' => $contest->sender_email,
             ];
         } else {
-            // @TODO - move this user logic into some sorta helper, we do it a lot.
-            $users = [];
-            $ids = $competition->users->pluck('id')->toArray();
-
-            if ($ids) {
-                $users = $this->userRepository->getAll($ids);
-            }
+            $users = $this->manager->getCompetitionUsers($competition);
         }
 
         $resources = [

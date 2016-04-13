@@ -197,6 +197,26 @@ class Manager
         return $contest;
     }
 
+
+    /**
+     * Get a collection of northstar users that exist on a model.
+     *
+     * @param  \Gladiator\Models\Competition|WaitingRoom $model
+     *
+     * @return collection $users
+     */
+    public function getModelUsers($model)
+    {
+        $users = [];
+        $ids = $model->users->pluck('id')->toArray();
+
+        if ($ids) {
+            $users = $this->userRepository->getAll($ids);
+        }
+
+        return $users;
+    }
+
     /**
      * Get a user's signup/reportback activity for a
      * competition or waiting room.
