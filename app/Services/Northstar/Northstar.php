@@ -64,7 +64,7 @@ class Northstar extends RestApiClient
     /*
      * Send a GET request to return a user's signups.
      *
-     * @param  string $id
+     * @param  string $ids
      * @param  string $campaigns
      * @param  int|array $runs
      * @return object|null
