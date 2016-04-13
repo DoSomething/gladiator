@@ -98,7 +98,7 @@ class Manager
      * Build leaderboard data for a given Competition
      *
      * @param Competition $competition
-     * @param User $users
+     * @param bool $ignoreFlagged Should we include flagged reportbacks?
      * @return array $leaderboard
      */
     public function getLeaderboard($competition, $ignoreFlagged = false)
@@ -230,7 +230,7 @@ class Manager
      *
      * @param array $ids Array of ID's
      * @param \Gladiator\Models\Competition $competition
-     *
+     * @param int $batchSize How many reportbacks to fetch at once
      * @return collection $signups
      */
     public function getActivityForAllUsers($ids, $competition, $batchSize = 50)
