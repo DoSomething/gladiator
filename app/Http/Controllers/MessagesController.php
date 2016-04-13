@@ -96,12 +96,23 @@ class MessagesController extends Controller
         $contest = Contest::find($contestId);
         $contest = $this->manager->appendCampaign($contest);
 
-        // @TODO - move this user logic into some sorta helper, we do it a lot.
-        $users = [];
-        $ids = $competition->users->pluck('id')->toArray();
+        if (request('test')) {
+            $users = collect([
+                0 => (object) [
+                    'first_name' => $contest->sender_name,
+                    'email' => $contest->sender_email,
+                ]
+            ]);
+        } else {
+            // @TODO - move this user logic into some sorta helper, we do it a lot.
+            $users = [];
+            $ids = $competition->users->pluck('id')->toArray();
 
-        if ($ids) {
-            $users = $this->userRepository->getAll($ids);
+            if ($ids) {
+                $users = $this->userRepository->getAll($ids);
+            }
+
+            dd($users);
         }
 
         $resources = [
@@ -110,10 +121,6 @@ class MessagesController extends Controller
             'competition' => $competition,
             'users' => $users,
         ];
-
-        if (request('test')) {
-            $resources['test'] = request('test');
-        }
 
         // Kick off email sending
         event(new QueueMessageRequest($resources));
