@@ -93,12 +93,12 @@ class Email
     {
         $parsableProperties = ['subject', 'body', 'pro_tip'];
 
-        $processedMessage = clone $message;
+        $processedMessage['type'] = $message->type;
 
         foreach ($parsableProperties as $prop) {
-            $processedMessage->$prop = $this->replaceTokens($tokens, $message->$prop);
-            $processedMessage->$prop = $this->parseLinks($processedMessage->$prop);
-            $processedMessage->$prop = nl2br($processedMessage->$prop);
+            $processedMessage[$prop] = $this->replaceTokens($tokens, $message->$prop);
+            $processedMessage[$prop] = $this->parseLinks($processedMessage[$prop]);
+            $processedMessage[$prop] = nl2br($processedMessage[$prop]);
         }
 
         return $processedMessage;

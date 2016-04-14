@@ -35,18 +35,16 @@ class QueueMessage implements ShouldQueue
         // Build the email.
         $email = new Email($resources['message'], $resources['contest'], $resources['competition'], $resources['users']);
 
-        foreach ($email->allMessages as $message) {
-            $content = $message['message'];
-
+        foreach ($email->allMessages as $content) {
             $settings = [
-                'subject' => $content->subject,
+                'subject' => $content['message']['subject'],
                 'from' => $email->contest->sender_email,
                 'from_name' => $email->contest->sender_name,
-                'to' => $message['user']->email,
-                'to_name' => $message['user']->first_name,
+                'to' => $content['user']->email,
+                'to_name' => $content['user']->first_name,
             ];
 
-            $this->sendMail($content, $settings);
+            $this->sendMail($content['message'], $settings);
         }
     }
 
@@ -58,7 +56,7 @@ class QueueMessage implements ShouldQueue
      */
     public function sendMail($content, $settings)
     {
-        $this->mail->queue('messages.' . $content->type, ['body' => $content->body], function ($msg) use ($settings) {
+        $this->mail->queue('messages.' . $content['type'], ['content' => $content], function ($msg) use ($settings) {
             $msg->from($settings['from'], $settings['from_name']);
 
             $msg->to($settings['to'], $settings['to_name'])->subject($settings['subject']);
