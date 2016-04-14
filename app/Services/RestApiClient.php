@@ -27,7 +27,7 @@ class RestApiClient
 
         $client = new Client([
             'base_uri' => $base_uri,
-            'timeout' => 2.0,
+            'timeout' => 20.0,
             'headers' => $headers,
         ]);
 
