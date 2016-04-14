@@ -145,7 +145,12 @@ class WaitingRoomsController extends Controller
      */
     public function export(WaitingRoom $room)
     {
-        $csv = $this->manager->exportCSV($room);
+        $users = $this->manager->getModelUsers($room);
+
+        $csv = $this->manager->exportUsersCsv($users);
+
+        // $csv = $this->manager->exportCSV($room);
+
         $csv->output('waitingroom' . $room->id . '.csv');
     }
 }

@@ -7,7 +7,6 @@ use Gladiator\Models\Contest;
 use Gladiator\Services\Northstar\Northstar;
 use Gladiator\Repositories\CacheCampaignRepository;
 use Gladiator\Repositories\UserRepositoryContract;
-use Illuminate\Database\Eloquent\Collection;
 
 class Manager
 {
@@ -48,17 +47,21 @@ class Manager
     /**
      * Build CSV data for a given WaitingRoom or Competition
      *
-     * @param WaitingRoom|Competition $model
-     * @param bool $reportbacks Should this csv include reportback data?
+     * @param  WaitingRoom|Competition $model
+     * @param  bool $reportbacks Should this csv include reportback data?
      * @return \League\Csv $csv
+     * @deprecated
      */
     public function exportCSV($model)
     {
+        dd('exporting...');
+
         $data = [];
         $users = $model->users;
 
         $ids = $users->pluck('id')->all();
         $users = $this->userRepository->getAll($ids);
+
         $users = $users->keyBy('id')->all();
         $signups = $this->getActivityForAllUsers($ids, $model);
 
@@ -87,6 +90,16 @@ class Manager
 
             array_push($data, $details);
         }
+
+        return build_csv($data);
+    }
+
+    public function exportUsersCsv($users)
+    {
+        // Similar to above function but no longer need to pass and search for reportbacks if needed.
+        // Reportbacks, if exist, already embedded in each user object.
+
+        dd('exporting...');
 
         return build_csv($data);
     }
@@ -195,21 +208,29 @@ class Manager
     }
 
     /**
-     * Get a collection of northstar users that exist on a model.
+     * Get a collection of Northstar users that exist on a model.
      *
-     * @param  \Gladiator\Models\Competition|WaitingRoom $model
-     *
-     * @return collection $users
+     * @param  \Gladiator\Models\Competition|WaitingRoom  $model
+     * @param  bool  $withReportback
+     * @return \Illuminate\Support\Collection  $users
      */
-    public function getModelUsers($model)
+    public function getModelUsers($model, $withReportback = false)
     {
-        $ids = $model->users->pluck('id')->toArray();
+        $users = $model->users;
 
-        if ($ids) {
-            return $this->userRepository->getAll($ids);
+        if (! $users) {
+            return null;
         }
 
-        return null;
+        $ids = $users->pluck('id')->all();
+
+        $users = $this->userRepository->getAll($ids);
+
+        if (! $withReportback) {
+            return $users;
+        }
+
+        return $this->appendReportback($users);
     }
 
     /**
@@ -304,7 +325,7 @@ class Manager
      */
     public function appendCampaign($data)
     {
-        if ($data instanceof Collection) {
+        if ($data instanceof \Illuminate\Database\Eloquent\Collection) {
             return $this->appendCampaignToCollection($data);
         }
 
@@ -312,7 +333,21 @@ class Manager
             return $this->appendCampaignToModel($data);
         }
 
-        return;
+        return null;
+    }
+
+
+    public function appendReportback($data)
+    {
+        if ($data instanceof \Illuminate\Support\Collection) {
+            return $this->appendReportbackToCollection($data);
+        }
+
+        if ($data instanceof \stdClass) {
+            return $this->appendReportbackToObject($data);
+        }
+
+        return null;
     }
 
     /**
@@ -361,4 +396,15 @@ class Manager
 
         return $model;
     }
+
+    protected function appendReportbackToCollection($collection)
+    {
+        dd('grab reportbacks and append to user collection');
+    }
+
+    protected function appendReportbackToObject($model)
+    {
+        dd('grab reportback and append to user object');
+    }
 }
+
