@@ -52,7 +52,7 @@ class Manager
      * @param bool $reportbacks Should this csv include reportback data?
      * @return \League\Csv $csv
      */
-    public function exportCSV($model, $hasReportback = false)
+    public function exportCSV($model)
     {
         $data = [];
         $users = $model->users;
@@ -60,13 +60,9 @@ class Manager
         $ids = $users->pluck('id')->all();
         $users = $this->userRepository->getAll($ids);
         $users = $users->keyBy('id')->all();
+        $signups = $this->getActivityForAllUsers($ids, $model);
 
-        $headers = ['northstar_id', 'first_name', 'last_name', 'email', 'cell'];
-
-        if ($hasReportback) {
-            array_push($headers, 'reportback', 'quantity', 'flagged status');
-            $signups = $this->getActivityForAllUsers($ids, $model);
-        }
+        $headers = ['northstar_id', 'first_name', 'last_name', 'email', 'cell', 'reportback', 'quantity', 'flagged status'];
 
         array_push($data, $headers);
 
@@ -80,7 +76,8 @@ class Manager
             ];
 
             $signup = $signups->get($user->id);
-            if ($hasReportback && isset($signup->reportback)) {
+
+            if (isset($signup) && isset($signup->reportback)) {
                 $reportback = $this->formatReportback($signup->reportback);
                 array_push($details,
                     $reportback->admin_url,
@@ -262,7 +259,7 @@ class Manager
 
         for ($i = 0; $i < $count; $i++) {
             $batch = array_slice($ids, $index, $batchSize);
-            $signups = array_merge($signups, $this->northstar->getUserSignups(implode(',', $batch), $campaign, $campaign_run));
+            $signups = array_merge($signups, $this->northstar->getUserSignups(implode(',', $batch), $campaign, $campaign_run, $batchSize));
             $index += $batchSize;
         }
 
