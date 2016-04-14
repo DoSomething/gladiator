@@ -9,7 +9,6 @@ use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Manager;
 use Gladiator\Models\Message;
 use Gladiator\Models\User;
-use Illuminate\Http\Request;
 
 class CompetitionsController extends Controller
 {
