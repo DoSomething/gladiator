@@ -125,6 +125,10 @@ class RestApiClient
     protected function send($method, $path, $options = [])
     {
         try {
+            if (env('LOG_API_REQUESTS')) {
+                logger('made an API request', compact('method', 'path', 'options'));
+            }
+
             return $this->client->request($method, $path, $options);
         } catch (RequestException $error) {
             $response = $this->getJson($error->getResponse());
