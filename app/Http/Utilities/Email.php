@@ -91,7 +91,7 @@ class Email
      */
     protected function processMessage($tokens, $message)
     {
-        $parsableProperties = ['subject', 'body', 'pro_tip'];
+        $parsableProperties = ['subject', 'body', 'signoff', 'pro_tip'];
 
         $processedMessage['type'] = $message->type;
 
