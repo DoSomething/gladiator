@@ -149,6 +149,6 @@ class WaitingRoomsController extends Controller
 
         $csv = $this->manager->exportUsersCsv($users);
 
-        $csv->output('waitingroom' . $room->id . '.csv');
+        $csv->output('contest_' . $room->contest_id . '-' . 'waitingroom_' . $room->id . '-users.csv');
     }
 }
