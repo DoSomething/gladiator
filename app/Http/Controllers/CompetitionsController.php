@@ -100,9 +100,9 @@ class CompetitionsController extends Controller
      * @param  \Gladiator\Models\Competition  $competition
      * @return \League\Csv\ $csv
      */
-    public function export(Competition $competition, Request $request)
+    public function export(Competition $competition)
     {
-        $csv = $this->manager->exportCSV($competition, $request->input('hasReportback'));
+        $csv = $this->manager->exportCSV($competition);
         $csv->output('competition' . $competition->id . '.csv');
     }
 
