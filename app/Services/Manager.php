@@ -54,15 +54,16 @@ class Manager
      */
     public function exportCSV($model)
     {
-        dd('exporting...');
-
         $data = [];
+
         $users = $model->users;
 
         $ids = $users->pluck('id')->all();
+
         $users = $this->userRepository->getAll($ids);
 
         $users = $users->keyBy('id')->all();
+
         $signups = $this->getActivityForAllUsers($ids, $model);
 
         $headers = ['northstar_id', 'first_name', 'last_name', 'email', 'cell', 'reportback', 'quantity', 'flagged status'];
@@ -91,15 +92,34 @@ class Manager
             array_push($data, $details);
         }
 
+        dd($data);
+
         return build_csv($data);
     }
+
 
     public function exportUsersCsv($users)
     {
         // Similar to above function but no longer need to pass and search for reportbacks if needed.
         // Reportbacks, if exist, already embedded in each user object.
 
-        dd('exporting...');
+        $data = [];
+
+        // dd($users);
+
+        $data[] = ['northstar_id', 'first_name', 'last_name', 'email', 'mobile number', 'reportback', 'quantity', '# promoted', '# approved', '# excluded', '# flagged', '# pending'];
+
+        foreach ($users as $user) {
+            $details = [
+                $user->id,
+                isset($user->first_name) ? $user->first_name : '',
+                isset($user->last_name) ? $user->last_name : '',
+                isset($user->email) ? $user->email : '',
+                isset($user->mobile) ? $user->mobile : '',
+            ];
+
+            $data[] = $details;
+        }
 
         return build_csv($data);
     }

@@ -141,7 +141,9 @@ class CompetitionsController extends Controller
      */
     public function leaderboard(Competition $competition)
     {
-        $users = $this->manager->getCompetitionUsers($competition);
+        $users = $this->manager->getModelUsers($competition);
+
+        // do another step...
 
         $leaderboard = $this->manager->getLeaderboard($competition);
 
