@@ -10,6 +10,17 @@
     <div class="container">
         <div class="wrapper">
             <div class="container__block">
+            <h2 class="heading">Data export</h1>
+                <ul class="list">
+                    <li><a href="{{ route('competitions.export', ['competition' => $competition->id, 'withReportback' => 'true']) }}">&DownArrowBar; Export</a> &mdash; CSV list of users in this leaderboard</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="wrapper">
+            <div class="container__block">
                 <h2 class="heading -banner">Leaderboard</h2>
 
                 <table class="table">

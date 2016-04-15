@@ -42,7 +42,7 @@
             <div class="container__block">
             <h2 class="heading">Data export</h1>
                 <ul class="list">
-                    <li><a href="{{ route('competitions.export', ['competition' => $competition->id]) }}">&DownArrowBar; Export</a> &mdash; competition users <em>with</em> reportback data</li>
+                    <li><a href="{{ route('competitions.export', ['competition' => $competition->id]) }}">&DownArrowBar; Export</a> &mdash; CSV list of users for this competition</li>
                 </ul>
             </div>
         </div>

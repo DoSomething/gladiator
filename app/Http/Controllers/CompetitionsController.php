@@ -5,10 +5,11 @@ namespace Gladiator\Http\Controllers;
 use Gladiator\Http\Requests\CompetitionRequest;
 use Gladiator\Models\Competition;
 use Gladiator\Models\Contest;
-use Gladiator\Repositories\UserRepositoryContract;
-use Gladiator\Services\Manager;
 use Gladiator\Models\Message;
 use Gladiator\Models\User;
+use Gladiator\Repositories\UserRepositoryContract;
+use Gladiator\Services\Manager;
+use Illuminate\Http\Request;
 
 class CompetitionsController extends Controller
 {
@@ -94,15 +95,20 @@ class CompetitionsController extends Controller
     }
 
     /**
-     * Download the CSV export of all users.
+     * Download a CSV export of all users based on different criteria.
      *
      * @param  \Gladiator\Models\Competition  $competition
-     * @return \League\Csv\ $csv
+     * @return void
      */
-    public function export(Competition $competition)
+    public function export(Competition $competition, Request $request)
     {
-        $csv = $this->manager->exportCSV($competition);
-        $csv->output('competition' . $competition->id . '.csv');
+        $users = $this->manager->getModelUsers($competition);
+
+        $csv = $this->manager->exportUsersCsv($users);
+
+        $fileName = 'contest_' . $competition->contest_id . '-' . 'competition_' . $competition->id . '-users';
+
+        $csv->output($fileName . '.csv');
     }
 
     /**
