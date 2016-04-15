@@ -4,13 +4,20 @@ namespace Gladiator\Services;
 
 class Leaderboard
 {
-    public function generate($data, $sortBy = 'default')
+    public function build($users, $sortBy = 'default')
     {
+        if ($sortBy === 'default') {
+            return $this->rank($users);
+        }
 
+        return $users;
     }
 
-    public function rank()
+    public function rank($users)
     {
+
+        return $users;
+
         // $increment = 1;
         // $rank = 1;
 

@@ -8,6 +8,7 @@ use Gladiator\Models\Contest;
 use Gladiator\Models\Message;
 use Gladiator\Models\User;
 use Gladiator\Repositories\UserRepositoryContract;
+use Gladiator\Services\Leaderboard;
 use Gladiator\Services\Manager;
 use Illuminate\Http\Request;
 
@@ -157,16 +158,17 @@ class CompetitionsController extends Controller
      */
     public function leaderboard(Competition $competition)
     {
-        // Consider Flashing/Caching the leaderboard to the session for a few minutes,
+        // @TODO: Consider Flashing/Caching the leaderboard to the session for a few minutes,
         // to keep from having to re-request if page is reloaded or switching back and forth between views!
 
-        $users = $this->manager->getModelUsers($competition);
+        $users = $this->manager->getModelUsers($competition, true);
 
-        dd($users);
+        $leaderboard = new Leaderboard;
 
-        // do another step...
+        // $leaderboard = $this->manager->getLeaderboard($competition);
+        $list = $leaderboard->build($users);
 
-        $leaderboard = $this->manager->getLeaderboard($competition);
+        dd($list);
 
         return view('competitions.leaderboard', compact('competition', 'leaderboard'));
     }
