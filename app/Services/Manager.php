@@ -45,59 +45,11 @@ class Manager
     }
 
     /**
-     * Build CSV data for a given WaitingRoom or Competition
+     * Build and export a CSV of user data.
      *
-     * @param  WaitingRoom|Competition $model
-     * @param  bool $reportbacks Should this csv include reportback data?
-     * @return \League\Csv $csv
-     * @deprecated
+     * @param  object $users
+     * @return \League\Csv
      */
-    // public function exportCSV($model)
-    // {
-    //     $data = [];
-
-    //     $users = $model->users;
-
-    //     $ids = $users->pluck('id')->all();
-
-    //     $users = $this->userRepository->getAll($ids);
-
-    //     $users = $users->keyBy('id')->all();
-
-    //     $signups = $this->getActivityForAllUsers($ids, $model);
-
-    //     $headers = ['northstar_id', 'first_name', 'last_name', 'email', 'cell', 'reportback', 'quantity', 'flagged status'];
-
-    //     array_push($data, $headers);
-
-    //     foreach ($users as $user) {
-    //         $details = [
-    //             $user->id,
-    //             isset($user->first_name) ? $user->first_name : '',
-    //             isset($user->last_name) ? $user->last_name : '',
-    //             isset($user->email) ? $user->email : '',
-    //             isset($user->mobile) ? $user->mobile : '',
-    //         ];
-
-    //         $signup = $signups->get($user->id);
-
-    //         if (isset($signup) && isset($signup->reportback)) {
-    //             $reportback = $this->formatReportback($signup->reportback);
-    //             array_push($details,
-    //                 $reportback->admin_url,
-    //                 $reportback->quantity,
-    //                 $reportback->flagged);
-    //         }
-
-    //         array_push($data, $details);
-    //     }
-
-    //     dd($data);
-
-    //     return build_csv($data);
-    // }
-
-
     public function exportUsersCsv($users)
     {
         // Similar to above function but no longer need to pass and search for reportbacks if needed.
