@@ -6,7 +6,7 @@ use Carbon\Carbon;
  * Build a CSV from the supplied data.
  *
  * @param  array  $data
- * @return \League\Csv $csv
+ * @return \League\Csv  $csv
  */
 function build_csv($data)
 {
@@ -15,6 +15,17 @@ function build_csv($data)
     $csv->insertAll($data);
 
     return $csv;
+}
+
+/**
+ * Convert a string 'true' or 'false' to a boolean value.
+ *
+ * @param  string  $string
+ * @return bool
+ */
+function convert_string_to_boolean($string)
+{
+    return filter_var($string, FILTER_VALIDATE_BOOLEAN);
 }
 
 /**

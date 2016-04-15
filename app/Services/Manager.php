@@ -52,50 +52,50 @@ class Manager
      * @return \League\Csv $csv
      * @deprecated
      */
-    public function exportCSV($model)
-    {
-        $data = [];
+    // public function exportCSV($model)
+    // {
+    //     $data = [];
 
-        $users = $model->users;
+    //     $users = $model->users;
 
-        $ids = $users->pluck('id')->all();
+    //     $ids = $users->pluck('id')->all();
 
-        $users = $this->userRepository->getAll($ids);
+    //     $users = $this->userRepository->getAll($ids);
 
-        $users = $users->keyBy('id')->all();
+    //     $users = $users->keyBy('id')->all();
 
-        $signups = $this->getActivityForAllUsers($ids, $model);
+    //     $signups = $this->getActivityForAllUsers($ids, $model);
 
-        $headers = ['northstar_id', 'first_name', 'last_name', 'email', 'cell', 'reportback', 'quantity', 'flagged status'];
+    //     $headers = ['northstar_id', 'first_name', 'last_name', 'email', 'cell', 'reportback', 'quantity', 'flagged status'];
 
-        array_push($data, $headers);
+    //     array_push($data, $headers);
 
-        foreach ($users as $user) {
-            $details = [
-                $user->id,
-                isset($user->first_name) ? $user->first_name : '',
-                isset($user->last_name) ? $user->last_name : '',
-                isset($user->email) ? $user->email : '',
-                isset($user->mobile) ? $user->mobile : '',
-            ];
+    //     foreach ($users as $user) {
+    //         $details = [
+    //             $user->id,
+    //             isset($user->first_name) ? $user->first_name : '',
+    //             isset($user->last_name) ? $user->last_name : '',
+    //             isset($user->email) ? $user->email : '',
+    //             isset($user->mobile) ? $user->mobile : '',
+    //         ];
 
-            $signup = $signups->get($user->id);
+    //         $signup = $signups->get($user->id);
 
-            if (isset($signup) && isset($signup->reportback)) {
-                $reportback = $this->formatReportback($signup->reportback);
-                array_push($details,
-                    $reportback->admin_url,
-                    $reportback->quantity,
-                    $reportback->flagged);
-            }
+    //         if (isset($signup) && isset($signup->reportback)) {
+    //             $reportback = $this->formatReportback($signup->reportback);
+    //             array_push($details,
+    //                 $reportback->admin_url,
+    //                 $reportback->quantity,
+    //                 $reportback->flagged);
+    //         }
 
-            array_push($data, $details);
-        }
+    //         array_push($data, $details);
+    //     }
 
-        dd($data);
+    //     dd($data);
 
-        return build_csv($data);
-    }
+    //     return build_csv($data);
+    // }
 
 
     public function exportUsersCsv($users)

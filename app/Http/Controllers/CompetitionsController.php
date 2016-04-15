@@ -98,15 +98,25 @@ class CompetitionsController extends Controller
      * Download a CSV export of all users based on different criteria.
      *
      * @param  \Gladiator\Models\Competition  $competition
+     * @param  \Illuminate\Http\Request  $request
      * @return void
      */
     public function export(Competition $competition, Request $request)
     {
-        $users = $this->manager->getModelUsers($competition);
+        $withReportback = convert_string_to_boolean($request->input('withReportback'));
+
+        // @TODO: before re-requesting all this info, check if there's a cache in session/flash!
+        $users = $this->manager->getModelUsers($competition, $withReportback);
 
         $csv = $this->manager->exportUsersCsv($users);
 
-        $fileName = 'contest_' . $competition->contest_id . '-' . 'competition_' . $competition->id . '-users';
+        $fileName = 'contest_' . $competition->contest_id . '-' . 'competition_' . $competition->id;
+
+        if (! $withReportback) {
+            $fileName = $fileName . '-users';
+        } else {
+            $fileName = $fileName . '-leaderboard';
+        }
 
         $csv->output($fileName . '.csv');
     }
@@ -147,6 +157,9 @@ class CompetitionsController extends Controller
      */
     public function leaderboard(Competition $competition)
     {
+        // Consider Flashing/Caching the leaderboard to the session for a few minutes,
+        // to keep from having to re-request if page is reloaded or switching back and forth between views!
+
         $users = $this->manager->getModelUsers($competition);
 
         // do another step...

@@ -4,7 +4,7 @@
 
     @include('layouts.header', [
         'title' => 'Competitions',
-        'subtitle' => 'Viewing competition ' . $competition->id
+        'subtitle' => 'Viewing leaderboard for competition ' . $competition->id
     ])
 
     <div class="container">
@@ -12,7 +12,7 @@
             <div class="container__block">
             <h2 class="heading">Data export</h1>
                 <ul class="list">
-                    <li><a href="{{ route('competitions.export', ['competition' => $competition->id, 'withReportback' => 'true']) }}">&DownArrowBar; Export</a> &mdash; CSV list of users in this leaderboard</li>
+                    <li><a href="{{ route('competitions.export', ['competition' => $competition->id, 'withReportback' => 'true']) }}">&DownArrowBar; Export</a> &mdash; CSV list of users and their activity in this leaderboard</li>
                 </ul>
             </div>
         </div>
