@@ -4,9 +4,10 @@ namespace Gladiator\Services;
 
 use Carbon\Carbon;
 use Gladiator\Models\Contest;
-use Gladiator\Services\Northstar\Northstar;
 use Gladiator\Repositories\CacheCampaignRepository;
 use Gladiator\Repositories\UserRepositoryContract;
+use Gladiator\Services\Catalog;
+use Gladiator\Services\Northstar\Northstar;
 
 class Manager
 {
@@ -52,12 +53,7 @@ class Manager
      */
     public function exportUsersCsv($users)
     {
-        // Similar to above function but no longer need to pass and search for reportbacks if needed.
-        // Reportbacks, if exist, already embedded in each user object.
-
         $data = [];
-
-        // dd($users);
 
         $data[] = ['northstar_id', 'first_name', 'last_name', 'email', 'mobile number', 'reportback', 'quantity', '# promoted', '# approved', '# excluded', '# flagged', '# pending'];
 
@@ -70,10 +66,27 @@ class Manager
                 isset($user->mobile) ? $user->mobile : '',
             ];
 
+            if (isset($user->reportback)) {
+                $details[] = env('PHOENIX_URI') . '/admin/reportback/' . $user->reportback->id;
+                $details[] = $user->reportback->quantity;
+                $details[] = $user->reportback->reportback_items->count_by_status['promoted'];
+                $details[] = $user->reportback->reportback_items->count_by_status['approved'];
+                $details[] = $user->reportback->reportback_items->count_by_status['excluded'];
+                $details[] = $user->reportback->reportback_items->count_by_status['flagged'];
+                $details[] = $user->reportback->reportback_items->count_by_status['pending'];
+            }
+
             $data[] = $details;
         }
 
         return build_csv($data);
+    }
+
+    public function catalogUsers($users, $sortBy = 'rank')
+    {
+        $catalog = new Catalog;
+
+        return $catalog->build($users, $sortBy);
     }
 
     /**
@@ -160,12 +173,6 @@ class Manager
         $index = 0;
         $signups = [];
 
-        // dd([
-        //     'ids' => $ids,
-        //     'count' => $count,
-        //     'parameters' => $parameters,
-        // ]);
-
         for ($i = 0; $i < $count; $i++) {
             $batch = array_slice($ids, $index, $batchSize);
 
@@ -178,34 +185,6 @@ class Manager
         }
 
         return collect($signups);
-    }
-
-    /**
-     * Formats a given reportback for use in Gladiator.
-     *
-     * @param object $reportback from API response
-     * @return object $reportback
-     */
-    private function formatReportback($reportback)
-    {
-        // Provide the admin URL to the reportback.
-        $reportback->admin_url = env('PHOENIX_URI') . '/admin/reportback/' . $reportback->id;
-
-        // Format the update timestamp
-        $reportback->updated_at = new Carbon($reportback->updated_at);
-        $reportback->updated_at = $reportback->updated_at->format('Y-m-d');
-
-        // Set flagged status to 'pending' if it is NULL, otherwise use bool value
-        if (! isset($reportback->flagged)) {
-            $reportback->flagged = 'pending';
-        } elseif ($reportback->flagged) {
-            $reportback->flagged = 'flagged';
-        } else {
-            $reportback->flagged = 'approved';
-        }
-
-        // Return the reportback.
-        return $reportback;
     }
 
     /**
@@ -342,7 +321,6 @@ class Manager
         //     'activity' => $activity,
         //     'collection' => $collection,
         // ]);
-        // $collection = $collection->merge($activity->all()); // DELETE! ONLY TEMPORARY!
 
         $activity = $activity->keyBy(function ($item) {
             return $item->user->id;

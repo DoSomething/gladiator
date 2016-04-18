@@ -8,7 +8,6 @@ use Gladiator\Models\Contest;
 use Gladiator\Models\Message;
 use Gladiator\Models\User;
 use Gladiator\Repositories\UserRepositoryContract;
-use Gladiator\Services\Catalog;
 use Gladiator\Services\Manager;
 use Illuminate\Http\Request;
 
@@ -104,20 +103,23 @@ class CompetitionsController extends Controller
      */
     public function export(Competition $competition, Request $request)
     {
+        $fileName = 'contest_' . $competition->contest_id . '-' . 'competition_' . $competition->id;
+
         $withReportback = convert_string_to_boolean($request->input('withReportback'));
 
-        // @TODO: before re-requesting all this info, check if there's a cache in session/flash!
         $users = $this->manager->getModelUsers($competition, $withReportback);
-
-        $csv = $this->manager->exportUsersCsv($users);
-
-        $fileName = 'contest_' . $competition->contest_id . '-' . 'competition_' . $competition->id;
 
         if (! $withReportback) {
             $fileName = $fileName . '-users';
         } else {
             $fileName = $fileName . '-leaderboard';
+
+            $list = $this->manager->catalogUsers($users);
+
+            $users = $list['active'];
         }
+
+        $csv = $this->manager->exportUsersCsv($users);
 
         $csv->output($fileName . '.csv');
     }
@@ -166,9 +168,7 @@ class CompetitionsController extends Controller
 
         $users = $this->manager->getModelUsers($competition, true);
 
-        $catalog = new Catalog;
-
-        $list = $catalog->build($users);
+        $list = $this->manager->catalogUsers($users);
 
         $leaderboard = $list['active'];
         $pending = $list['inactive'];
