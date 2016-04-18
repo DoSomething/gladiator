@@ -321,7 +321,8 @@ class Manager
     protected function appendReportbackToObject($object, $parameters)
     {
         // @TODO: not used at the moment, but will be @_@
-        dd('grab reportback and append to user object');
+        // grab reportback and append to user object
+
+        return null;
     }
 }
-
