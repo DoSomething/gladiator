@@ -300,6 +300,7 @@ class Manager
         // $activity = $this->getActivityForAllUsers($collection->pluck('id')->all(), $parameters);
 
         // ::: For testing, need to remove :::
+
         $ids = $collection->pluck('id')->all();
 
         $curatedIds = [
@@ -337,6 +338,11 @@ class Manager
         $activity = $this->getActivityForAllUsers($ids, $parameters);
         // ::: For testing, need to remove :::
 
+        // dd([
+        //     'activity' => $activity,
+        //     'collection' => $collection,
+        // ]);
+        // $collection = $collection->merge($activity->all()); // DELETE! ONLY TEMPORARY!
 
         $activity = $activity->keyBy(function ($item) {
             return $item->user->id;
