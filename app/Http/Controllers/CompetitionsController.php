@@ -114,7 +114,11 @@ class CompetitionsController extends Controller
         } else {
             $fileName = $fileName . '-leaderboard';
 
-            $list = $this->manager->catalogUsers($users);
+            if (session()->has($fileName)) {
+                $list = session($fileName);
+            } else {
+                $list = $this->manager->catalogUsers($users);
+            }
 
             $users = $list['active'];
         }
@@ -158,7 +162,7 @@ class CompetitionsController extends Controller
      * @param  \Gladiator\Models\Competition  $competition
      * @return \Illuminate\Http\Response
      */
-    public function leaderboard(Competition $competition)
+    public function leaderboard(Competition $competition, Request $request)
     {
         // @TODO: Consider Flashing/Caching the leaderboard to the session for a few minutes,
         // to keep from having to re-request if page is reloaded or switching back and forth between views
@@ -172,6 +176,8 @@ class CompetitionsController extends Controller
 
         $leaderboard = $list['active'];
         $pending = $list['inactive'];
+
+        session()->flash('contest_' . $competition->contest_id . '-' . 'competition_' . $competition->id . '-leaderboard', $list);
 
         return view('competitions.leaderboard', compact('competition', 'leaderboard', 'pending'));
     }
