@@ -166,6 +166,8 @@ class CompetitionsController extends Controller
 
         $users = $this->manager->getModelUsers($competition, true);
 
+        dd($users);
+
         $leaderboard = new Leaderboard;
 
         // $leaderboard = $this->manager->getLeaderboard($competition);
