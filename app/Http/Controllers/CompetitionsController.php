@@ -110,6 +110,7 @@ class CompetitionsController extends Controller
         $users = $this->manager->getModelUsers($competition, $withReportback);
 
         if (! $withReportback) {
+            // @TODO: can probably flash this to the session too!
             $fileName = $fileName . '-users';
         } else {
             $fileName = $fileName . '-leaderboard';
@@ -162,7 +163,7 @@ class CompetitionsController extends Controller
      * @param  \Gladiator\Models\Competition  $competition
      * @return \Illuminate\Http\Response
      */
-    public function leaderboard(Competition $competition, Request $request)
+    public function leaderboard(Competition $competition)
     {
         // @TODO: Consider Flashing/Caching the leaderboard to the session for a few minutes,
         // to keep from having to re-request if page is reloaded or switching back and forth between views

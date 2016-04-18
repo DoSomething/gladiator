@@ -4,6 +4,13 @@ namespace Gladiator\Services;
 
 class Catalog
 {
+    /**
+     * Build out a catalog list of users sorted by a specified method.
+     *
+     * @param  \Illuminate\Support\Collection  $users
+     * @param  string $sortBy
+     * @return array
+     */
     public function build($users, $sortBy = 'rank')
     {
         // Return array of collated users grouped as "active" or "inactive".
@@ -18,9 +25,16 @@ class Catalog
         return $users;
     }
 
+    /**
+     * Sort a list of users by method specified.
+     *
+     * @param  array  $users
+     * @param  string $method
+     * @return array
+     */
     public function sort($users, $method = 'rank')
     {
-        // @TODO: allows adding more sort option in the future, and with session flashed data,
+        // @TODO: allows adding more sort options in the future, and with session flashed data,
         // would not require additional requests and API calls since all in flash cache.
 
         if ($method === 'rank') {
@@ -34,6 +48,37 @@ class Catalog
         return $users;
     }
 
+    /**
+     * Organize and group a collection of users by reportback activity.
+     *
+     * @param  \Illuminate\Support\Collection  $users
+     * @return array
+     */
+    protected function collateByReportbackActivity($users)
+    {
+        $active = [];
+        $inactive = [];
+
+        foreach ($users as $user) {
+            if (! $user->reportback) {
+                $inactive[] = $user;
+            } else {
+                $active[] = $user;
+            }
+        }
+
+        return [
+            'active' => $active,
+            'inactive' => $inactive,
+        ];
+    }
+
+    /**
+     * Sort a list of user by rank.
+     *
+     * @param  array  $users
+     * @return array
+     */
     protected function sortByRank($users)
     {
         $users = $this->sortByReportbackQuantity($users);
@@ -61,6 +106,12 @@ class Catalog
         return $users;
     }
 
+    /**
+     * Sort a list of user by reportback quantity.
+     *
+     * @param  array  $users
+     * @return array
+     */
     protected function sortByReportbackQuantity($users)
     {
         usort($users, function ($a, $b) {
@@ -68,25 +119,6 @@ class Catalog
         });
 
         return $users;
-    }
-
-    protected function collateByReportbackActivity($users)
-    {
-        $active = [];
-        $inactive = [];
-
-        foreach ($users as $user) {
-            if (! $user->reportback) {
-                $inactive[] = $user;
-            } else {
-                $active[] = $user;
-            }
-        }
-
-        return [
-            'active' => $active,
-            'inactive' => $inactive,
-        ];
     }
 
     /**

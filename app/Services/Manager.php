@@ -82,6 +82,13 @@ class Manager
         return build_csv($data);
     }
 
+    /**
+     * Catalog a list of users and sort by a specified method.
+     * 
+     * @param  array  $users
+     * @param  string $sortBy
+     * @return array
+     */
     public function catalogUsers($users, $sortBy = 'rank')
     {
         $catalog = new Catalog;
@@ -206,7 +213,13 @@ class Manager
         return null;
     }
 
-
+    /**
+     * Append Reportback data to the supplied data if applicable.
+     * 
+     * @param  mixed  $data
+     * @param  \Gladiator\Models\Competition  $model
+     * @return mixed
+     */
     public function appendReportback($data, $model)
     {
         $parameters = [];
@@ -274,53 +287,16 @@ class Manager
         return $model;
     }
 
+    /**
+     * Append Reportback data to the supplied collection of users.
+     * 
+     * @param  \Illuminate\Support\Collection  $collection
+     * @param  array  $parameters
+     * @return \Illuminate\Support\Collection
+     */
     protected function appendReportbackToCollection($collection, $parameters)
     {
-        // $activity = $this->getActivityForAllUsers($collection->pluck('id')->all(), $parameters);
-
-        // ::: For testing, need to remove :::
-
-        $ids = $collection->pluck('id')->all();
-
-        $curatedIds = [
-          // '5639066ba59dbfe6598b4567', // '1705523', // 5639066ba59dbfe6598b4567 & 570fe8f1a59dbf5b048b4569 // Katie Crane
-          // '55882c57a59dbfa93d8b4599', // '1700013', // present in actual
-          // '560c79dda59dbf9b0a8b456a', // '1705397', // 560afd12a59dbf37038b4569 & 560c79dda59dbf9b0a8b456a
-          '559442cca59dbfc9578b4bf4', // '1702694',
-          // '56094df7a59dbf57798b4567', // '1705378', // 56094df7a59dbf57798b4567 & 56097d7ea59dbf4c7a8b4568
-          '55957df6a59dbfc9578b4c1a', // '1704963',
-          '55e60194a59dbfaa118b46ea', // '1705244',
-          '55e45e49a59dbfac118b46d6', // '1705239',
-          '55ddf0d0a59dbfac118b4647', // '1705226',
-          '559442c4a59dbfc9578b4b6a', // '1700226',
-          '55d49fe2a59dbfd0618b4653', // '1705162',
-          '559a8051a59dbfc9578b4c1e', // '1704964',
-          '55c22140a59dbf747b8b4cf7', // '1705086',
-          '55bfb463a59dbfca578b5375', // '1705076',
-          '55bfca44a59dbf747b8b4ca8', // '1705078',
-          '55b78d2ea59dbfca578b5241', // '1705054',
-          // '55a53048a59dbf747b8b4923', // '1704994', // 55a53048a59dbf747b8b4923 & 55a52deaa59dbf747b8b491e
-          '559442cfa59dbfc9578b4c14', // '10',
-          '5571df42a59dbf3b7a8b456d', // '9',
-          '55844d19a59dbfa83d8b4592', // '1700083',
-          '559442c3a59dbfc9578b4b58', // '1703935',
-          '559442c3a59dbfca578b4b68', // '1700230',
-          '559442c1a59dbfca578b4b38', // '1703614',
-          // '5571f4f5a59dbf3c7a8b4569', // '18', // present in actual
-          '559442a9a59dbfc9578b49b0', // '1701495',
-          '559442a9a59dbfca578b49af', // '129',
-          '559442baa59dbfc9578b4ac4', // '1700233',
-        ];
-
-        $ids = array_merge($ids, $curatedIds);  // 58 total, 23 with results
-
-        $activity = $this->getActivityForAllUsers($ids, $parameters);
-        // ::: For testing, need to remove :::
-
-        // dd([
-        //     'activity' => $activity,
-        //     'collection' => $collection,
-        // ]);
+        $activity = $this->getActivityForAllUsers($collection->pluck('id')->all(), $parameters);
 
         $activity = $activity->keyBy(function ($item) {
             return $item->user->id;
@@ -337,8 +313,16 @@ class Manager
         return $collection;
     }
 
-    protected function appendReportbackToObject($parameters)
+    /**
+     * Append Reportback data to the supplied user object.
+     *
+     * @param  object  $object
+     * @param  array  $parameters
+     * @return object
+     */
+    protected function appendReportbackToObject($object, $parameters)
     {
+        // @TODO: not used at the moment, but will be @_@
         dd('grab reportback and append to user object');
     }
 }
