@@ -74,7 +74,7 @@ class Catalog
     }
 
     /**
-     * Sort a list of user by rank.
+     * Sort a list of users by rank.
      *
      * @param  array  $users
      * @return array
@@ -107,7 +107,7 @@ class Catalog
     }
 
     /**
-     * Sort a list of user by reportback quantity.
+     * Sort a list of users by reportback quantity.
      *
      * @param  array  $users
      * @return array
