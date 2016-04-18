@@ -8,7 +8,7 @@ use Gladiator\Models\Contest;
 use Gladiator\Models\Message;
 use Gladiator\Models\User;
 use Gladiator\Repositories\UserRepositoryContract;
-use Gladiator\Services\Leaderboard;
+use Gladiator\Services\Catalog;
 use Gladiator\Services\Manager;
 use Illuminate\Http\Request;
 
@@ -160,19 +160,19 @@ class CompetitionsController extends Controller
     {
         // @TODO: Consider Flashing/Caching the leaderboard to the session for a few minutes,
         // to keep from having to re-request if page is reloaded or switching back and forth between views
-        // or when wanting to download the leaderboard csv vs viewing the leaderboard!
+        // or when wanting to download the leaderboard csv vs viewing the leaderboard on the same page!
 
         $competition = $competition->load('contest');
 
         $users = $this->manager->getModelUsers($competition, true);
 
-        $leaderboard = new Leaderboard;
+        $catalog = new Catalog;
 
-        // $leaderboard = $this->manager->getLeaderboard($competition);
-        $list = $leaderboard->build($users);
+        $list = $catalog->build($users);
 
-        dd($list);
+        $leaderboard = $list['active'];
+        $pending = $list['inactive'];
 
-        return view('competitions.leaderboard', compact('competition', 'leaderboard'));
+        return view('competitions.leaderboard', compact('competition', 'leaderboard', 'pending'));
     }
 }
