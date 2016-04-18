@@ -159,7 +159,10 @@ class CompetitionsController extends Controller
     public function leaderboard(Competition $competition)
     {
         // @TODO: Consider Flashing/Caching the leaderboard to the session for a few minutes,
-        // to keep from having to re-request if page is reloaded or switching back and forth between views!
+        // to keep from having to re-request if page is reloaded or switching back and forth between views
+        // or when wanting to download the leaderboard csv vs viewing the leaderboard!
+
+        $competition = $competition->load('contest');
 
         $users = $this->manager->getModelUsers($competition, true);
 

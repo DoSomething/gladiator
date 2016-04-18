@@ -116,7 +116,7 @@ class Manager
             return $users;
         }
 
-        return $this->appendReportback($users);
+        return $this->appendReportback($users, $model);
     }
 
     /**
@@ -125,10 +125,9 @@ class Manager
      *
      * @param  string $id  User ID
      * @param  \Gladiator\Models\Competition|WaitingRoom $model
-     *
      * @return object $reportback
      */
-    public function getUserActivity($id, $model)
+    public function getActivityForUser($id, $model)
     {
         $campaign = $model->contest->campaign_id;
         $campaign_run = $model->contest->campaign_run_id;
@@ -150,23 +149,63 @@ class Manager
     /**
      * Get reportbacks for many users & a given competition.
      *
-     * @param array $ids Array of ID's
-     * @param \Gladiator\Models\Competition $competition
-     * @param int $batchSize How many reportbacks to fetch at once
-     * @return collection $signups
+     * @param  array  $ids
+     * @param  \Gladiator\Models\Competition  $competition
+     * @param  int  $batchSize
+     * @return \Illuminate\Support\Collection $signups
      */
-    public function getActivityForAllUsers($ids, $competition, $batchSize = 50)
+    public function getActivityForAllUsers($ids, $parameters = [], $batchSize = 50)
     {
-        $campaign = $competition->contest->campaign_id;
-        $campaign_run = $competition->contest->campaign_run_id;
+        $curatedIds = [
+          // '5639066ba59dbfe6598b4567', // '1705523', // 5639066ba59dbfe6598b4567 & 570fe8f1a59dbf5b048b4569 // Katie Crane
+          // '55882c57a59dbfa93d8b4599', // '1700013', // present in actual
+          // '560c79dda59dbf9b0a8b456a', // '1705397', // 560afd12a59dbf37038b4569 & 560c79dda59dbf9b0a8b456a
+          '559442cca59dbfc9578b4bf4', // '1702694',
+          // '56094df7a59dbf57798b4567', // '1705378', // 56094df7a59dbf57798b4567 & 56097d7ea59dbf4c7a8b4568
+          '55957df6a59dbfc9578b4c1a', // '1704963',
+          '55e60194a59dbfaa118b46ea', // '1705244',
+          '55e45e49a59dbfac118b46d6', // '1705239',
+          '55ddf0d0a59dbfac118b4647', // '1705226',
+          '559442c4a59dbfc9578b4b6a', // '1700226',
+          '55d49fe2a59dbfd0618b4653', // '1705162',
+          '559a8051a59dbfc9578b4c1e', // '1704964',
+          '55c22140a59dbf747b8b4cf7', // '1705086',
+          '55bfb463a59dbfca578b5375', // '1705076',
+          '55bfca44a59dbf747b8b4ca8', // '1705078',
+          '55b78d2ea59dbfca578b5241', // '1705054',
+          // '55a53048a59dbf747b8b4923', // '1704994', // 55a53048a59dbf747b8b4923 & 55a52deaa59dbf747b8b491e
+          // '559442cfa59dbfc9578b4c14', // '10', // 1 entry return 6 items; something's messed up on /signups
+          '5571df42a59dbf3b7a8b456d', // '9',
+          '55844d19a59dbfa83d8b4592', // '1700083',
+          '559442c3a59dbfc9578b4b58', // '1703935',
+          '559442c3a59dbfca578b4b68', // '1700230',
+          '559442c1a59dbfca578b4b38', // '1703614',
+          // '5571f4f5a59dbf3c7a8b4569', // '18', // present in actual
+          '559442a9a59dbfc9578b49b0', // '1701495',
+          '559442a9a59dbfca578b49af', // '129',
+          '559442baa59dbfc9578b4ac4', // '1700233',
+        ];
 
-        $signups = [];
+        $ids = array_merge($ids, $curatedIds);  // 58 total, 23 with results`
+
         $count = intval(ceil(count($ids) / $batchSize));
         $index = 0;
+        $signups = [];
+
+        // dd([
+        //     'ids' => $ids,
+        //     'count' => $count,
+        //     'parameters' => $parameters,
+        // ]);
 
         for ($i = 0; $i < $count; $i++) {
             $batch = array_slice($ids, $index, $batchSize);
-            $signups = array_merge($signups, $this->northstar->getUserSignups(implode(',', $batch), $campaign, $campaign_run, $batchSize));
+
+            $parameters['users'] = implode(',', $batch);
+            $parameters['count'] = $batchSize;
+
+            $signups = array_merge($signups, $this->northstar->getAllUserSignups($parameters));
+
             $index += $batchSize;
         }
 
@@ -223,14 +262,21 @@ class Manager
     }
 
 
-    public function appendReportback($data)
+    public function appendReportback($data, $model)
     {
+        $parameters = [];
+
+        if ($model->contest) {
+            $parameters['campaigns'] = $model->contest->campaign_id;
+            $parameters['runs'] = $model->contest->campaign_run_id;
+        }
+
         if ($data instanceof \Illuminate\Support\Collection) {
-            return $this->appendReportbackToCollection($data);
+            return $this->appendReportbackToCollection($data, $parameters);
         }
 
         if ($data instanceof \stdClass) {
-            return $this->appendReportbackToObject($data);
+            return $this->appendReportbackToObject($data, $parameters);
         }
 
         return null;
@@ -283,12 +329,16 @@ class Manager
         return $model;
     }
 
-    protected function appendReportbackToCollection($collection)
+    protected function appendReportbackToCollection($collection, $parameters)
     {
+        $activity = $this->getActivityForAllUsers($collection->pluck('id')->all(), $parameters);
+
+        dd($activity);
+
         dd('grab reportbacks and append to user collection');
     }
 
-    protected function appendReportbackToObject($model)
+    protected function appendReportbackToObject($parameters)
     {
         dd('grab reportback and append to user object');
     }

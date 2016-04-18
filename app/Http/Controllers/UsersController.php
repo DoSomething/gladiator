@@ -103,7 +103,7 @@ class UsersController extends Controller
 
         // Get the user's reportback for each competition they are in.
         foreach ($competitions as $competition) {
-            $reportback = $this->manager->getUserActivity($id, $competition);
+            $reportback = $this->manager->getActivityForUser($id, $competition);
 
             if ($reportback) {
                 $competition->reportback = $reportback;
