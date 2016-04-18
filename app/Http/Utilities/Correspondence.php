@@ -15,7 +15,7 @@ class Correspondence
             'key' => '1',
             'label' => 'Welcome',
             'subject' => 'Welcome, :first_name:!',
-            'body' => "Woohoo, so glad you signed up for my :campaign_title: competition, :first_name:! Feel free to get a head start on the competition! Again, winners will be selecting based on the greatest number of :reportback_noun: :reportback_verb:.\n\rI’ll be in touch with more info in the next few days. Excited to watch you climb the leaderboard and crush the competition!\n\r:sender_name:",
+            'body' => "Woohoo, so glad you signed up for my :campaign_title: competition, :first_name:! Feel free to get a head start on the competition! Again, winners will be selected based on the greatest number of :reportback_noun: :reportback_verb:.\n\rI’ll be in touch with more info in the next few days. Excited to watch you climb the leaderboard and crush the competition!\n\r:sender_name:",
             'pro_tip' => null,
         ],
         [
@@ -23,7 +23,7 @@ class Correspondence
             'key' => '1',
             'label' => 'Competition info',
             'subject' => ':first_name:! Here’s more :campaign_title: competition info',
-            'body' => "Just wanted to send along some more info about the :campaign_title: competition you signed up for! The rules are simple:\n\r1. The more :reportback_noun: :reportback_verb:, the higher you move up the leaderboard.\n\r2. To be considered, go to the [Prove It](:prove_it_link:) section of the campaign and upload a photo a clearly shows you and all :reportback_noun: :reportback_verb:. Submissions are due each :leaderboard_msg_day-1: night throughout the campaign.\n\rThe competitor with the most :reportback_noun: :reportback_verb: by the competition deadline of :end_date:, wins $100 on an Amex gift card. 2nd - $50, 3rd - $25.\n\rYour first update is due on :leaderboard_msg_day-1: before 10 PM EST. If you have an update for me and want to see yourself on :leaderboard_msg_day:’s leaderboard, simply:\n\r   - Go to the [Prove It](:prove_it_link:) section\n\r   - Upload your photo \n\r   - Click “submit your pic”\n\rOn :leaderboard_msg_day:, I will send you the updated standings so you can see yourself on the leaderboard.\n\rRootin’ for ya, :first_name:,\n\r:sender_name:",
+            'body' => "Just wanted to send along some more info about the :campaign_title: competition you signed up for! The rules are simple:\n\r1. The more :reportback_noun: :reportback_verb:, the higher you move up the leaderboard.\n\r2. To be considered, go to the [Prove It](:prove_it_link:) section of the campaign and upload a photo that clearly shows you and all :reportback_noun: :reportback_verb:. Submissions are due each :leaderboard_msg_day-1: night throughout the campaign.\n\rThe competitor with the most :reportback_noun: :reportback_verb: by the competition deadline of :end_date:, wins $100 on an Amex gift card. 2nd - $50, 3rd - $25.\n\rYour first update is due on :leaderboard_msg_day-1: before 10 PM EST. If you have an update for me and want to see yourself on :leaderboard_msg_day:’s leaderboard, simply:\n\r   - Go to the [Prove It](:prove_it_link:) section\n\r   - Upload your photo \n\r   - Click “submit your pic”\n\rOn :leaderboard_msg_day:, I will send you the updated standings so you can see yourself on the leaderboard.\n\rRootin’ for ya, :first_name:,\n\r:sender_name:",
             'pro_tip' => null,
         ],
         [
@@ -79,7 +79,7 @@ class Correspondence
             'key' => '2',
             'label' => 'Leaderboard update 2',
             'subject' => 'Leaderboard update #2 for the :campaign_title: competition!',
-            'body' => "Hello, competitors-- \n\r1 more week! This :campaign_title: competition ends on :end_date:, so it’s time to make your mark.\n\rPro tip - :pro_tip:\n\rA final photo with your :reportback_noun: will be due :leaderboard_msg_day-1: before 10pm EST. [Upload yours here](:prove_it_link:).\n\rHere is the leaderboard! Shoutouts to the top 3 below:\n\r[#] more weeks to make your mark and climb up the leaderboard!",
+            'body' => "Hello, competitors-- \n\r1 more week! This :campaign_title: competition ends on :end_date:, so it’s time to make your mark.\n\rPro tip - :pro_tip:\n\rA final photo with your :reportback_noun: will be due :leaderboard_msg_day-1: before 10pm EST. [Upload yours here](:prove_it_link:).\n\rHere is the leaderboard! Shoutouts to the top 3 below:\n\r1 more week to make your mark and climb up the leaderboard!",
             'pro_tip' => null,
         ],
         [
