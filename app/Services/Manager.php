@@ -2,11 +2,9 @@
 
 namespace Gladiator\Services;
 
-use Carbon\Carbon;
 use Gladiator\Models\Contest;
 use Gladiator\Repositories\CacheCampaignRepository;
 use Gladiator\Repositories\UserRepositoryContract;
-use Gladiator\Services\Catalog;
 use Gladiator\Services\Northstar\Northstar;
 
 class Manager
@@ -84,7 +82,7 @@ class Manager
 
     /**
      * Catalog a list of users and sort by a specified method.
-     * 
+     *
      * @param  array  $users
      * @param  string $sortBy
      * @return array
@@ -215,7 +213,7 @@ class Manager
 
     /**
      * Append Reportback data to the supplied data if applicable.
-     * 
+     *
      * @param  mixed  $data
      * @param  \Gladiator\Models\Competition  $model
      * @return mixed
@@ -289,7 +287,7 @@ class Manager
 
     /**
      * Append Reportback data to the supplied collection of users.
-     * 
+     *
      * @param  \Illuminate\Support\Collection  $collection
      * @param  array  $parameters
      * @return \Illuminate\Support\Collection

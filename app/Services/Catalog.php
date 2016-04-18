@@ -138,7 +138,7 @@ class Catalog
         ];
 
         foreach ($reportback->reportback_items->data as $item) {
-            $statuses[$item->status] ++;
+            $statuses[$item->status]++;
         }
 
         $reportback->reportback_items->count_by_status = $statuses;
