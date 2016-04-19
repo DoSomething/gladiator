@@ -61,6 +61,12 @@ class Northstar extends RestApiClient
         return $response ? true : false;
     }
 
+    /**
+     * Send a GET request to return all signups for the supplied collection of users.
+     *
+     * @param  array  $inputs
+     * @return object|null
+     */
     public function getAllUserSignups($inputs = [])
     {
         $response = $this->get('signups', $inputs);
@@ -71,19 +77,12 @@ class Northstar extends RestApiClient
     /*
      * Send a GET request to return a user's signups.
      *
-     * @param  string $ids
-     * @param  string $campaigns
-     * @param  int|array $runs
+     * @param  array  $inputs
      * @return object|null
      */
-    public function getUserSignups($ids, $campaigns, $runs = '', $count = 25)
+    public function getUserSignups($inputs = [])
     {
-        $response = $this->get('signups', [
-            'users' => $ids,
-            'campaigns' => $campaigns,
-            'runs' => $runs,
-            'count' => $count,
-        ]);
+        $response = $this->get('signups', $inputs);
 
         return is_null($response) ? null : $response;
     }

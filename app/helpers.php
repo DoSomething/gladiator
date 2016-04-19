@@ -73,6 +73,17 @@ function format_date_form_field($model, $field, $defaut = 'MM/DD/YYYY')
 }
 
 /**
+ * Formate a timestamp using Carbon for display in a view.
+ *
+ * @param  string  $timestamp
+ * @return /Carbon/Carbon
+ */
+function format_timestamp_for_display($timestamp)
+{
+    return (new Carbon($timestamp))->format('Y-m-d');
+}
+
+/**
  * Check if the waiting room signup period ended.
  *
  * @param  date  $signupDate
@@ -110,4 +121,15 @@ function match_email_domain($email, $domain = 'dosomething.org')
 function get_day_of_week($day)
 {
     return jddayofweek($day, 1);
+}
+
+/**
+ * Generate Phoenix admin URL for specified reportback.
+ *
+ * @param  string $id
+ * @return string
+ */
+function reportback_admin_url($id)
+{
+    return env('PHOENIX_URI') . '/admin/reportback/' . $id;
 }

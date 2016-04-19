@@ -65,7 +65,7 @@ class Manager
             ];
 
             if (isset($user->reportback)) {
-                $details[] = env('PHOENIX_URI') . '/admin/reportback/' . $user->reportback->id;
+                $details[] = reportback_admin_url($user->reportback->id);
                 $details[] = $user->reportback->quantity;
                 $details[] = $user->reportback->reportback_items->count_by_status['promoted'];
                 $details[] = $user->reportback->reportback_items->count_by_status['approved'];
@@ -134,41 +134,32 @@ class Manager
             return $users;
         }
 
-        return $this->appendReportback($users, $model);
+        return $this->appendReportback($users, $this->getCampaignParameters($model));
     }
 
     /**
-     * Get a user's signup/reportback activity for a
-     * competition or waiting room.
+     * Get reportbacks for a user & supplied parameters.
      *
-     * @param  string $id  User ID
-     * @param  \Gladiator\Models\Competition|WaitingRoom $model
-     * @return object $reportback
+     * @param  string  $id
+     * @param  array  $parameters
+     * @return object
      */
-    public function getActivityForUser($id, $model)
+    public function getActivityForUser($id, $parameters = [])
     {
-        $campaign = $model->contest->campaign_id;
-        $campaign_run = $model->contest->campaign_run_id;
+        $parameters['users'] = $id;
+        $parameters['count'] = 25;
 
-        $signup = $this->northstar->getUserSignups($id, $campaign, $campaign_run);
+        // @TODO: Investigat NS proxy; passing a bad ID results in general index of signups response.
+        $signup = $this->northstar->getUserSignups($parameters);
 
-        if (is_array($signup)) {
-            $signup = reset($signup);
-        }
-
-        if ($signup && $signup->reportback) {
-            return $this->formatReportback($signup->reportback);
-        }
-
-        // If the user has no activity for this competition or waiting room.
-        return null;
+        return array_shift($signup);
     }
 
     /**
-     * Get reportbacks for many users & a given competition.
+     * Get reportbacks for many users & supplied parameters.
      *
      * @param  array  $ids
-     * @param  \Gladiator\Models\Competition  $competition
+     * @param  array  $parameters
      * @param  int  $batchSize
      * @return \Illuminate\Support\Collection $signups
      */
@@ -190,6 +181,31 @@ class Manager
         }
 
         return collect($signups);
+    }
+
+    /**
+     * Get the campaign information as parameters for API requests.
+     *
+     * @param  \Gladiator\Models\Contest|Competition  $model
+     * @return array
+     */
+    public function getCampaignParameters($model)
+    {
+        $parameters = [];
+
+        if ($model instanceof \Gladiator\Models\Contest) {
+            $parameters['campaigns'] = $model->campaign_id;
+            $parameters['runs'] = $model->campaign_run_id;
+        }
+
+        if ($model instanceof \Gladiator\Models\Competition) {
+            if ($model->contest) {
+                $parameters['campaigns'] = $model->contest->campaign_id;
+                $parameters['runs'] = $model->contest->campaign_run_id;
+            }
+        }
+
+        return $parameters;
     }
 
     /**
@@ -215,24 +231,21 @@ class Manager
      * Append Reportback data to the supplied data if applicable.
      *
      * @param  mixed  $data
-     * @param  \Gladiator\Models\Competition  $model
+     * @param  array  $parameters
      * @return mixed
      */
-    public function appendReportback($data, $model)
+    public function appendReportback($data, $parameters)
     {
-        $parameters = [];
-
-        if ($model->contest) {
-            $parameters['campaigns'] = $model->contest->campaign_id;
-            $parameters['runs'] = $model->contest->campaign_run_id;
-        }
-
         if ($data instanceof \Illuminate\Support\Collection) {
             return $this->appendReportbackToCollection($data, $parameters);
         }
 
+        if ($data instanceof \Gladiator\Models\Competition) {
+            return $this->appendReportbackToModel($data, $parameters);
+        }
+
         if ($data instanceof \stdClass) {
-            return $this->appendReportbackToObject($data, $parameters);
+            return $this->appendReportbackToUserObject($data, $parameters);
         }
 
         return null;
@@ -311,18 +324,40 @@ class Manager
         return $collection;
     }
 
+    protected function appendReportbackToModel($model, $parameters)
+    {
+        $userId = $parameters['users'];
+        unset($parameters['users']);
+        // @TODO: potential refactor; not a fan of the above, but leaving for now.
+
+        $activity = $this->getActivityForUser($userId, $parameters);
+
+        if ($activity) {
+            $model->setAttribute('reportback', $activity->reportback);
+        } else {
+            $model->setAttribute('reportback', null);
+        }
+
+        return $model;
+    }
+
     /**
      * Append Reportback data to the supplied user object.
      *
-     * @param  object  $object
+     * @param  object  $user
      * @param  array  $parameters
      * @return object
      */
-    protected function appendReportbackToObject($object, $parameters)
+    protected function appendReportbackToUserObject($user, $parameters)
     {
-        // @TODO: not used at the moment, but will be @_@
-        // grab reportback and append to user object
+        $activity = $this->getActivityForUser($user->id, $parameters);
 
-        return null;
+        if ($activity) {
+            $user->reportback = $activity->reportback;
+        } else {
+            $user->reportback = null;
+        }
+
+        return $user;
     }
 }

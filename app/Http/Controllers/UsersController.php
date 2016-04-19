@@ -97,20 +97,20 @@ class UsersController extends Controller
      */
     public function show($id)
     {
+        $activities = [];
+
         $user = $this->repository->find($id);
 
-        $competitions = User::find($id)->competitions;
+        $competitions = User::findOrFail($id)->competitions;
 
-        // Get the user's reportback for each competition they are in.
         foreach ($competitions as $competition) {
-            $reportback = $this->manager->getActivityForUser($id, $competition);
+            $parameters = $this->manager->getCampaignParameters($competition);
+            $parameters['users'] = $user->id;
 
-            if ($reportback) {
-                $competition->reportback = $reportback;
-            }
+            $activities[] = $this->manager->appendReportback($competition, $parameters);
         }
 
-        return view('users.show', compact('user', 'competitions'));
+        return view('users.show', compact('user', 'activities'));
     }
 
     /**
