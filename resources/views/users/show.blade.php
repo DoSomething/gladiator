@@ -61,7 +61,7 @@
                                             {{ $competition->reportback->id }}
                                         </a>
                                     @else
-                                        'N/A'
+                                        N/A
                                     @endif
                                 </td>
                                 <td class="table__cell">{{ $competition->reportback->reportback_items->total or 'N/A'}}</td>

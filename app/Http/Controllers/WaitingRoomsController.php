@@ -138,14 +138,17 @@ class WaitingRoomsController extends Controller
     }
 
     /**
-     * Download the CSV export of all users.
+     * Download a CSV export of all users.
      *
      * @param  \Gladiator\Models\WaitingRoom  $room
-     * @return \League\Csv\ $csv
+     * @return void
      */
     public function export(WaitingRoom $room)
     {
-        $csv = $this->manager->exportCSV($room);
-        $csv->output('waitingroom' . $room->id . '.csv');
+        $users = $this->manager->getModelUsers($room);
+
+        $csv = $this->manager->exportUsersCsv($users);
+
+        $csv->output('contest_' . $room->contest_id . '-' . 'waitingroom_' . $room->id . '-users.csv');
     }
 }

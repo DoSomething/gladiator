@@ -2,13 +2,14 @@
 
 namespace Gladiator\Http\Controllers;
 
-use Gladiator\Http\Requests\CompetitionRequest;
-use Gladiator\Models\Competition;
-use Gladiator\Models\Contest;
-use Gladiator\Repositories\UserRepositoryContract;
-use Gladiator\Services\Manager;
-use Gladiator\Models\Message;
 use Gladiator\Models\User;
+use Gladiator\Models\Contest;
+use Gladiator\Models\Message;
+use Gladiator\Services\Manager;
+use Gladiator\Models\Competition;
+use Gladiator\Http\Requests\CompetitionRequest;
+use Gladiator\Repositories\UserRepositoryContract;
+use Illuminate\Http\Request;
 
 class CompetitionsController extends Controller
 {
@@ -94,15 +95,38 @@ class CompetitionsController extends Controller
     }
 
     /**
-     * Download the CSV export of all users.
+     * Download a CSV export of all users based on different criteria.
      *
      * @param  \Gladiator\Models\Competition  $competition
-     * @return \League\Csv\ $csv
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
      */
-    public function export(Competition $competition)
+    public function export(Competition $competition, Request $request)
     {
-        $csv = $this->manager->exportCSV($competition);
-        $csv->output('competition' . $competition->id . '.csv');
+        $fileName = 'contest_' . $competition->contest_id . '-' . 'competition_' . $competition->id;
+
+        $withReportback = convert_string_to_boolean($request->input('withReportback'));
+
+        $users = $this->manager->getModelUsers($competition, $withReportback);
+
+        if (! $withReportback) {
+            // @TODO: can probably flash this to the session too!
+            $fileName = $fileName . '-users';
+        } else {
+            $fileName = $fileName . '-leaderboard';
+
+            if (session()->has($fileName)) {
+                $list = session($fileName);
+            } else {
+                $list = $this->manager->catalogUsers($users);
+            }
+
+            $users = $list['active'];
+        }
+
+        $csv = $this->manager->exportUsersCsv($users);
+
+        $csv->output($fileName . '.csv');
     }
 
     /**
@@ -141,8 +165,17 @@ class CompetitionsController extends Controller
      */
     public function leaderboard(Competition $competition)
     {
-        $leaderboard = $this->manager->getLeaderboard($competition);
+        $competition = $competition->load('contest');
 
-        return view('competitions.leaderboard', compact('competition', 'leaderboard'));
+        $users = $this->manager->getModelUsers($competition, true);
+
+        $list = $this->manager->catalogUsers($users);
+
+        $leaderboard = $list['active'];
+        $pending = $list['inactive'];
+
+        session()->flash('contest_' . $competition->contest_id . '-' . 'competition_' . $competition->id . '-leaderboard', $list);
+
+        return view('competitions.leaderboard', compact('competition', 'leaderboard', 'pending'));
     }
 }

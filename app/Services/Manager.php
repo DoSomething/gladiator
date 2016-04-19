@@ -2,12 +2,10 @@
 
 namespace Gladiator\Services;
 
-use Carbon\Carbon;
 use Gladiator\Models\Contest;
-use Gladiator\Services\Northstar\Northstar;
 use Gladiator\Repositories\CacheCampaignRepository;
 use Gladiator\Repositories\UserRepositoryContract;
-use Illuminate\Database\Eloquent\Collection;
+use Gladiator\Services\Northstar\Northstar;
 
 class Manager
 {
@@ -46,25 +44,16 @@ class Manager
     }
 
     /**
-     * Build CSV data for a given WaitingRoom or Competition
+     * Build and export a CSV of user data.
      *
-     * @param WaitingRoom|Competition $model
-     * @param bool $reportbacks Should this csv include reportback data?
-     * @return \League\Csv $csv
+     * @param  object $users
+     * @return \League\Csv
      */
-    public function exportCSV($model)
+    public function exportUsersCsv($users)
     {
         $data = [];
-        $users = $model->users;
 
-        $ids = $users->pluck('id')->all();
-        $users = $this->userRepository->getAll($ids);
-        $users = $users->keyBy('id')->all();
-        $signups = $this->getActivityForAllUsers($ids, $model);
-
-        $headers = ['northstar_id', 'first_name', 'last_name', 'email', 'cell', 'reportback', 'quantity', 'flagged status'];
-
-        array_push($data, $headers);
+        $data[] = ['northstar_id', 'first_name', 'last_name', 'email', 'mobile number', 'reportback', 'quantity', '# promoted', '# approved', '# excluded', '# flagged', '# pending'];
 
         foreach ($users as $user) {
             $details = [
@@ -75,106 +64,34 @@ class Manager
                 isset($user->mobile) ? $user->mobile : '',
             ];
 
-            $signup = $signups->get($user->id);
-
-            if (isset($signup) && isset($signup->reportback)) {
-                $reportback = $this->formatReportback($signup->reportback);
-                array_push($details,
-                    $reportback->admin_url,
-                    $reportback->quantity,
-                    $reportback->flagged);
+            if (isset($user->reportback)) {
+                $details[] = env('PHOENIX_URI') . '/admin/reportback/' . $user->reportback->id;
+                $details[] = $user->reportback->quantity;
+                $details[] = $user->reportback->reportback_items->count_by_status['promoted'];
+                $details[] = $user->reportback->reportback_items->count_by_status['approved'];
+                $details[] = $user->reportback->reportback_items->count_by_status['excluded'];
+                $details[] = $user->reportback->reportback_items->count_by_status['flagged'];
+                $details[] = $user->reportback->reportback_items->count_by_status['pending'];
             }
 
-            array_push($data, $details);
+            $data[] = $details;
         }
 
         return build_csv($data);
     }
 
     /**
-     * Build leaderboard data for a given Competition
+     * Catalog a list of users and sort by a specified method.
      *
-     * @param Competition $competition
-     * @param bool $ignoreFlagged Should we include flagged reportbacks?
-     * @return array $leaderboard
+     * @param  array  $users
+     * @param  string $sortBy
+     * @return array
      */
-    public function getLeaderboard($competition, $ignoreFlagged = false)
+    public function catalogUsers($users, $sortBy = 'rank')
     {
-        $rows = [];
-        $users = $competition->users;
+        $catalog = new Catalog;
 
-        // Get all users in bulk
-        $ids = $users->pluck('id')->all();
-        $users = $this->userRepository->getAll($ids)->keyBy('id')->all();
-        $signups = $this->getActivityForAllUsers($ids, $competition);
-
-        foreach ($users as $user) {
-            $id = $user->id;
-            // For each user get the reportback details
-            if (! $signups->has($id)) {
-                continue;
-            }
-
-            $signup = $signups->get($id);
-            if (! isset($signup->reportback)) {
-                continue;
-            }
-
-            $reportback = $this->formatReportback($signup->reportback);
-            $quantity = isset($reportback) ? $reportback->quantity : 0;
-            $flagged = isset($reportback) ? $reportback->flagged : 'N/A';
-
-            if ($flagged === 'flagged' && $ignoreFlagged) {
-                continue;
-            }
-
-            // Give each user a "row" in the leaderboard
-            array_push($rows, ['user' => $user, 'quantity' => $quantity, 'flagged' => $flagged]);
-        }
-
-        // Sort all of the rows by reportback quantity
-        usort($rows, function ($a, $b) {
-            return $a['quantity'] <= $b['quantity'];
-        });
-
-        // Rank the leaderboard & return
-        return $this->rankLeaderboard($rows);
-    }
-
-    /**
-     * Rank the leaderboard based on traditional :sports: rules.
-     * If a group of people tie, they each get the same rank.
-     * You then skip to the next rank based on how many people tied.
-     * For example, if 3 people tied for second, they each get third.
-     * The next person would then get 5th place.
-     *
-     * @param array $leaderboard
-     *  Unranked leaderboard
-     * @return array $leaderboard
-     *  Ranked leaderboard
-     */
-    private function rankLeaderboard($leaderboard)
-    {
-        $increment = 1;
-        $rank = 1;
-
-        foreach ($leaderboard as $index => $row) {
-            // Don't perform this logic on the first element
-            if ($index > 0) {
-                // If the last row quantity equals this rows quantity, just increment.
-                if ($row['quantity'] === $leaderboard[$index - 1]['quantity']) {
-                    $increment++;
-                // Otherwise apply the increment to the rank and reset it back to 1.
-                } else {
-                    $rank += $increment;
-                    $increment = 1;
-                }
-            }
-            // Give each row a rank
-            $leaderboard[$index]['rank'] = $rank;
-        }
-
-        return $leaderboard;
+        return $catalog->build($users, $sortBy);
     }
 
     /**
@@ -195,21 +112,29 @@ class Manager
     }
 
     /**
-     * Get a collection of northstar users that exist on a model.
+     * Get a collection of Northstar users that exist on a model.
      *
-     * @param  \Gladiator\Models\Competition|WaitingRoom $model
-     *
-     * @return collection $users
+     * @param  \Gladiator\Models\Competition|WaitingRoom  $model
+     * @param  bool  $withReportback
+     * @return \Illuminate\Support\Collection  $users
      */
-    public function getModelUsers($model)
+    public function getModelUsers($model, $withReportback = false)
     {
-        $ids = $model->users->pluck('id')->toArray();
+        $users = $model->users;
 
-        if ($ids) {
-            return $this->userRepository->getAll($ids);
+        if (! $users) {
+            return null;
         }
 
-        return null;
+        $ids = $users->pluck('id')->all();
+
+        $users = $this->userRepository->getAll($ids);
+
+        if (! $withReportback) {
+            return $users;
+        }
+
+        return $this->appendReportback($users, $model);
     }
 
     /**
@@ -218,10 +143,9 @@ class Manager
      *
      * @param  string $id  User ID
      * @param  \Gladiator\Models\Competition|WaitingRoom $model
-     *
      * @return object $reportback
      */
-    public function getUserActivity($id, $model)
+    public function getActivityForUser($id, $model)
     {
         $campaign = $model->contest->campaign_id;
         $campaign_run = $model->contest->campaign_run_id;
@@ -243,57 +167,29 @@ class Manager
     /**
      * Get reportbacks for many users & a given competition.
      *
-     * @param array $ids Array of ID's
-     * @param \Gladiator\Models\Competition $competition
-     * @param int $batchSize How many reportbacks to fetch at once
-     * @return collection $signups
+     * @param  array  $ids
+     * @param  \Gladiator\Models\Competition  $competition
+     * @param  int  $batchSize
+     * @return \Illuminate\Support\Collection $signups
      */
-    public function getActivityForAllUsers($ids, $competition, $batchSize = 50)
+    public function getActivityForAllUsers($ids, $parameters = [], $batchSize = 50)
     {
-        $campaign = $competition->contest->campaign_id;
-        $campaign_run = $competition->contest->campaign_run_id;
-
-        $signups = [];
         $count = intval(ceil(count($ids) / $batchSize));
         $index = 0;
+        $signups = [];
 
         for ($i = 0; $i < $count; $i++) {
             $batch = array_slice($ids, $index, $batchSize);
-            $signups = array_merge($signups, $this->northstar->getUserSignups(implode(',', $batch), $campaign, $campaign_run, $batchSize));
+
+            $parameters['users'] = implode(',', $batch);
+            $parameters['count'] = $batchSize;
+
+            $signups = array_merge($signups, $this->northstar->getAllUserSignups($parameters));
+
             $index += $batchSize;
         }
 
-        return collect($signups)->keyBy(function ($item) {
-            return $item->user->id;
-        });
-    }
-
-    /**
-     * Formats a given reportback for use in Gladiator.
-     *
-     * @param object $reportback from API response
-     * @return object $reportback
-     */
-    private function formatReportback($reportback)
-    {
-        // Provide the admin URL to the reportback.
-        $reportback->admin_url = env('PHOENIX_URI') . '/admin/reportback/' . $reportback->id;
-
-        // Format the update timestamp
-        $reportback->updated_at = new Carbon($reportback->updated_at);
-        $reportback->updated_at = $reportback->updated_at->format('Y-m-d');
-
-        // Set flagged status to 'pending' if it is NULL, otherwise use bool value
-        if (! isset($reportback->flagged)) {
-            $reportback->flagged = 'pending';
-        } elseif ($reportback->flagged) {
-            $reportback->flagged = 'flagged';
-        } else {
-            $reportback->flagged = 'approved';
-        }
-
-        // Return the reportback.
-        return $reportback;
+        return collect($signups);
     }
 
     /**
@@ -304,7 +200,7 @@ class Manager
      */
     public function appendCampaign($data)
     {
-        if ($data instanceof Collection) {
+        if ($data instanceof \Illuminate\Database\Eloquent\Collection) {
             return $this->appendCampaignToCollection($data);
         }
 
@@ -312,7 +208,34 @@ class Manager
             return $this->appendCampaignToModel($data);
         }
 
-        return;
+        return null;
+    }
+
+    /**
+     * Append Reportback data to the supplied data if applicable.
+     *
+     * @param  mixed  $data
+     * @param  \Gladiator\Models\Competition  $model
+     * @return mixed
+     */
+    public function appendReportback($data, $model)
+    {
+        $parameters = [];
+
+        if ($model->contest) {
+            $parameters['campaigns'] = $model->contest->campaign_id;
+            $parameters['runs'] = $model->contest->campaign_run_id;
+        }
+
+        if ($data instanceof \Illuminate\Support\Collection) {
+            return $this->appendReportbackToCollection($data, $parameters);
+        }
+
+        if ($data instanceof \stdClass) {
+            return $this->appendReportbackToObject($data, $parameters);
+        }
+
+        return null;
     }
 
     /**
@@ -360,5 +283,46 @@ class Manager
         }
 
         return $model;
+    }
+
+    /**
+     * Append Reportback data to the supplied collection of users.
+     *
+     * @param  \Illuminate\Support\Collection  $collection
+     * @param  array  $parameters
+     * @return \Illuminate\Support\Collection
+     */
+    protected function appendReportbackToCollection($collection, $parameters)
+    {
+        $activity = $this->getActivityForAllUsers($collection->pluck('id')->all(), $parameters);
+
+        $activity = $activity->keyBy(function ($item) {
+            return $item->user->id;
+        });
+
+        foreach ($collection as $user) {
+            if (isset($activity[$user->id])) {
+                $user->reportback = $activity[$user->id]->reportback;
+            } else {
+                $user->reportback = null;
+            }
+        }
+
+        return $collection;
+    }
+
+    /**
+     * Append Reportback data to the supplied user object.
+     *
+     * @param  object  $object
+     * @param  array  $parameters
+     * @return object
+     */
+    protected function appendReportbackToObject($object, $parameters)
+    {
+        // @TODO: not used at the moment, but will be @_@
+        // grab reportback and append to user object
+
+        return null;
     }
 }
