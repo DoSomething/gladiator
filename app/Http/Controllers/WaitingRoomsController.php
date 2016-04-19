@@ -116,7 +116,7 @@ class WaitingRoomsController extends Controller
      */
     public function showSplitForm(WaitingRoom $room)
     {
-        $split = $room->getDefaultSplit();
+        $split = $room->getSplit();
 
         return view('waitingrooms.split', compact('split', 'room'));
     }
@@ -130,7 +130,7 @@ class WaitingRoomsController extends Controller
      */
     public function split(SplitRequest $request, WaitingRoom $room)
     {
-        $split = $room->getDefaultSplit();
+        $split = $room->getSplit($request->competition_max);
         $contest = Contest::find($room->contest_id);
         $room->saveSplit($contest, $split, $request);
 
