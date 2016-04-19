@@ -197,7 +197,7 @@ class Manager
 
     /**
      * Get the campaign information as parameters for API requests.
-     * 
+     *
      * @param  \Gladiator\Models\Contest|Competition  $model
      * @return array
      */
@@ -214,7 +214,7 @@ class Manager
             if ($model->contest) {
                 $parameters['campaigns'] = $model->contest->campaign_id;
                 $parameters['runs'] = $model->contest->campaign_run_id;
-            }    
+            }
         }
 
         return $parameters;

@@ -2,12 +2,11 @@
 
 namespace Gladiator\Http\Controllers;
 
-use Gladiator\Http\Requests\UserRequest;
-use Gladiator\Models\Competition;
 use Gladiator\Models\User;
-use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Manager;
 use Gladiator\Services\Registrar;
+use Gladiator\Http\Requests\UserRequest;
+use Gladiator\Repositories\UserRepositoryContract;
 
 class UsersController extends Controller
 {
