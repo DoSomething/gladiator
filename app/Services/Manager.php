@@ -153,18 +153,6 @@ class Manager
         $signup = $this->northstar->getUserSignups($parameters);
 
         return array_shift($signup);
-
-        // if (is_array($signup)) {
-        //     $signup = reset($signup);
-        // }
-
-        // if ($signup && $signup->reportback) {
-        //     dd('here');
-        //     return $this->formatReportback($signup->reportback);
-        // }
-
-        // // If the user has no activity for this competition or waiting room.
-        // return null;
     }
 
     /**
