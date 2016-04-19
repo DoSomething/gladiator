@@ -3,7 +3,6 @@
 namespace Gladiator\Http\Controllers\Api;
 
 use Gladiator\Models\WaitingRoom;
-use Gladiator\Http\Requests\WaitingRoomRequest;
 use Illuminate\Http\Request;
 
 class WaitingRoomsController extends ApiController
