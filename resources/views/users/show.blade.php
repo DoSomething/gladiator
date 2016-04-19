@@ -1,3 +1,5 @@
+{{-- dd($activities) --}}
+
 @extends('layouts.master')
 
 @section('main_content')
@@ -38,12 +40,11 @@
                             <th class="table__cell">Items</th>
                             <th class="table__cell">Quantity</th>
                             <th class="table__cell">Updated At</th>
-                            <th class="table__cell">Flagged</th>
                             <th class="table__cell">Remove from Competition</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($competitions as $competition)
+                        @foreach ($activities as $competition)
                             <tr class="table__row">
                                 <td class="table__cell">
                                     <a href="{{ route('contests.show', $competition->contest->id) }}">
@@ -55,20 +56,20 @@
                                         {{ $competition->id }}
                                     </a>
                                 </td>
-                                <td class="table__cell">
-                                    @if ($competition->reportback)
-                                        <a href="{{ $competition->reportback->admin_url }}">
-                                            {{ $competition->reportback->id }}
-                                        </a>
-                                    @else
-                                        N/A
-                                    @endif
-                                </td>
-                                <td class="table__cell">{{ $competition->reportback->reportback_items->total or 'N/A'}}</td>
-                                <td class="table__cell">{{ $competition->reportback->quantity or 'N/A'}}</td>
-                                <td class="table__cell">{{ $competition->reportback->updated_at or 'N/A'}}</td>
-                                <td class="table__cell">{{ $competition->reportback->flagged or 'N/A' }}</td>
-                                <td class="table__cell"><a href="{{ route('competitions.users.destroy', ['user' => $user->id, 'competition' =>$competition->id]) }}" class="button -danger">Remove</a></td>
+
+                                @if ($competition->reportback)
+                                    <td class="table__cell"><a href="{{ reportback_admin_url($competition->reportback->id) }}">{{ $competition->reportback->id }}</a></td>
+                                    <td class="table__cell">{{ $competition->reportback->reportback_items->total }}</td>
+                                    <td class="table__cell">{{ $competition->reportback->quantity }}</td>
+                                    <td class="table__cell">{{ format_timestamp_for_display($competition->reportback->updated_at) }}</td>
+                                @else
+                                    <td class="table__cell">N/A</td>
+                                    <td class="table__cell">N/A</td>
+                                    <td class="table__cell">N/A</td>
+                                    <td class="table__cell">N/A</td>
+                                @endif
+
+                                <td class="table__cell"><a href="{{ route('competitions.users.destroy', ['user' => $user->id, 'competition' =>$competition->id]) }}" class="button -secondary -danger">Remove</a></td>
                             </tr>
                         @endforeach
                     </tbody>
