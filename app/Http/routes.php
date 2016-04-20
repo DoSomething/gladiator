@@ -67,6 +67,4 @@ Route::group(['prefix' => 'api/v1'], function () {
 
     Route::get('users', 'Api\UsersController@index');
     Route::post('users', 'Api\UsersController@store');
-
-    Route::get('split', 'Api\WaitingRoomsController@calculateSplit');
 });

@@ -10,7 +10,7 @@
 
         <div class="form-item -padded">
             <label class="field-label" for="id">Max users per competition:</label>
-            <input type="number" name="competition_max" id="competition_max" class="text-field" value="300"/>
+            <input type="number" name="competition_max" id="competition_max" class="text-field" value="300" data-total="{{count($room->users)}}" }/>
         </div>
 
         @include('competitions.partials._form_leaderboard_msg_day_field', [
