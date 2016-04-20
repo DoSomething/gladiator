@@ -55,7 +55,7 @@ class WaitingRoom extends Model
      * Equally splits the users of a waiting room into arrays
      * representing competitions.
      */
-    public function getDefaultSplit()
+    public function getSplit($maxPerCompetition = 300)
     {
         $users = $this->users;
 
@@ -63,7 +63,7 @@ class WaitingRoom extends Model
         $roomSize = count($users);
 
         // Determine the amount of competitions to make
-        $numOfCompetitions = $roomSize / 300;
+        $numOfCompetitions = $roomSize / $maxPerCompetition;
 
         // Create the competitions
         $competitions = [];
