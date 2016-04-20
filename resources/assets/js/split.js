@@ -5,21 +5,34 @@ $('#competition_max').change(function() {
   $('tbody').empty();
   var max = $(this).val();
 
-  // Get new row totals & round up to be safe
-  var rows = Math.ceil(TOTAL_USERS / max);
-  for (var i = 0; i < rows; i++) {
+  // Get new total competitions
+  var numOfCompetitions = TOTAL_USERS / max;
+  var rows = [];
 
-    var rowTotal = max;
-    if (i == rows - 1) {
-      rowTotal = TOTAL_USERS - ((rows - 1) * max);
+  // Distribute the people
+  var competitionIndex = 0;
+  for (var userIndex = 0; userIndex < TOTAL_USERS; userIndex++) {
+    if (!rows[competitionIndex]) {
+      rows[competitionIndex] = 0;
     }
 
+    rows[competitionIndex]++;
+    competitionIndex++;
+
+    if (competitionIndex >= numOfCompetitions) {
+      competitionIndex = 0;
+    }
+
+  }
+
+  // Add the HTML
+  rows.forEach(function(row, index) {
     // Build the HTML row
     var $row = $('<tr class="table__row">');
-    $row.append(`<td class="table__cell">${i + 1}</td>`);
-    $row.append(`<td class="table__cell">${rowTotal}</td>`);
+    $row.append(`<td class="table__cell">${index + 1}</td>`);
+    $row.append(`<td class="table__cell">${row}</td>`);
     $('tbody').append($row);
-  }
+  });
 
   // Add warning if it wasn't already added
   if (!$('#matchup-flag').length) {
