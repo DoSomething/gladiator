@@ -9,7 +9,6 @@ use Gladiator\Models\Message;
 use Gladiator\Events\QueueMessageRequest;
 use Gladiator\Repositories\MessageRepository;
 use Gladiator\Repositories\UserRepositoryContract;
-use Gladiator\Http\Utilities\Email;
 use Gladiator\Services\Manager;
 
 class MessagesController extends Controller
@@ -104,7 +103,7 @@ class MessagesController extends Controller
                 'email' => $contest->sender_email,
             ];
         } else {
-            $users = $this->manager->getModelUsers($competition);
+            $users = $this->manager->getModelUsers($competition, true);
         }
 
         $resources = [
