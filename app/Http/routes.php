@@ -42,6 +42,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('messages/{message}/send', 'MessagesController@sendMessage')->name('messages.send');
 
     // Users
+    Route::get('users/contestants', 'UsersController@contestantIndex')->name('users.contestants');
     Route::resource('users', 'UsersController');
     Route::get('users/{id}/signup/{signup_id}', [
         'as' => 'users.signup',
