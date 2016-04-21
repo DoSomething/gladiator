@@ -53,9 +53,8 @@ class UsersController extends Controller
     {
         $admins = $this->repository->getAllByRole('admin');
         $staff = $this->repository->getAllByRole('staff');
-        $contestants = $this->repository->getAllByRole();
 
-        return view('users.index', compact('admins', 'staff', 'contestants'));
+        return view('users.index', compact('admins', 'staff'));
     }
 
     /**
@@ -157,5 +156,17 @@ class UsersController extends Controller
     public function showSignup($id, $signup_id)
     {
         var_dump('show signup');
+    }
+
+    /**
+     * Returns an index of all contestants.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function contestantsIndex()
+    {
+        $contestants = $this->repository->getAllByRole();
+
+        return view('users.contestants_index', compact('contestants'));
     }
 }
