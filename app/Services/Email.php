@@ -5,7 +5,7 @@ namespace Gladiator\Services;
 use Gladiator\Models\Contest;
 use Gladiator\Models\Competition;
 use Gladiator\Models\Message;
-// use Gladiator\Services\Manager;
+use Gladiator\Services\Manager;
 
 class Email
 {
@@ -47,7 +47,7 @@ class Email
     /**
      * Constructor
      */
-    public function __construct($resources)
+    public function __construct($resources, Manager $manager)
     {
         $this->message = $resources['message'];
         $this->contest = $resources['contest'];
@@ -55,7 +55,7 @@ class Email
         $this->users = $resources['users'];
         // @TODO - is there a better way of instantiating and pulling in the manager class?
         // Maybe this email class needs to be a service instead.
-        // $this->manager = $manager;
+        $this->manager = $manager;
 
         $this->setupEmail();
     }
@@ -144,12 +144,12 @@ class Email
 
             // Leaderboard messages get an extra leaderboard variable to be sent to the email template.
             // @TODO - move into smaller function that gets the leaderboard and then add it to the allMessages array here.
-            // if ($this->message->type == 'leaderboard')
-            // {
-            //     $list = $this->manager->catalogUsers($users);
+            if ($this->message->type == 'leaderboard')
+            {
+                $list = $this->manager->catalogUsers($this->users);
 
-            //     $this->allMessages[$key]['message']['leaderboard'] = $list['active'];
-            // }
+                $this->allMessages[$key]['message']['leaderboard'] = $list['active'];
+            }
 
             // @TODO - create a smaller function that can be called here that gets the top 3 reportbacks.
         }
