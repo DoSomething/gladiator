@@ -33,8 +33,7 @@ class QueueMessage implements ShouldQueue
         $resources = $event->resources;
 
         // Build the email.
-        $manager = app(\Gladiator\Services\Manager::class);
-        $email = new Email($resources, $manager);
+        $email = new Email($resources);
 
         foreach ($email->allMessages as $content) {
             $settings = [

@@ -101,6 +101,7 @@ class Correspondence
             'signoff' => null,
         ],
     ];
+
     /**
      * Get all default messages.
      *

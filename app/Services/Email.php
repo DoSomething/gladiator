@@ -46,15 +46,14 @@ class Email
     /**
      * Constructor
      */
-    public function __construct($resources, Manager $manager)
+    public function __construct($resources)
     {
         $this->message = $resources['message'];
         $this->contest = $resources['contest'];
         $this->competition = $resources['competition'];
         $this->users = $resources['users'];
-        // @TODO - is there a better way of instantiating and pulling in the manager class?
-        // Maybe this email class needs to be a service instead.
-        $this->manager = $manager;
+
+        $this->manager = app(\Gladiator\Services\Manager::class);
 
         $this->setupEmail();
     }
