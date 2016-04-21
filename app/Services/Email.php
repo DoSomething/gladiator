@@ -1,10 +1,11 @@
 <?php
 
-namespace Gladiator\Http\Utilities;
+namespace Gladiator\Services;
 
 use Gladiator\Models\Contest;
 use Gladiator\Models\Competition;
 use Gladiator\Models\Message;
+use Gladiator\Services\Manager;
 
 class Email
 {
@@ -46,12 +47,15 @@ class Email
     /**
      * Constructor
      */
-    public function __construct(Message $message, Contest $contest, Competition $competition, $users)
+    public function __construct($resources, Manager $manager)
     {
-        $this->message = $message;
-        $this->contest = $contest;
-        $this->competition = $competition;
-        $this->users = $users;
+        $this->message = $resources['message'];
+        $this->contest = $resources['contest'];
+        $this->competition = $resources['competition'];
+        $this->users = $resources['users'];
+        // @TODO - is there a better way of instantiating and pulling in the manager class?
+        // Maybe this email class needs to be a service instead.
+        $this->manager = $manager;
 
         $this->setupEmail();
     }
@@ -91,14 +95,14 @@ class Email
      */
     protected function processMessage($tokens, $message)
     {
-        $parsableProperties = ['subject', 'body', 'pro_tip'];
+        $parsableProperties = ['subject', 'body', 'signoff', 'pro_tip'];
 
-        $processedMessage = clone $message;
+        $processedMessage['type'] = $message->type;
 
         foreach ($parsableProperties as $prop) {
-            $processedMessage->$prop = $this->replaceTokens($tokens, $message->$prop);
-            $processedMessage->$prop = $this->parseLinks($processedMessage->$prop);
-            $processedMessage->$prop = nl2br($processedMessage->$prop);
+            $processedMessage[$prop] = $this->replaceTokens($tokens, $message->$prop);
+            $processedMessage[$prop] = $this->parseLinks($processedMessage[$prop]);
+            $processedMessage[$prop] = nl2br($processedMessage[$prop]);
         }
 
         return $processedMessage;
@@ -137,6 +141,17 @@ class Email
 
             $tokens = $this->defineTokens($user);
             $this->allMessages[$key]['message'] = $this->processMessage($tokens, $this->message);
+
+            // Leaderboard messages get an extra leaderboard variable to be sent to the email template.
+            // @TODO - move into smaller function that gets the leaderboard and then add it to the allMessages array here.
+            if ($this->message->type == 'leaderboard')
+            {
+                $list = $this->manager->catalogUsers($this->users);
+
+                $this->allMessages[$key]['message']['leaderboard'] = $list['active'];
+            }
+
+            // @TODO - create a smaller function that can be called here that gets the top 3 reportbacks.
         }
     }
 }
