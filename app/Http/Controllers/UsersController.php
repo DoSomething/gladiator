@@ -167,6 +167,6 @@ class UsersController extends Controller
     {
         $contestants = $this->repository->getAllByRole();
 
-        return view('users.contestants', compact('contestants'));
+        return view('users.contestants_index', compact('contestants'));
     }
 }
