@@ -163,7 +163,7 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function contestantIndex()
+    public function contestantsIndex()
     {
         $contestants = $this->repository->getAllByRole();
 
