@@ -5,7 +5,6 @@ namespace Gladiator\Services;
 use Gladiator\Models\Contest;
 use Gladiator\Models\Competition;
 use Gladiator\Models\Message;
-use Gladiator\Services\Manager;
 
 class Email
 {
@@ -144,8 +143,7 @@ class Email
 
             // Leaderboard messages get an extra leaderboard variable to be sent to the email template.
             // @TODO - move into smaller function that gets the leaderboard and then add it to the allMessages array here.
-            if ($this->message->type == 'leaderboard')
-            {
+            if ($this->message->type == 'leaderboard') {
                 $list = $this->manager->catalogUsers($this->users);
 
                 $this->allMessages[$key]['message']['leaderboard'] = $list['active'];

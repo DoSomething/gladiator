@@ -89,7 +89,7 @@ class Correspondence
             'subject' => 'Leaderboard update #2 for the :campaign_title: competition!',
             'body' => "Hello, competitors-- \n\r1 more week! This :campaign_title: competition ends on :end_date:, so it’s time to make your mark.\n\r:pro_tip:\n\rA final photo with your :reportback_noun: will be due :leaderboard_msg_day-1: before 10pm EST. [Upload yours here](:prove_it_link:).\n\rHere is the leaderboard! Shoutouts to the top 3 below:\n\r1 more week to make your mark and climb up the leaderboard!",
             'pro_tip' => null,
-            'signoff' => "1 more week to make your mark and climb up the leaderboard!",
+            'signoff' => '1 more week to make your mark and climb up the leaderboard!',
         ],
         [
             'type' => 'leaderboard',
