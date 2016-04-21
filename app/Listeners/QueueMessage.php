@@ -6,7 +6,7 @@ use Illuminate\Mail\Mailer;
 use Gladiator\Events\QueueMessageRequest;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Gladiator\Models\Message;
-use Gladiator\Http\Utilities\Email;
+use Gladiator\Services\Email;
 
 class QueueMessage implements ShouldQueue
 {
@@ -33,7 +33,7 @@ class QueueMessage implements ShouldQueue
         $resources = $event->resources;
 
         // Build the email.
-        $email = new Email($resources['message'], $resources['contest'], $resources['competition'], $resources['users']);
+        $email = new Email($resources);
 
         foreach ($email->allMessages as $content) {
             $settings = [

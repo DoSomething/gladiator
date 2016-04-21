@@ -9,7 +9,6 @@ use Gladiator\Models\Message;
 use Gladiator\Events\QueueMessageRequest;
 use Gladiator\Repositories\MessageRepository;
 use Gladiator\Repositories\UserRepositoryContract;
-use Gladiator\Http\Utilities\Email;
 use Gladiator\Services\Manager;
 
 class MessagesController extends Controller
