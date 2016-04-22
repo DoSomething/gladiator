@@ -165,6 +165,7 @@ class Email
         $vars = [
             'leaderboard' => $leaderboard,
             'topThree' => $this->manager->getTopThreeReportbacks($leaderboard),
+            'reportbackInfo' => $this->contest->campaign->reportback_info,
         ];
 
         return $vars;

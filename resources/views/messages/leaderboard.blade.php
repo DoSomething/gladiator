@@ -3,7 +3,7 @@
 <br><br>
 
 @if (count($content['topThree']))
-    @include('messages.partials._topthree_table', ['topThree' => $content['topThree']])
+    @include('messages.partials._topthree_table', ['topThree' => $content['topThree'], 'reportbackInfo' => $content['reportbackInfo']])
 @endif
 
 @if (count($content['leaderboard']))
