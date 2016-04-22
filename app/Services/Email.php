@@ -139,11 +139,15 @@ class Email
 
             $tokens = $this->defineTokens($user);
 
-            $this->allMessages[$key]['message'] = $this->processMessage($tokens, $this->message);
+            $message = [];
+
+            $message = $this->processMessage($tokens, $this->message);
 
             if ($this->message->type == 'leaderboard') {
-                $this->allMessages[$key]['message'] = array_merge($this->allMessages[$key]['message'], $this->processLeaderboardVars($this->users));
+                $message = array_merge($message, $this->processLeaderboardVars($this->users));
             }
+
+            $this->allMessages[$key]['message'] = $message;
         }
     }
 
