@@ -7,6 +7,9 @@ use Gladiator\Models\Contest;
 use Gladiator\Services\Registrar;
 use Gladiator\Http\Requests\UserRequest;
 use Gladiator\Http\Transformers\UserTransformer;
+use Gladiator\Events\QueueMessageRequest;
+
+use Gladiator\Models\Message;
 
 class UsersController extends ApiController
 {
@@ -74,6 +77,16 @@ class UsersController extends ApiController
         }
 
         $contest->waitingRoom->users()->attach($user->id);
+
+        // Fire off welcome Email
+        $message = Message::where(['contest_id' => $contest->id, 'type' => 'Welcome'])->first();
+        $resources = [
+            'message' => $message,
+            'contest' => $contest,
+            'users' => [$user],
+            'test' => false,
+        ];
+        event(new QueueMessageRequest($resources));
 
         // @TODO: maybe add more detail to response to indicate which room user was added to?
         return $this->item($user);
