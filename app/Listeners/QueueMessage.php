@@ -36,8 +36,8 @@ class QueueMessage implements ShouldQueue
         $email = new Email($resources);
 
         if ($resources['test']) {
-            // @TODO - need a better way of sending test messages, should process the message as the
-            // contest sender not just pop off the first message. Probably move this into the Email building.
+            // @TODO - Clean this up. If this is a test email, the Email class should deal
+            // with building one message that can be sent to the admin.
             $settings = [
                 'subject' => $email->allMessages[0]['message']['subject'],
                 'from' => $email->contest->sender_email,
@@ -47,8 +47,7 @@ class QueueMessage implements ShouldQueue
             ];
 
             $this->sendMail($email->allMessages[0]['message'], $settings);
-        }
-        else {
+        } else {
             foreach ($email->allMessages as $content) {
                 $settings = [
                     'subject' => $content['message']['subject'],
@@ -57,7 +56,6 @@ class QueueMessage implements ShouldQueue
                     'to' => $content['user']->email,
                     'to_name' => $content['user']->first_name,
                 ];
-
             }
 
             $this->sendMail($content['message'], $settings);
