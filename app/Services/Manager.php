@@ -262,13 +262,15 @@ class Manager
     public function getTopThreeReportbacks($leaderboard)
     {
         $topThreeUsers = array_slice($leaderboard, 0, 3);
+        $places = ['1st', '2nd', '3rd'];
 
-        foreach ($topThreeUsers as $user)
+        foreach ($topThreeUsers as $key => $user)
         {
             $reportbackItems = $user->reportback->reportback_items->data;
             $latestReportback = array_pop($reportbackItems);
 
             $topThree[] = [
+                'place' => $places[$key],
                 'first_name' => $user->first_name,
                 'quantity' => $user->reportback->quantity,
                 'image_url' => $latestReportback->media->uri,
