@@ -40,6 +40,12 @@ class MessageRepository
         }
     }
 
+    public function buildMessagesFromDefaults()
+    {
+        $defaults = correspondence()->defaults();
+
+    }
+
     /**
      * Update a message.
      *

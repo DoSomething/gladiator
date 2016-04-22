@@ -9,6 +9,13 @@ class MessageTableSeeder extends Seeder
 {
     protected $repository;
 
+    /**
+     * Attributes to exclude when seeding default messages.
+     *
+     * @var array
+     */
+    protected $excludedAttributes = ['contest_id', 'type', 'key'];
+
     public function __construct(MessageRepository $repository)
     {
         $this->repository = $repository;
@@ -21,23 +28,28 @@ class MessageTableSeeder extends Seeder
      */
     public function run()
     {
-        $contests = Contest::all();
         $defaults = correspondence()->defaults();
-        $types = Message::getTypes();
         $messages = [];
+
+        $contests = Contest::all();
+
+        $model = new Message;
+        $types = $model->getTypes();
+        $attributes = $model->getFillable();
+        $attributes = array_diff($attributes, $this->excludedAttributes);
 
         foreach ($types as $type) {
             $messages[$type] = [];
         }
 
         foreach ($defaults as $data) {
-            $messages[$data['type']][] = [
-                'subject' => $data['subject'],
-                'body' => $data['body'],
-                'label' => $data['label'],
-                'pro_tip' => $data['pro_tip'],
-                'signoff' => $data['signoff'],
-            ];
+            $fields = [];
+
+            foreach ($attributes as $attribute) {
+                $fields[$attribute] = $data[$attribute];
+            }
+
+            $messages[$data['type']][] = $fields;
         }
 
         foreach ($contests as $contest) {
