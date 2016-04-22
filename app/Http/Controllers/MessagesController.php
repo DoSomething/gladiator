@@ -95,22 +95,14 @@ class MessagesController extends Controller
         $contest = Contest::find($contestId);
         $contest = $this->manager->appendCampaign($contest);
 
-        // If sending test email, create a fake user object with the contest's
-        // sender_name and sender_email so we prep and send a message only for the admin.
-        if (request('test')) {
-            $users[] = (object) [
-                'first_name' => $contest->sender_name,
-                'email' => $contest->sender_email,
-            ];
-        } else {
-            $users = $this->manager->getModelUsers($competition, true);
-        }
+        $users = $this->manager->getModelUsers($competition, true);
 
         $resources = [
             'message' => $message,
             'contest' => $contest,
             'competition' => $competition,
             'users' => $users,
+            'test' => request('test'),
         ];
 
         // Kick off email sending

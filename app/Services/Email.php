@@ -142,11 +142,11 @@ class Email
 
             // Leaderboard messages get an extra leaderboard variable to be sent to the email template.
             // @TODO - move into smaller function that gets the leaderboard and then add it to the allMessages array here.
-            // if ($this->message->type == 'leaderboard') {
-            //     $list = $this->manager->catalogUsers($this->users);
+            if ($this->message->type == 'leaderboard') {
+                $list = $this->manager->catalogUsers($this->users);
 
-            //     $this->allMessages[$key]['message']['leaderboard'] = $list['active'];
-            // }
+                $this->allMessages[$key]['message']['leaderboard'] = $list['active'];
+            }
 
             // @TODO - create a smaller function that can be called here that gets the top 3 reportbacks.
         }
