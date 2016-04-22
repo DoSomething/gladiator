@@ -265,14 +265,15 @@ class Manager
         $places = ['1st', '2nd', '3rd'];
 
         foreach ($topThreeUsers as $key => $user) {
-            $latestReportback = array_pop($user->reportback->reportback_items->data);
+            $reportbackItems = $user->reportback->reportback_items->data;
+            $latestReportbackItem = array_pop($reportbackItems);
 
             $topThree[] = [
                 'place' => $places[$key],
                 'first_name' => $user->first_name,
                 'quantity' => $user->reportback->quantity,
-                'image_url' => $latestReportback->media->uri,
-                'caption' => $latestReportback->caption,
+                'image_url' => $latestReportbackItem->media->uri,
+                'caption' => $latestReportbackItem->caption,
             ];
         }
 
