@@ -35,6 +35,7 @@ class MessageTableSeeder extends Seeder
                 'subject' => $data['subject'],
                 'body' => $data['body'],
                 'label' => $data['label'],
+                'pro_tip' => $data['pro_tip'],
                 'signoff' => $data['signoff'],
             ];
         }
