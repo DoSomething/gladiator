@@ -14,7 +14,7 @@
 Route::group(['middleware' => ['web']], function () {
 
     Route::get('/', function () {
-        return view('pages.home');
+        return redirect()->route('contests.index');
     });
 
     // Authentication
