@@ -17,7 +17,7 @@ Route::group(['middleware' => ['web']], function () {
         return redirect()->route('contests.index');
     });
 
-    Route::get('/pineapple', function() {
+    Route::get('/zerowing', function() {
         return view('pages.home');
     });
 
