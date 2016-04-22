@@ -40,10 +40,36 @@ class MessageRepository
         }
     }
 
+    /**
+     * Build the series of messages from the Correspondence defaults.
+     *
+     * @return array
+     */
     public function buildMessagesFromDefaults()
     {
+        $messages = [];
+
         $defaults = correspondence()->defaults();
 
+        $model = new Message;
+        $types = $model->getTypes();
+        $attributes = array_diff($model->getFillable(), $model->getExcludedAttributes());
+
+        foreach ($types as $type) {
+            $messages[$type] = [];
+        }
+
+        foreach ($defaults as $data) {
+            $fields = [];
+
+            foreach ($attributes as $attribute) {
+                $fields[$attribute] = $data[$attribute];
+            }
+
+            $messages[$data['type']][] = $fields;
+        }
+
+        return $messages;
     }
 
     /**
@@ -55,7 +81,11 @@ class MessageRepository
      */
     public function update($contest, $data)
     {
-        $message = Message::where('contest_id', '=', $contest->id)->where('type', '=', $data['type'])->where('key', '=', $data['key'])->firstOrFail();
+        $message = Message::where('contest_id', '=', $contest->id)->where('type', '=', $data['type'])->where('key', '=', $data['key'])->first();
+
+        if (! $message) {
+            return $this->create($contest, $data);
+        }
 
         $attributes = $message->getFillable();
 

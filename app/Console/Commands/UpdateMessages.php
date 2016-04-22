@@ -3,10 +3,13 @@
 namespace Gladiator\Console\Commands;
 
 use Gladiator\Models\Contest;
+use Gladiator\Repositories\MessageRepository;
 use Illuminate\Console\Command;
 
 class UpdateMessages extends Command
 {
+    protected $repository;
+
     /**
      * The name and signature of the console command.
      *
@@ -24,11 +27,14 @@ class UpdateMessages extends Command
     /**
      * Create a new command instance.
      *
+     * @param \Gladiator\Repositories\MessageRepository  $repository
      * @return void
      */
-    public function __construct()
+    public function __construct(MessageRepository $repository)
     {
         parent::__construct();
+
+        $this->repository = $repository;
     }
 
     /**
@@ -40,10 +46,22 @@ class UpdateMessages extends Command
     {
         $contest = $this->argument('contest');
 
+        $messages = $this->repository->buildMessagesFromDefaults();
+
         if ($contest) {
             $contest = Contest::findOrFail($contest);
 
-            dd($contest);
+            $this->repository->updateMessagesForContest($contest, $messages);
+
+            return $this->comment(PHP_EOL . 'All set! Messages for Contest ID #' . $contest->id . ' have been updated. If any messages were missing, they were added as well!' . PHP_EOL);
         }
+
+        $contests = Contest::all();
+
+        foreach ($contests as $contest) {
+            $this->repository->updateMessagesForContest($contest, $messages);
+        }
+
+        return $this->comment(PHP_EOL . 'All set! Messages for all Contests have been updated. If any messages for a Contest were missing, they were added as well!' . PHP_EOL);
     }
 }

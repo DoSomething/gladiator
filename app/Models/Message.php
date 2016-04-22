@@ -6,19 +6,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
+    /**
+     * Get the fillable attributes for the model.
+     *
+     * @return array
+     */
     protected $fillable = ['contest_id', 'type', 'key', 'label', 'subject', 'body', 'pro_tip', 'signoff'];
+
+    /**
+     * Excluded attributes that are not customizeable.
+     *
+     * @var array
+     */
+    protected $excludedAttributes = ['contest_id', 'type', 'key'];
 
     /**
      * Array of available message types.
      *
      * @var array
      */
-    protected static $types = [
-        'checkin',
-        'leaderboard',
-        'reminder',
-        'welcome',
-    ];
+    protected static $types = [ 'checkin', 'leaderboard', 'reminder', 'welcome' ];
 
     /**
      * Get the contest associated with this message.
@@ -26,6 +33,16 @@ class Message extends Model
     public function contest()
     {
         return $this->belongsTo(Contest::class);
+    }
+
+    /**
+     * Get the list of excluded attributes.
+     *
+     * @return array
+     */
+    public function getExcludedAttributes()
+    {
+        return $this->excludedAttributes;
     }
 
     /**

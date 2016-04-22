@@ -7,15 +7,18 @@ use Illuminate\Database\Seeder;
 
 class MessageTableSeeder extends Seeder
 {
+    /**
+     * MessageRepository instance.
+     *
+     * @var \Gladiator\Repositories\MessageRepository
+     */
     protected $repository;
 
     /**
-     * Attributes to exclude when seeding default messages.
+     * Create a new message table seeder instance.
      *
-     * @var array
+     * @param \Gladiator\Repositories\MessageRepository  $repository
      */
-    protected $excludedAttributes = ['contest_id', 'type', 'key'];
-
     public function __construct(MessageRepository $repository)
     {
         $this->repository = $repository;
@@ -28,29 +31,9 @@ class MessageTableSeeder extends Seeder
      */
     public function run()
     {
-        $defaults = correspondence()->defaults();
-        $messages = [];
-
         $contests = Contest::all();
 
-        $model = new Message;
-        $types = $model->getTypes();
-        $attributes = $model->getFillable();
-        $attributes = array_diff($attributes, $this->excludedAttributes);
-
-        foreach ($types as $type) {
-            $messages[$type] = [];
-        }
-
-        foreach ($defaults as $data) {
-            $fields = [];
-
-            foreach ($attributes as $attribute) {
-                $fields[$attribute] = $data[$attribute];
-            }
-
-            $messages[$data['type']][] = $fields;
-        }
+        $messages = $this->repository->buildMessagesFromDefaults();
 
         foreach ($contests as $contest) {
             if (! $contest->messages->count()) {
