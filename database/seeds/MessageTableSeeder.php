@@ -7,8 +7,18 @@ use Illuminate\Database\Seeder;
 
 class MessageTableSeeder extends Seeder
 {
+    /**
+     * MessageRepository instance.
+     *
+     * @var \Gladiator\Repositories\MessageRepository
+     */
     protected $repository;
 
+    /**
+     * Create a new message table seeder instance.
+     *
+     * @param \Gladiator\Repositories\MessageRepository  $repository
+     */
     public function __construct(MessageRepository $repository)
     {
         $this->repository = $repository;
@@ -22,23 +32,8 @@ class MessageTableSeeder extends Seeder
     public function run()
     {
         $contests = Contest::all();
-        $defaults = correspondence()->defaults();
-        $types = Message::getTypes();
-        $messages = [];
 
-        foreach ($types as $type) {
-            $messages[$type] = [];
-        }
-
-        foreach ($defaults as $data) {
-            $messages[$data['type']][] = [
-                'subject' => $data['subject'],
-                'body' => $data['body'],
-                'label' => $data['label'],
-                'pro_tip' => $data['pro_tip'],
-                'signoff' => $data['signoff'],
-            ];
-        }
+        $messages = $this->repository->buildMessagesFromDefaults();
 
         foreach ($contests as $contest) {
             if (! $contest->messages->count()) {
