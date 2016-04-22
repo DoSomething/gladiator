@@ -25,7 +25,7 @@ class Message extends Model
      *
      * @var array
      */
-    protected static $types = [ 'checkin', 'leaderboard', 'reminder', 'welcome' ];
+    protected static $types = ['checkin', 'leaderboard', 'reminder', 'welcome'];
 
     /**
      * Get the contest associated with this message.
