@@ -1,5 +1,7 @@
 {!! $content['body'] !!}
 <br><br>
-{{-- @TODO: check if leaderboard exists and checkbox to include it is checked, then pull in the leaderboard partial here. --}}
+@if (count($content['leaderboard']))
+    @include('messages.partials._leaderboard_table', ['leaderboard' => $content['leaderboard']])
+@endif
 <br><br>
 {!! $content['signoff'] !!}
