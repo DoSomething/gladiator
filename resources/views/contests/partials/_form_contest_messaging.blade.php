@@ -18,12 +18,12 @@
         </div>
 
         <div class="form-item -padded">
-            <label class="field-label" for="{{ correspondence()->getAttribute($message, 'reportback_id') }}">Reportback ID</label>
+            <label class="field-label" for="{{ correspondence()->getAttribute($message, 'reportback_id') }}">Featured Reportback ID</label>
             <input class="text-field" type="text" name="{{ correspondence()->getAttribute($message, 'reportback_id') }}" id="{{ correspondence()->getAttribute($message, 'reportback_id') }}" value="{{ correspondence($message, 'reportback_id') }}" />
         </div>
 
         <div class="form-item -padded">
-            <label class="field-label" for="{{ correspondence()->getAttribute($message, 'reportback_item_id') }}">Reportback Item ID</label>
+            <label class="field-label" for="{{ correspondence()->getAttribute($message, 'reportback_item_id') }}">Featured Reportback Item ID</label>
             <input class="text-field" type="text" name="{{ correspondence()->getAttribute($message, 'reportback_item_id') }}" id="{{ correspondence()->getAttribute($message, 'reportback_item_id') }}" value="{{ correspondence($message, 'reportback_item_id') }}" />
         </div>
 

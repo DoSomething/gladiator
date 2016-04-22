@@ -273,6 +273,8 @@ class Manager
         $topThreeUsers = array_slice($leaderboard, 0, 3);
         $places = ['1st', '2nd', '3rd'];
 
+        $topThree = [];
+
         foreach ($topThreeUsers as $key => $user) {
             $reportbackItems = $user->reportback->reportback_items->data;
             $latestReportbackItem = array_pop($reportbackItems);
