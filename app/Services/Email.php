@@ -144,7 +144,7 @@ class Email
             $message = $this->processMessage($tokens, $this->message);
 
             if ($this->message->type == 'leaderboard') {
-                $message = array_merge($message, $this->processLeaderboardVars($this->users));
+                $message = array_merge($message, $this->getLeaderboardVars($this->users));
             }
 
             $this->allMessages[$key]['message'] = $message;
@@ -157,7 +157,7 @@ class Email
      *
      * @param  array $users
      */
-    protected function processLeaderboardVars($users)
+    protected function getLeaderboardVars($users)
     {
         $list = $this->manager->catalogUsers($users);
         $leaderboard = $list['active'];
