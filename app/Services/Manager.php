@@ -254,6 +254,32 @@ class Manager
     }
 
     /**
+     * Get the top three reportbacks from a given leaderboard.
+     *
+     * @param array $leaderboard
+     * @return array $topThree
+     */
+    public function getTopThreeReportbacks($leaderboard)
+    {
+        $topThreeUsers = array_slice($leaderboard, 0, 3);
+
+        foreach ($topThreeUsers as $user)
+        {
+            $reportbackItems = $user->reportback->reportback_items->data;
+            $latestReportback = array_pop($reportbackItems);
+
+            $topThree[] = [
+                'first_name' => $user->first_name,
+                'quantity' => $user->reportback->quantity,
+                'image_url' => $latestReportback->media->uri,
+                'caption' => $latestReportback->caption,
+            ];
+        }
+
+        return $topThree;
+    }
+
+    /**
      * Append Campaign data to the supplied collection.
      *
      * @param  \Illuminate\Database\Eloquent\Collection  $collection

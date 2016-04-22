@@ -129,7 +129,7 @@ class Email
     }
 
     /**
-     * Builds the email object.
+     * Builds the email array.
      */
     protected function setupEmail()
     {
@@ -138,25 +138,31 @@ class Email
             $this->allMessages[$key]['user'] = $user;
 
             $tokens = $this->defineTokens($user);
+
             $this->allMessages[$key]['message'] = $this->processMessage($tokens, $this->message);
 
             if ($this->message->type == 'leaderboard') {
-                $this->allMessages[$key]['message']['leaderboard'] = $this->generateLeaderboard($this->users);
-
-                // @TODO - get top 3 reportbacks
+                $this->allMessages[$key]['message'] = array_merge($this->allMessages[$key]['message'], $this->processLeaderboardVars($this->users));
             }
         }
     }
 
     /*
-     * Generates a leaderboard given an array of users with reportback activity
+     * Sets the variables needed for leaderboard emails
+     * including the full leaderboard and the top three reportbacks.
      *
      * @param  array $users
      */
-    protected function generateLeaderboard($users)
+    protected function processLeaderboardVars($users)
     {
         $list = $this->manager->catalogUsers($users);
+        $leaderboard = $list['active'];
 
-        return $list['active'];
+        $vars = [
+            'leaderboard' => $leaderboard,
+            'topThree' => $this->manager->getTopThreeReportbacks($leaderboard),
+        ];
+
+        return $vars;
     }
 }

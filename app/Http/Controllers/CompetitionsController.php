@@ -172,6 +172,7 @@ class CompetitionsController extends Controller
         $list = $this->manager->catalogUsers($users);
 
         $leaderboard = $list['active'];
+
         $pending = $list['inactive'];
 
         session()->flash('contest_' . $competition->contest_id . '-' . 'competition_' . $competition->id . '-leaderboard', $list);
