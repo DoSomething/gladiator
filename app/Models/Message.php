@@ -52,7 +52,7 @@ class Message extends Model
      */
     public function setProTipAttribute($value)
     {
-        $this->attributes['pro_tip'] = empty($value) ? null : $value;
+        $this->attributes['pro_tip'] = ! empty($value) ? $value : null;
     }
 
     /**
