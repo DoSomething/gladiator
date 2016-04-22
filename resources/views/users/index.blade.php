@@ -10,7 +10,6 @@
         <div class="wrapper">
             <div class="container__block">
                 <a class="button" href="{{ route('users.create') }}">Add User</a>
-                <a class="button" href="{{ route('users.contestants') }}">Contestants</a>
             </div>
         </div>
     </div>
@@ -22,5 +21,13 @@
     @if ($staff->count())
         @include('users.partials._table_users', ['users' => $staff, 'role' => 'Staff'])
     @endif
+
+    <div class="container">
+        <div class="wrapper">
+            <div class="container__block">
+                <p>View the list of all <a href="{{ route('users.contestants') }}">Contestants</a> in Gladiator.</p>
+            </div>
+        </div>
+    </div>
 
 @stop
