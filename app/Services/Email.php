@@ -129,34 +129,47 @@ class Email
     }
 
     /**
-     * Builds the email object.
+     * Builds the email array.
      */
     protected function setupEmail()
     {
+        $leaderboardVars = $this->getLeaderboardVars($this->users);
+
         // Each user gets it's own processed message
         foreach ($this->users as $key => $user) {
             $this->allMessages[$key]['user'] = $user;
 
             $tokens = $this->defineTokens($user);
-            $this->allMessages[$key]['message'] = $this->processMessage($tokens, $this->message);
 
-            if ($this->message->type == 'leaderboard') {
-                $this->allMessages[$key]['message']['leaderboard'] = $this->generateLeaderboard($this->users);
+            $message = [];
 
-                // @TODO - get top 3 reportbacks
+            $message = $this->processMessage($tokens, $this->message);
+
+            if ($this->message->type === 'leaderboard') {
+                $message = array_merge($message, $leaderboardVars);
             }
+
+            $this->allMessages[$key]['message'] = $message;
         }
     }
 
     /*
-     * Generates a leaderboard given an array of users with reportback activity
+     * Sets the variables needed for leaderboard emails
+     * including the full leaderboard and the top three reportbacks.
      *
      * @param  array $users
      */
-    protected function generateLeaderboard($users)
+    protected function getLeaderboardVars($users)
     {
         $list = $this->manager->catalogUsers($users);
+        $leaderboard = $list['active'];
 
-        return $list['active'];
+        $vars = [
+            'leaderboard' => $leaderboard,
+            'topThree' => $this->manager->getTopThreeReportbacks($leaderboard),
+            'reportbackInfo' => $this->contest->campaign->reportback_info,
+        ];
+
+        return $vars;
     }
 }
