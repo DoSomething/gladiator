@@ -402,7 +402,7 @@ class Manager
 
     public function appendReportbackItemToMessage($reportback_id, $reportback_item_id)
     {
-         return ($this->phoenix->getReportbackItem($reportback_id, $reportback_item_id));
+         return ($this->phoenix->getSpecificReportbackItem($reportback_id, $reportback_item_id));
 
     }
 }
