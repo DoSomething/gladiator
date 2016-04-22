@@ -35,16 +35,30 @@ class QueueMessage implements ShouldQueue
         // Build the email.
         $email = new Email($resources);
 
-        foreach ($email->allMessages as $content) {
+        if ($resources['test']) {
+            // @TODO - Clean this up. If this is a test email, the Email class should deal
+            // with building one message that can be sent to the admin.
             $settings = [
-                'subject' => $content['message']['subject'],
+                'subject' => $email->allMessages[0]['message']['subject'],
                 'from' => $email->contest->sender_email,
                 'from_name' => $email->contest->sender_name,
-                'to' => $content['user']->email,
-                'to_name' => $content['user']->first_name,
+                'to' => $email->contest->sender_email,
+                'to_name' => $email->contest->sender_name,
             ];
 
-            $this->sendMail($content['message'], $settings);
+            $this->sendMail($email->allMessages[0]['message'], $settings);
+        } else {
+            foreach ($email->allMessages as $content) {
+                $settings = [
+                    'subject' => $content['message']['subject'],
+                    'from' => $email->contest->sender_email,
+                    'from_name' => $email->contest->sender_name,
+                    'to' => $content['user']->email,
+                    'to_name' => $content['user']->first_name,
+                ];
+
+                $this->sendMail($content['message'], $settings);
+            }
         }
     }
 
