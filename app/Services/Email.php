@@ -168,6 +168,7 @@ class Email
             'leaderboard' => $leaderboard,
             'topThree' => $this->manager->getTopThreeReportbacks($leaderboard),
             'reportbackInfo' => $this->contest->campaign->reportback_info,
+            'featuredReportback' => $this->manager->appendReportbackItemToMessage($this->message->reportback_id, $this->message->reportback_item_id),
         ];
 
         return $vars;
