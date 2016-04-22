@@ -31,6 +31,7 @@
             <label class="field-label" for="{{ correspondence()->getAttribute($message, 'signoff') }}">Signoff:</label>
             <textarea class="text-field" name="{{ correspondence()->getAttribute($message, 'signoff') }}" id="{{ correspondence()->getAttribute($message, 'signoff') }}" rows="3">{{ correspondence($message, 'signoff') }}</textarea>
         </div>
+
     @endif
 
     <input type="hidden" name="{{ correspondence()->getAttribute($message, 'label') }}" value="{{ correspondence($message, 'label') }}" />
