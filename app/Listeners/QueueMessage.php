@@ -56,9 +56,9 @@ class QueueMessage implements ShouldQueue
                     'to' => $content['user']->email,
                     'to_name' => $content['user']->first_name,
                 ];
-            }
 
-            $this->sendMail($content['message'], $settings);
+                $this->sendMail($content['message'], $settings);
+            }
         }
     }
 
