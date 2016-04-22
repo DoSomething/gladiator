@@ -38,7 +38,6 @@ class Manager
      */
     protected $phoenix;
 
-
     /**
      * Create new Registrar instance.
      *
@@ -400,9 +399,15 @@ class Manager
         return $user;
     }
 
+    /**
+     * Append Reportback item to the message.
+     *
+     * @param  string  $reportback_id
+     * @param  string  $reportback_item_id
+     * @return object
+     */
     public function appendReportbackItemToMessage($reportback_id, $reportback_item_id)
     {
-         return ($this->phoenix->getSpecificReportbackItem($reportback_id, $reportback_item_id));
-
+        return $this->phoenix->getSpecificReportbackItem($reportback_id, $reportback_item_id);
     }
 }

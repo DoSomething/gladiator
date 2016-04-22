@@ -12,11 +12,10 @@ class AddFeaturedReportbackFields extends Migration
      */
     public function up()
     {
-       Schema::table('messages', function (Blueprint $table) {
+        Schema::table('messages', function (Blueprint $table) {
             $table->integer('reportback_id')->nullable()->after('pro_tip');
             $table->integer('reportback_item_id')->nullable()->after('reportback_id');
         });
-
     }
 
     /**

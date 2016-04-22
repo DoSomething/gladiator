@@ -62,7 +62,7 @@ class Message extends Model
      */
     public function setReportbackIdAttribute($value)
     {
-         $this->attributes['reportback_id'] = ! empty($value) ? $value : null;
+        $this->attributes['reportback_id'] = ! empty($value) ? $value : null;
     }
 
     /**
@@ -72,7 +72,7 @@ class Message extends Model
      */
     public function setReportbackItemIdAttribute($value)
     {
-         $this->attributes['reportback_item_id'] = ! empty($value) ? $value : null;
+        $this->attributes['reportback_item_id'] = ! empty($value) ? $value : null;
     }
 
     /**
@@ -84,5 +84,4 @@ class Message extends Model
     {
         return static::$types;
     }
-
 }
