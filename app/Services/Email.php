@@ -140,15 +140,23 @@ class Email
             $tokens = $this->defineTokens($user);
             $this->allMessages[$key]['message'] = $this->processMessage($tokens, $this->message);
 
-            // Leaderboard messages get an extra leaderboard variable to be sent to the email template.
-            // @TODO - move into smaller function that gets the leaderboard and then add it to the allMessages array here.
             if ($this->message->type == 'leaderboard') {
-                $list = $this->manager->catalogUsers($this->users);
+                $this->allMessages[$key]['message']['leaderboard'] = $this->generateLeaderboard($this->users);
 
-                $this->allMessages[$key]['message']['leaderboard'] = $list['active'];
+                // @TODO - get top 3 reportbacks
             }
-
-            // @TODO - create a smaller function that can be called here that gets the top 3 reportbacks.
         }
+    }
+
+    /*
+     * Generates a leaderboard given an array of users with reportback activity
+     *
+     * @param  array $users
+     */
+    protected function generateLeaderboard($users)
+    {
+        $list = $this->manager->catalogUsers($users);
+
+        return $list['active'];
     }
 }
