@@ -15,7 +15,7 @@ class UpdateMessages extends Command
      *
      * @var string
      */
-    protected $signature = 'update:messages {contest?} {--override : Override all contest messages and refresh with latest defaults }';
+    protected $signature = 'update:messages {contest?}';
 
     /**
      * The console command description.
