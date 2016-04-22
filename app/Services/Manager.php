@@ -6,6 +6,7 @@ use Gladiator\Models\Contest;
 use Gladiator\Repositories\CacheCampaignRepository;
 use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Northstar\Northstar;
+use Gladiator\Services\Phoenix\Phoenix;
 
 class Manager
 {
@@ -31,6 +32,14 @@ class Manager
     protected $northstar;
 
     /**
+     * Phoenix instance.
+     *
+     * @var \Gladiator\Services\Northstar\Phoenix
+     */
+    protected $phoenix;
+
+
+    /**
      * Create new Registrar instance.
      *
      * @param  $userRepository
@@ -41,6 +50,7 @@ class Manager
         $this->campaignRepository = $campaignRepository;
         $this->userRepository = $userRepository;
         $this->northstar = new Northstar;
+        $this->phoenix = new Phoenix;
     }
 
     /**
@@ -388,5 +398,11 @@ class Manager
         }
 
         return $user;
+    }
+
+    public function appendReportbackItemToMessage($reportback_id, $reportback_item_id)
+    {
+         return ($this->phoenix->getReportbackItem($reportback_id, $reportback_item_id));
+
     }
 }
