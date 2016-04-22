@@ -164,12 +164,16 @@ class Email
         $list = $this->manager->catalogUsers($users);
         $leaderboard = $list['active'];
 
-        $vars = [
-            'leaderboard' => $leaderboard,
-            'topThree' => $this->manager->getTopThreeReportbacks($leaderboard),
-            'reportbackInfo' => $this->contest->campaign->reportback_info,
-            'featuredReportback' => $this->manager->appendReportbackItemToMessage($this->message->reportback_id, $this->message->reportback_item_id),
-        ];
+        $vars = [];
+
+        if ($leaderboard) {
+            $vars = [
+                'leaderboard' => $leaderboard,
+                'topThree' => $this->manager->getTopThreeReportbacks($leaderboard),
+                'reportbackInfo' => $this->contest->campaign->reportback_info,
+                // 'featuredReportback' => $this->manager->appendReportbackItemToMessage($this->message->reportback_id, $this->message->reportback_item_id),
+            ];
+        }
 
         return $vars;
     }
