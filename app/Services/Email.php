@@ -70,10 +70,10 @@ class Email
         // @TODO - set defaults?
         $tokens = [
             ':campaign_title:'        => $this->contest->campaign->title,
-            ':end_date:'              => isset($this->competition) ? $this->competition->competition_end_date->format('F d, Y') : '',
+            ':end_date:'              => !is_null($this->competition) ? $this->competition->competition_end_date->format('F d, Y') : '',
             ':first_name:'            => $user->first_name,
-            ':leaderboard_msg_day:'   => isset($this->competition) ? get_day_of_week($this->competition->leaderboard_msg_day) : '',
-            ':leaderboard_msg_day-1:' => isset($this->competition) ? get_day_of_week($this->competition->leaderboard_msg_day - 1) : '',
+            ':leaderboard_msg_day:'   => !is_null($this->competition) ? get_day_of_week($this->competition->leaderboard_msg_day) : '',
+            ':leaderboard_msg_day-1:' => !is_null($this->competition) ? get_day_of_week($this->competition->leaderboard_msg_day - 1) : '',
             ':pro_tip:'               => $this->message->pro_tip,
             ':prove_it_link:'         => url(config('services.phoenix.uri') .'/node/' . $this->contest->campaign_id . '#prove'),
             ':reportback_noun:'       => strtolower($this->contest->campaign->reportback_info->noun),
