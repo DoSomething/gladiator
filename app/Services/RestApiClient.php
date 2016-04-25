@@ -174,7 +174,6 @@ class RestApiClient
      */
     protected function setMessages($error)
     {
-        // dd('errors');
         // @TODO: may eventually need to handle an array of errors.
         return (new MessageBag)->add($error->code, $error->message);
     }
