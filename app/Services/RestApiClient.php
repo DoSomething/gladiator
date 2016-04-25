@@ -132,6 +132,7 @@ class RestApiClient
             return $this->client->request($method, $path, $options);
         } catch (RequestException $error) {
             $response = $this->getJson($error->getResponse());
+            $response = $this->setErrorCode($response, $error->getCode());
 
             if ($error->getCode() === 404) {
                 $messages = $this->setMessages($response->error);
@@ -151,12 +152,29 @@ class RestApiClient
     }
 
     /**
+     * Set the error code on the response error object if missing.
+     *
+     * @param  object  $response
+     * @param  string  $code
+     * @return object
+     */
+    protected function setErrorCode($response, $code)
+    {
+        if (! property_exists($response->error, 'code')) {
+            $response->error->code = $code;
+        }
+
+        return $response;
+    }
+
+    /**
      * Set any erorr message within a MessageBag.
      *
      * @param object  $error
      */
     protected function setMessages($error)
     {
+        // dd('errors');
         // @TODO: may eventually need to handle an array of errors.
         return (new MessageBag)->add($error->code, $error->message);
     }
