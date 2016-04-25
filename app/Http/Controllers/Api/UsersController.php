@@ -86,7 +86,7 @@ class UsersController extends ApiController
         $this->manager->appendCampaign($contest);
 
         // Fire off welcome Email
-        $message = Message::where(['contest_id' => $contest->id, 'type' => 'Welcome'])->first();
+        $message = Message::where(['contest_id' => $contest->id, 'type' => 'welcome'])->first();
         $resources = [
             'message' => $message,
             'contest' => $contest,
