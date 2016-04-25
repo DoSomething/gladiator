@@ -92,7 +92,7 @@ class UsersController extends ApiController
             'message' => $message,
             'contest' => $contest,
             'users' => [$user],
-            'test' => true,
+            'test' => false,
         ];
         event(new QueueMessageRequest($resources));
 
