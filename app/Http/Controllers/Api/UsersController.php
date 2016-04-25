@@ -9,7 +9,6 @@ use Gladiator\Services\Manager;
 use Gladiator\Http\Requests\UserRequest;
 use Gladiator\Http\Transformers\UserTransformer;
 use Gladiator\Events\QueueMessageRequest;
-
 use Gladiator\Models\Message;
 
 class UsersController extends ApiController
