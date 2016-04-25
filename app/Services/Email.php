@@ -180,11 +180,15 @@ class Email
 
     protected function getFeaturedReportback()
     {
-        $featuredReportback = $this->manager->appendReportbackItemToMessage($this->message->reportback_id, $this->message->reportback_item_id);
+        if (isset($this->message->reportback_id) && isset($this->message->reportback_item_id)) {
+            $featuredReportback = $this->manager->appendReportbackItemToMessage($this->message->reportback_id, $this->message->reportback_item_id);
 
-        return $featuredReportback = [
-            'image_url' => $featuredReportback->media->uri,
-            'caption' => $featuredReportback->caption,
-        ];
+            return $featuredReportback = [
+                'image_url' => $featuredReportback->media->uri,
+                'caption' => $featuredReportback->caption,
+            ];
+        }
+
+        return null;
     }
 }
