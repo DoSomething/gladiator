@@ -171,10 +171,20 @@ class Email
                 'leaderboard' => $leaderboard,
                 'topThree' => $this->manager->getTopThreeReportbacks($leaderboard),
                 'reportbackInfo' => $this->contest->campaign->reportback_info,
-                // 'featuredReportback' => $this->manager->appendReportbackItemToMessage($this->message->reportback_id, $this->message->reportback_item_id),
+                'featuredReportback' => $this->getFeaturedReportback(),
             ];
         }
 
         return $vars;
+    }
+
+    protected function getFeaturedReportback()
+    {
+        $featuredReportback = $this->manager->appendReportbackItemToMessage($this->message->reportback_id, $this->message->reportback_item_id);
+
+        return $featuredReportback = [
+            'image_url' => $featuredReportback->media->uri,
+            'caption' => $featuredReportback->caption,
+        ];
     }
 }

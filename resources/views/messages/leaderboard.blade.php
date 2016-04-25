@@ -10,6 +10,8 @@
     @include('messages.partials._leaderboard_table', ['leaderboard' => $content['leaderboard']])
 @endif
 
+<h2>Testing featured reportback</h2>
+{{ $content['featuredReportback']['caption']}}
 <br><br>
 
 {!! $content['signoff'] !!}
