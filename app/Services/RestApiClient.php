@@ -132,6 +132,7 @@ class RestApiClient
             return $this->client->request($method, $path, $options);
         } catch (RequestException $error) {
             $response = $this->getJson($error->getResponse());
+            $response = $this->setErrorCode($response, $error->getCode());
 
             if ($error->getCode() === 404) {
                 $messages = $this->setMessages($response->error);
@@ -148,6 +149,22 @@ class RestApiClient
 
             throw new HttpException(500, 'Northstar returned an error for that request.');
         }
+    }
+
+    /**
+     * Set the error code on the response error object if missing.
+     *
+     * @param  object  $response
+     * @param  string  $code
+     * @return object
+     */
+    protected function setErrorCode($response, $code)
+    {
+        if (! property_exists($response->error, 'code')) {
+            $response->error->code = $code;
+        }
+
+        return $response;
     }
 
     /**
