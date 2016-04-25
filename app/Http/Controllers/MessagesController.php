@@ -105,8 +105,6 @@ class MessagesController extends Controller
             'test' => request('test'),
         ];
 
-        Log::debug($resources);
-
         // Kick off email sending
         event(new QueueMessageRequest($resources));
 
