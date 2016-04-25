@@ -50,7 +50,7 @@ class Email
     {
         $this->message = $resources['message'];
         $this->contest = $resources['contest'];
-        $this->competition = $resources['competition'];
+        $this->competition = isset($resources['competition']) ? $resources['competition'] : null;
         $this->users = $resources['users'];
 
         $this->manager = app(\Gladiator\Services\Manager::class);

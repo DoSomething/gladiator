@@ -5,6 +5,7 @@ namespace Gladiator\Http\Controllers\Api;
 use Gladiator\Models\User;
 use Gladiator\Models\Contest;
 use Gladiator\Services\Registrar;
+use Gladiator\Services\Manager;
 use Gladiator\Http\Requests\UserRequest;
 use Gladiator\Http\Transformers\UserTransformer;
 use Gladiator\Events\QueueMessageRequest;
@@ -24,12 +25,18 @@ class UsersController extends ApiController
     protected $transformer;
 
     /**
+     * @var Gladiator\Services\Manager;
+     */
+    protected $manager;
+
+    /**
      * Create new UsersController instance.
      */
-    public function __construct(Registrar $registrar)
+    public function __construct(Registrar $registrar, Manager $manager)
     {
         $this->registrar = $registrar;
         $this->transformer = new UserTransformer;
+        $this->manager = $manager;
 
         $this->middleware('auth.api');
     }
@@ -77,6 +84,7 @@ class UsersController extends ApiController
         }
 
         $contest->waitingRoom->users()->attach($user->id);
+        $this->manager->appendCampaign($contest);
 
         // Fire off welcome Email
         $message = Message::where(['contest_id' => $contest->id, 'type' => 'Welcome'])->first();
@@ -84,7 +92,7 @@ class UsersController extends ApiController
             'message' => $message,
             'contest' => $contest,
             'users' => [$user],
-            'test' => false,
+            'test' => true,
         ];
         event(new QueueMessageRequest($resources));
 
