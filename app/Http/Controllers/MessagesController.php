@@ -10,6 +10,7 @@ use Gladiator\Events\QueueMessageRequest;
 use Gladiator\Repositories\MessageRepository;
 use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Manager;
+use Gladiator\Services\Registrar;
 
 class MessagesController extends Controller
 {
@@ -28,9 +29,16 @@ class MessagesController extends Controller
     protected $userRepository;
 
     /**
+     * Registrar instance.
+     *
+     * @var \Gladiator\Services\Registrar;
+     */
+    protected $registrar;
+
+    /**
      * Create new MessagesController instance.
      */
-    public function __construct(MessageRepository $msgRepository, UserRepositoryContract $userRepository, Manager $manager)
+    public function __construct(MessageRepository $msgRepository, UserRepositoryContract $userRepository, Manager $manager, Registrar $registrar)
     {
         $this->manager = $manager;
         $this->msgRepository = $msgRepository;
@@ -38,6 +46,8 @@ class MessagesController extends Controller
 
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
+
+        $this->registrar = $registrar;
     }
 
     /**
@@ -95,11 +105,18 @@ class MessagesController extends Controller
         $contest = Contest::find($contestId);
         $contest = $this->manager->appendCampaign($contest);
 
-        $users = $this->manager->getModelUsers($competition, true);
+        // @TODO - Move into it's own function.
+        if (request('test')) {
+            $user = $this->registrar->findNorthstarAccount('email', $contest->sender_email);
 
-        // Only send checkin messages to users who haven't reported back.
-        if ($message->type === 'checkin') {
-            $users = $users->where('reportback', null);
+            $users = [$user];
+        } else {
+            $users = $this->manager->getModelUsers($competition, true);
+
+            // Only send checkin messages to users who haven't reported back.
+            if ($message->type === 'checkin') {
+                $users = $users->where('reportback', null);
+            }
         }
 
         $resources = [
