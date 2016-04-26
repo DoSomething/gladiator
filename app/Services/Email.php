@@ -159,7 +159,8 @@ class Email
      * Sets the variables needed for leaderboard emails
      * including the full leaderboard and the top three reportbacks.
      *
-     * @param  array $users
+     * @param   array $users
+     * @return  array $vars
      */
     protected function getLeaderboardVars($users)
     {
@@ -180,6 +181,12 @@ class Email
         return $vars;
     }
 
+    /*
+     * Gets the featured reportback and grabs the properties that
+     * email template needs for display.
+     *
+     * @return  array $featuredReportback
+     */
     protected function getFeaturedReportback()
     {
         if (isset($this->message->reportback_id) && isset($this->message->reportback_item_id)) {
