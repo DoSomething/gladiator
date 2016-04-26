@@ -13,7 +13,7 @@ class AddRulesToCompetition extends Migration
     public function up()
     {
         Schema::table('competitions', function (Blueprint $table) {
-            $table->string('rules');
+            $table->string('rules')->nullable()->after('leaderboard_msg_day');
         });
     }
 

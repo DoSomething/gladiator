@@ -134,6 +134,10 @@ class Email
      */
     protected function setupEmail()
     {
+        if ($this->message->type === 'leaderboard') {
+            $leaderboardVars = $this->getLeaderboardVars($this->users);
+        }
+
         // Each user gets it's own processed message
         foreach ($this->users as $key => $user) {
             $this->allMessages[$key]['user'] = $user;
@@ -145,7 +149,6 @@ class Email
             $message = $this->processMessage($tokens, $this->message);
 
             if ($this->message->type === 'leaderboard') {
-                $leaderboardVars = $this->getLeaderboardVars($this->users);
                 $message = array_merge($message, $leaderboardVars);
             }
 
