@@ -143,13 +143,9 @@ class Email
 
             $tokens = $this->defineTokens($user);
 
-            $message = [];
+            $processedMessage = $this->processMessage($tokens, $this->message);
 
-            $message = $this->processMessage($tokens, $this->message);
-
-            if ($this->message->type === 'leaderboard') {
-                $message = array_merge($message, $leaderboardVars);
-            }
+            $message = $leaderboardVars ? array_merge($processedMessage, $leaderboardVars) : $processedMessage;
 
             $this->allMessages[$key]['message'] = $message;
         }
@@ -164,21 +160,25 @@ class Email
      */
     protected function getLeaderboardVars($users)
     {
-        $list = $this->manager->catalogUsers($users);
-        $leaderboard = $list['active'];
+        if ($this->message->type === 'leaderboard') {
+            $list = $this->manager->catalogUsers($users);
+            $leaderboard = $list['active'];
 
-        $vars = [];
+            $vars = [];
 
-        if ($leaderboard) {
-            $vars = [
-                'leaderboard' => $leaderboard,
-                'topThree' => $this->manager->getTopThreeReportbacks($leaderboard),
-                'reportbackInfo' => $this->contest->campaign->reportback_info,
-                'featuredReportback' => $this->getFeaturedReportback(),
-            ];
+            if ($leaderboard) {
+                $vars = [
+                    'leaderboard' => $leaderboard,
+                    'topThree' => $this->manager->getTopThreeReportbacks($leaderboard),
+                    'reportbackInfo' => $this->contest->campaign->reportback_info,
+                    'featuredReportback' => $this->getFeaturedReportback(),
+                ];
+            }
+
+            return $vars;
         }
 
-        return $vars;
+        return null;
     }
 
     /*
