@@ -93,7 +93,7 @@ class Email
      */
     protected function processMessage($tokens, $message)
     {
-        $parsableProperties = ['subject', 'body', 'signoff', 'pro_tip'];
+        $parsableProperties = ['subject', 'body', 'signoff', 'pro_tip', 'shoutout'];
 
         $processedMessage['type'] = $message->type;
 
@@ -164,12 +164,32 @@ class Email
         $list = $this->manager->catalogUsers($users);
         $leaderboard = $list['active'];
 
-        $vars = [
-            'leaderboard' => $leaderboard,
-            'topThree' => $this->manager->getTopThreeReportbacks($leaderboard),
-            'reportbackInfo' => $this->contest->campaign->reportback_info,
-        ];
+        $vars = [];
+
+        if ($leaderboard) {
+            $vars = [
+                'leaderboard' => $leaderboard,
+                'topThree' => $this->manager->getTopThreeReportbacks($leaderboard),
+                'reportbackInfo' => $this->contest->campaign->reportback_info,
+                'featuredReportback' => $this->getFeaturedReportback(),
+            ];
+        }
 
         return $vars;
+    }
+
+    protected function getFeaturedReportback()
+    {
+        if (isset($this->message->reportback_id) && isset($this->message->reportback_item_id)) {
+            $featuredReportback = $this->manager->appendReportbackItemToMessage($this->message->reportback_id, $this->message->reportback_item_id);
+
+            return $featuredReportback = [
+                'shoutout' => $this->message->shoutout,
+                'image_url' => $featuredReportback->media->uri,
+                'caption' => $featuredReportback->caption,
+            ];
+        }
+
+        return null;
     }
 }

@@ -6,6 +6,7 @@ use Gladiator\Models\Contest;
 use Gladiator\Repositories\CacheCampaignRepository;
 use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Northstar\Northstar;
+use Gladiator\Services\Phoenix\Phoenix;
 
 class Manager
 {
@@ -31,6 +32,13 @@ class Manager
     protected $northstar;
 
     /**
+     * Phoenix instance.
+     *
+     * @var \Gladiator\Services\Northstar\Phoenix
+     */
+    protected $phoenix;
+
+    /**
      * Create new Registrar instance.
      *
      * @param  $userRepository
@@ -41,6 +49,7 @@ class Manager
         $this->campaignRepository = $campaignRepository;
         $this->userRepository = $userRepository;
         $this->northstar = new Northstar;
+        $this->phoenix = new Phoenix;
     }
 
     /**
@@ -264,6 +273,8 @@ class Manager
         $topThreeUsers = array_slice($leaderboard, 0, 3);
         $places = ['1st', '2nd', '3rd'];
 
+        $topThree = [];
+
         foreach ($topThreeUsers as $key => $user) {
             $reportbackItems = $user->reportback->reportback_items->data;
             $latestReportbackItem = array_pop($reportbackItems);
@@ -388,5 +399,23 @@ class Manager
         }
 
         return $user;
+    }
+
+    /**
+     * Append Reportback item to the message.
+     *
+     * @param  string  $reportback_id
+     * @param  string  $reportback_item_id
+     * @return object
+     */
+    public function appendReportbackItemToMessage($reportback_id, $reportback_item_id)
+    {
+        $reportback = $this->phoenix->getReportback($reportback_id, $reportback_item_id);
+
+        // Remove the nonsense 0,1,2 array keys and key by the reportback item id.
+        $reportback_items = collect($reportback->reportback_items->data)->keyBy('id');
+
+        // Find the matching reportback item, and return the item.
+        return $reportback_items->get($reportback_item_id);
     }
 }
