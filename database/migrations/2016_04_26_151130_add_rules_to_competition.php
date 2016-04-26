@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddRulesToContest extends Migration
+class AddRulesToCompetition extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class AddRulesToContest extends Migration
      */
     public function up()
     {
-        Schema::table('contests', function (Blueprint $table) {
+        Schema::table('competitions', function (Blueprint $table) {
             $table->string('rules');
         });
     }
@@ -24,7 +24,7 @@ class AddRulesToContest extends Migration
      */
     public function down()
     {
-        Schema::table('contests', function (Blueprint $table) {
+        Schema::table('competitions', function (Blueprint $table) {
             $table->dropColumn('rules');
         });
     }
