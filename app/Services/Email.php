@@ -79,7 +79,7 @@ class Email
             ':reportback_noun:'       => strtolower($this->contest->campaign->reportback_info->noun),
             ':reportback_verb:'       => strtolower($this->contest->campaign->reportback_info->verb),
             ':sender_name:'           => $this->contest->sender_name,
-            ':rules:'                 => ! is_null($this->competition) ? $this->competition->rules : '',
+            ':rules_link:'            => ! is_null($this->competition) ? $this->competition->rules : '',
         ];
 
         return $tokens;
@@ -134,9 +134,7 @@ class Email
      */
     protected function setupEmail()
     {
-        if ($this->message->type === 'leaderboard') {
-            $leaderboardVars = $this->getLeaderboardVars($this->users);
-        }
+        $leaderboardVars = $this->getLeaderboardVars($this->users);
 
         // Each user gets it's own processed message
         foreach ($this->users as $key => $user) {
