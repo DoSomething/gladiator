@@ -44,8 +44,20 @@ class Phoenix extends RestApiClient
      */
     public function getCampaign($id)
     {
-        $response = $this->get($this->base_uri . 'campaigns/' . $id);
+        $response = $this->get('campaigns/' . $id);
 
         return is_null($response) ? null : $response;
+    }
+
+    /**
+     * Send a GET request to return a reportback & an item with the specified id.
+     *
+     * @param  string $reportback_id
+     * @param  string $reportback_item_id
+     * @return object|null
+     */
+    public function getReportback($reportback_id, $reportback_item_id)
+    {
+        return $this->get('reportbacks/' . $reportback_id);
     }
 }

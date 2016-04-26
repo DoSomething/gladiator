@@ -97,6 +97,11 @@ class MessagesController extends Controller
 
         $users = $this->manager->getModelUsers($competition, true);
 
+        // Only send checkin messages to users who haven't reported back.
+        if ($message->type === 'checkin') {
+            $users = $users->where('reportback', null);
+        }
+
         $resources = [
             'message' => $message,
             'contest' => $contest,
