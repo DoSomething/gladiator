@@ -14,8 +14,8 @@
         </div>
 
         <div class="form-item -padded">
-            <label class="field-label" for="rules">Rules URL:</label>
-            <input type="text" name="rules" id="rules" class="text-field" placeholder="http://docs.google.com/the-rules" />
+            <label class="field-label" for="rules_url">Rules URL:</label>
+            <input type="text" name="rules_url" id="rules_url" class="text-field" placeholder="http://docs.google.com/the-rules" />
         </div>
 
         @include('competitions.partials._form_leaderboard_msg_day_field', [

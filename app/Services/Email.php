@@ -79,7 +79,7 @@ class Email
             ':reportback_noun:'       => strtolower($this->contest->campaign->reportback_info->noun),
             ':reportback_verb:'       => strtolower($this->contest->campaign->reportback_info->verb),
             ':sender_name:'           => $this->contest->sender_name,
-            ':rules_url:'            => ! is_null($this->competition) ? $this->competition->rules : '',
+            ':rules_url:'            => ! is_null($this->competition) ? $this->competition->rules_url : '',
         ];
 
         return $tokens;

@@ -106,7 +106,7 @@ class WaitingRoom extends Model
             $competition->competition_start_date = $startDate;
             $competition->competition_end_date = $endDate->endOfDay();
             $competition->leaderboard_msg_day = $request->leaderboard_msg_day;
-            $competition->rules = $request->rules;
+            $competition->rules_url = $request->rules_url;
             $contest->competitions()->save($competition);
 
             // For each user in this group
