@@ -14,8 +14,8 @@ class ContestsTest extends TestCase
 	 */
 	public function testCreatingAContest()
 	{
-		$signup_start_date = Carbon::now();
-		$signup_end_date = Carbon::now()->addMonth();
+		$signup_start_date = Carbon::now()->startOfDay();
+		$signup_end_date = Carbon::now()->addMonth()->endOfDay();
 
 		// Fill out form.
 		$this->asAdminUser()
@@ -48,5 +48,18 @@ class ContestsTest extends TestCase
 			'signup_start_date' => $signup_start_date,
 			'signup_end_date' => $signup_end_date,
         ]);
+
+        // Make sure default messages are created. Just test that required fields are there.
+		$correspondence = app(Gladiator\Http\Utilities\Correspondence::class);
+
+		foreach (correspondence()->defaults() as $message) {
+			$this->seeInDatabase('messages', [
+				'contest_id' => '1',
+				'type' => $message['type'],
+				'label' => $message['label'],
+				'subject' => $message['subject'],
+				'body' => $message['body'],
+			]);
+		}
 	}
 }
