@@ -13,6 +13,11 @@
             <input type="number" name="competition_max" id="competition_max" class="text-field" value="300" data-total="{{count($room->users)}}" }/>
         </div>
 
+        <div class="form-item -padded">
+            <label class="field-label" for="rules_url">Rules URL:</label>
+            <input type="text" name="rules_url" id="rules_url" class="text-field" placeholder="http://docs.google.com/the-rules" />
+        </div>
+
         @include('competitions.partials._form_leaderboard_msg_day_field', [
             'default' => null,
         ])
