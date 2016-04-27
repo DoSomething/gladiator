@@ -6,8 +6,6 @@ use Gladiator\Models\Contest;
 use Gladiator\Models\Competition;
 use Gladiator\Models\Message;
 
-use Log;
-
 class Email
 {
     /**
