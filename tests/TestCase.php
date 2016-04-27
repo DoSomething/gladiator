@@ -1,13 +1,13 @@
 <?php
 
 use Gladiator\Models\User;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
-
-    use DatabaseTransactions;
+    use DatabaseMigrations, DatabaseTransactions;
 
     /**
      * The base URL to use while testing the application.
