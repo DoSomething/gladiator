@@ -69,6 +69,10 @@ class UsersController extends ApiController
             unset($credentials['term']);
 
             $user = $this->registrar->createUser((object) $credentials);
+
+            if ($request->input('term')) {
+                $user->email = $request->input('id');
+            }
         }
 
         $contest = Contest::with(['waitingRoom', 'competitions'])->where('campaign_id', '=', $request['campaign_id'])
