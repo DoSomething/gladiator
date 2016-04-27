@@ -6,6 +6,8 @@ use Gladiator\Models\Contest;
 use Gladiator\Models\Competition;
 use Gladiator\Models\Message;
 
+use Log;
+
 class Email
 {
     /**
@@ -79,7 +81,7 @@ class Email
             ':reportback_noun:'       => strtolower($this->contest->campaign->reportback_info->noun),
             ':reportback_verb:'       => strtolower($this->contest->campaign->reportback_info->verb),
             ':sender_name:'           => $this->contest->sender_name,
-            ':rules_link:'            => ! is_null($this->competition) ? $this->competition->rules : '',
+            ':rules_url:'            => ! is_null($this->competition) ? $this->competition->rules : '',
         ];
 
         return $tokens;
@@ -95,7 +97,6 @@ class Email
     protected function processMessage($tokens, $message)
     {
         $parsableProperties = ['subject', 'body', 'signoff', 'pro_tip', 'shoutout'];
-
         $processedMessage['type'] = $message->type;
 
         foreach ($parsableProperties as $prop) {
