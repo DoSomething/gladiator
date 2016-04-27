@@ -1,12 +1,13 @@
 <?php
 
+use Gladiator\Models\User;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
-
-    use DatabaseTransactions;
+    use DatabaseMigrations, DatabaseTransactions;
 
     /**
      * The base URL to use while testing the application.
@@ -14,6 +15,23 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      * @var string
      */
     protected $baseUrl = 'http://localhost';
+
+
+    /**
+     * Set the currently logged in user to be a "fake" administrator.
+     *
+     * @return $this
+     */
+    public function asAdminUser()
+    {
+        $admin = new User();
+        $admin->id = str_random(24);
+        $admin->role = 'admin';
+        
+        $this->be($admin);
+        
+        return $this;
+    }
 
     /**
      * Creates the application.
