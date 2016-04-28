@@ -34,7 +34,7 @@ class ContestsTest extends TestCase
 		->type($campaignID, 'campaign_id')
 		->type($campaignRunID, 'campaign_run_id')
 		->type($senderEmail, 'sender_email')
-		->type($senderName, 'sender_name')
+		->type($senderName, 'sender_name');
 		// ->press('Submit');
 
 		// $this->see('Contest has been saved!');
