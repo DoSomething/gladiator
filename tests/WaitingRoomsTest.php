@@ -48,6 +48,6 @@ class WaitingRoomsTest extends TestCase
 
         $this->see('Waiting Room has been split!');
 
-        $this->assertTrue(count($contest->competitions->toArray()) ==  2);
+        $this->assertCount(2, $contest->competitions->toArray());
     }
 }
