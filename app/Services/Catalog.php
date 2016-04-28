@@ -58,10 +58,13 @@ class Catalog
     {
         $active = [];
         $inactive = [];
+        $flagged = [];
 
         foreach ($users as $user) {
             if (! $user->reportback) {
                 $inactive[] = $user;
+            } elseif ($user->reportback && $user->reportback->flagged) {
+                $flagged[] = $user;
             } else {
                 $active[] = $user;
             }
@@ -70,6 +73,7 @@ class Catalog
         return [
             'active' => $active,
             'inactive' => $inactive,
+            'flagged' => $flagged,
         ];
     }
 
@@ -104,6 +108,28 @@ class Catalog
         }
 
         return $users;
+    }
+
+    /**
+     * Remove users with flagged reportbacks from the users array.
+     *
+     * @param array $users
+     * @return array
+     */
+    protected function removeFlaggedUsers($users)
+    {
+        return array_values(collect($users)->where('reportback.flagged', false)->toArray());
+    }
+
+    /**
+     * Get all users with flagged reportbacks.
+     *
+     * @param array $users
+     * @return array
+     */
+    protected function getFlaggedUsers($users)
+    {
+        return array_values(collect($users)->where('reportback.flagged', true)->toArray());
     }
 
     /**
