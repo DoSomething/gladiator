@@ -9,28 +9,76 @@ class UserTest extends TestCase
 {
     protected $repository;
 
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        // $this->repository = app(\Gladiator\Repositories\UserRepositoryContract::class);
-    }
-
     /**
-     * Test to retrieve an existing user in the database.
+     * Test to retrieve an existing contestant user in the database.
      *
      * @return void
      * @test
      */
-    public function itRetrievesAnExistingUserByNorthstarId()
+    public function itCanStoreANewContestant()
     {
-        // dd(get_class($this->repository));
+        $account = (object) [
+            'id' => str_random(24),
+        ];
 
-        // $user = User::create()
+        $repository = app(\Gladiator\Repositories\UserRepositoryContract::class);
+        $user = $repository->create($account);
 
-        // dd($user);
+        $this->assertTrue($user instanceof User);
 
-        $this->assertTrue(true);
+        $this->seeInDatabase('users', [
+            'id' => $account->id,
+            'role' => null,
+        ]);
+    }
+
+
+    /**
+     * Test to retrieve an existing contestant user in the database.
+     *
+     * @return void
+     * @test
+     */
+    public function itRetrievesAnExistingContestantUserByNorthstarId()
+    {
+        $model = factory(User::class)->create();
+
+        $mock = $this->mock(\Gladiator\Services\Northstar\Northstar::class)
+            ->shouldReceive('getUser')
+            ->andReturn((object) [
+                'id' => $model->id,
+                'first_name' => 'Larry',
+                // ...
+            ]);
+
+        $repository = app(\Gladiator\Repositories\UserRepositoryContract::class);
+        $user = $repository->find($model->id);
+
+
+        $this->assertEquals($model->id, $user->id);
+        $this->assertEquals($model->role, $user->role);
+        $this->assertEquals('Larry', $user->first_name);
+    }
+
+    /**
+     * Test to retrieve an existing contestant user in the database.
+     *
+     * @return void
+     * @test
+     */
+    public function itRetrievesAnExistingAdminUserByNorthstarId()
+    {
+        $account = (object) [
+            'id' => str_random(24),
+            'role' => 'admin',
+        ];
+
+        $repository = app(\Gladiator\Repositories\UserRepositoryContract::class);
+        $repository->create($account);
+
+        $this->seeInDatabase('users', [
+            'id' => $account->id,
+            'role' => 'admin',
+        ]);
     }
 }
