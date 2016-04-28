@@ -18,26 +18,26 @@ class ContestsTest extends TestCase
 		->visit(route('contests.create'))
 		->see('Add a new contest');
 
-		// $signupStartDate = Carbon::now()->startOfDay();
-		// $signupEndDate = Carbon::now()->addMonth()->endOfDay();
-		// $senderName = $this->faker->firstName;
-		// $senderEmail = $this->faker->unique()->safeEmail;
-		// $campaignID = $this->faker->randomNumber(4);
-		// $campaignRunID = $this->faker->randomNumber(3);
+		$signupStartDate = Carbon::now()->startOfDay();
+		$signupEndDate = Carbon::now()->addMonth()->endOfDay();
+		$senderName = $this->faker->firstName;
+		$senderEmail = $this->faker->unique()->safeEmail;
+		$campaignID = $this->faker->randomNumber(4);
+		$campaignRunID = $this->faker->randomNumber(3);
 
-		// // Fill out form.
-		// $this->asAdminUser()
-		// ->visit(route('contests.create'))
-		// ->see('Add a new contest')
-		// ->type($signupStartDate, 'signup_start_date')
-		// ->type($signupEndDate, 'signup_end_date')
-		// ->type($campaignID, 'campaign_id')
-		// ->type($campaignRunID, 'campaign_run_id')
-		// ->type($senderEmail, 'sender_email')
-		// ->type($senderName, 'sender_name')
-		// ->press('Submit');
+		// Fill out form.
+		$this->asAdminUser()
+		->visit(route('contests.create'))
+		->see('Add a new contest')
+		->type($signupStartDate, 'signup_start_date')
+		->type($signupEndDate, 'signup_end_date')
+		->type($campaignID, 'campaign_id')
+		->type($campaignRunID, 'campaign_run_id')
+		->type($senderEmail, 'sender_email')
+		->type($senderName, 'sender_name')
+		->press('Submit');
 
-		// $this->see('Contest has been saved!');
+		$this->see('Contest has been saved!');
 
 		// // Make sure contest was created.
   //       $this->seeInDatabase('contests', [
