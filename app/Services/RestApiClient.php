@@ -6,7 +6,7 @@ use GuzzleHttp\Client;
 use Illuminate\Support\MessageBag;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Foundation\Validation\ValidationException;
-use Symfony\Component\HttpKernel\Exception\HttpException;use Log;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class RestApiClient
 {
@@ -124,7 +124,6 @@ class RestApiClient
      */
     protected function send($method, $path, $options = [])
     {
-        Log::debug("HIIIIIIIII");
         try {
             if (env('LOG_API_REQUESTS')) {
                 logger('made an API request', compact('method', 'path', 'options'));
