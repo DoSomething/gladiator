@@ -266,8 +266,11 @@ class Manager
         $statistics['totalContestants'] = count($competition->contestants);
         $statistics['totalReportbacks'] = count($competition->activity['active']);
         $statistics['reportbackRate'] = intval(round(($statistics['totalReportbacks'] / $statistics['totalContestants']) * 100));
+        $statistics['impactQuantity'] = 0;
 
-        //@TODO: Need to collect non-flagged impact quantity.
+        foreach ($competition->activity['active'] as $user) {
+            $statistics['impactQuantity'] += intval($user->reportback->quantity);
+        }
 
         return (object) $statistics;
     }

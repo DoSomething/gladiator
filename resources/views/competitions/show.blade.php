@@ -42,9 +42,10 @@
             <div class="container__block -half">
                 <h2 class="heading">Statistics</h2>
                 <ul class="list">
-                    <li>Total number of contestants in competition: {{ $statistics->totalContestants }}</li>
-                    <li>Number of contestants who have reported back: {{ $statistics->totalReportbacks }}</li>
-                    <li>Reportback rate: {{ $statistics->reportbackRate . '%' }}</li>
+                    <li>Total number of contestants in competition: <strong>{{ $statistics->totalContestants }}</strong></li>
+                    <li>Number of contestants who have reported back: <strong>{{ $statistics->totalReportbacks }}</strong></li>
+                    <li>Reportback rate: <strong>{{ $statistics->reportbackRate . '%' }}</strong></li>
+                    <li>Approved reportbacks impact quantity: <strong>{{ $statistics->impactQuantity }} </strong></li>
                 </ul>
             </div>
         </div>
