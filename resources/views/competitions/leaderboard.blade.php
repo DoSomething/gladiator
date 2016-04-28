@@ -22,6 +22,10 @@
         @include('competitions.partials._table_users_leaderboard', ['leaderboard' => $leaderboard])
     @endif
 
+    @if (count($flagged))
+        @include('competitions.partials._table_users_flagged', ['flagged' => $flagged])
+    @endif
+
     @if (count($pending))
         @include('competitions.partials._table_users_pending', ['pending' => $pending])
     @endif

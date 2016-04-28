@@ -38,8 +38,6 @@ class Catalog
         // would not require additional requests and API calls since all in flash cache.
 
         if ($method === 'rank') {
-            $users = $this->removeFlaggedUsers($users);
-
             return $this->sortByRank($users);
         }
 
@@ -60,10 +58,13 @@ class Catalog
     {
         $active = [];
         $inactive = [];
+        $flagged = [];
 
         foreach ($users as $user) {
             if (! $user->reportback) {
                 $inactive[] = $user;
+            } elseif ($user->reportback && $user->reportback->flagged) {
+                $flagged[] = $user;
             } else {
                 $active[] = $user;
             }
@@ -72,6 +73,7 @@ class Catalog
         return [
             'active' => $active,
             'inactive' => $inactive,
+            'flagged' => $flagged,
         ];
     }
 

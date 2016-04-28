@@ -172,10 +172,11 @@ class CompetitionsController extends Controller
         $list = $this->manager->catalogUsers($users);
 
         $leaderboard = $list['active'];
+        $flagged = $list['flagged'];
         $pending = $list['inactive'];
 
         session()->flash('contest_' . $competition->contest_id . '-' . 'competition_' . $competition->id . '-leaderboard', $list);
 
-        return view('competitions.leaderboard', compact('competition', 'leaderboard', 'pending'));
+        return view('competitions.leaderboard', compact('competition', 'leaderboard', 'pending', 'flagged'));
     }
 }
