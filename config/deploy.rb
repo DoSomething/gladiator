@@ -31,6 +31,7 @@ namespace :deploy do
   task :link_folders do
     run "ln -nfs #{shared_path}/.env #{release_path}/"
     folders.each do |folder|
+      run "rm -rf #{release_path}/storage/#{folder}"
       run "ln -nfs #{shared_path}/#{folder} #{release_path}/storage/#{folder}"
     end
   end
