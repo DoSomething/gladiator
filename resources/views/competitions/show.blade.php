@@ -39,13 +39,13 @@
 
     <div class="container">
         <div class="wrapper">
-            <div class="container__block -half">
+            <div class="container__block">
                 <h2 class="heading">Statistics</h2>
                 <ul class="list">
                     <li>Total number of contestants in competition: <strong>{{ $statistics->totalContestants }}</strong></li>
                     <li>Number of contestants who have reported back: <strong>{{ $statistics->totalReportbacks }}</strong></li>
                     <li>Reportback rate: <strong>{{ $statistics->reportbackRate . '%' }}</strong></li>
-                    <li>Approved reportbacks impact quantity: <strong>{{ $statistics->impactQuantity }} </strong></li>
+                    <li>Approved reportbacks impact quantity: <strong>{{ number_format($statistics->impactQuantity) . ' ' . $competition->contest->campaign->reportback_info->noun . ' ' . $competition->contest->campaign->reportback_info->verb }} </strong></li>
                 </ul>
             </div>
         </div>
