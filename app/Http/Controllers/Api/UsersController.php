@@ -11,8 +11,6 @@ use Gladiator\Http\Transformers\UserTransformer;
 use Gladiator\Events\QueueMessageRequest;
 use Gladiator\Models\Message;
 
-use Log;
-
 class UsersController extends ApiController
 {
     /**
