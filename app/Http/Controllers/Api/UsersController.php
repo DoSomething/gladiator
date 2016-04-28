@@ -11,6 +11,8 @@ use Gladiator\Http\Transformers\UserTransformer;
 use Gladiator\Events\QueueMessageRequest;
 use Gladiator\Models\Message;
 
+use Log;
+
 class UsersController extends ApiController
 {
     /**
@@ -69,10 +71,6 @@ class UsersController extends ApiController
             unset($credentials['term']);
 
             $user = $this->registrar->createUser((object) $credentials);
-
-            if ($request->input('term') === 'email') {
-                $user->email = $request->input('id');
-            }
         }
 
         $contest = Contest::with(['waitingRoom', 'competitions'])->where('campaign_id', '=', $request['campaign_id'])
@@ -94,7 +92,7 @@ class UsersController extends ApiController
         $resources = [
             'message' => $message,
             'contest' => $contest,
-            'users' => [$user],
+            'users' => [$account],
             'test' => false,
         ];
         event(new QueueMessageRequest($resources));
