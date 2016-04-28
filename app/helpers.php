@@ -73,7 +73,7 @@ function format_date_form_field($model, $field, $defaut = 'MM/DD/YYYY')
 }
 
 /**
- * Formate a timestamp using Carbon for display in a view.
+ * Format a timestamp using Carbon for display in a view.
  *
  * @param  string  $timestamp
  * @return /Carbon/Carbon
@@ -81,6 +81,28 @@ function format_date_form_field($model, $field, $defaut = 'MM/DD/YYYY')
 function format_timestamp_for_display($timestamp)
 {
     return (new Carbon($timestamp))->format('Y-m-d');
+}
+
+/**
+ * Generate a unique key for flashing model data to the session.
+ *
+ * @param  \Illuminate\Database\Eloquent\Model  $model
+ * @param  array  $options
+ * @return string
+ */
+function generate_model_flash_session_key($model, $options = [])
+{
+    if ($model instanceof \Gladiator\Models\Competition) {
+        $key = 'contest_' . $model->contest_id . '-' . 'competition_' . $model->id;
+
+        if (isset($options['includeActivity']) && $options['includeActivity']) {
+            $key .= '-activity_included';
+        }
+
+        return $key;
+    }
+
+    return '';
 }
 
 /**

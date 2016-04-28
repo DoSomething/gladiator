@@ -220,6 +220,59 @@ class Manager
     }
 
     /**
+     * Get the full competition overview and include user activity if specified.
+     *
+     * @param  \Gladiator\Models\Competition  $competition
+     * @param  bool $includeActivity
+     * @return \Gladiator\Models\Competition
+     */
+    public function getCompetitionOverview($competition, $includeActivity = false)
+    {
+        $competition = $competition->load('contest');
+
+        $competition->contest = $this->appendCampaign($competition->contest);
+
+        $competition->contestants = $this->getModelUsers($competition, $includeActivity);
+
+        if ($includeActivity) {
+            $competition->activity = $this->catalogUsers($competition->contestants);
+
+            $key = generate_model_flash_session_key($competition, ['includeActivity' => true]);
+        } else {
+            $competition->activity = null;
+
+            $key = generate_model_flash_session_key($competition);
+        }
+
+        session()->flash($key, $competition);
+
+        return $competition;
+    }
+
+    /**
+     * Get statistics for the specified competition.
+     *
+     * @param  \Gladiator\Models\Competition  $competition
+     * @return object
+     */
+    public function getStatisticsForCompetition($competition)
+    {
+        if (! $competition) {
+            return null;
+        }
+
+        $statistics = [];
+
+        $statistics['totalContestants'] = count($competition->contestants);
+        $statistics['totalReportbacks'] = count($competition->activity['active']);
+        $statistics['reportbackRate'] = intval(round(($statistics['totalReportbacks'] / $statistics['totalContestants']) * 100));
+
+        //@TODO: Need to collect non-flagged impact quantity.
+
+        return (object) $statistics;
+    }
+
+    /**
      * Append Campaign data to the supplied data if applicable.
      *
      * @param  mixed $data
