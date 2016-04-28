@@ -1,27 +1,26 @@
 <?php
 
 use Gladiator\Models\User;
+use Gladiator\Services\Northstar\Northstar;
+use Gladiator\Repositories\UserRepositoryContract;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class UserTest extends TestCase
 {
-    protected $repository;
-
     /**
-     * Test to retrieve an existing contestant user in the database.
+     * Test for storing a new contestant user in database using repository.
      *
      * @return void
-     * @test
      */
-    public function itCanStoreANewContestant()
+    public function testStoreNewUserUsingRepository()
     {
         $account = (object) [
             'id' => str_random(24),
         ];
 
-        $repository = app(\Gladiator\Repositories\UserRepositoryContract::class);
+        $repository = app(UserRepositoryContract::class);
         $user = $repository->create($account);
 
         $this->assertTrue($user instanceof User);
@@ -34,96 +33,29 @@ class UserTest extends TestCase
 
 
     /**
-     * Test to retrieve an existing contestant user in the database.
+     * Test to find and retrieve an existing user in the database via
+     * their Northstar ID using repository.
      *
      * @return void
-     * @test
      */
-    public function itRetrievesAnExistingContestantUserByNorthstarId()
+    public function testFindUserByNorthstarIdUsingRepository()
     {
         $model = factory(User::class)->create();
 
-        $mock = $this->mock(\Gladiator\Services\Northstar\Northstar::class)
+        $mock = $this->mock(Northstar::class)
             ->shouldReceive('getUser')
             ->andReturn((object) [
                 'id' => $model->id,
-                'first_name' => 'Larry',
+                'first_name' => 'Kallark',
                 // ...
             ]);
 
-        $repository = app(\Gladiator\Repositories\UserRepositoryContract::class);
-        $user = $repository->find($model->id);
+        $repository = app(UserRepositoryContract::class);
 
+        $user = $repository->find($model->id);
 
         $this->assertEquals($model->id, $user->id);
         $this->assertEquals($model->role, $user->role);
-        $this->assertEquals('Larry', $user->first_name);
-    }
-
-    /**
-     * Test to retrieve an existing contestant user in the database.
-     *
-     * @return void
-     * @test
-     */
-    public function itRetrievesAnExistingAdminUserByNorthstarId()
-    {
-        $account = (object) [
-            'id' => str_random(24),
-            'role' => 'admin',
-        ];
-
-        $repository = app(\Gladiator\Repositories\UserRepositoryContract::class);
-        $repository->create($account);
-
-        $this->seeInDatabase('users', [
-            'id' => $account->id,
-            'role' => 'admin',
-        ]);
-    }
-
-    /**
-     * Test to retrieve an existing user in the database.
-     *
-     * @return void
-     * @test
-     */
-    // public function testUserIsInWaitingRoom()
-    // {
-        // $this->json('POST', 'api/v1/users',
-        //     ['id' => 'fantini-loves-impact@dosomething.org',
-        //      'term', => 'email',
-        //      'campaign_id' => '1',
-        //      'campaign_run_id' => '2'
-        //     ]);
-
-        // $this->assertTrue(true);
-    // }
-
-    /**
-     * Test to see if our api returns json.
-     *
-     * @return void
-     * @test
-     */
-    public function testUserApiReturnsResponse()
-    {
-        $this->json('GET', 'api/v1/users')
-             ->assertResponseStatus('200');
-    }
-
-    /**
-     * Test to see if the api returns valid users.
-     *
-     * @return void
-     * @test
-     */
-    public function testUserApiReturnsUsers()
-    {
-        $users = factory(User::class, 2)->create();
-        $this->json('GET', 'api/v1/users')
-             ->seeJsonStructure(['*' => [
-                     'id', 'created_at', 'updated_at', 'role',
-                 ]]);
+        $this->assertEquals('Kallark', $user->first_name);
     }
 }

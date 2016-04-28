@@ -50,7 +50,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     /**
      * Mock a class, and register with the IoC container.
      *
-     * @param $class String - Class name to mock
+     * @param  $class  string  Class name to mock
      * @return \Mockery\MockInterface
      */
     public function mock($class)
