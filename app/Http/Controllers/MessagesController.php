@@ -10,7 +10,7 @@ use Gladiator\Events\QueueMessageRequest;
 use Gladiator\Repositories\MessageRepository;
 use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Manager;
-use Gladiator\Services\Registrar;
+use Auth;
 
 class MessagesController extends Controller
 {
@@ -29,16 +29,9 @@ class MessagesController extends Controller
     protected $userRepository;
 
     /**
-     * Registrar instance.
-     *
-     * @var \Gladiator\Services\Registrar;
-     */
-    protected $registrar;
-
-    /**
      * Create new MessagesController instance.
      */
-    public function __construct(MessageRepository $msgRepository, UserRepositoryContract $userRepository, Manager $manager, Registrar $registrar)
+    public function __construct(MessageRepository $msgRepository, UserRepositoryContract $userRepository, Manager $manager)
     {
         $this->manager = $manager;
         $this->msgRepository = $msgRepository;
@@ -46,8 +39,6 @@ class MessagesController extends Controller
 
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
-
-        $this->registrar = $registrar;
     }
 
     /**
@@ -105,9 +96,10 @@ class MessagesController extends Controller
         $contest = Contest::find($contestId);
         $contest = $this->manager->appendCampaign($contest);
 
-        // @TODO - Move into it's own function.
         if (request('test')) {
-            $user = $this->registrar->findNorthstarAccount('email', $contest->sender_email);
+            $user = Auth::user();
+            $user = $this->userRepository->find($user->id);
+            $user = $this->manager->appendReportback($user, null);
 
             $users = [$user];
         } else {

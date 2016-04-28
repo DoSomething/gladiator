@@ -161,7 +161,10 @@ class Email
     protected function getLeaderboardVars($users)
     {
         if ($this->message->type === 'leaderboard') {
-            $list = $this->manager->catalogUsers($users);
+            $contestants = $this->manager->getModelUsers($this->competition, true);
+
+            $list = $this->manager->catalogUsers($contestants);
+
             $leaderboard = $list['active'];
 
             $vars = [];
