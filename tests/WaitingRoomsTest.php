@@ -37,7 +37,7 @@ class WaitingRoomsTest extends TestCase
         }
 
         // Mock Phoenix API call
-        $this->mock(\Gladiator\Services\Phoenix::class)
+        $this->mock(\Gladiator\Services\Phoenix\Phoenix::class)
             ->shouldReceive('getCampaign')
             ->andReturn((object) [
                 'data' => [
