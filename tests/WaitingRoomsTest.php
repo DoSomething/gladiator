@@ -39,7 +39,7 @@ class WaitingRoomsTest extends TestCase
 
         // Mock Phoenix API call
         $this->mock(Phoenix::class)
-            ->shouldReceive('getCampaign')
+            ->shouldReceive('getJson')
             ->andReturn((object) [
                 'data' => [
                     'id' => 1,
