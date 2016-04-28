@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Gladiator\Models\Contest;
 use Gladiator\Models\WaitingRoom;
 use Gladiator\Models\User;
+use Gladiator\Services\Phoenix\Phoenix;
 
 class WaitingRoomsTest extends TestCase
 {
@@ -37,7 +38,7 @@ class WaitingRoomsTest extends TestCase
         }
 
         // Mock Phoenix API call
-        $this->mock(\Gladiator\Services\Phoenix\Phoenix::class)
+        $this->mock(Phoenix::class)
             ->shouldReceive('getCampaign')
             ->andReturn((object) [
                 'data' => [
