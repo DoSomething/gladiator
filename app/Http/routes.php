@@ -17,6 +17,10 @@ Route::group(['middleware' => ['web']], function () {
         return redirect()->route('contests.index');
     });
 
+    Route::get('/zerowing', function () {
+        return view('pages.home');
+    });
+
     // Authentication
     Route::get('auth/login', 'Auth\AuthController@showLoginForm');
     Route::post('auth/login', 'Auth\AuthController@login');
