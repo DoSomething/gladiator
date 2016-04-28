@@ -145,7 +145,7 @@ class Email
 
             $processedMessage = $this->processMessage($tokens, $this->message);
 
-            $message = $leaderboardVars ? array_merge($processedMessage, $leaderboardVars) : $processedMessage;
+            $message = isset($leaderboardVars) ? array_merge($processedMessage, $leaderboardVars) : $processedMessage;
 
             $this->allMessages[$key]['message'] = $message;
         }
@@ -160,28 +160,24 @@ class Email
      */
     protected function getLeaderboardVars($users)
     {
-        if ($this->message->type === 'leaderboard') {
-            $contestants = $this->manager->getModelUsers($this->competition, true);
+        $contestants = $this->manager->getModelUsers($this->competition, true);
 
-            $list = $this->manager->catalogUsers($contestants);
+        $list = $this->manager->catalogUsers($contestants);
 
-            $leaderboard = $list['active'];
+        $leaderboard = $list['active'];
 
-            $vars = [];
+        $vars = [];
 
-            if ($leaderboard) {
-                $vars = [
-                    'leaderboard' => $leaderboard,
-                    'topThree' => $this->manager->getTopThreeReportbacks($leaderboard),
-                    'reportbackInfo' => $this->contest->campaign->reportback_info,
-                    'featuredReportback' => $this->getFeaturedReportback(),
-                ];
-            }
-
-            return $vars;
+        if ($leaderboard) {
+            $vars = [
+                'leaderboard' => $leaderboard,
+                'topThree' => $this->manager->getTopThreeReportbacks($leaderboard),
+                'reportbackInfo' => $this->contest->campaign->reportback_info,
+                'featuredReportback' => $this->getFeaturedReportback(),
+            ];
         }
 
-        return null;
+        return $vars;
     }
 
     /*
