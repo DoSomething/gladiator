@@ -25,7 +25,7 @@
                         <tbody>
                            @foreach($split as $key => $competition)
                                 <tr class="table__row">
-                                    <td class="table__cell">{{ $key }}</td>
+                                    <td class="table__cell">{{ $key + 1 }}</td>
                                     <td class="table__cell">{{ count($competition) }}</td>
                                 </tr>
                             @endforeach

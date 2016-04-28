@@ -10,7 +10,7 @@
     <div class="container">
         <div class="wrapper">
             <div class="container__block -half">
-                <h2 class="heading">Competition information</h1>
+                <h2 class="heading">Information</h1>
 
                 <ul>
                     <li><strong>Campaign:</strong> {{ $contest->campaign->title or 'No title available' }}</li>
