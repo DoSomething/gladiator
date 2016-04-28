@@ -2,7 +2,7 @@
 
 <div class="form-item -padded">
     {{ Form::label('contest_id', 'Contest ID:', ['class' => 'field-label']) }}
-    {{ Form::text('contest_id', NULL, ['class' => 'text-field']) }}
+    {{ Form::text('contest_id', NULL, ['class' => 'text-field', 'readonly' => 'readonly']) }}
 </div>
 
 <div class="form-item -padded">

@@ -3,6 +3,7 @@
 namespace Gladiator\Repositories;
 
 use Gladiator\Services\Phoenix\Phoenix;
+use Illuminate\Support\Collection;
 
 class CacheCampaignRepository implements RepositoryContract
 {
@@ -78,6 +79,6 @@ class CacheCampaignRepository implements RepositoryContract
 
         // @TODO: not sure if the following is actually a thing that is possible.
         // $campaigns = $this->phoenix->getAllCampaigns(['count' => 'all']);
-        return null;
+        return new Collection;
     }
 }

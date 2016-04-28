@@ -1,5 +1,6 @@
 <form method="POST" action="{{ route('split', $room->id) }}">
-    {{ method_field('POST') }}
+    @include('layouts.errors')
+
     {{ csrf_field() }}
 
     <div class="container__block">
@@ -18,9 +19,7 @@
             <input type="text" name="rules_url" id="rules_url" class="text-field" placeholder="http://docs.google.com/the-rules" />
         </div>
 
-        @include('competitions.partials._form_leaderboard_msg_day_field', [
-            'default' => null,
-        ])
+        @include('competitions.partials._form_leaderboard_msg_day_field', [ 'default' => null ])
 
         <input type="submit" class="button" value="Split" />
     </div>

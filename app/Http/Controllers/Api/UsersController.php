@@ -90,7 +90,7 @@ class UsersController extends ApiController
         $resources = [
             'message' => $message,
             'contest' => $contest,
-            'users' => [$user],
+            'users' => [$account],
             'test' => false,
         ];
         event(new QueueMessageRequest($resources));

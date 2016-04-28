@@ -105,7 +105,7 @@ class WaitingRoomsController extends Controller
     {
         $room->fill($request->all())->save();
 
-        return redirect()->back()->with('status', 'Waiting room has been updated!');
+        return redirect()->route('waitingrooms.show', $room->id)->with('status', 'Waiting room has been updated!');
     }
 
     /**
