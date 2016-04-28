@@ -70,7 +70,7 @@ class UsersController extends ApiController
 
             $user = $this->registrar->createUser((object) $credentials);
 
-            if ($request->input('term') === 'enail') {
+            if ($request->input('term') === 'email') {
                 $user->email = $request->input('id');
             }
         }
