@@ -17,9 +17,9 @@ class DatabaseUserRepository implements UserRepositoryContract
     /**
      * Create new DatabaseUserRepository instance.
      */
-    public function __construct()
+    public function __construct(Northstar $northstar)
     {
-        $this->northstar = new Northstar;
+        $this->northstar = $northstar;
     }
 
     /**

@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Gladiator\Repositories\CacheUserRepository;
 use Gladiator\Repositories\DatabaseUserRepository;
 use Gladiator\Repositories\UserRepositoryContract;
+use Gladiator\Services\Northstar\Northstar;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,7 +28,11 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(UserRepositoryContract::class, function ($app) {
-            return new CacheUserRepository(new DatabaseUserRepository);
+            return new CacheUserRepository(
+                new DatabaseUserRepository(
+                    $app[Northstar::class]
+                )
+            );
         });
     }
 }
