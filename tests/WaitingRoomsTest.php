@@ -10,10 +10,6 @@ use Gladiator\Models\User;
 
 class WaitingRoomsTest extends TestCase
 {
-
-    use DatabaseMigrations;
-    use Illuminate\Foundation\Testing\WithoutMiddleware;
-
     /**
      * A basic test example.
      *
@@ -40,7 +36,17 @@ class WaitingRoomsTest extends TestCase
             $contest->waitingRoom->users()->attach($user->id);
         }
 
-        $this->visit(route('split', [$contest->waitingRoom->id]))
+        // Mock Phoenix API call
+        $this->mock(\Gladiator\Services\Phoenix::class)
+            ->shouldReceive('getCampaign')
+            ->andReturn((object) [
+                'data' => [
+                    'id' => 1,
+                ],
+            ]);
+
+        $this->asAdminUser()
+            ->visit(route('split', [$contest->waitingRoom->id]))
             ->type(Carbon::now()->addWeeks(3)->endOfDay(), 'competition_end_date')
             ->type(300, 'competition_max')
             ->type('http://docs.google.com/lol', 'rules_url')

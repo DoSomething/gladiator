@@ -44,12 +44,12 @@ class Manager
      * @param  $userRepository
      * @param  $campaignRepository
      */
-    public function __construct(UserRepositoryContract $userRepository, CacheCampaignRepository $campaignRepository)
+    public function __construct(UserRepositoryContract $userRepository, CacheCampaignRepository $campaignRepository, Northstar $northstar, Phoenix $phoenix)
     {
         $this->campaignRepository = $campaignRepository;
         $this->userRepository = $userRepository;
-        $this->northstar = new Northstar;
-        $this->phoenix = new Phoenix;
+        $this->northstar = $northstar;
+        $this->phoenix = $phoenix;
     }
 
     /**
