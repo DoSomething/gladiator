@@ -116,7 +116,7 @@ class MessagesController extends Controller
 
             // Only send checkin messages to users who haven't reported back.
             if ($message->type === 'checkin') {
-                $users = $users->where('reportback', null);
+                $users = $competition->activity['inactive'];
             }
         }
 
