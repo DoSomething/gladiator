@@ -134,4 +134,20 @@ class ContestsController extends Controller
         $csv = $contest->getCSVExport();
         $csv->output('contest' . $contest->id . '.csv');
     }
+
+    /**
+     * @param  \Gladiator\Models\Contest $contest
+     * @return  \Illuminate\Http\Response
+     */
+    public function signupForm(Contest $contest)
+    {
+        $contest = $contest->load(['waitingroom', 'competitions']);
+
+        return view('contests.signup', compact('contest'));
+    }
+
+    public function signupUser(Contest $contest)
+    {
+        // do things, like signup the user.
+    }
 }

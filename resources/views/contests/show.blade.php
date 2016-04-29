@@ -27,6 +27,9 @@
                     <li>
                         <a href="{{ route('split', $contest->waitingRoom->id) }}" class="button -secondary">Split</a>
                     </li>
+                    <li>
+                        <a href="{{ route('contests.user.add', $contest->id) }}" class="button -secondary">+ User</a>
+                    </li>
                 </ul>
             </div>
         </div>
