@@ -135,6 +135,10 @@ class RestApiClient
             return $this->client->request($method, $path, $options);
         } catch (RequestException $error) {
             $response = $this->getJson($error->getResponse());
+            if (! isset($response)) {
+                return;
+            }
+
             $response = $this->setErrorCode($response, $error->getCode());
 
             if ($error->getCode() === 404) {
@@ -163,10 +167,6 @@ class RestApiClient
      */
     protected function setErrorCode($response, $code)
     {
-        if (! isset($response->error)) {
-            return null;
-        }
-
         if (! property_exists($response->error, 'code')) {
             $response->error->code = $code;
         }
