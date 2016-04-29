@@ -47,13 +47,19 @@ class CompetitionsController extends Controller
      */
     public function show(Competition $competition)
     {
-        $contest = Contest::find($competition->contest_id);
+        $key = generate_model_flash_session_key($competition, ['includeActivity' => true]);
 
-        $contest = $this->manager->appendCampaign($contest);
+        if (session()->has($key)) {
+            $competition = session($key);
 
-        $users = $this->manager->getModelUsers($competition);
+            session()->reflash();
+        } else {
+            $competition = $this->manager->getCompetitionOverview($competition, true);
+        }
 
-        return view('competitions.show', compact('competition', 'contest', 'users'));
+        $statistics = $this->manager->getStatisticsForCompetition($competition);
+
+        return view('competitions.show', compact('competition', 'statistics'));
     }
 
     /**
@@ -107,21 +113,26 @@ class CompetitionsController extends Controller
 
         $withReportback = convert_string_to_boolean($request->input('withReportback'));
 
-        $users = $this->manager->getModelUsers($competition, $withReportback);
-
         if (! $withReportback) {
-            // @TODO: can probably flash this to the session too!
             $fileName = $fileName . '-users';
+
+            $key = generate_model_flash_session_key($competition);
         } else {
             $fileName = $fileName . '-leaderboard';
 
-            if (session()->has($fileName)) {
-                $list = session($fileName);
-            } else {
-                $list = $this->manager->catalogUsers($users);
-            }
+            $key = generate_model_flash_session_key($competition, ['includeActivity' => true]);
+        }
 
-            $users = $list['active'];
+        if (session()->has($key)) {
+            $competition = session($key);
+        } else {
+            $competition = $this->manager->getCompetitionOverview($competition, $withReportback);
+        }
+
+        if (! $withReportback) {
+            $users = $competition->contestants;
+        } else {
+            $users = $competition->activity['active'];
         }
 
         $csv = $this->manager->exportUsersCsv($users);
@@ -165,17 +176,21 @@ class CompetitionsController extends Controller
      */
     public function leaderboard(Competition $competition)
     {
-        $competition = $competition->load('contest');
+        $key = generate_model_flash_session_key($competition, ['includeActivity' => true]);
 
-        $users = $this->manager->getModelUsers($competition, true);
+        if (session()->has($key)) {
+            $competition = session($key);
 
-        $list = $this->manager->catalogUsers($users);
+            session()->reflash();
+        } else {
+            $competition = $this->manager->getCompetitionOverview($competition, true);
 
-        $leaderboard = $list['active'];
-        $flagged = $list['flagged'];
-        $pending = $list['inactive'];
+            session()->flash($key, $competition);
+        }
 
-        session()->flash('contest_' . $competition->contest_id . '-' . 'competition_' . $competition->id . '-leaderboard', $list);
+        $flagged = $competition->activity['flagged'];
+        $leaderboard = $competition->activity['active'];
+        $pending = $competition->activity['inactive'];
 
         return view('competitions.leaderboard', compact('competition', 'leaderboard', 'pending', 'flagged'));
     }
