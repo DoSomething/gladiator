@@ -101,7 +101,7 @@ class RestApiClient
     public function getJson($response, $asArray = false)
     {
         if (! isset($response)) {
-            return NULL;
+            return null;
         }
         return json_decode($response->getBody(), $asArray);
     }
@@ -164,9 +164,9 @@ class RestApiClient
     protected function setErrorCode($response, $code)
     {
         if (! isset($response->error)) {
-            return NULL;
+            return null;
         }
-        
+
         if (! property_exists($response->error, 'code')) {
             $response->error->code = $code;
         }
