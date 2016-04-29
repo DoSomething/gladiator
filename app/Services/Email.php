@@ -52,7 +52,6 @@ class Email
         $this->contest = $resources['contest'];
         $this->competition = isset($resources['competition']) ? $resources['competition'] : null;
         $this->users = $resources['users'];
-
         $this->manager = app(\Gladiator\Services\Manager::class);
 
         $this->setupEmail();
@@ -160,11 +159,7 @@ class Email
      */
     protected function getLeaderboardVars($users)
     {
-        $contestants = $this->manager->getModelUsers($this->competition, true);
-
-        $list = $this->manager->catalogUsers($contestants);
-
-        $leaderboard = $list['active'];
+        $leaderboard = $this->competition->activity['active'];
 
         $vars = [];
 

@@ -90,12 +90,17 @@ class MessagesController extends Controller
      */
     public function sendMessage(Message $message)
     {
+        // Get contest.
         $contestId = request('contest_id');
-        $competitionId = request('competition_id');
-        $competition = Competition::find($competitionId);
         $contest = Contest::find($contestId);
         $contest = $this->manager->appendCampaign($contest);
 
+        // Get competition with activity.
+        $competitionId = request('competition_id');
+        $competition = Competition::find($competitionId);
+        $competition = $this->manager->getCompetitionOverview($competition, true);
+
+        // Send test emails to authenticated user.
         if (request('test')) {
             $user = Auth::user();
             $user = $this->userRepository->find($user->id);
@@ -103,7 +108,7 @@ class MessagesController extends Controller
 
             $users = [$user];
         } else {
-            $users = $this->manager->getModelUsers($competition, true);
+            $users = $competition->contestants;
 
             // Only send checkin messages to users who haven't reported back.
             if ($message->type === 'checkin') {
