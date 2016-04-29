@@ -17,13 +17,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{-- URL::to('settings') --}}">
+                    <a href="{{ URL::to('settings') }}">
                         <strong class="navigation__title">Settings</strong>
                         <span class="navigation__subtitle">Options &amp; Customizations</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{-- URL::to('settings') --}}">
+                    <a href="{{-- URL::to('development') --}}">
                         <strong class="navigation__title">Development</strong>
                         <span class="navigation__subtitle">Logging &amp; Debugging</span>
                     </a>

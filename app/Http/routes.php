@@ -30,7 +30,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('competitions/{competitions}/messages/{contest}', 'CompetitionsController@message')->name('competitions.message');
     Route::get('competitions/{competitions}/leaderboard', 'CompetitionsController@leaderboard')->name('competitions.leaderboard');
 
-    // Competitions
+    // Contests
     Route::model('contests', 'Gladiator\Models\Contest');
     Route::get('contests/{contest}/export', 'ContestsController@export')->name('contests.export');
     Route::get('/contests/{id}/messages/edit', 'MessagesController@edit')->name('contests.messages.edit');
@@ -43,6 +43,11 @@ Route::group(['middleware' => ['web']], function () {
     // Messages
     Route::resource('messages', 'MessagesController');
     Route::get('messages/{message}/send', 'MessagesController@sendMessage')->name('messages.send');
+
+    // Settings
+    Route::get('settings', 'SettingsController@index');
+    Route::get('settings/{category}', 'SettingsController@indexCategory');
+    Route::get('settings/{category}/{key}/edit', 'SettingsController@editCategory')->name('settings.category.edit');
 
     // Users
     Route::get('users/contestants', 'UsersController@contestantsIndex')->name('users.contestants');
