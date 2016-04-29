@@ -163,6 +163,18 @@ class CompetitionsController extends Controller
      */
     public function message(Competition $competition, Contest $contest)
     {
+        $key = generate_model_flash_session_key($competition, ['includeActivity' => true]);
+
+        if (session()->has($key)) {
+            $competition = session($key);
+
+            session()->reflash();
+        } else {
+            $competition = $this->manager->getCompetitionOverview($competition, true);
+
+            session()->flash($key, $competition);
+        }
+
         $messages = Message::where('contest_id', '=', $contest->id)->get();
 
         return view('messages.show', compact('messages', 'competition'));

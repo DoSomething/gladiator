@@ -98,7 +98,16 @@ class MessagesController extends Controller
         // Get competition with activity.
         $competitionId = request('competition_id');
         $competition = Competition::find($competitionId);
-        $competition = $this->manager->getCompetitionOverview($competition, true);
+
+        // Get competition with activity from flash if it is there, otherwise
+        // grab it.
+        $key = generate_model_flash_session_key($competition, ['includeActivity' => true]);
+
+        if (session()->has($key)) {
+            $competition = session($key);
+        } else {
+            $competition = $this->manager->getCompetitionOverview($competition, $withReportback);
+        }
 
         // Send test emails to authenticated user.
         if (request('test')) {
