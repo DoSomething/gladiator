@@ -163,6 +163,10 @@ class RestApiClient
      */
     protected function setErrorCode($response, $code)
     {
+        if (! isset($response->error)) {
+            return NULL;
+        }
+        
         if (! property_exists($response->error, 'code')) {
             $response->error->code = $code;
         }
