@@ -90,23 +90,18 @@ class MessagesController extends Controller
      */
     public function sendMessage(Message $message)
     {
-        // Get contest.
-        $contestId = request('contest_id');
-        $contest = Contest::find($contestId);
-        $contest = $this->manager->appendCampaign($contest);
-
         // Get competition with activity.
         $competitionId = request('competition_id');
         $competition = Competition::find($competitionId);
 
-        // Get competition with activity from flash if it is there, otherwise
-        // grab it.
+        // Get competition with activity from flash if it is there.
+        // Otherwise, grab it.
         $key = generate_model_flash_session_key($competition, ['includeActivity' => true]);
 
         if (session()->has($key)) {
             $competition = session($key);
         } else {
-            $competition = $this->manager->getCompetitionOverview($competition, $withReportback);
+            $competition = $this->manager->getCompetitionOverview($competition, true);
         }
 
         // Send test emails to authenticated user.
@@ -127,7 +122,6 @@ class MessagesController extends Controller
 
         $resources = [
             'message' => $message,
-            'contest' => $contest,
             'competition' => $competition,
             'users' => $users,
             'test' => request('test'),
@@ -136,6 +130,6 @@ class MessagesController extends Controller
         // Kick off email sending
         event(new QueueMessageRequest($resources));
 
-        return redirect()->route('competitions.message', ['competition' => $competitionId, 'contest' => $contestId])->with('status', 'Fired that right the hell off!');
+        return redirect()->route('competitions.message', ['competition' => $competitionId, 'contest' => request('contest_id')])->with('status', 'Fired that right the hell off!');
     }
 }

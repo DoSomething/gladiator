@@ -49,8 +49,11 @@ class Email
     public function __construct($resources)
     {
         $this->message = $resources['message'];
-        $this->contest = $resources['contest'];
         $this->competition = isset($resources['competition']) ? $resources['competition'] : null;
+
+        // If a contest is passed in the resources used that, otherwise grab it from the competition.
+        $this->contest = isset($resources['contest']) ? $resources['contest'] : $this->competition->contest;
+
         $this->users = $resources['users'];
         $this->manager = app(\Gladiator\Services\Manager::class);
 
