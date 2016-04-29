@@ -108,7 +108,7 @@ class MessagesController extends Controller
         if (request('test')) {
             $user = Auth::user();
             $user = $this->userRepository->find($user->id);
-            $user = $this->manager->appendReportback($user, null);
+            $user = $this->manager->appendReportback($user, []);
 
             $users = [$user];
         } else {
