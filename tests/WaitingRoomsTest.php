@@ -38,13 +38,13 @@ class WaitingRoomsTest extends TestCase
         }
 
         // Mock Phoenix API call
-        $this->mock(RestApiClient::class)
-            ->shouldReceive('getJson')
-            ->andReturn((object) [
-                'data' => [
-                    'id' => 1,
-                ],
-            ]);
+        // $this->mock(RestApiClient::class)
+        //     ->shouldReceive('getJson')
+        //     ->andReturn((object) [
+        //         'data' => [
+        //             'id' => 1,
+        //         ],
+        //     ]);
 
         $this->asAdminUser()
             ->visit(route('split', [$contest->waitingRoom->id]))

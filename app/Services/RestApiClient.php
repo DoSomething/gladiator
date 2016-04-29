@@ -100,6 +100,9 @@ class RestApiClient
      */
     public function getJson($response, $asArray = false)
     {
+        if (!isset($response)) {
+            return NULL;
+        }
         return json_decode($response->getBody(), $asArray);
     }
 
