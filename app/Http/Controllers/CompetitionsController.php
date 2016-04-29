@@ -161,9 +161,21 @@ class CompetitionsController extends Controller
      * @param  \Gladiator\Models\Contest  $contest
      * @return \Illuminate\Http\Response
      */
-    public function message(Competition $competition, Contest $contest)
+    public function message(Competition $competition)
     {
-        $messages = Message::where('contest_id', '=', $contest->id)->get();
+        $key = generate_model_flash_session_key($competition, ['includeActivity' => true]);
+
+        if (session()->has($key)) {
+            $competition = session($key);
+
+            session()->reflash();
+        } else {
+            $competition = $this->manager->getCompetitionOverview($competition, true);
+
+            session()->flash($key, $competition);
+        }
+
+        $messages = Message::where('contest_id', '=', $competition->contest->id)->get();
 
         return view('messages.show', compact('messages', 'competition'));
     }

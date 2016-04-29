@@ -49,10 +49,12 @@ class Email
     public function __construct($resources)
     {
         $this->message = $resources['message'];
-        $this->contest = $resources['contest'];
         $this->competition = isset($resources['competition']) ? $resources['competition'] : null;
-        $this->users = $resources['users'];
 
+        // If a contest is passed in the resources used that, otherwise grab it from the competition.
+        $this->contest = isset($resources['contest']) ? $resources['contest'] : $this->competition->contest;
+
+        $this->users = $resources['users'];
         $this->manager = app(\Gladiator\Services\Manager::class);
 
         $this->setupEmail();
@@ -129,6 +131,16 @@ class Email
     }
 
     /**
+     * Check that the email is valid.
+     *
+     * @param  string $email
+     */
+    protected function validEmail($email)
+    {
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
+    }
+
+    /**
      * Builds the email array.
      */
     protected function setupEmail()
@@ -139,19 +151,17 @@ class Email
 
         // Each user gets it's own processed message
         foreach ($this->users as $key => $user) {
-            $this->allMessages[$key]['user'] = $user;
+            if ($user->email && $this->validEmail($user->email)) {
+                $this->allMessages[$key]['user'] = $user;
 
-            $tokens = $this->defineTokens($user);
+                $tokens = $this->defineTokens($user);
 
-            $message = [];
+                $processedMessage = $this->processMessage($tokens, $this->message);
 
-            $message = $this->processMessage($tokens, $this->message);
+                $message = isset($leaderboardVars) ? array_merge($processedMessage, $leaderboardVars) : $processedMessage;
 
-            if ($this->message->type === 'leaderboard') {
-                $message = array_merge($message, $leaderboardVars);
+                $this->allMessages[$key]['message'] = $message;
             }
-
-            $this->allMessages[$key]['message'] = $message;
         }
     }
 
@@ -159,12 +169,12 @@ class Email
      * Sets the variables needed for leaderboard emails
      * including the full leaderboard and the top three reportbacks.
      *
-     * @param  array $users
+     * @param   array $users
+     * @return  array $vars
      */
     protected function getLeaderboardVars($users)
     {
-        $list = $this->manager->catalogUsers($users);
-        $leaderboard = $list['active'];
+        $leaderboard = $this->competition->activity['active'];
 
         $vars = [];
 
@@ -180,6 +190,12 @@ class Email
         return $vars;
     }
 
+    /*
+     * Gets the featured reportback and grabs the properties that
+     * email template needs for display.
+     *
+     * @return  array $featuredReportback
+     */
     protected function getFeaturedReportback()
     {
         if (isset($this->message->reportback_id) && isset($this->message->reportback_item_id)) {
