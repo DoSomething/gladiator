@@ -103,6 +103,7 @@ class RestApiClient
         if (! isset($response)) {
             return null;
         }
+        
         return json_decode($response->getBody(), $asArray);
     }
 
