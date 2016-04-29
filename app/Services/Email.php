@@ -131,6 +131,16 @@ class Email
     }
 
     /**
+     * Check that the email is valid.
+     *
+     * @param  string $email
+     */
+    protected function validEmail($email)
+    {
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
+    }
+
+    /**
      * Builds the email array.
      */
     protected function setupEmail()
@@ -141,15 +151,17 @@ class Email
 
         // Each user gets it's own processed message
         foreach ($this->users as $key => $user) {
-            $this->allMessages[$key]['user'] = $user;
+            if ($user->email && $this->validEmail($user->email)) {
+                $this->allMessages[$key]['user'] = $user;
 
-            $tokens = $this->defineTokens($user);
+                $tokens = $this->defineTokens($user);
 
-            $processedMessage = $this->processMessage($tokens, $this->message);
+                $processedMessage = $this->processMessage($tokens, $this->message);
 
-            $message = isset($leaderboardVars) ? array_merge($processedMessage, $leaderboardVars) : $processedMessage;
+                $message = isset($leaderboardVars) ? array_merge($processedMessage, $leaderboardVars) : $processedMessage;
 
-            $this->allMessages[$key]['message'] = $message;
+                $this->allMessages[$key]['message'] = $message;
+            }
         }
     }
 
