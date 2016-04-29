@@ -3,8 +3,11 @@
 namespace Gladiator\Http\Controllers;
 
 use Gladiator\Models\Contest;
+use Gladiator\Models\User;
 use Gladiator\Services\Manager;
+use Gladiator\Services\Registrar;
 use Gladiator\Http\Requests\ContestRequest;
+use Gladiator\Http\Requests\SignupUserRequest;
 use Gladiator\Repositories\MessageRepository;
 
 class ContestsController extends Controller
@@ -12,9 +15,10 @@ class ContestsController extends Controller
     /**
      * Create new ContestsController instance.
      */
-    public function __construct(Manager $manager)
+    public function __construct(Manager $manager, Registrar $registrar)
     {
         $this->manager = $manager;
+        $this->registrar = $registrar;
 
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
@@ -146,8 +150,21 @@ class ContestsController extends Controller
         return view('contests.signup', compact('contest'));
     }
 
-    public function signupUser(Contest $contest)
+    public function signupUser(SignupUserRequest $request)
     {
-        // do things, like signup the user.
+        $user = $this->registrar->findUserAccount($request->all());
+
+        if (! $user instanceof User) {
+            $user = $this->registrar->createUser($user);
+        }
+
+        // @TODO: only create row if it doesn't exist.
+        if ($request->has('competition_id')) {
+            $user->competitions()->attach($request->competition_id);
+        } else {
+            $user->waitingRooms()->attach($request->waitingroom_id);
+        }
+
+        return redirect()->route('contests.show', 1)->with('status', 'Allllllright, we added that late punk!');
     }
 }

@@ -10,6 +10,7 @@
     <div class="container">
         <div class="wrapper">
             <form method="POST" action="{{ route('contests.user.add', $contest->id) }}">
+                {{ csrf_field() }}
                 <div class="form-item -padded">
                     <label class="field-label" for="id">User identification:</label>
                     <input type="text" name="id" id="id" class="text-field" placeholder="Email, Mobile Phone Number, Northstar ID or Phoenix ID"/>
@@ -36,8 +37,8 @@
                             <label class="field-label" for="id">Waiting Room ID:</label>
                             <div class="select">
                                 <select name="waitingroom_id" id="waitingroom_id">
-                                    <option value="none">None</option>
-                                    <option value="waitingroom">{{ $contest->waitingroom->id }}</option>
+                                    <option value="">None</option>
+                                    <option value="{{ $contest->waitingroom->id }}">{{ $contest->waitingroom->id }}</option>
                                 </select>
                             </div>
                         </div>
@@ -47,10 +48,10 @@
                         <div class="form-item">
                             <label class="field-label" for="id">Competition ID:</label>
                             <div class="select">
-                                <select name="contest_id" id="contest_id">
-                                    <option value="none">None</option>
+                                <select name="competition_id" id="competition_id">
+                                    <option value="">None</option>
                                     @foreach ($contest->competitions as $competition)
-                                    <option value="competition-{{ $competition->id }}">{{ $competition->id }}</option>
+                                        <option value="{{ $competition->id }}">{{ $competition->id }}</option>
                                     @endforeach
                                 </select>
                             </div>
