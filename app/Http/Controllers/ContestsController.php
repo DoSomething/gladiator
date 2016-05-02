@@ -140,7 +140,6 @@ class ContestsController extends Controller
     }
 
     /**
-     *
      * Grab the form to add a user retroactively.
      *
      * @param  \Gladiator\Models\Contest $contest
@@ -154,7 +153,6 @@ class ContestsController extends Controller
     }
 
     /**
-     *
      * The post request to add a user retroactively.
      *
      * @param  SignupUserRequest $request
