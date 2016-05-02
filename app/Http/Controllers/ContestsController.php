@@ -140,6 +140,9 @@ class ContestsController extends Controller
     }
 
     /**
+     *
+     * Grab the form to add a user retroactively.
+     *
      * @param  \Gladiator\Models\Contest $contest
      * @return  \Illuminate\Http\Response
      */
@@ -150,6 +153,13 @@ class ContestsController extends Controller
         return view('contests.signup', compact('contest'));
     }
 
+    /**
+     *
+     * The post request to add a user retroactively.
+     *
+     * @param  SignupUserRequest $request
+     * @return \Illuminate\Http\Response
+     */
     public function signupUser(SignupUserRequest $request)
     {
         $user = $this->registrar->findUserAccount($request->all());
