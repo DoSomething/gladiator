@@ -155,10 +155,11 @@ class ContestsController extends Controller
     /**
      * The post request to add a user retroactively.
      *
+     * @param  \Gladiator\Models\Contest $contest
      * @param  SignupUserRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function signupUser(SignupUserRequest $request)
+    public function signupUser(Contest $contest, SignupUserRequest $request)
     {
         $user = $this->registrar->findUserAccount($request->all());
 
@@ -173,6 +174,6 @@ class ContestsController extends Controller
             $this->manager->addUserToRoom('waitingrooms', $request->waitingroom_id, $user);
         }
 
-        return redirect()->route('contests.show', 1)->with('status', 'Allllllright, we added that late punk!');
+        return redirect()->route('contests.show', $contest->id)->with('status', 'Allllllright, we added that late punk!');
     }
 }
