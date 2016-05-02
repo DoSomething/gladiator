@@ -3,15 +3,26 @@
 <br><br>
 
 @if (isset($content['featuredReportback']))
-    @include('messages.partials._featured_reportback', ['featuredReportback' => $content['featuredReportback']])
+    @include('messages.partials._featured_reportback', [
+        'messageKey' => $content['key'],
+        'featuredReportback' => $content['featuredReportback'],
+        'reportbackInfo' => $content['reportbackInfo'],
+    ])
 @endif
 
 @if (isset($content['topThree']))
-    @include('messages.partials._topthree_table', ['topThree' => $content['topThree'], 'reportbackInfo' => $content['reportbackInfo']])
+    @include('messages.partials._topthree_table', [
+        'messageKey' => $content['key'],
+        'topThree' => $content['topThree'],
+        'reportbackInfo' => $content['reportbackInfo'],
+    ])
 @endif
 
 @if (isset($content['leaderboard']))
-    @include('messages.partials._leaderboard_table', ['leaderboard' => $content['leaderboard']])
+    @include('messages.partials._leaderboard_table', [
+        'messageKey' => $content['key'],
+        'leaderboard' => $content['leaderboard'],
+    ])
 @endif
 
 <br><br>

@@ -98,6 +98,7 @@ class Email
     {
         $parsableProperties = ['subject', 'body', 'signoff', 'pro_tip', 'shoutout'];
         $processedMessage['type'] = $message->type;
+        $processedMessage['key'] = $message->key;
 
         foreach ($parsableProperties as $prop) {
             $processedMessage[$prop] = $this->replaceTokens($tokens, $message->$prop);
