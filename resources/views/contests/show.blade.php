@@ -25,11 +25,19 @@
                         <a href="{{ route('contests.export', $contest->id) }}" class="button -secondary">Export</a>
                     </li>
                     <li>
-                        <a href="{{ route('split', $contest->waitingRoom->id) }}" class="button -secondary">Split</a>
+                        <a href="{{ route('contests.user.add', $contest->id) }}" class="button">Signup User</a>
                     </li>
-                    <li>
-                        <a href="{{ route('contests.user.add', $contest->id) }}" class="button -secondary">+ User</a>
-                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="wrapper">
+            <div class="container__block">
+            <h2 class="heading">Data export</h1>
+                <ul class="list">
+                    <li><a href="{{ route('contests.export', $contest->id) }}">&DownArrowBar; Export</a> &mdash; CSV list of users for this contest</li>
                 </ul>
             </div>
         </div>
