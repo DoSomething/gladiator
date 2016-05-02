@@ -134,7 +134,7 @@ class MessagesController extends Controller
         // Kick off email sending
         event(new QueueMessageRequest($resources));
 
-        if (!$competitionId) {
+        if (! $competitionId) {
             return redirect()->back()->with('status', 'Fired that right the hell off!');
         }
 
