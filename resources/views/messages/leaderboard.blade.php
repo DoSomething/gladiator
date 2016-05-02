@@ -1,7 +1,5 @@
 {!! $content['body'] !!}
 
-<br><br>
-
 @if (isset($content['featuredReportback']))
     @include('messages.partials._featured_reportback', [
         'messageKey' => $content['key'],

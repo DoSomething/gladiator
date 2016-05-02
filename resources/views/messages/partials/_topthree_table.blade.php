@@ -1,3 +1,5 @@
+<br><br>
+
 @foreach ($topThree as $index => $reportback)
   <div style="display: inline-block; margin: 0 5px;">
     @include('messages.partials._reportback', [

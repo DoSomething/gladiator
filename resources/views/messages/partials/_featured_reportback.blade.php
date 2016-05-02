@@ -1,3 +1,5 @@
+<br><br>
+
 @include('messages.partials._reportback', [
     'type' => 'featured',
     'shoutout' => $featuredReportback['shoutout'],
