@@ -1,4 +1,4 @@
-<h2 class="heading -banner">Leaderboard</h2>
+<p><strong>Leaderboard</strong></p>
 
 <table class="table">
     <thead>

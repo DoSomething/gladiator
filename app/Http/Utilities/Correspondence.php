@@ -99,7 +99,7 @@ class Correspondence
             'key' => '1',
             'label' => 'Leaderboard update',
             'subject' => '1st :campaign_title: Leaderboard Update',
-            'body' => "Hello Competitors,\n\rHere is your first official :campaign_title: competition update! The competition ends on :end_date:. Finish in the top 3 in :reportback_noun: :reportback_verb: and win:\n\r- 1st place: ­ $100 amex card\r\n- 2nd place: ­ $50 amex card\r\n- 3rd place: ­ $25 amex card\n\rTwo more weeks to increase your number of :reportback_noun: :reportback_verb: to move up the leaderboard! [Upload your photos here](:prove_it_link:).\n\r:pro_tip:\n\rNext :reportback_noun: will be due :leaderboard_msg_day-1: before 10pm est.\n\rHere is the leaderboard! Shoutouts to the top 3 below:",
+            'body' => "Hello Competitors,\n\rHere is your first official :campaign_title: competition update! The competition ends on :end_date:. Finish in the top 3 in :reportback_noun: :reportback_verb: and win:\n\r- 1st place: ­ $100 amex card\r\n- 2nd place: ­ $50 amex card\r\n- 3rd place: ­ $25 amex card\n\rTwo more weeks to increase your number of :reportback_noun: :reportback_verb: to move up the leaderboard! [Upload your photos here](:prove_it_link:).\n\r:pro_tip:\n\rNext :reportback_noun: photo update will be due :leaderboard_msg_day-1: before 10pm est.\n\rHere is the leaderboard! Shoutouts to the top 3 below:",
             'pro_tip' => null,
             'signoff' => null,
             'reportback_id' => null,
