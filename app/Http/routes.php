@@ -34,6 +34,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::model('contests', 'Gladiator\Models\Contest');
     Route::get('contests/{contest}/export', 'ContestsController@export')->name('contests.export');
     Route::get('/contests/{id}/messages/edit', 'MessagesController@edit')->name('contests.messages.edit');
+    Route::get('contests/{contest}/signup', 'ContestsController@signupForm')->name('contests.user.add');
+    Route::post('contests/{contest}/signup', 'ContestsController@signupUser')->name('contests.user.add');
+
     Route::match(['put', 'patch'], '/contests/{id}/messages', 'MessagesController@update')->name('contests.messages.update');
     Route::resource('contests', 'ContestsController');
 

@@ -19,14 +19,25 @@
             <div class="container__block -half">
                 <ul class="form-actions -inline">
                     <li>
-                        <a href="{{ route('contests.edit', $contest->id) }}" class="button -secondary">Edit</a>
+                        <a href="{{ route('contests.edit', $contest->id) }}" class="button">Edit</a>
                     </li>
                     <li>
-                        <a href="{{ route('contests.export', $contest->id) }}" class="button -secondary">Export</a>
+                        <a href="{{ route('split', $contest->waitingRoom->id) }}" class="button">Split</a>
                     </li>
                     <li>
-                        <a href="{{ route('split', $contest->waitingRoom->id) }}" class="button -secondary">Split</a>
+                        <a href="{{ route('contests.user.add', $contest->id) }}" class="button">Signup User</a>
                     </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="wrapper">
+            <div class="container__block">
+            <h2 class="heading">Data export</h1>
+                <ul class="list">
+                    <li><a href="{{ route('contests.export', $contest->id) }}">&DownArrowBar; Export</a> &mdash; CSV list of users for this contest</li>
                 </ul>
             </div>
         </div>

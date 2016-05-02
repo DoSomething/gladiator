@@ -4,8 +4,11 @@ namespace Gladiator\Http\Controllers;
 
 use Gladiator\Models\Contest;
 use Gladiator\Models\Message;
+use Gladiator\Models\User;
 use Gladiator\Services\Manager;
+use Gladiator\Services\Registrar;
 use Gladiator\Http\Requests\ContestRequest;
+use Gladiator\Http\Requests\SignupUserRequest;
 use Gladiator\Repositories\MessageRepository;
 
 class ContestsController extends Controller
@@ -13,9 +16,10 @@ class ContestsController extends Controller
     /**
      * Create new ContestsController instance.
      */
-    public function __construct(Manager $manager)
+    public function __construct(Manager $manager, Registrar $registrar)
     {
         $this->manager = $manager;
+        $this->registrar = $registrar;
 
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
@@ -134,5 +138,43 @@ class ContestsController extends Controller
     {
         $csv = $contest->getCSVExport();
         $csv->output('contest' . $contest->id . '.csv');
+    }
+
+    /**
+     * Grab the form to add a user retroactively.
+     *
+     * @param  \Gladiator\Models\Contest $contest
+     * @return  \Illuminate\Http\Response
+     */
+    public function signupForm(Contest $contest)
+    {
+        $contest = $contest->load(['waitingroom', 'competitions']);
+
+        return view('contests.signup', compact('contest'));
+    }
+
+    /**
+     * The post request to add a user retroactively.
+     *
+     * @param  \Gladiator\Models\Contest $contest
+     * @param  SignupUserRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function signupUser(Contest $contest, SignupUserRequest $request)
+    {
+        $user = $this->registrar->findUserAccount($request->all());
+
+        if (! $user instanceof User) {
+            $user = $this->registrar->createUser($user);
+        }
+
+        // Add the user to a competition or waiting room, but only if not already in it.
+        if ($request->has('competition_id')) {
+            $this->manager->addUserToModel('competitions', $request->competition_id, $user);
+        } else {
+            $this->manager->addUserToModel('waitingrooms', $request->waitingroom_id, $user);
+        }
+
+        return redirect()->route('contests.show', $contest->id)->with('status', 'Allllllright, we added that late punk!');
     }
 }
