@@ -169,9 +169,9 @@ class ContestsController extends Controller
 
         // Add the user to a competition or waiting room, but only if not already in it.
         if ($request->has('competition_id')) {
-            $this->manager->addUserToRoom('competitions', $request->competition_id, $user);
+            $this->manager->addUserToModel('competitions', $request->competition_id, $user);
         } else {
-            $this->manager->addUserToRoom('waitingrooms', $request->waitingroom_id, $user);
+            $this->manager->addUserToModel('waitingrooms', $request->waitingroom_id, $user);
         }
 
         return redirect()->route('contests.show', $contest->id)->with('status', 'Allllllright, we added that late punk!');

@@ -427,11 +427,11 @@ class Manager
      * @param object $user
      * @return bool
      */
-    public function addUserToRoom($type, $id, $user)
+    public function addUserToModel($model, $id, $user)
     {
         // Attach the user to the room, if it isn't alredy.
-        if (! $user->{$type}()->where('id', $id)->first()) {
-            $user->{$type}()->attach($id);
+        if (! $user->{$model}()->where('id', $id)->first()) {
+            $user->{$model}()->attach($id);
         }
 
         return true;
