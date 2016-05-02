@@ -3,6 +3,7 @@
 namespace Gladiator\Http\Controllers;
 
 use Gladiator\Models\Contest;
+use Gladiator\Models\Message;
 use Gladiator\Models\User;
 use Gladiator\Services\Manager;
 use Gladiator\Services\Registrar;
@@ -80,10 +81,10 @@ class ContestsController extends Controller
     public function show(Contest $contest)
     {
         $contest = $this->manager->collectContestInfo($contest->id);
-
         $contest = $this->manager->appendCampaign($contest);
+        $welcomeEmail = Message::where('contest_id', '=', $contest->id)->where('type', '=', 'welcome')->firstOrFail();
 
-        return view('contests.show', compact('contest'));
+        return view('contests.show', compact('contest', 'welcomeEmail'));
     }
 
     /**
