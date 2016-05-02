@@ -39,6 +39,7 @@
                 <p>The current name of the messages sender is: <em>{{ $contest->sender_name or 'not assigned' }}</em></p>
                 <p>The current email assigned for the messages sender is: <em>{{ $contest->sender_email or 'not assigned' }}</em></p>
                 <p><a href="{{ route('contests.messages.edit', $contest->id) }}" class="button -secondary">View &amp; Edit Messages</a></p>
+                <p><a href="{{ route('messages.send', ['message' => $welcomeEmail->id, 'contest_id' => $welcomeEmail->contest_id, 'test' => true, ]) }}" class="button -secondary">Test welcome message</a></p>
             </div>
         </div>
     </div>

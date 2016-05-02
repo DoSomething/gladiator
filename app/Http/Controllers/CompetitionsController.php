@@ -175,7 +175,7 @@ class CompetitionsController extends Controller
             session()->flash($key, $competition);
         }
 
-        $messages = Message::where('contest_id', '=', $competition->contest->id)->get();
+        $messages = Message::where('contest_id', '=', $competition->contest->id)->where('type', '!=', 'welcome')->get();
 
         return view('messages.show', compact('messages', 'competition'));
     }
