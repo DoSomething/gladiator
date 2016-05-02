@@ -1,5 +1,3 @@
-<h2 class="heading -banner">Top Three Reportbacks</h2>
-
 @foreach ($topThree as $reportback)
     <div style="display: inline-block; margin: 0 5px;">
         <h3><span style="font-size: 14px;">In {{ $reportback['place'] }} place with {{ $reportback['quantity'] }} {{ strtolower($reportbackInfo['noun']) }}</span><br><strong>{{ $reportback['first_name'] }}</strong></h3>
