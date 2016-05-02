@@ -418,4 +418,21 @@ class Manager
         // Find the matching reportback item, and return the item.
         return $reportback_items->get($reportback_item_id);
     }
+
+    /**
+     * Attach a user object to a waiting room or a competition.
+     *
+     * @param string $type
+     * @param string $id
+     * @param object $user
+     * @return bool
+     */
+    public function addUserToRoom($type, $id, $user)
+    {
+        // Attach the user to the room, if it isn't alredy.
+        if (! $user->{$type}()->where('id', $id)->first()) {
+            $user->{$type}()->attach($id);
+        }
+        return true;
+    }
 }
