@@ -158,10 +158,10 @@ class ContestsController extends Controller
             $user = $this->registrar->createUser($user);
         }
 
-        // @TODO: only create row if it doesn't exist.
-        if ($request->has('competition_id')) {
+        // Add the user to a competition or waiting room, but only if not already in it.
+        if ($request->has('competition_id') && ! $user->competitions()->where('id', $request->competition_id)->first()) {
             $user->competitions()->attach($request->competition_id);
-        } else {
+        } elseif ($request->has('waitingroom_id') && ! $user->waitingrooms()->where('id', $request->waitingroom_id)->first()) {
             $user->waitingRooms()->attach($request->waitingroom_id);
         }
 
