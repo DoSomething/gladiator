@@ -433,6 +433,7 @@ class Manager
         if (! $user->{$type}()->where('id', $id)->first()) {
             $user->{$type}()->attach($id);
         }
+
         return true;
     }
 }
