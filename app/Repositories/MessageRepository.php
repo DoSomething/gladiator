@@ -3,6 +3,8 @@
 namespace Gladiator\Repositories;
 
 use Gladiator\Models\Message;
+use Gladiator\Models\Setting;
+use Gladiator\Services\Settings\SettingRepository;
 
 class MessageRepository
 {
@@ -49,7 +51,7 @@ class MessageRepository
     {
         $messages = [];
 
-        $defaults = correspondence()->defaults();
+        $defaults = (new SettingRepository)->getAllByCategory('messages', true);
 
         $model = new Message;
         $types = $model->getTypes();
@@ -63,10 +65,10 @@ class MessageRepository
             $fields = [];
 
             foreach ($attributes as $attribute) {
-                $fields[$attribute] = $data[$attribute];
+                $fields[$attribute] = $data->value[$attribute];
             }
 
-            $messages[$data['type']][] = $fields;
+            $messages[$data->value['type']][] = $fields;
         }
 
         return $messages;

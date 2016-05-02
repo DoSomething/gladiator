@@ -155,3 +155,13 @@ function reportback_admin_url($id)
 {
     return env('PHOENIX_URI') . '/admin/reportback/' . $id;
 }
+
+function serialize_data($data)
+{
+    return collect($data)->toJson();
+}
+
+function unserialize_data($data)
+{
+    return json_decode($data, true);
+}

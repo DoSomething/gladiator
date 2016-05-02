@@ -17,9 +17,8 @@ class CreateSettingsTable extends Migration
             $table->string('category')->index();
             $table->string('key')->unique();
             $table->text('value')->nullable();
-            $table->string('field_label')->nullable();
-            $table->string('field_type')->nullable();
-            $table->text('field_description')->nullable();
+            $table->boolean('serialized')->default(false);
+            $table->text('meta_data')->nullable();
             $table->timestamps();
         });
     }
