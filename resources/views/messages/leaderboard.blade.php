@@ -22,6 +22,7 @@
     @include('messages.partials._leaderboard_table', [
         'messageKey' => $content['key'],
         'leaderboard' => $content['leaderboard'],
+        'reportbackInfo' => $content['reportbackInfo'],
     ])
 @endif
 

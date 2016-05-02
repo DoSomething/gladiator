@@ -5,7 +5,7 @@
         <tr class="table__header" style="border-collapse: collapse; width: 100%">
             <th class="table__cell" style="border-bottom: 1px solid #ddd; padding: 10px">Rank</th>
             <th class="table__cell" style="border-bottom: 1px solid #ddd; padding: 10px">Name</th>
-            <th class="table__cell" style="border-bottom: 1px solid #ddd; padding: 10px">Quantity</th>
+            <th class="table__cell" style="border-bottom: 1px solid #ddd; padding: 10px">{{ $reportbackInfo['noun'] . ' ' . $reportbackInfo['verb'] }}</th>
         </tr>
     </thead>
     <tbody>
