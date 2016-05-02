@@ -1,29 +1,29 @@
 @if ($type === 'topThree')
-		<p>
-				@if ($place === '1st')
-						@if ($messageKey !== 2)
-								Our current leader with {{ $quantity }} {{ strtolower($reportbackNoun) }}...
-						@else
-								Our winner, with {{ $quantity }} {{ strtolower($reportbackNoun) }}...
-						@endif
-				@else
-						In {{ $place }} place with {{ $quantity }} {{ strtolower($reportbackNoun) }}...
-				@endif
+    <p>
+        @if ($place === '1st')
+            @if ($messageKey !== 2)
+                Our current leader with {{ $quantity }} {{ strtolower($reportbackNoun) }}...
+            @else
+                Our winner, with {{ $quantity }} {{ strtolower($reportbackNoun) }}...
+            @endif
+        @else
+            In {{ $place }} place with {{ $quantity }} {{ strtolower($reportbackNoun) }}...
+        @endif
 
-				@if ($messageKey === 2)
-						<br>
+        @if ($messageKey === 2)
+            <br>
 
-						{{ $prize }}
-				@endif
+            {{ $prize }}
+        @endif
 
-				<br>
+        <br>
 
-				<strong>
-						{{ $firstName }}
-				</strong>
-		</p>
+        <strong>
+            {{ $firstName or '' }}
+        </strong>
+    </p>
 @elseif ($type === 'featured')
-		<p>{{ $shoutout or '' }}</p>
+    <p>{{ $shoutout or '' }}</p>
 @endif
 
 <img src="{{ $image }}" width="200" />
