@@ -1,19 +1,26 @@
 @foreach ($topThree as $index => $reportback)
-    <div style="display: inline-block; margin: 0 5px;">
-        @if ($index === 0)
-          {{-- Leaderboard update 1 and 2 --}}
-          @if ($messageKey !== 2)
-              <h3><span style="font-size: 14px;">Our current leader with {{ $reportback['quantity'] }} {{ strtolower($reportbackInfo['noun']) }}... </span><br><strong>{{ $reportback['first_name'] }}</strong></h3>
-          {{-- Final leaderboard update --}}
-          @else
-              <h3><span style="font-size: 14px;">Our winner with {{ $reportback['quantity'] }} {{ strtolower($reportbackInfo['noun']) }}... </span><br><strong>{{ $reportback['first_name'] }}</strong></h3>
-          @endif
-        @else
-            <h3><span style="font-size: 14px;">In {{ $reportback['place'] }} place with {{ $reportback['quantity'] }} {{ strtolower($reportbackInfo['noun']) }}</span><br><strong>{{ $reportback['first_name'] }}</strong></h3>
-        @endif
-
-        <img src="{{ $reportback['image_url'] }}" width="200" />
-
-        <p>{{ $reportback['caption'] }}</p>
-    </div>
+    {{-- Update emails. --}}
+    @if ($messageKey !== 2)
+      @include('messages.partials._reportback', [
+          'messageKey' => $messageKey,
+          'place' => $reportback['place'],
+          'quantity' => $reportback['quantity'],
+          'reportbackNoun' => $reportbackInfo['noun'],
+          'firstName' => $reportback['first_name'],
+          'image' => $reportback['image_url'],
+          'caption' => $reportback['caption'],
+      ])
+    {{-- Final leaderboard message. --}}
+    @else
+      @include('messages.partials._reportback', [
+          'messageKey' => $messageKey,
+          'place' => $reportback['place'],
+          'prize' => $reportback['prize_copy'],
+          'quantity' => $reportback['quantity'],
+          'reportbackNoun' => $reportbackInfo['noun'],
+          'firstName' => $reportback['first_name'],
+          'image' => $reportback['image_url'],
+          'caption' => $reportback['caption'],
+      ])
+    @endif
 @endforeach
