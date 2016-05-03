@@ -2,6 +2,7 @@
 
 namespace Gladiator\Listeners;
 
+use Log;
 use Illuminate\Mail\Mailer;
 use Gladiator\Events\QueueMessageRequest;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -58,10 +59,14 @@ class QueueMessage implements ShouldQueue
      */
     public function sendMail($content, $settings)
     {
-        $this->mail->queue('messages.' . $content['type'], ['content' => $content], function ($msg) use ($settings) {
-            $msg->from($settings['from'], $settings['from_name']);
+        try {
+            $this->mail->queue('messages.' . $content['type'], ['content' => $content], function ($msg) use ($settings) {
+                $msg->from($settings['from'], $settings['from_name']);
 
-            $msg->to($settings['to'], $settings['to_name'])->subject($settings['subject']);
-        });
+                $msg->to($settings['to'], $settings['to_name'])->subject($settings['subject']);
+            });
+        } catch (Exception $e) {
+            Log::alert('Message failed to queue', ['message' => $content]);
+        }
     }
 }
