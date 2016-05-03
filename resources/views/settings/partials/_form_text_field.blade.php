@@ -1,6 +1,7 @@
 {{-- Setting Text Field --}}
 <div class="form-item -padded">
-    hello
+    <label class="field-label" for="{{ $field->group }}">{{ ucfirst($field['meta_data']->field_label) }}:</label>
+    <input class="text-field" type="text" name="{{ $field->group }}" value="{{ $field->value }}"/>
 </div>
 
 

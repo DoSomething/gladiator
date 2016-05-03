@@ -26,9 +26,9 @@ class SettingsController extends Controller
 
     public function indexCategory($category)
     {
-        $items = $this->settingRepository->getAllByCategory($category);
+        $settings = $this->settingRepository->getAllByCategory($category, true);
 
-        return view('settings.' . $category . '.index', compact('category', 'items'));
+        return view('settings.' . $category . '.index', compact('category', 'settings'));
     }
 
     public function editCategory($category, $key)

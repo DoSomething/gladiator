@@ -51,9 +51,7 @@ class MessageRepository
     {
         $messages = [];
 
-        $defaults = (new SettingRepository)->getAllByCategory('messages', true);
-
-        // dd($defaults->count());
+        $defaults = correspondence()->defaults();
 
         $model = new Message;
         $types = $model->getTypes();
@@ -64,17 +62,31 @@ class MessageRepository
         }
 
         foreach ($defaults as $data) {
-            dd($data);
             $fields = [];
 
             foreach ($attributes as $attribute) {
-                $fields[$attribute] = $data->value[$attribute];
+                $fields[$attribute] = $data[$attribute];
             }
 
-            $messages[$data->value['type']][] = $fields;
+            $messages[$data['type']][] = $fields;
         }
 
         return $messages;
+    }
+
+    public function buildMessagesFromSettings()
+    {
+        $messages = [];
+
+        $groupedSettings = (new SettingRepository)->getAllByCategory('messages', true);
+
+        foreach ($groupedSettings as $setting) {
+
+            dd($setting);
+
+        }
+
+        dd($groupedSettings);
     }
 
     /**

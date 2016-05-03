@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('poopie', function () {
+    return (new \Gladiator\Repositories\MessageRepository)->buildMessagesFromDefaultSettings();
+});
+
 Route::group(['middleware' => ['web']], function () {
 
     Route::get('/', function () {

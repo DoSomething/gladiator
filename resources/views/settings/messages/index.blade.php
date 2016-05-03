@@ -1,4 +1,4 @@
-{{-- dd($items) --}}
+{{ dd($settings) }}
 
 @extends('layouts.master')
 
@@ -15,18 +15,16 @@
                 <ul class="list">
                     <h2 class="heading">Default Messages</h2>
 
-                    @foreach($items as $item)
-                        {{ dd($item->value) }}
+                    @foreach($settings as $label => $setting)
+                        {{-- dd($setting) --}}
 
                         <fieldset>
-                            <h3>{{ $item->value['label'] }}</h3>
+                            <h3>{{ $label }}</h3>
 
-                            @include('settings.partials._form_text_field')
-                            {{--
-                            @foreach($item->value as $key => $value)
-                                {{ dd($data) }}
+                            @foreach($setting as $field)
+                                @include('settings.partials._form_' . $field['meta_data']->field_type . '_field', ['field' => $field])
                             @endforeach
-                            --}}
+
                         </fieldset>
 
                         {{-- @include('settings.partials._form_' . $item->value->field_type . '_field', ['item' => (object) ['meta_data' => [ 'field_description' => 'hello', 'field_label' => 'poopie' ], 'value' => 'shit']]) --}}
