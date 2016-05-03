@@ -3,6 +3,7 @@
 namespace Gladiator\Repositories;
 
 use Gladiator\Models\Message;
+use Gladiator\Models\MessageSetting;
 
 class MessageRepository
 {
@@ -24,52 +25,41 @@ class MessageRepository
      * Create a series of messages for a contest based on an
      * associative array of messages keyed on message type.
      *
-     * @param  \Gladiator\Models\Contest $contest
-     * @param  array $messages
+     * @param  \Gladiator\Models\Contest  $contest
+     * @param  array  $messages
      * @return void
      */
     public function createMessagesForContest($contest, $messages)
     {
-        foreach ($messages as $type => $items) {
-            foreach ($items as $key => $data) {
-                $data['type'] = $type;
-                $data['key'] = $key;
-
-                $this->create($contest, $data);
-            }
+        foreach ($messages as $message) {
+            $this->create($contest, $message);
         }
     }
 
     /**
-     * Build the series of messages from the Correspondence defaults.
+     * Build the series of messages from the defaults in settings.
      *
      * @return array
      */
-    public function buildMessagesFromDefaults()
+    public function getMessagesFromSettings()
     {
-        $messages = [];
+        $filteredMessages = [];
 
-        $defaults = correspondence()->defaults();
+        $messages = MessageSetting::all();
+        $messages = $messages->toArray();
 
-        $model = new Message;
-        $types = $model->getTypes();
-        $attributes = array_diff($model->getFillable(), $model->getExcludedAttributes());
+        foreach ($messages as $message) {
+            unset($message['id']);
+            unset($message['created_at']);
+            unset($message['updated_at']);
 
-        foreach ($types as $type) {
-            $messages[$type] = [];
+            $message['reportback_id'] = null;
+            $message['reportback_item_id'] = null;
+
+            $filteredMessages[] = $message;
         }
 
-        foreach ($defaults as $data) {
-            $fields = [];
-
-            foreach ($attributes as $attribute) {
-                $fields[$attribute] = $data[$attribute];
-            }
-
-            $messages[$data['type']][] = $fields;
-        }
-
-        return $messages;
+        return $filteredMessages;
     }
 
     /**
