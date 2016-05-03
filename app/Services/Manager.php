@@ -320,6 +320,7 @@ class Manager
 
     /**
      * Get the top three reportbacks from a given leaderboard.
+     * Adds custom info about each placement for display.
      *
      * @param array $leaderboard
      * @return array $topThree
@@ -328,6 +329,7 @@ class Manager
     {
         $topThreeUsers = array_slice($leaderboard, 0, 3);
         $places = ['1st', '2nd', '3rd'];
+        $prizeCopy = ['Taking home the $100 AMEX gift card', 'Winner of the $50 amex gift card', 'Winner of the $25 amex gift card'];
 
         $topThree = [];
 
@@ -337,6 +339,7 @@ class Manager
 
             $topThree[] = [
                 'place' => $places[$key],
+                'prize_copy' => $prizeCopy[$key],
                 'first_name' => $user->first_name,
                 'quantity' => $user->reportback->quantity,
                 'image_url' => $latestReportbackItem->media->uri,

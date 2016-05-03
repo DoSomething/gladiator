@@ -92,16 +92,20 @@ class MessagesController extends Controller
     {
         // Get competition with activity.
         $competitionId = request('competition_id');
-        $competition = Competition::find($competitionId);
+        // $competition = null;
 
-        // Get competition with activity from flash if it is there.
-        // Otherwise, grab it.
-        $key = generate_model_flash_session_key($competition, ['includeActivity' => true]);
+        if ($competitionId) {
+            $competition = Competition::find($competitionId);
 
-        if (session()->has($key)) {
-            $competition = session($key);
-        } else {
-            $competition = $this->manager->getCompetitionOverview($competition, true);
+            // Get competition with activity from flash if it is there.
+            // Otherwise, grab it.
+            $key = generate_model_flash_session_key($competition, ['includeActivity' => true]);
+
+            if (session()->has($key)) {
+                $competition = session($key);
+            } else {
+                $competition = $this->manager->getCompetitionOverview($competition, true);
+            }
         }
 
         // Send test emails to authenticated user.
@@ -122,13 +126,17 @@ class MessagesController extends Controller
 
         $resources = [
             'message' => $message,
-            'competition' => $competition,
+            'competition' => isset($competition) ? $competition : null,
             'users' => $users,
             'test' => request('test'),
         ];
 
         // Kick off email sending
         event(new QueueMessageRequest($resources));
+
+        if (! $competitionId) {
+            return redirect()->back()->with('status', 'Fired that right the hell off!');
+        }
 
         return redirect()->route('competitions.message', ['competition' => $competitionId, 'contest' => request('contest_id')])->with('status', 'Fired that right the hell off!');
     }

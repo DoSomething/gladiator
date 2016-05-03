@@ -1,9 +1,17 @@
-<h2 class="heading -banner">Top Three Reportbacks</h2>
+<br><br>
 
-@foreach ($topThree as $reportback)
-    <div style="display: inline-block; margin: 0 5px;">
-        <h3><span style="font-size: 14px;">In {{ $reportback['place'] }} place with {{ $reportback['quantity'] }} {{ strtolower($reportbackInfo['noun']) }}</span><br><strong>{{ $reportback['first_name'] }}</strong></h3>
-        <img src="{{ $reportback['image_url'] }}" width="200" />
-        <p>{{ $reportback['caption'] }}</p>
-    </div>
+@foreach ($topThree as $index => $reportback)
+  <div style="display: inline-block; margin: 0 5px;">
+    @include('messages.partials._reportback', [
+        'type' => 'topThree',
+        'messageKey' => $messageKey,
+        'place' => $reportback['place'],
+        'prize' => $reportback['prize_copy'],
+        'quantity' => $reportback['quantity'],
+        'reportbackNoun' => $reportbackInfo['noun'],
+        'firstName' => $reportback['first_name'],
+        'image' => $reportback['image_url'],
+        'caption' => $reportback['caption'],
+    ])
+  </div>
 @endforeach
