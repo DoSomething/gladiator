@@ -206,4 +206,18 @@ class CompetitionsController extends Controller
 
         return view('competitions.leaderboard', compact('competition', 'leaderboard', 'pending', 'flagged'));
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Gladiator\Models\Competition  $competition
+     * @return \Illuminate\Http\Response
+     */
+    public function updateFeaturedReportback(FeaturedReportbackRequest $request, Competition $competition)
+    {
+        $competition->fill($request->all())->save();
+
+        return redirect()->back()->with('status', 'Competition has been updated!');
+    }
 }
