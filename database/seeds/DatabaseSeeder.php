@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(ContestTableSeeder::class);
         $this->call(UserTableSeeder::class);
+        $this->call(MessageSettingTableSeeder::class);
         $this->call(MessageTableSeeder::class);
 
         // @TODO: We shouldn't be seeding the Competitions for a Contest without afterwards

@@ -44,6 +44,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('messages', 'MessagesController');
     Route::get('messages/{message}/send', 'MessagesController@sendMessage')->name('messages.send');
 
+    // Settings
+    Route::get('settings', 'Settings\SettingsController@index')->name('settings.index');
+    Route::get('settings/{category}', 'Settings\SettingsController@indexCategory');
+    Route::match(['put', 'patch'], 'settings/messages', 'Settings\MessagesSettingsController@update')->name('settings.messages.update');
+
     // Users
     Route::get('users/contestants', 'UsersController@contestantsIndex')->name('users.contestants');
     Route::resource('users', 'UsersController');
