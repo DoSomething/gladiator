@@ -2,7 +2,6 @@
 
 namespace Gladiator\Http\Controllers\Settings;
 
-use Gladiator\Http\Requests;
 use Gladiator\Models\MessageSetting;
 use Gladiator\Http\Controllers\Controller;
 use Illuminate\Http\Request;
