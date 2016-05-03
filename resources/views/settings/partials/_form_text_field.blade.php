@@ -1,7 +1,6 @@
 {{-- Setting Text Field --}}
 <div class="form-item -padded">
-    <label class="field-label">{{ $item->field_label }}:</label>
-    <input type="text" class="text-field" value="{{ $item->value }}" />
+    hello
 </div>
 
 

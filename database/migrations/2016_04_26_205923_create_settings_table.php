@@ -15,9 +15,9 @@ class CreateSettingsTable extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('category')->index();
+            $table->string('group')->nullable()->index();
             $table->string('key')->unique();
             $table->text('value')->nullable();
-            $table->boolean('serialized')->default(false);
             $table->text('meta_data')->nullable();
             $table->timestamps();
         });

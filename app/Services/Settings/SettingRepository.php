@@ -6,20 +6,24 @@ use Gladiator\Models\Setting;
 
 class SettingRepository
 {
-    public function getAllByCategory($category, $unserializeData = false)
+    public function getAllByCategory($category, $grouped = true)
     {
-        $data = Setting::where('category', $category)->get();
+        $items = Setting::where('category', $category)->get();
 
-        if (! $data->count()) {
+        if (! $items->count()) {
             throw new SettingCategoryNotFoundException;
         }
 
-        if ($unserializeData) {
-            foreach ($data as $item) {
-                $item->value = Settings::unserializeData($item->value);
+        foreach ($items as $item) {
+            if ($item->meta_data) {
+                $item->meta_data = (object) Settings::unserializeData($item->meta_data);
             }
         }
 
-        return $data;
+        if ($grouped) {
+            return $items->groupBy('group');
+        }
+
+        return $items;
     }
 }

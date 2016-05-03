@@ -15,7 +15,7 @@ class SettingTableSeeder extends Seeder
     {
         $this->seedMessagesSettings();
 
-        // Add additional settings seeders
+        // Call additional settings specific seeder methods.
     }
 
     /**
@@ -28,12 +28,28 @@ class SettingTableSeeder extends Seeder
         $defaultMessages = correspondence()->defaults();
 
         foreach($defaultMessages as $message) {
-            $setting = new Setting;
-            $setting->category = 'messages';
-            $setting->key = $message['type'] . '_' . $message['key'];
-            $setting->value = Settings::serializeData($message);
-            $setting->serialized = true;
-            $setting->save();
+
+            $settingSubject = new Setting;
+            $settingSubject->category = 'messages';
+            $settingSubject->group = $message['type'] . '_' . $message['key'];
+            $settingSubject->key = $message['type'] . '_' . $message['key'] . '_subject';
+            $settingSubject->value = $message['subject'];
+            $settingSubject->meta_data = Settings::serializeData([
+                'field_label' => 'subject',
+                'field_type' => 'text',
+            ]);
+            $settingSubject->save();
+
+            $settingBody = new Setting;
+            $settingBody->category = 'messages';
+            $settingBody->group = $message['type'] . '_' . $message['key'];
+            $settingBody->key = $message['type'] . '_' . $message['key'] . '_body';
+            $settingBody->value = $message['body'];
+            $settingBody->meta_data = Settings::serializeData([
+                'field_label' => 'body',
+                'field_type' => 'textarea',
+            ]);
+            $settingBody->save();
         }
     }
 }

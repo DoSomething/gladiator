@@ -53,6 +53,8 @@ class MessageRepository
 
         $defaults = (new SettingRepository)->getAllByCategory('messages', true);
 
+        // dd($defaults->count());
+
         $model = new Message;
         $types = $model->getTypes();
         $attributes = array_diff($model->getFillable(), $model->getExcludedAttributes());
@@ -62,6 +64,7 @@ class MessageRepository
         }
 
         foreach ($defaults as $data) {
+            dd($data);
             $fields = [];
 
             foreach ($attributes as $attribute) {
