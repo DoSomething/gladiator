@@ -10,6 +10,10 @@
      <div class="container">
         <div class="wrapper">
             <div class="container__block">
+                <h2 class="heading -banner">Featured reportback</h2>
+                @include('messages.partials._featured_reportback_form')
+            </div>
+            <div class="container__block">
                 <h2 class="heading -banner">Send Messages</h2>
                 <table class="table">
                     <thead>

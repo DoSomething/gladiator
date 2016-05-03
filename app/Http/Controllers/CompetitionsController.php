@@ -8,6 +8,7 @@ use Gladiator\Models\Message;
 use Gladiator\Services\Manager;
 use Gladiator\Models\Competition;
 use Gladiator\Http\Requests\CompetitionRequest;
+use Gladiator\Http\Requests\FeaturedReportbackRequest;
 use Gladiator\Repositories\UserRepositoryContract;
 use Illuminate\Http\Request;
 
