@@ -199,11 +199,15 @@ class Email
      */
     protected function getFeaturedReportback()
     {
-        if (isset($this->message->reportback_id) && isset($this->message->reportback_item_id)) {
-            $featuredReportback = $this->manager->appendReportbackItemToMessage($this->message->reportback_id, $this->message->reportback_item_id);
+        if (!isset($this->competition)) {
+            return;
+        }
+
+        if (isset($this->competition->reportback_id) && isset($this->competition->reportback_item_id)) {
+            $featuredReportback = $this->manager->appendReportbackItemToMessage($this->competition->reportback_id, $this->competition->reportback_item_id);
 
             return $featuredReportback = [
-                'shoutout' => $this->message->shoutout,
+                'shoutout' => $this->competition->shoutout,
                 'image_url' => $featuredReportback->media->uri,
                 'caption' => $featuredReportback->caption,
             ];

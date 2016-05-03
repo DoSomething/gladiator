@@ -56,26 +56,6 @@ class Message extends Model
     }
 
     /**
-     * Set the reportback_id attribute for the message.
-     *
-     * @param string  $value
-     */
-    public function setReportbackIdAttribute($value)
-    {
-        $this->attributes['reportback_id'] = ! empty($value) ? $value : null;
-    }
-
-    /**
-     * Set the reportback_item_id attribute for the message.
-     *
-     * @param string  $value
-     */
-    public function setReportbackItemIdAttribute($value)
-    {
-        $this->attributes['reportback_item_id'] = ! empty($value) ? $value : null;
-    }
-
-    /**
      * Get the list of Message types.
      *
      * @return array
