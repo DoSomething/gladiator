@@ -31,6 +31,26 @@ class MessageRepository
      */
     public function createMessagesForContest($contest, $messages)
     {
+        foreach ($messages as $type => $items) {
+            foreach ($items as $key => $data) {
+                $data['type'] = $type;
+                $data['key'] = $key;
+
+                $this->create($contest, $data);
+            }
+        }
+    }
+
+    /**
+     * Create a series of messages for a contest based on defaults
+     * retrieved from settings.
+     *
+     * @param  \Gladiator\Models\Contest  $contest
+     * @param  array  $messages
+     * @return void
+     */
+    public function createMessagesForContestFromSettings($contest, $messages)
+    {
         foreach ($messages as $message) {
             $this->create($contest, $message);
         }

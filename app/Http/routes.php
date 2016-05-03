@@ -45,9 +45,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('messages/{message}/send', 'MessagesController@sendMessage')->name('messages.send');
 
     // Settings
-    Route::get('settings', 'Settings\SettingsController@index');
+    Route::get('settings', 'Settings\SettingsController@index')->name('settings.index');
     Route::get('settings/{category}', 'Settings\SettingsController@indexCategory');
-    // Route::get('settings/{category}/{key}/edit', 'SettingsController@editCategory')->name('settings.category.edit');
+    Route::match(['put', 'patch'], 'settings/messages', 'Settings\MessagesSettingsController@update')->name('settings.messages.update');
 
     // Users
     Route::get('users/contestants', 'UsersController@contestantsIndex')->name('users.contestants');

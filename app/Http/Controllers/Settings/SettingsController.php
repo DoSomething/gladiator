@@ -8,6 +8,15 @@ use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
+    /**
+     * Create new SettingsController instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin,staff');
+    }
+
     public function index()
     {
         return view('settings.index');
@@ -16,7 +25,7 @@ class SettingsController extends Controller
     public function indexCategory($category)
     {
         if ($category === 'messages') {
-            return (new MessagesSettingsController)->index();
+            return (new MessagesSettingsController)->edit();
         }
 
         // @TODO: for when general settings with categories are added:

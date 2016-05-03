@@ -37,7 +37,7 @@ class MessageTableSeeder extends Seeder
 
         foreach ($contests as $contest) {
             if (! $contest->messages->count()) {
-                $this->repository->createMessagesForContest($contest, $messages);
+                $this->repository->createMessagesForContestFromSettings($contest, $messages);
             }
         }
     }

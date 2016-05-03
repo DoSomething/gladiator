@@ -22,7 +22,7 @@
 
                     <h2 class="heading -alpha">Messages</h2>
 
-                    @foreach (correspondence()->defaults() as $message)
+                    @foreach ($messages as $message)
 
                         @include('contests.partials._form_contest_messaging', ['message' => $message])
 
