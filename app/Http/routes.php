@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('poopie', function () {
+    return (new \Gladiator\Repositories\MessageRepository)->buildMessagesFromDefaultSettings();
+});
+
 Route::group(['middleware' => ['web']], function () {
 
     Route::get('/', function () {
@@ -43,6 +47,11 @@ Route::group(['middleware' => ['web']], function () {
     // Messages
     Route::resource('messages', 'MessagesController');
     Route::get('messages/{message}/send', 'MessagesController@sendMessage')->name('messages.send');
+
+    // Settings
+    Route::get('settings', 'SettingsController@index');
+    Route::get('settings/{category}', 'SettingsController@indexCategory');
+    Route::get('settings/{category}/{key}/edit', 'SettingsController@editCategory')->name('settings.category.edit');
 
     // Users
     Route::get('users/contestants', 'UsersController@contestantsIndex')->name('users.contestants');

@@ -3,6 +3,8 @@
 namespace Gladiator\Repositories;
 
 use Gladiator\Models\Message;
+use Gladiator\Models\Setting;
+use Gladiator\Services\Settings\SettingRepository;
 
 class MessageRepository
 {
@@ -70,6 +72,21 @@ class MessageRepository
         }
 
         return $messages;
+    }
+
+    public function buildMessagesFromSettings()
+    {
+        $messages = [];
+
+        $groupedSettings = (new SettingRepository)->getAllByCategory('messages', true);
+
+        foreach ($groupedSettings as $setting) {
+
+            dd($setting);
+
+        }
+
+        dd($groupedSettings);
     }
 
     /**
