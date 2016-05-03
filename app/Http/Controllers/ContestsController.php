@@ -7,6 +7,7 @@ use Gladiator\Models\Message;
 use Gladiator\Models\User;
 use Gladiator\Services\Manager;
 use Gladiator\Services\Registrar;
+use Gladiator\Models\MessageSetting;
 use Gladiator\Http\Requests\ContestRequest;
 use Gladiator\Http\Requests\SignupUserRequest;
 use Gladiator\Repositories\MessageRepository;
@@ -46,7 +47,9 @@ class ContestsController extends Controller
      */
     public function create()
     {
-        return view('contests.create');
+        $messages = MessageSetting::all();
+
+        return view('contests.create', compact('messages'));
     }
 
     /**

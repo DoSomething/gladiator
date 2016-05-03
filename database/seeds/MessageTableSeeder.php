@@ -33,11 +33,11 @@ class MessageTableSeeder extends Seeder
     {
         $contests = Contest::all();
 
-        $messages = $this->repository->buildMessagesFromDefaults();
+        $messages = $this->repository->getMessagesFromSettings();
 
         foreach ($contests as $contest) {
             if (! $contest->messages->count()) {
-                $this->repository->createMessagesForContest($contest, $messages);
+                $this->repository->createMessagesForContestFromSettings($contest, $messages);
             }
         }
     }

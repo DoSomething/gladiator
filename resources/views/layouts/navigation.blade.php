@@ -16,6 +16,12 @@
                         <span class="navigation__subtitle">Admins, Staff, Contestants</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ URL::to('settings') }}">
+                        <strong class="navigation__title">Settings</strong>
+                        <span class="navigation__subtitle">Options &amp; Customizations</span>
+                    </a>
+                </li>
             </ul>
         @endif
 
