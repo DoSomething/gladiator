@@ -3,6 +3,7 @@
 namespace Gladiator\Listeners;
 
 use Log;
+use Swift_RfcComplianceException;
 use Illuminate\Mail\Mailer;
 use Gladiator\Events\QueueMessageRequest;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -59,14 +60,14 @@ class QueueMessage implements ShouldQueue
      */
     public function sendMail($content, $settings)
     {
-        try {
-            $this->mail->queue('messages.' . $content['type'], ['content' => $content], function ($msg) use ($settings) {
+        $this->mail->queue('messages.' . $content['type'], ['content' => $content], function ($msg) use ($settings) {
+            try {
                 $msg->from($settings['from'], $settings['from_name']);
 
                 $msg->to($settings['to'], $settings['to_name'])->subject($settings['subject']);
-            });
-        } catch (Exception $e) {
-            Log::alert('Message failed to queue', ['message' => $content]);
-        }
+            } catch(Swift_RfcComplianceException $e) {
+                Log::alert('Message failed to send', ['message_settings' => $settings]);
+            }
+        });
     }
 }
