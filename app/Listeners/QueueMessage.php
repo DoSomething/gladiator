@@ -65,7 +65,7 @@ class QueueMessage implements ShouldQueue
                 $msg->from($settings['from'], $settings['from_name']);
 
                 $msg->to($settings['to'], $settings['to_name'])->subject($settings['subject']);
-            } catch(Swift_RfcComplianceException $e) {
+            } catch (Swift_RfcComplianceException $e) {
                 Log::alert('Message failed to send', ['error' => $e]);
             }
         });
