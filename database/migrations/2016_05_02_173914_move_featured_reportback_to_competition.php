@@ -38,8 +38,9 @@ class MoveFeaturedReportbackToCompetition extends Migration
             $table->dropColumn('reportback_item_id');
             $table->dropColumn('shoutout');
         });
+
         Schema::table('messages', function (Blueprint $table) {
-            $table->integer('reportback_id')->nullable()->after('leaderboard_msg_day');
+            $table->integer('reportback_id')->nullable()->after('pro_tip');
             $table->integer('reportback_item_id')->nullable()->after('reportback_id');
             $table->longText('shoutout')->nullable()->after('reportback_item_id');
         });
