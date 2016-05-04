@@ -3,8 +3,8 @@
 @section('main_content')
 
     @include('layouts.header', [
-        'title' => 'Contests',
-        'subtitle' => 'Viewing contest ID: ' . $contest->id
+        'title' => 'Contest',
+        'subtitle' => $contest->campaign->title . ' Contest ID: ' . $contest->id
     ])
 
     <div class="container">
@@ -37,7 +37,7 @@
             <div class="container__block">
             <h2 class="heading">Data export</h1>
                 <ul class="list">
-                    <li><a href="{{ route('contests.export', $contest->id) }}">&DownArrowBar; Export</a> &mdash; CSV list of users for this contest</li>
+                    <li><a href="{{ route('contests.export', $contest->id) }}">&DownArrowBar; Export</a> &mdash; CSV list of competition IDs for this contest</li>
                 </ul>
             </div>
         </div>
@@ -49,8 +49,11 @@
                 <h2 class="heading -alpha">Messaging</h2>
                 <p>The current name of the messages sender is: <em>{{ $contest->sender_name or 'not assigned' }}</em></p>
                 <p>The current email assigned for the messages sender is: <em>{{ $contest->sender_email or 'not assigned' }}</em></p>
-                <p><a href="{{ route('contests.messages.edit', $contest->id) }}" class="button -secondary">View &amp; Edit Messages</a></p>
-                <p><a href="{{ route('messages.send', ['message' => $welcomeEmail->id, 'contest_id' => $welcomeEmail->contest_id, 'test' => true, ]) }}" class="button -secondary">Test welcome message</a></p>
+
+                <ul class="form-actions -inline">
+                    <li><a href="{{ route('contests.messages.edit', $contest->id) }}" class="button -secondary">View &amp; Edit Messages</a></li>
+                    <li><a href="{{ route('messages.send', ['message' => $welcomeEmail->id, 'contest_id' => $welcomeEmail->contest_id, 'test' => true, ]) }}" class="button -secondary">Test welcome message</a></li>
+                </ul>
             </div>
         </div>
     </div>
