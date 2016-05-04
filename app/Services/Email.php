@@ -199,7 +199,7 @@ class Email
      */
     protected function getFeaturedReportback()
     {
-        if (!isset($this->competition)) {
+        if (! isset($this->competition)) {
             return;
         }
 
