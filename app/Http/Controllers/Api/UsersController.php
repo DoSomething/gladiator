@@ -98,7 +98,6 @@ class UsersController extends ApiController
         $this->manager->appendCampaign($contest);
 
         // Fire off welcome Email
-        Log::debug('Gladiator\Http\Controllers\Api\UsersController -- Sending welcome email', ['user' => $user]);
         $this->sendWelcomeEmail($user, $contest);
 
         // @TODO: maybe add more detail to response to indicate which room user was added to?
@@ -125,6 +124,8 @@ class UsersController extends ApiController
             'users' => [$user],
             'test' => false,
         ];
+
+        Log::debug('Gladiator\Http\Controllers\Api\UsersController -- Sending welcome email', ['user' => $user]);
 
         event(new QueueMessageRequest($resources));
     }
