@@ -99,19 +99,33 @@ class UsersController extends ApiController
 
         // Fire off welcome Email
         Log::debug('Gladiator\Http\Controllers\Api\UsersController -- Sending welcome email', ['user' => $user]);
+        $this->sendWelcomeEmail($user, $contest);
 
+        // @TODO: maybe add more detail to response to indicate which room user was added to?
+        return $this->item($user);
+    }
+
+    /**
+     * Fires off the event to send a welcome email to the user.
+     *
+     * @param  Gladiator\Models\User     $user
+     * @param  Gladiator\Models\Contest  $contest
+     */
+    protected function sendWelcomeEmail($user, $contest)
+    {
         $message = Message::where(['contest_id' => $contest->id, 'type' => 'welcome'])->first();
+
+        // Get the full northstar user object to send to.
         $user = $this->repository->find($user->id);
 
         $resources = [
             'message' => $message,
             'contest' => $contest,
+            //@TODO -- fix the Email class so that it doesn't require this property to be sent as an array.
             'users' => [$user],
             'test' => false,
         ];
-        event(new QueueMessageRequest($resources));
 
-        // @TODO: maybe add more detail to response to indicate which room user was added to?
-        return $this->item($user);
+        event(new QueueMessageRequest($resources));
     }
 }
