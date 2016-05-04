@@ -4,7 +4,7 @@
 
     @include('layouts.header', [
         'title' => 'Competitions Messaging',
-        'subtitle' => 'Viewing messages in contest ' . $messages[0]->contest_id
+        'subtitle' => 'Viewing messages in competition ' . $messages[0]->competition_id
     ])
 
      <div class="container">

@@ -2,6 +2,7 @@
 
 namespace Gladiator\Http\Controllers\Api;
 
+use Log;
 use Gladiator\Models\User;
 use Gladiator\Models\Contest;
 use Gladiator\Services\Registrar;
@@ -10,6 +11,7 @@ use Gladiator\Http\Requests\UserRequest;
 use Gladiator\Http\Transformers\UserTransformer;
 use Gladiator\Events\QueueMessageRequest;
 use Gladiator\Models\Message;
+use Gladiator\Repositories\UserRepositoryContract;
 
 class UsersController extends ApiController
 {
@@ -29,13 +31,21 @@ class UsersController extends ApiController
     protected $manager;
 
     /**
+     * UserRepository instance.
+     *
+     * @var \Gladiator\Repositories\UserRepositoryContract
+     */
+    protected $repository;
+
+    /**
      * Create new UsersController instance.
      */
-    public function __construct(Registrar $registrar, Manager $manager)
+    public function __construct(Registrar $registrar, Manager $manager, UserRepositoryContract $repository)
     {
         $this->registrar = $registrar;
         $this->transformer = new UserTransformer;
         $this->manager = $manager;
+        $this->repository = $repository;
 
         $this->middleware('auth.api');
     }
@@ -71,6 +81,8 @@ class UsersController extends ApiController
             $user = $this->registrar->createUser((object) $credentials);
         }
 
+        Log::debug('Gladiator\Http\Controllers\Api\UsersController -- Storing user', ['user' => $user]);
+
         $contest = Contest::with(['waitingRoom', 'competitions'])->where('campaign_id', '=', $request['campaign_id'])
                             ->where('campaign_run_id', '=', $request['campaign_run_id'])
                             ->firstOrFail();
@@ -86,16 +98,35 @@ class UsersController extends ApiController
         $this->manager->appendCampaign($contest);
 
         // Fire off welcome Email
-        $message = Message::where(['contest_id' => $contest->id, 'type' => 'welcome'])->first();
-        $resources = [
-            'message' => $message,
-            'contest' => $contest,
-            'users' => [$account],
-            'test' => false,
-        ];
-        event(new QueueMessageRequest($resources));
+        $this->sendWelcomeEmail($user, $contest);
 
         // @TODO: maybe add more detail to response to indicate which room user was added to?
         return $this->item($user);
+    }
+
+    /**
+     * Fires off the event to send a welcome email to the user.
+     *
+     * @param  Gladiator\Models\User     $user
+     * @param  Gladiator\Models\Contest  $contest
+     */
+    protected function sendWelcomeEmail($user, $contest)
+    {
+        $message = Message::where(['contest_id' => $contest->id, 'type' => 'welcome'])->first();
+
+        // Get the full northstar user object to send to.
+        $user = $this->repository->find($user->id);
+
+        $resources = [
+            'message' => $message,
+            'contest' => $contest,
+            //@TODO -- fix the Email class so that it doesn't require this property to be sent as an array.
+            'users' => [$user],
+            'test' => false,
+        ];
+
+        Log::debug('Gladiator\Http\Controllers\Api\UsersController -- Sending welcome email', ['user' => $user]);
+
+        event(new QueueMessageRequest($resources));
     }
 }
