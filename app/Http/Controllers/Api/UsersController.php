@@ -2,6 +2,7 @@
 
 namespace Gladiator\Http\Controllers\Api;
 
+use Log;
 use Gladiator\Models\User;
 use Gladiator\Models\Contest;
 use Gladiator\Services\Registrar;
@@ -10,6 +11,7 @@ use Gladiator\Http\Requests\UserRequest;
 use Gladiator\Http\Transformers\UserTransformer;
 use Gladiator\Events\QueueMessageRequest;
 use Gladiator\Models\Message;
+use Gladiator\Repositories\UserRepositoryContract;
 
 class UsersController extends ApiController
 {
@@ -29,13 +31,21 @@ class UsersController extends ApiController
     protected $manager;
 
     /**
+     * UserRepository instance.
+     *
+     * @var \Gladiator\Repositories\UserRepositoryContract
+     */
+    protected $repository;
+
+    /**
      * Create new UsersController instance.
      */
-    public function __construct(Registrar $registrar, Manager $manager)
+    public function __construct(Registrar $registrar, Manager $manager, UserRepositoryContract $repository)
     {
         $this->registrar = $registrar;
         $this->transformer = new UserTransformer;
         $this->manager = $manager;
+        $this->repository = $repository;
 
         $this->middleware('auth.api');
     }
@@ -71,6 +81,8 @@ class UsersController extends ApiController
             $user = $this->registrar->createUser((object) $credentials);
         }
 
+        Log::debug('Gladiator\Http\Controllers\Api\UsersController -- Storing user', ['user' => $user]);
+
         $contest = Contest::with(['waitingRoom', 'competitions'])->where('campaign_id', '=', $request['campaign_id'])
                             ->where('campaign_run_id', '=', $request['campaign_run_id'])
                             ->firstOrFail();
@@ -86,11 +98,15 @@ class UsersController extends ApiController
         $this->manager->appendCampaign($contest);
 
         // Fire off welcome Email
+        Log::debug('Gladiator\Http\Controllers\Api\UsersController -- Sending welcome email', ['user' => $user]);
+
         $message = Message::where(['contest_id' => $contest->id, 'type' => 'welcome'])->first();
+        $user = $this->repository->find($user->id);
+
         $resources = [
             'message' => $message,
             'contest' => $contest,
-            'users' => [$account],
+            'users' => [$user],
             'test' => false,
         ];
         event(new QueueMessageRequest($resources));
