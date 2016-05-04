@@ -23,6 +23,25 @@ $forge-path: "/assets/vendor/forge/assets/";
       background-color: $error-color;
     }
   }
+
+  &.-muted {
+    background: none;
+    color: $med-gray;
+    font-size: $font-small;
+    font-weight: $weight-normal;
+    text-transform: none;
+    border: 0 none;
+
+    &:hover {
+      color: $off-black;
+      background-color: none;
+      text-decoration: underline;
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
 }
 
 #matchup-flag {
