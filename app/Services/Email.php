@@ -2,6 +2,7 @@
 
 namespace Gladiator\Services;
 
+use Log;
 use Gladiator\Models\Contest;
 use Gladiator\Models\Competition;
 use Gladiator\Models\Message;
@@ -162,6 +163,8 @@ class Email
                 $message = isset($leaderboardVars) ? array_merge($processedMessage, $leaderboardVars) : $processedMessage;
 
                 $this->allMessages[$key]['message'] = $message;
+            } else {
+                Log::alert('User email is not valid', ['id' => $user->id, 'email' => $user->email]);
             }
         }
     }

@@ -2,6 +2,8 @@
 
 namespace Gladiator\Listeners;
 
+use Log;
+use Swift_RfcComplianceException;
 use Illuminate\Mail\Mailer;
 use Gladiator\Events\QueueMessageRequest;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -35,16 +37,18 @@ class QueueMessage implements ShouldQueue
         // Build the email.
         $email = new Email($resources);
 
-        foreach ($email->allMessages as $content) {
-            $settings = [
-                'subject' => $content['message']['subject'],
-                'from' => $email->contest->sender_email,
-                'from_name' => $email->contest->sender_name,
-                'to' => $content['user']->email,
-                'to_name' => $content['user']->first_name,
-            ];
+        if (isset($email->allMessages)) {
+            foreach ($email->allMessages as $content) {
+                $settings = [
+                    'subject' => $content['message']['subject'],
+                    'from' => $email->contest->sender_email,
+                    'from_name' => $email->contest->sender_name,
+                    'to' => $content['user']->email,
+                    'to_name' => $content['user']->first_name,
+                ];
 
-            $this->sendMail($content['message'], $settings);
+                $this->sendMail($content['message'], $settings);
+            }
         }
     }
 
@@ -57,9 +61,13 @@ class QueueMessage implements ShouldQueue
     public function sendMail($content, $settings)
     {
         $this->mail->queue('messages.' . $content['type'], ['content' => $content], function ($msg) use ($settings) {
-            $msg->from($settings['from'], $settings['from_name']);
+            try {
+                $msg->from($settings['from'], $settings['from_name']);
 
-            $msg->to($settings['to'], $settings['to_name'])->subject($settings['subject']);
+                $msg->to($settings['to'], $settings['to_name'])->subject($settings['subject']);
+            } catch (Swift_RfcComplianceException $e) {
+                Log::alert('Message failed to send', ['error' => $e]);
+            }
         });
     }
 }
