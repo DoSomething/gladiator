@@ -217,7 +217,8 @@ class CompetitionsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function featuredReportbackForm(Competition $competition, Message $message) {
-        return view('competitions.featured_reportback', compact('competition', 'message'));
+        $reportback = FeaturedReportback::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->first();
+        return view('competitions.featured_reportback', compact('competition', 'message', 'reportback'));
     }
 
     /**

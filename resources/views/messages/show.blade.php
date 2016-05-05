@@ -30,7 +30,7 @@
                                 <td class="table__cell"><a href="{{ route('messages.send', ['message' => $message->id, 'contest_id' => $message->contest_id, 'competition_id' => $competition->id]) }}" class="button -tertiary">Send</a></td>
                                 <td class="table__cell">
                                     @if ($message->type === "leaderboard")
-                                        <a href="{{ route('competitions.featuredReportbackForm', ['competition' => $competition->id, 'message' => $message->id]) }}" class="button {{ isset($featuredReportbacks[$message->id]) ? '-secondary' : '' }}">EDIT</a>
+                                        <a href="{{ route('competitions.featuredReportbackForm', ['competition' => $competition->id, 'message' => $message->id]) }}" class="button {{ isset($featuredReportbacks[$message->id]) ? '-tertiary' : '-secondary' }}">EDIT</a>
                                     @endif
                                 </td>
                             </tr>
