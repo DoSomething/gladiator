@@ -501,6 +501,7 @@ class Manager
      *
      * @param  Gladiator\Models\User     $user
      * @param  Gladiator\Models\Contest  $contest
+     * @param  array $params
      */
     public function sendEmail($user, $contest, $params)
     {
