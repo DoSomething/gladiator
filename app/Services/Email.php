@@ -3,6 +3,7 @@
 namespace Gladiator\Services;
 
 use Log;
+use Gladiator\Models\FeaturedReportback;
 use Gladiator\Models\Contest;
 use Gladiator\Models\Competition;
 use Gladiator\Models\Message;
@@ -206,14 +207,14 @@ class Email
             return;
         }
 
-        if (isset($this->competition->reportback_id) && isset($this->competition->reportback_item_id)) {
-            $featuredReportback = FeaturedReportback::where('competition_id', '=', $this->competition->id)->where('message_id', '=', $this->message->id)->first();
-            $featuredReportback = $this->manager->appendReportbackItemToMessage($featuredReportback->reportback_id, $featuredReportback->reportback_item_id);
+        $featuredReportback = FeaturedReportback::where('competition_id', '=', $this->competition->id)->where('message_id', '=', $this->message->id)->first();
+        if (isset($featuredReportback->reportback_id) && isset($featuredReportback->reportback_item_id)) {
+            $reportback = $this->manager->appendReportbackItemToMessage($featuredReportback->reportback_id, $featuredReportback->reportback_item_id);
 
             return $featuredReportback = [
                 'shoutout' => $featuredReportback->shoutout,
-                'image_url' => $featuredReportback->media->uri,
-                'caption' => $featuredReportback->caption,
+                'image_url' => $reportback->media->uri,
+                'caption' => $reportback->caption,
             ];
         }
 
