@@ -2,6 +2,7 @@
 
 namespace Gladiator\Services;
 
+use Gladiator\Models\Message;
 use Gladiator\Models\Contest;
 use Gladiator\Repositories\CacheCampaignRepository;
 use Gladiator\Repositories\UserRepositoryContract;
