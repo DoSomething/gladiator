@@ -495,4 +495,27 @@ class Manager
 
         return true;
     }
+
+    /**
+     * Fires off an event to send an email a user.
+     *
+     * @param  Gladiator\Models\User     $user
+     * @param  Gladiator\Models\Contest  $contest
+     */
+    public function sendEmail($user, $contest)
+    {
+        $message = Message::where(['contest_id' => $contest->id, 'type' => 'welcome'])->first();
+
+        $resources = [
+            'message' => $message,
+            'contest' => $contest,
+            //@TODO -- fix the Email class so that it doesn't require this property to be sent as an array.
+            'users' => [$this->repository->find($user->id)],
+            'test' => false,
+        ];
+
+        Log::debug('Gladiator\Services\Manager -- Sending welcome email', ['user' => $user]);
+
+        event(new QueueMessageRequest($resources));
+    }
 }

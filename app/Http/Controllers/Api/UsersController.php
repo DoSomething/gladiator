@@ -98,7 +98,7 @@ class UsersController extends ApiController
         $this->manager->appendCampaign($contest);
 
         // Fire off welcome Email
-        $this->sendWelcomeEmail($user, $contest);
+        $this->manager->sendEmail($user, $contest);
 
         // @TODO: maybe add more detail to response to indicate which room user was added to?
         return $this->item($user);
