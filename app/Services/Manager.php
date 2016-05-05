@@ -502,9 +502,16 @@ class Manager
      * @param  Gladiator\Models\User     $user
      * @param  Gladiator\Models\Contest  $contest
      * @param  array $params
+     * @return null|void
      */
     public function sendEmail($user, $contest, $params)
     {
+        if (! isset($params)) {
+            Log::error('Gladiator\Services\Manager -- No params passed');
+
+            return null;
+        }
+
         $message = Message::where($params)->first();
 
         if ($message) {
@@ -521,6 +528,8 @@ class Manager
             event(new QueueMessageRequest($resources));
         } else {
             Log::error('Gladiator\Services\Manager -- Message not found', ['params' => $params]);
+
+            return null;
         }
     }
 }
