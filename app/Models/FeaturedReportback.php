@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class FeaturedReportback extends Model
 {
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'competitions_featured_reportbacks';
+
+    /**
      * Get the fillable attributes for the model.
      *
      * @return array

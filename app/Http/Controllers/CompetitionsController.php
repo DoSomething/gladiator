@@ -5,6 +5,7 @@ namespace Gladiator\Http\Controllers;
 use Gladiator\Models\User;
 use Gladiator\Models\Contest;
 use Gladiator\Models\Message;
+use Gladiator\Models\FeaturedReportback;
 use Gladiator\Services\Manager;
 use Gladiator\Models\Competition;
 use Gladiator\Http\Requests\CompetitionRequest;
@@ -209,16 +210,36 @@ class CompetitionsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Get the featured reportback form.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \Gladiator\Models\Competition  $competition
      * @return \Illuminate\Http\Response
      */
-    public function updateFeaturedReportback(FeaturedReportbackRequest $request, Competition $competition)
-    {
-        $competition->fill($request->all())->save();
+    public function featuredReportbackForm(Competition $competition, Message $message) {
+        return view('competitions.featured_reportback', compact('competition', 'message'));
+    }
 
-        return redirect()->back()->with('status', 'Competition has been updated!');
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Gladiator\Requests\FeaturedReportbackRequest  $request
+     * @param  \Gladiator\Models\Competition  $competition
+     * @return \Illuminate\Http\Response
+     */
+    public function updateFeaturedReportback(FeaturedReportbackRequest $request, Competition $competition, Message $message)
+    {
+        $reportback = FeaturedReportback::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->first();
+
+        if (! isset($reportback)) {
+            $reportback = new FeaturedReportback;
+            $reportback->competition_id = $competition->id;
+            $reportback->message_id = $message->id;
+            $reportback->save();
+        }
+
+        $reportback->fill($request->all())->save();
+
+        return redirect()->route('competitions.message', [$competition, $competition->contest])->with('status', 'Featured reportback has been updated!');
+        // return $this->message($competition)
     }
 }
