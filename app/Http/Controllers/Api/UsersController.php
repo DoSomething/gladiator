@@ -9,8 +9,6 @@ use Gladiator\Services\Registrar;
 use Gladiator\Services\Manager;
 use Gladiator\Http\Requests\UserRequest;
 use Gladiator\Http\Transformers\UserTransformer;
-use Gladiator\Events\QueueMessageRequest;
-use Gladiator\Models\Message;
 use Gladiator\Repositories\UserRepositoryContract;
 
 class UsersController extends ApiController
@@ -98,35 +96,14 @@ class UsersController extends ApiController
         $this->manager->appendCampaign($contest);
 
         // Fire off welcome Email
-        $this->sendWelcomeEmail($user, $contest);
+        $params = [
+            'type' => 'welcome',
+            'key' => 0,
+        ];
+
+        $this->manager->sendEmail($user, $contest, $params);
 
         // @TODO: maybe add more detail to response to indicate which room user was added to?
         return $this->item($user);
-    }
-
-    /**
-     * Fires off the event to send a welcome email to the user.
-     *
-     * @param  Gladiator\Models\User     $user
-     * @param  Gladiator\Models\Contest  $contest
-     */
-    protected function sendWelcomeEmail($user, $contest)
-    {
-        $message = Message::where(['contest_id' => $contest->id, 'type' => 'welcome'])->first();
-
-        // Get the full northstar user object to send to.
-        $user = $this->repository->find($user->id);
-
-        $resources = [
-            'message' => $message,
-            'contest' => $contest,
-            //@TODO -- fix the Email class so that it doesn't require this property to be sent as an array.
-            'users' => [$user],
-            'test' => false,
-        ];
-
-        Log::debug('Gladiator\Http\Controllers\Api\UsersController -- Sending welcome email', ['user' => $user]);
-
-        event(new QueueMessageRequest($resources));
     }
 }

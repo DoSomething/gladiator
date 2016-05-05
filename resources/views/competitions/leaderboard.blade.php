@@ -3,9 +3,11 @@
 @section('main_content')
 
     @include('layouts.header', [
-        'title' => 'Competitions',
-        'subtitle' => 'Viewing leaderboard for competition ' . $competition->id
+        'title' => 'Leaderboard',
+        'subtitle' => $competition->contest->campaign->title . ' Competition ID: ' . $competition->id
     ])
+
+    @include('layouts.back', ['link' => ['path' => route('competitions.show', $competition->id), 'copy' => 'back to competition']])
 
     <div class="container">
         <div class="wrapper">
