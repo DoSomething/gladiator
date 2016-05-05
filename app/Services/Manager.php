@@ -506,16 +506,20 @@ class Manager
     {
         $message = Message::where($params)->first();
 
-        $resources = [
-            'message' => $message,
-            'contest' => $contest,
-            //@TODO -- fix the Email class so that it doesn't require this property to be sent as an array.
-            'users' => [$this->repository->find($user->id)],
-            'test' => false,
-        ];
+        if ($message) {
+            $resources = [
+                'message' => $message,
+                'contest' => $contest,
+                //@TODO -- fix the Email class so that it doesn't require this property to be sent as an array.
+                'users' => [$this->repository->find($user->id)],
+                'test' => false,
+            ];
 
-        Log::debug('Gladiator\Services\Manager -- Sending ' . $params['type'] . ' email', ['users' => $resources['users']]);
+            Log::debug('Gladiator\Services\Manager -- Sending ' . $params['type'] . ' email', ['users' => $resources['users']]);
 
-        event(new QueueMessageRequest($resources));
+            event(new QueueMessageRequest($resources));
+        } else {
+            Log::error('Gladiator\Services\Manager -- Message not found', ['params' => $params]);
+        }
     }
 }
