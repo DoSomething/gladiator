@@ -502,9 +502,9 @@ class Manager
      * @param  Gladiator\Models\User     $user
      * @param  Gladiator\Models\Contest  $contest
      */
-    public function sendEmail($user, $contest)
+    public function sendEmail($user, $contest, $params)
     {
-        $message = Message::where(['contest_id' => $contest->id, 'type' => 'welcome'])->first();
+        $message = Message::where($params)->first();
 
         $resources = [
             'message' => $message,

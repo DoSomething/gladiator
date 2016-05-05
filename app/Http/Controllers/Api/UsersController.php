@@ -9,8 +9,6 @@ use Gladiator\Services\Registrar;
 use Gladiator\Services\Manager;
 use Gladiator\Http\Requests\UserRequest;
 use Gladiator\Http\Transformers\UserTransformer;
-use Gladiator\Events\QueueMessageRequest;
-use Gladiator\Models\Message;
 use Gladiator\Repositories\UserRepositoryContract;
 
 class UsersController extends ApiController
@@ -98,7 +96,12 @@ class UsersController extends ApiController
         $this->manager->appendCampaign($contest);
 
         // Fire off welcome Email
-        $this->manager->sendEmail($user, $contest);
+        $params = [
+            'type' => 'welcome',
+            'key' => 0,
+        ];
+
+        $this->manager->sendEmail($user, $contest, $params);
 
         // @TODO: maybe add more detail to response to indicate which room user was added to?
         return $this->item($user);
