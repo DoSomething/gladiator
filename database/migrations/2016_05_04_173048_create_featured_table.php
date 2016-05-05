@@ -12,7 +12,13 @@ class CreateFeaturedTable extends Migration
      */
     public function up()
     {
-        Schema::create('competitions_featured_reportbacks', function (Blueprint $table) {
+        Schema::table('messages', function (Blueprint $table) {
+            $table->dropColumn('reportback_id');
+            $table->dropColumn('reportback_item_id');
+            $table->dropColumn('shoutout');
+        });
+
+        Schema::create('featured_reportbacks', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('competition_id')->unsigned();
             $table->foreign('competition_id')->references('id')->on('competitions')->onDelete('cascade');
@@ -23,12 +29,6 @@ class CreateFeaturedTable extends Migration
             $table->longText('shoutout')->nullable();
             $table->timestamps();
         });
-
-        Schema::table('competitions', function (Blueprint $table) {
-            $table->dropColumn('reportback_id');
-            $table->dropColumn('reportback_item_id');
-            $table->dropColumn('shoutout');
-        });
     }
 
     /**
@@ -38,10 +38,10 @@ class CreateFeaturedTable extends Migration
      */
     public function down()
     {
-        Schema::drop('competitions_featured_reportbacks');
+        Schema::drop('featured_reportbacks');
 
-        Schema::table('competitions', function (Blueprint $table) {
-            $table->integer('reportback_id')->nullable()->after('leaderboard_msg_day');
+        Schema::table('messages', function (Blueprint $table) {
+            $table->integer('reportback_id')->nullable()->after('pro_tip');
             $table->integer('reportback_item_id')->nullable()->after('reportback_id');
             $table->longText('shoutout')->nullable()->after('reportback_item_id');
         });
