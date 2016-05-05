@@ -207,10 +207,11 @@ class Email
         }
 
         if (isset($this->competition->reportback_id) && isset($this->competition->reportback_item_id)) {
-            $featuredReportback = $this->manager->appendReportbackItemToMessage($this->competition->reportback_id, $this->competition->reportback_item_id);
+            $featuredReportback = FeaturedReportback::where('competition_id', '=', $this->competition->id)->where('message_id', '=', $this->message->id)->first();
+            $featuredReportback = $this->manager->appendReportbackItemToMessage($featuredReportback->reportback_id, $featuredReportback->reportback_item_id);
 
             return $featuredReportback = [
-                'shoutout' => $this->competition->shoutout,
+                'shoutout' => $featuredReportback->shoutout,
                 'image_url' => $featuredReportback->media->uri,
                 'caption' => $featuredReportback->caption,
             ];
