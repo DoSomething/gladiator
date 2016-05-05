@@ -178,8 +178,9 @@ class CompetitionsController extends Controller
         }
 
         $messages = Message::where('contest_id', '=', $competition->contest->id)->where('type', '!=', 'welcome')->get();
+        $featuredReportbacks = FeaturedReportback::where('competition_id', '=', $competition->id)->get()->keyBy('message_id');;
 
-        return view('messages.show', compact('messages', 'competition'));
+        return view('messages.show', compact('messages', 'competition', 'featuredReportbacks'));
     }
 
     /**
@@ -240,6 +241,5 @@ class CompetitionsController extends Controller
         $reportback->fill($request->all())->save();
 
         return redirect()->route('competitions.message', [$competition, $competition->contest])->with('status', 'Featured reportback has been updated!');
-        // return $this->message($competition)
     }
 }
