@@ -35,5 +35,4 @@ class FeaturedReportback extends Model
     {
         return $this->belongsTo(Message::class);
     }
-
 }

@@ -178,7 +178,7 @@ class CompetitionsController extends Controller
         }
 
         $messages = Message::where('contest_id', '=', $competition->contest->id)->where('type', '!=', 'welcome')->get();
-        $featuredReportbacks = FeaturedReportback::where('competition_id', '=', $competition->id)->get()->keyBy('message_id');;
+        $featuredReportbacks = FeaturedReportback::where('competition_id', '=', $competition->id)->get()->keyBy('message_id');
 
         return view('messages.show', compact('messages', 'competition', 'featuredReportbacks'));
     }
@@ -216,7 +216,8 @@ class CompetitionsController extends Controller
      * @param  \Gladiator\Models\Competition  $competition
      * @return \Illuminate\Http\Response
      */
-    public function featuredReportbackForm(Competition $competition, Message $message) {
+    public function featuredReportbackForm(Competition $competition, Message $message)
+    {
         $reportback = FeaturedReportback::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->first();
         return view('competitions.featured_reportback', compact('competition', 'message', 'reportback'));
     }
