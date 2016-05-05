@@ -114,14 +114,11 @@ class UsersController extends ApiController
     {
         $message = Message::where(['contest_id' => $contest->id, 'type' => 'welcome'])->first();
 
-        // Get the full northstar user object to send to.
-        $user = $this->repository->find($user->id);
-
         $resources = [
             'message' => $message,
             'contest' => $contest,
             //@TODO -- fix the Email class so that it doesn't require this property to be sent as an array.
-            'users' => [$user],
+            'users' => [$this->repository->find($user->id)],
             'test' => false,
         ];
 
