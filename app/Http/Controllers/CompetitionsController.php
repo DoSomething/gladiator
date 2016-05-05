@@ -221,7 +221,7 @@ class CompetitionsController extends Controller
     {
         $reportback = FeaturedReportback::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->first();
 
-        return view('competitions.featured_reportback', compact('competition', 'message', 'reportback'));
+        return view('competitions.featured_reportback.edit', compact('competition', 'message', 'reportback'));
     }
 
     /**
