@@ -2,7 +2,6 @@
 
 namespace Gladiator\Services;
 
-use Log;
 use Gladiator\Models\Message;
 use Gladiator\Models\Contest;
 use Gladiator\Repositories\CacheCampaignRepository;
@@ -510,8 +509,6 @@ class Manager
     public function sendEmail($user, $contest, $params)
     {
         if (! isset($params)) {
-            Log::error('Gladiator\Services\Manager -- No params passed');
-
             return null;
         }
 
@@ -526,12 +523,8 @@ class Manager
                 'test' => false,
             ];
 
-            Log::debug('Gladiator\Services\Manager -- Sending ' . $params['type'] . ' email', ['users' => $resources['users']]);
-
             event(new QueueMessageRequest($resources));
         } else {
-            Log::error('Gladiator\Services\Manager -- Message not found', ['params' => $params]);
-
             return null;
         }
     }
