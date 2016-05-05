@@ -495,4 +495,41 @@ class Manager
 
         return true;
     }
+
+    /**
+     * Fires off an event to send an email a user.
+     *
+     * @param  Gladiator\Models\User     $user
+     * @param  Gladiator\Models\Contest  $contest
+     * @param  array $params
+     * @return null|void
+     */
+    public function sendEmail($user, $contest, $params)
+    {
+        if (! isset($params)) {
+            Log::error('Gladiator\Services\Manager -- No params passed');
+
+            return null;
+        }
+
+        $message = Message::where($params)->first();
+
+        if ($message) {
+            $resources = [
+                'message' => $message,
+                'contest' => $contest,
+                //@TODO -- fix the Email class so that it doesn't require this property to be sent as an array.
+                'users' => [$this->repository->find($user->id)],
+                'test' => false,
+            ];
+
+            Log::debug('Gladiator\Services\Manager -- Sending ' . $params['type'] . ' email', ['users' => $resources['users']]);
+
+            event(new QueueMessageRequest($resources));
+        } else {
+            Log::error('Gladiator\Services\Manager -- Message not found', ['params' => $params]);
+
+            return null;
+        }
+    }
 }
