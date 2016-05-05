@@ -514,7 +514,7 @@ class Manager
             'test' => false,
         ];
 
-        Log::debug('Gladiator\Services\Manager -- Sending welcome email', ['user' => $user]);
+        Log::debug('Gladiator\Services\Manager -- Sending ' . $params['type'] . ' email', ['users' => $resources['users']]);
 
         event(new QueueMessageRequest($resources));
     }
