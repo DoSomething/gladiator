@@ -236,6 +236,7 @@ class CompetitionsController extends Controller
     {
         $reportback = FeaturedReportback::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->first();
 
+        // @TODO: Make a function for this, potentially move it out of this controller.
         if (! isset($reportback)) {
             $reportback = new FeaturedReportback;
             $reportback->competition_id = $competition->id;
