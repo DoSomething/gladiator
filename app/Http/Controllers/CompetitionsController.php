@@ -214,6 +214,7 @@ class CompetitionsController extends Controller
      * Get the featured reportback form.
      *
      * @param  \Gladiator\Models\Competition  $competition
+     * @param  \Gladiator\Models\Message  $message
      * @return \Illuminate\Http\Response
      */
     public function editFeatureReportback(Competition $competition, Message $message)
@@ -228,6 +229,7 @@ class CompetitionsController extends Controller
      *
      * @param  \Gladiator\Requests\FeaturedReportbackRequest  $request
      * @param  \Gladiator\Models\Competition  $competition
+     * @param  \Gladiator\Models\Message  $message
      * @return \Illuminate\Http\Response
      */
     public function updateFeaturedReportback(FeaturedReportbackRequest $request, Competition $competition, Message $message)

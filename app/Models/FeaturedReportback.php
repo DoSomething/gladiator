@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class FeaturedReportback extends Model
 {
-
     /**
      * Get the fillable attributes for the model.
      *
