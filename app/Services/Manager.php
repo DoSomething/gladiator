@@ -519,7 +519,7 @@ class Manager
                 'message' => $message,
                 'contest' => $contest,
                 //@TODO -- fix the Email class so that it doesn't require this property to be sent as an array.
-                'users' => [$this->repository->find($user->id)],
+                'users' => [$this->userRepository->find($user->id)],
                 'test' => false,
             ];
 
