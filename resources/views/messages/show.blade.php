@@ -28,7 +28,7 @@
                                 <td class="table__cell">{{ $message->subject or 'N/A'}}</td>
                                 <td class="table__cell">
                                     @if ($message->type === "leaderboard")
-                                        <a href="{{ route('competitions.featuredReportbackForm', ['competition' => $competition->id, 'message' => $message->id]) }}" class="button -secondary">{{ isset($featuredReportbacks[$message->id]) ? 'Edit' : 'Set' }}</a>
+                                        <a href="{{ route('competitions.editFeatureReportback', ['competition' => $competition->id, 'message' => $message->id]) }}" class="button -secondary">{{ isset($featuredReportbacks[$message->id]) ? 'Edit' : 'Set' }}</a>
                                     @endif
                                 </td>
                                 <td class="table__cell"><a href="{{ route('messages.send', ['message' => $message->id, 'contest_id' => $message->contest_id, 'competition_id' => $competition->id, 'test' => true, ]) }}" class="button -tertiary">Test</a></td>

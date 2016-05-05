@@ -216,7 +216,7 @@ class CompetitionsController extends Controller
      * @param  \Gladiator\Models\Competition  $competition
      * @return \Illuminate\Http\Response
      */
-    public function featuredReportbackForm(Competition $competition, Message $message)
+    public function editFeatureReportback(Competition $competition, Message $message)
     {
         $reportback = FeaturedReportback::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->first();
 
