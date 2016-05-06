@@ -535,7 +535,7 @@ class Manager
      * @param  string $query
      * @return collection|null
      */
-    public function search($query)
+    public function search($query, $page = null)
     {
         // Attempt to fetch all users.
         $users = $this->northstar->getAllUsers([
@@ -545,7 +545,7 @@ class Manager
                 'email' => $query,
                 'mobile' => $query,
             ],
-            // 'page' => $request->query('page', 1),
+            'page' => is_null($page) ? 1 : $page,
         ]);
 
         return $users ? collect($users) : null;
