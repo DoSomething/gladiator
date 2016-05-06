@@ -208,7 +208,7 @@ class Email
         }
 
         $featuredReportback = FeaturedReportback::where('competition_id', '=', $this->competition->id)->where('message_id', '=', $this->message->id)->first();
-        if (isset($featuredReportback->reportback_id) && isset($featuredReportback->reportback_item_id)) {
+        if (isset($featuredReportback) && isset($featuredReportback->reportback_id) && isset($featuredReportback->reportback_item_id)) {
             $reportback = $this->manager->appendReportbackItemToMessage($featuredReportback->reportback_id, $featuredReportback->reportback_item_id);
 
             return $featuredReportback = [
