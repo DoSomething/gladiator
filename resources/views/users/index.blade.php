@@ -11,6 +11,10 @@
             <div class="container__block">
                 <a class="button" href="{{ route('users.create') }}">Add User</a>
             </div>
+
+            <div class="container__block">
+                @include('search.search')
+            </div>
         </div>
     </div>
 
