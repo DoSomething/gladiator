@@ -1,5 +1,5 @@
 <div class="form-actions -inline">
-    <form method="GET" action="">
+    <form method="GET" action="{{ route('users.search')}}">
         {{ csrf_field() }}
 
         <li>

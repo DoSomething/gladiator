@@ -5,6 +5,7 @@ namespace Gladiator\Http\Controllers;
 use Gladiator\Models\User;
 use Gladiator\Services\Manager;
 use Gladiator\Services\Registrar;
+use Illuminate\Http\Request;
 use Gladiator\Http\Requests\UserRequest;
 use Gladiator\Repositories\UserRepositoryContract;
 
@@ -168,5 +169,10 @@ class UsersController extends Controller
         $contestants = $this->repository->getAllByRole();
 
         return view('users.contestants_index', compact('contestants'));
+    }
+
+    public function search(Request $request)
+    {
+        dd($request);
     }
 }
