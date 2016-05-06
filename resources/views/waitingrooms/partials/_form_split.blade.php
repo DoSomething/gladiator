@@ -6,17 +6,17 @@
     <div class="container__block">
         <div class="form-item -padded">
             <label class="field-label" for="competition_end_date">End date for these competitions:</label>
-            <input type="date" name="competition_end_date" id="competition_end_date" value='MM/DD/YYYY' class="text-field"></input>
+            <input type="date" name="competition_end_date" id="competition_end_date" value='MM/DD/YYYY' class="text-field" value="{{ old('competition_end_date', 'MM/DD/YYYY') }}"></input>
         </div>
 
         <div class="form-item -padded">
             <label class="field-label" for="id">Max users per competition:</label>
-            <input type="number" name="competition_max" id="competition_max" class="text-field" value="300" data-total="{{count($room->users)}}" }/>
+            <input type="number" name="competition_max" id="competition_max" class="text-field" value="300" data-total="{{count($room->users)}}" value="{{ old('competition_max') }}" />
         </div>
 
         <div class="form-item -padded">
             <label class="field-label" for="rules_url">Rules URL:</label>
-            <input type="text" name="rules_url" id="rules_url" class="text-field" placeholder="http://docs.google.com/the-rules" />
+            <input type="text" name="rules_url" id="rules_url" class="text-field" placeholder="http://docs.google.com/the-rules" value="{{ old('rules_url') }}" />
         </div>
 
         @include('competitions.partials._form_leaderboard_msg_day_field', [ 'default' => null ])
