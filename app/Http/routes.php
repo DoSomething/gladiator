@@ -58,6 +58,7 @@ Route::group(['middleware' => ['web']], function () {
         'as' => 'users.signup',
         'uses' => 'UsersController@showSignup',
     ]);
+    Route::get('search', ['as' => 'users.search', 'uses' => 'UsersController@search']);
 
     // Waiting rooms routes.
     Route::model('waitingrooms', 'Gladiator\Models\WaitingRoom');

@@ -5,6 +5,7 @@ namespace Gladiator\Http\Controllers;
 use Gladiator\Models\User;
 use Gladiator\Services\Manager;
 use Gladiator\Services\Registrar;
+use Illuminate\Http\Request;
 use Gladiator\Http\Requests\UserRequest;
 use Gladiator\Repositories\UserRepositoryContract;
 
@@ -168,5 +169,25 @@ class UsersController extends Controller
         $contestants = $this->repository->getAllByRole();
 
         return view('users.contestants_index', compact('contestants'));
+    }
+
+    /**
+     * Search for users.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $query = $request->query('query');
+
+        // Redirect empty queries to the user index.
+        if ($query === '') {
+            return redirect()->route('users.index');
+        }
+
+        // Attempt to fetch all users.
+        $users = $this->manager->search($query);
+
+        return $users ? redirect()->route('users.show', [$users->first()->id]) : redirect()->route('users.index')->with('status', 'No user found!');
     }
 }
