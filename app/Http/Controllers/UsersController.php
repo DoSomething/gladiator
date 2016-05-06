@@ -171,8 +171,29 @@ class UsersController extends Controller
         return view('users.contestants_index', compact('contestants'));
     }
 
+    /**
+     * Search for users.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function search(Request $request)
     {
-        dd($request);
+        $query = $request->query('query');
+
+        // Redirect empty queries to the user index.
+        if ($query === '') {
+            return redirect()->route('users.index');
+        }
+
+        // Attempt to fetch all users.
+        $users = $this->manager->search($query);
+
+        // If only one user is matched, let's just redirect there.
+        if ($users->count() === 1) {
+            return redirect()->route('users.show', [$users->first()->id]);
+        }
+
+        dd($users);
+        // return view('users.search')->with(compact('users', 'query'));
     }
 }

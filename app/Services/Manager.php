@@ -528,4 +528,26 @@ class Manager
             return null;
         }
     }
+
+    /**
+     * Search for users in Northstar.
+     *
+     * @param  string $query
+     * @return collection|null
+     */
+    public function search($query)
+    {
+        // Attempt to fetch all users.
+        $users = $this->northstar->getAllUsers([
+            'search' => [
+                '_id' => $query,
+                'drupal_id' => $query,
+                'email' => $query,
+                'mobile' => $query,
+            ],
+            // 'page' => $request->query('page', 1),
+        ]);
+
+        return $users ? collect($users) : null;
+    }
 }

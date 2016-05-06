@@ -3,7 +3,7 @@
         {{ csrf_field() }}
 
         <li>
-            <input class="text-field -search" type="text" name="search" placeholder="Search"  />
+            <input class="text-field -search" type="text" name="query" placeholder="Search"  />
         </li>
 
         <li>
@@ -11,6 +11,3 @@
         </li>
     </form>
 </div>
-
-
-{{-- {{ route('contests.update', $contest->id) }} --}}
