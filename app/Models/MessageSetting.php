@@ -11,7 +11,7 @@ class MessageSetting extends Model
      *
      * @return array
      */
-    protected $fillable = ['type', 'key', 'label', 'subject', 'body', 'pro_tip', 'signoff', 'shoutout'];
+    protected $fillable = ['type', 'key', 'label', 'subject', 'body', 'pro_tip', 'signoff'];
 
     /**
      * The table associated with the model.

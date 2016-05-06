@@ -73,9 +73,6 @@ class MessageRepository
             unset($message['created_at']);
             unset($message['updated_at']);
 
-            $message['reportback_id'] = null;
-            $message['reportback_item_id'] = null;
-
             $filteredMessages[] = $message;
         }
 

@@ -5,9 +5,11 @@ namespace Gladiator\Http\Controllers;
 use Gladiator\Models\User;
 use Gladiator\Models\Contest;
 use Gladiator\Models\Message;
+use Gladiator\Models\FeaturedReportback;
 use Gladiator\Services\Manager;
 use Gladiator\Models\Competition;
 use Gladiator\Http\Requests\CompetitionRequest;
+use Gladiator\Http\Requests\FeaturedReportbackRequest;
 use Gladiator\Repositories\UserRepositoryContract;
 use Illuminate\Http\Request;
 
@@ -176,8 +178,9 @@ class CompetitionsController extends Controller
         }
 
         $messages = Message::where('contest_id', '=', $competition->contest->id)->where('type', '!=', 'welcome')->get();
+        $featuredReportbacks = FeaturedReportback::where('competition_id', '=', $competition->id)->get()->keyBy('message_id');
 
-        return view('messages.show', compact('messages', 'competition'));
+        return view('messages.show', compact('messages', 'competition', 'featuredReportbacks'));
     }
 
     /**
@@ -205,5 +208,44 @@ class CompetitionsController extends Controller
         $pending = $competition->activity['inactive'];
 
         return view('competitions.leaderboard', compact('competition', 'leaderboard', 'pending', 'flagged'));
+    }
+
+    /**
+     * Get the featured reportback form.
+     *
+     * @param  \Gladiator\Models\Competition  $competition
+     * @param  \Gladiator\Models\Message  $message
+     * @return \Illuminate\Http\Response
+     */
+    public function editFeatureReportback(Competition $competition, Message $message)
+    {
+        $reportback = FeaturedReportback::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->first();
+
+        return view('competitions.featured_reportback.edit', compact('competition', 'message', 'reportback'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Gladiator\Requests\FeaturedReportbackRequest  $request
+     * @param  \Gladiator\Models\Competition  $competition
+     * @param  \Gladiator\Models\Message  $message
+     * @return \Illuminate\Http\Response
+     */
+    public function updateFeaturedReportback(FeaturedReportbackRequest $request, Competition $competition, Message $message)
+    {
+        $reportback = FeaturedReportback::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->first();
+
+        // @TODO: Make a function for this, potentially move it out of this controller.
+        if (! isset($reportback)) {
+            $reportback = new FeaturedReportback;
+            $reportback->competition_id = $competition->id;
+            $reportback->message_id = $message->id;
+            $reportback->save();
+        }
+
+        $reportback->fill($request->all())->save();
+
+        return redirect()->route('competitions.message', [$competition, $competition->contest])->with('status', 'Featured reportback has been updated!');
     }
 }

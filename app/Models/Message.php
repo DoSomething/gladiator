@@ -11,7 +11,7 @@ class Message extends Model
      *
      * @return array
      */
-    protected $fillable = ['contest_id', 'type', 'key', 'label', 'subject', 'body', 'pro_tip', 'signoff', 'reportback_id', 'reportback_item_id', 'shoutout'];
+    protected $fillable = ['contest_id', 'type', 'key', 'label', 'subject', 'body', 'pro_tip', 'signoff'];
 
     /**
      * Excluded attributes that are not customizeable.
@@ -53,26 +53,6 @@ class Message extends Model
     public function setProTipAttribute($value)
     {
         $this->attributes['pro_tip'] = ! empty($value) ? $value : null;
-    }
-
-    /**
-     * Set the reportback_id attribute for the message.
-     *
-     * @param string  $value
-     */
-    public function setReportbackIdAttribute($value)
-    {
-        $this->attributes['reportback_id'] = ! empty($value) ? $value : null;
-    }
-
-    /**
-     * Set the reportback_item_id attribute for the message.
-     *
-     * @param string  $value
-     */
-    public function setReportbackItemIdAttribute($value)
-    {
-        $this->attributes['reportback_item_id'] = ! empty($value) ? $value : null;
     }
 
     /**

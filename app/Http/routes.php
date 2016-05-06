@@ -29,6 +29,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('competition/{competition}/users/{user}', 'CompetitionsController@removeUser')->name('competitions.users.destroy');
     Route::get('competitions/{competitions}/messages/{contest}', 'CompetitionsController@message')->name('competitions.message');
     Route::get('competitions/{competitions}/leaderboard', 'CompetitionsController@leaderboard')->name('competitions.leaderboard');
+    Route::get('competitions/{competition}/featured/{message}', 'CompetitionsController@editFeatureReportback')->name('competitions.editFeatureReportback');
+    Route::patch('competitions/{competition}/featured/{message}', 'CompetitionsController@updateFeaturedReportback')->name('competitions.updateFeaturedReportback');
 
     // Contests
     Route::model('contests', 'Gladiator\Models\Contest');
