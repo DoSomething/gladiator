@@ -533,6 +533,7 @@ class Manager
      * Search for users in Northstar.
      *
      * @param  string $query
+     * @param  int $page
      * @return collection|null
      */
     public function search($query, $page = null)
