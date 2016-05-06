@@ -22,7 +22,7 @@ class MessageSettingTableSeeder extends Seeder
             $setting->subject = $message['subject'];
             $setting->body = $message['body'];
             $setting->pro_tip = $message['pro_tip'];
-            $setting->signoff = $messagse['signoff'];
+            $setting->signoff = $message['signoff'];
             $setting->save();
         }
     }
