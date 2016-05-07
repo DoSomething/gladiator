@@ -35,6 +35,7 @@ class Correspondence
             'subject' => 'Is everything ok, :first_name:?',
             'body' => "I noticed you haven’t upload a picture of your :reportback_noun: :reportback_verb: to :campaign_title: yet. Just wanted to see if everything is ok!\n\rIf you are able, you still have until :leaderboard_msg_day-1: to be included in the next update! Take a picture and upload your photo [here](:prove_it_link:).\n\rLet me know if I can help you, :first_name:.\n\r:sender_name:",
             'pro_tip' => null,
+            'signoff' => null,
         ],
         [
             'type' => 'reminder',
