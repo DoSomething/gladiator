@@ -60,7 +60,7 @@ function format_date_form_field($model, $field, $default = 'MM/DD/YYYY')
     $oldDate = old($field);
 
     if ($oldDate) {
-        return (new Carbon($oldDate))->format('Y-m-d');
+        return $oldDate;
     }
 
     $attribute = $model->getAttribute($field);
