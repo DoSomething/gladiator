@@ -11,7 +11,7 @@
 
         <div class="form-item -padded">
             <label class="field-label" for="id">Max users per competition:</label>
-            <input type="number" name="competition_max" id="competition_max" class="text-field" data-total="{{count($room->users)}}" placeholder=300 value="{{ old('competition_max') }}" />
+            <input type="number" name="competition_max" id="competition_max" class="text-field" data-total="{{count($room->users)}}" value="{{ old('competition_max', 300) }}" />
         </div>
 
         <div class="form-item -padded">
