@@ -10,11 +10,11 @@
     <div class="container">
         <div class="wrapper">
             <div class="container__block -narrow">
-                {!! Form::model($room, ['method' => 'PATCH','route' => ['waitingrooms.update', $room->id]]) !!}
+                <form method="POST" action="{{ route('waitingrooms.update', $room->id) }}">
+                    {{ method_field('PATCH') }}
 
                     @include('waitingrooms.partials._form_waitingrooms')
-
-                {!! Form::close() !!}
+                </form>
             </div>
         </div>
     </div>
