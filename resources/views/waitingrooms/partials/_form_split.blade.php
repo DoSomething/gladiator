@@ -6,7 +6,7 @@
     <div class="container__block">
         <div class="form-item -padded">
             <label class="field-label" for="competition_end_date">End date for these competitions:</label>
-            <input type="date" name="competition_end_date" id="competition_end_date" value='MM/DD/YYYY' class="text-field" value="{{ old('competition_end_date', 'MM/DD/YYYY') }}"></input>
+            <input type="date" name="competition_end_date" id="competition_end_date" class="text-field" value="{{ format_date_form_field($room, 'competition_end_date') }}"></input>
         </div>
 
         <div class="form-item -padded">

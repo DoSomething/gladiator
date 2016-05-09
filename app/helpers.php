@@ -55,12 +55,12 @@ function correspondence($message = null, $field = null)
  * @param  string  $defaut
  * @return string
  */
-function format_date_form_field($model, $field, $defaut = 'MM/DD/YYYY')
+function format_date_form_field($model, $field, $default = 'MM/DD/YYYY')
 {
     $oldDate = old($field);
 
     if ($oldDate) {
-        return $oldDate;
+        return (new Carbon($oldDate))->format('Y-m-d');
     }
 
     $attribute = $model->getAttribute($field);
