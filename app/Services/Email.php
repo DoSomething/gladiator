@@ -211,11 +211,13 @@ class Email
         if (isset($featuredReportback) && isset($featuredReportback->reportback_id) && isset($featuredReportback->reportback_item_id)) {
             $reportback = $this->manager->appendReportbackItemToMessage($featuredReportback->reportback_id, $featuredReportback->reportback_item_id);
 
-            return $featuredReportback = [
-                'shoutout' => $featuredReportback->shoutout,
-                'image_url' => $reportback->media->uri,
-                'caption' => $reportback->caption,
-            ];
+            if ($reportback) {
+                return $featuredReportback = [
+                    'shoutout' => $featuredReportback->shoutout,
+                    'image_url' => $reportback->media->uri,
+                    'caption' => $reportback->caption,
+                ];
+            }
         }
 
         return null;
