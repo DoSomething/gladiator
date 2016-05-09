@@ -1,20 +1,22 @@
+{{ csrf_field() }}
+
 @include('layouts.errors')
 
 <div class="form-item -padded">
-    {{ Form::label('contest_id', 'Contest ID:', ['class' => 'field-label']) }}
-    {{ Form::text('contest_id', NULL, ['class' => 'text-field', 'readonly' => 'readonly']) }}
+    <label for="contest_id" class="field-label">Contest ID:</label>
+    <input type="number" name="contest_id" id="contest_id" class="text-field" readonly value="{{ $room->contest_id or old('contest_id') }}"></input>
 </div>
 
 <div class="form-item -padded">
-    {!! Form::label('signup_start_date', 'Signup Start Date: ', ['class' => 'field-label']) !!}
-    {!! Form::date('signup_start_date', (isset($room->signup_start_date)) ? $room->signup_start_date : NULL, ['class' => 'text-field']) !!}
+    <label for="signup_start_date" class="field-label">Signup Start Date:</label>
+    <input type="date" name="signup_start_date" id="signup_start_date" class="text-field" value="{{ isset($room) ? format_date_form_field($room, 'signup_start_date') : '' }}" />
 </div>
 
 <div class="form-item -padded">
-    {!! Form::label('signup_end_date', 'Signup End Date: ', ['class' => 'field-label']) !!}
-    {!! Form::date('signup_end_date', (isset($room->signup_end_date)) ? $room->signup_end_date : NULL, ['class' => 'text-field']) !!}
+    <label for="signup_end_date" class="field-label">Signup End Date:</label>
+    <input type="date" name="signup_end_date" id="signup_end_date" class="text-field" value="{{ isset($room) ? format_date_form_field($room, 'signup_end_date') : '' }}" />
 </div>
 
 <div class="form-item -padded">
-    {{ Form::submit('Submit', ['class' => 'button']) }}
+    <input type="submit" value="Submit" class="button" />
 </div>
