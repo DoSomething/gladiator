@@ -52,7 +52,7 @@ function correspondence($message = null, $field = null)
  *
  * @param  \Illuminate\Database\Eloquent\Model  $model
  * @param  string  $field
- * @param  string  $defaut
+ * @param  string  $default
  * @return string
  */
 function format_date_form_field($model, $field, $default = 'MM/DD/YYYY')
