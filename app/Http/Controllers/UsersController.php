@@ -190,7 +190,7 @@ class UsersController extends Controller
 
         if (! $users) {
             return redirect()->route('users.index')->with('status', 'No user found!');
-        } else if ($users->count() === 1) {
+        } elseif ($users->count() === 1) {
             return redirect()->route('users.show', [$users->first()->id]);
         }
 
