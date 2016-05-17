@@ -188,6 +188,12 @@ class UsersController extends Controller
         // Attempt to fetch all users.
         $users = $this->manager->search($query);
 
-        return $users ? redirect()->route('users.show', [$users->first()->id]) : redirect()->route('users.index')->with('status', 'No user found!');
+        if (! $users) {
+            return redirect()->route('users.index')->with('status', 'No user found!');
+        } else if ($users->count() === 1) {
+            return redirect()->route('users.show', [$users->first()->id]);
+        }
+
+        return view('users.search')->with(compact('users', 'query'));
     }
 }
