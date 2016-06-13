@@ -19,7 +19,6 @@ class CreateCompetitionsTable extends Migration
             $table->dateTime('competition_start_date');
             $table->dateTime('competition_end_date');
             $table->timestamps();
-
         });
     }
 
