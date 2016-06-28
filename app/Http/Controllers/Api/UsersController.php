@@ -93,12 +93,13 @@ class UsersController extends ApiController
         }
 
         $contest->waitingRoom->users()->attach($user->id);
-        $this->manager->appendCampaign($contest);
+        $contest = $this->manager->appendCampaign($contest);
 
         // Fire off welcome Email
         $params = [
             'type' => 'welcome',
             'key' => 0,
+            'contest_id' => $contest->id,
         ];
 
         $this->manager->sendEmail($user, $contest, $params);

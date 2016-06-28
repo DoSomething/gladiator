@@ -92,7 +92,9 @@ class MessagesController extends Controller
     {
         // Get competition with activity.
         $competitionId = request('competition_id');
-        // $competition = null;
+
+        $contest = Contest::find(request('contest_id'));
+        $contest = $this->manager->appendCampaign($contest);
 
         if ($competitionId) {
             $competition = Competition::find($competitionId);
@@ -127,6 +129,7 @@ class MessagesController extends Controller
         $resources = [
             'message' => $message,
             'competition' => isset($competition) ? $competition : null,
+            'contest' => $contest,
             'users' => $users,
             'test' => request('test'),
         ];

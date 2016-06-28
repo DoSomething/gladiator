@@ -45,8 +45,8 @@ class MessagesSettingsController extends Controller
             foreach ($items as $key => $data) {
                 $data['type'] = $type;
                 $data['key'] = $key;
-
                 $message = MessageSetting::where('type', $type)->where('key', $key)->first();
+
 
                 $attributes = $message->getFillable();
 
