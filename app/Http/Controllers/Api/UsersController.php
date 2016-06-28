@@ -99,6 +99,7 @@ class UsersController extends ApiController
         $params = [
             'type' => 'welcome',
             'key' => 0,
+            'contest_id' => $contest->id,
         ];
 
         $this->manager->sendEmail($user, $contest, $params);
