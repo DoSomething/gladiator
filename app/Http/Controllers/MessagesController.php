@@ -94,7 +94,7 @@ class MessagesController extends Controller
         $competitionId = request('competition_id');
 
         $contest = Contest::find(request('contest_id'));
-        $this->manager->appendCampaign($contest);
+        $contest = $this->manager->appendCampaign($contest);
 
         if ($competitionId) {
             $competition = Competition::find($competitionId);
