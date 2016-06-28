@@ -1,4 +1,4 @@
-# Gladiator [![StyleCI](https://styleci.io/repos/51176505/shield)](https://styleci.io/repos/51176505)
+# Gladiator 🛡 [![StyleCI](https://styleci.io/repos/51176505/shield)](https://styleci.io/repos/51176505)
 
 Welcome to **Gladiator**, the admin tool for DoSomething Competitions!
 
