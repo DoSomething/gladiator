@@ -104,6 +104,7 @@ class Email
 
         foreach ($parsableProperties as $prop) {
             $processedMessage[$prop] = $this->replaceTokens($tokens, $message->$prop);
+            $processedMessage[$prop] = $this->parseImageTags($processedMessage[$prop]);
             $processedMessage[$prop] = $this->parseLinks($processedMessage[$prop]);
             $processedMessage[$prop] = nl2br($processedMessage[$prop]);
         }
@@ -131,6 +132,16 @@ class Email
     protected function parseLinks($string)
     {
         return preg_replace('/\[([^\[]+)\]\(([^\)]+)\)/', '<a href=\'\2\'>\1</a>', $string);
+    }
+
+    /**
+     * Handles regex replacement that supports a markdown syntax for image tags.
+     *
+     * @param  string $string
+     */
+    protected function parseImageTags($string)
+    {
+        return preg_replace('/!\[([^\[]+)\]\(([^\)]+)\)/', '<img src=\'\2\' alt=\'\1\'>', $string);
     }
 
     /**
