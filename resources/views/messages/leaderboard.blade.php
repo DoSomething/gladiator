@@ -5,6 +5,7 @@
         'messageKey' => $content['key'],
         'featuredReportback' => $content['featuredReportback'],
         'reportbackInfo' => $content['reportbackInfo'],
+        'showImages' => $content['show_images'],
     ])
 @endif
 
@@ -13,6 +14,7 @@
         'messageKey' => $content['key'],
         'topThree' => $content['topThree'],
         'reportbackInfo' => $content['reportbackInfo'],
+        'showImages' => $content['show_images'],
     ])
 @endif
 

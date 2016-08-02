@@ -26,6 +26,8 @@
     <p>{{ $shoutout or '' }}</p>
 @endif
 
-<img src="{{ $image }}" width="200" />
+@if ($showImages)
+    <img src="{{ $image }}" width="200" />
+@endif
 
 <p>"<em>{{ $caption }}</em>"</p>

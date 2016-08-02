@@ -51,6 +51,7 @@ class Email
     public function __construct($resources)
     {
         $this->message = $resources['message'];
+
         $this->competition = isset($resources['competition']) ? $resources['competition'] : null;
 
         // If a contest is passed in the resources used that, otherwise grab it from the competition.
@@ -101,6 +102,7 @@ class Email
         $parsableProperties = ['subject', 'body', 'signoff', 'pro_tip', 'shoutout'];
         $processedMessage['type'] = $message->type;
         $processedMessage['key'] = $message->key;
+        $processedMessage['show_images'] = $message->show_images;
 
         foreach ($parsableProperties as $prop) {
             $processedMessage[$prop] = $this->replaceTokens($tokens, $message->$prop);
