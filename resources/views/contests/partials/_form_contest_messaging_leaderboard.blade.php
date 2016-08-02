@@ -10,7 +10,7 @@
 
 <div class="form-item -padded">
     <label class="option -checkbox">
-        <input checked type="checkbox" value="1" name="{{ correspondence()->getAttribute($message, 'show_images') }}" id="{{ correspondence()->getAttribute($message, 'show_images') }}">
+        <input @if (correspondence()->get($message, 'show_images')) checked @endif type="checkbox" value="1" name="{{ correspondence()->getAttribute($message, 'show_images') }}" id="{{ correspondence()->getAttribute($message, 'show_images') }}">
         <span class="option__indicator"></span>
         <span>Show images</span>
     </label>
