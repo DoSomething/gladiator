@@ -81,6 +81,7 @@ class Correspondence
             'body' => "Hello Competitors,\n\rHere is your first official :campaign_title: competition update! The competition ends on :end_date:. Finish in the top 3 in :reportback_noun: :reportback_verb: and win:\n\r- 1st place: ­ $100 amex card\r\n- 2nd place: ­ $50 amex card\r\n- 3rd place: ­ $25 amex card\n\rTwo more weeks to increase your number of :reportback_noun: :reportback_verb: to move up the leaderboard! [Upload your photos here](:prove_it_link:).\n\r:pro_tip:\n\rNext :reportback_noun: photo update will be due :leaderboard_msg_day-1: before 10pm est.\n\rHere is the leaderboard! Shoutouts to the top 3 below:",
             'pro_tip' => null,
             'signoff' => null,
+            'show_images' => true,
         ],
         [
             'type' => 'leaderboard',
@@ -90,6 +91,7 @@ class Correspondence
             'body' => "Hello, competitors-- \n\r1 more week! This :campaign_title: competition ends on :end_date:, so it’s time to make your mark.\n\r:pro_tip:\n\rA final photo with your :reportback_noun: photo update will be due :leaderboard_msg_day-1: before 10pm EST. [Upload yours here](:prove_it_link:).\n\rHere is the leaderboard! Shoutouts to the top 3 below:\n\r1 more week to make your mark and climb up the leaderboard!",
             'pro_tip' => null,
             'signoff' => '1 more week to make your mark and climb up the leaderboard!',
+            'show_images' => true,
         ],
         [
             'type' => 'leaderboard',
@@ -99,6 +101,7 @@ class Correspondence
             'body' => "This is it, the final leaderboard and results. Thank you for spending these last 3 weeks, working hard not only to climb the leaderboard, but also to affect lives around you and make the world a better place.\n\rHere is your final leaderboard. Pics, prizes and honorable mentions below:\n\r",
             'pro_tip' => null,
             'signoff' => null,
+            'show_images' => true,
         ],
     ];
 

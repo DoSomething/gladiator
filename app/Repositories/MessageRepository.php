@@ -120,6 +120,12 @@ class MessageRepository
                 $data['type'] = $type;
                 $data['key'] = $key;
 
+                if ($data['type'] === 'leaderboard') {
+                    if (!array_key_exists('show_images', $data)) {
+                        $data['show_images'] = 0;
+                    }
+                }
+
                 $this->update($contest, $data);
             }
         }

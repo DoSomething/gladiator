@@ -11,7 +11,7 @@ class Message extends Model
      *
      * @return array
      */
-    protected $fillable = ['contest_id', 'type', 'key', 'label', 'subject', 'body', 'pro_tip', 'signoff'];
+    protected $fillable = ['contest_id', 'type', 'key', 'label', 'subject', 'body', 'pro_tip', 'signoff', 'show_images'];
 
     /**
      * Excluded attributes that are not customizeable.
