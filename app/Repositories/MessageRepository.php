@@ -120,6 +120,16 @@ class MessageRepository
                 $data['type'] = $type;
                 $data['key'] = $key;
 
+                // @TODO - When the 'show_images' checkbox is not checked,
+                // The `show_images` property is not sent in the request so we
+                // manually set it here. Let's figure out a better way to do this,
+                // maybe in a MessageRequest class?
+                if ($data['type'] === 'leaderboard') {
+                    if (! array_key_exists('show_images', $data)) {
+                        $data['show_images'] = 0;
+                    }
+                }
+
                 $this->update($contest, $data);
             }
         }
