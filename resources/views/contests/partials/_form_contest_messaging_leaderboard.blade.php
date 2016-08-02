@@ -7,3 +7,11 @@
     <label class="field-label" for="{{ correspondence()->getAttribute($message, 'signoff') }}">Signoff:</label>
     <textarea class="text-field" name="{{ correspondence()->getAttribute($message, 'signoff') }}" id="{{ correspondence()->getAttribute($message, 'signoff') }}" rows="3">{{ correspondence($message, 'signoff') }}</textarea>
 </div>
+
+<div class="form-item -padded">
+    <label class="option -checkbox">
+        <input checked type="checkbox" id="show-image-toggle">
+        <span class="option__indicator"></span>
+        <span>Show images</span>
+    </label>
+</div>
