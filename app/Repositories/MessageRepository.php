@@ -121,7 +121,7 @@ class MessageRepository
                 $data['key'] = $key;
 
                 if ($data['type'] === 'leaderboard') {
-                    if (!array_key_exists('show_images', $data)) {
+                    if (! array_key_exists('show_images', $data)) {
                         $data['show_images'] = 0;
                     }
                 }
