@@ -160,6 +160,9 @@ return [
         Gladiator\Providers\RouteServiceProvider::class,
 
         Collective\Html\HtmlServiceProvider::class,
+        Spatie\Backup\BackupServiceProvider::class,
+        Maknz\Slack\Laravel\ServiceProvider::class,
+        Aws\Laravel\AwsServiceProvider::class,
 
     ],
 
@@ -179,6 +182,7 @@ return [
         'App'       => Illuminate\Support\Facades\App::class,
         'Artisan'   => Illuminate\Support\Facades\Artisan::class,
         'Auth'      => Illuminate\Support\Facades\Auth::class,
+        'AWS'       => Aws\Laravel\AwsFacade::class,
         'Blade'     => Illuminate\Support\Facades\Blade::class,
         'Cache'     => Illuminate\Support\Facades\Cache::class,
         'Config'    => Illuminate\Support\Facades\Config::class,
@@ -202,6 +206,7 @@ return [
         'Route'     => Illuminate\Support\Facades\Route::class,
         'Schema'    => Illuminate\Support\Facades\Schema::class,
         'Session'   => Illuminate\Support\Facades\Session::class,
+        'Slack'     => Maknz\Slack\Laravel\Facade::class,
         'Storage'   => Illuminate\Support\Facades\Storage::class,
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,

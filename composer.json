@@ -12,7 +12,11 @@
         "league/fractal": "^0.13.0",
         "predis/predis": "^1.0",
         "league/csv": "^8.0",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.5",
+        "spatie/laravel-backup": "^3.9",
+        "maknz/slack-laravel": "^1.0",
+        "league/flysystem-aws-s3-v3": "~1.0",
+        "aws/aws-sdk-php-laravel": "^3.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
