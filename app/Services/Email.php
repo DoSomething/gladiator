@@ -84,7 +84,8 @@ class Email
             ':reportback_noun:'       => strtolower($this->contest->campaign->reportback_info->noun),
             ':reportback_verb:'       => strtolower($this->contest->campaign->reportback_info->verb),
             ':sender_name:'           => $this->contest->sender_name,
-            ':rules_url:'            => ! is_null($this->competition) ? $this->competition->rules_url : '',
+            ':rules_url:'             => ! is_null($this->competition) ? $this->competition->rules_url : '',
+            ':share_link:'            => url(config('services.phoenix.uri') .'/us/node/' . $this->contest->campaign_id . '?source=user/' . $user->id),
         ];
 
         return $tokens;
