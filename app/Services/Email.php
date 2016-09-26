@@ -76,7 +76,7 @@ class Email
         $tokens = [
             ':campaign_title:'        => $this->contest->campaign->title,
             ':end_date:'              => ! is_null($this->competition) ? $this->competition->competition_end_date->format('F d, Y') : '',
-            ':first_name:'            => $user->first_name,
+            ':first_name:'            => ucwords($user->first_name),
             ':leaderboard_msg_day:'   => ! is_null($this->competition) ? get_day_of_week($this->competition->leaderboard_msg_day) : '',
             ':leaderboard_msg_day-1:' => ! is_null($this->competition) ? get_day_of_week($this->competition->leaderboard_msg_day - 1) : '',
             ':pro_tip:'               => $this->message->pro_tip,
