@@ -93,16 +93,24 @@ function format_timestamp_for_display($timestamp)
 function generate_model_flash_session_key($model, $options = [])
 {
     if ($model instanceof \Gladiator\Models\Competition) {
-        $key = 'contest_' . $model->contest_id . '-' . 'competition_' . $model->id;
+      $key = 'contest_' . $model->contest_id . '-' . 'competition_' . $model->id;
 
-        if (isset($options['includeActivity']) && $options['includeActivity']) {
-            $key .= '-activity_included';
-        }
+      if (isset($options['includeActivity']) && $options['includeActivity']) {
+          $key .= '-activity_included';
+      }
+      return $key;
 
-        return $key;
+    } elseif ($model instanceof \Gladiator\Models\Contest){
+      $key = 'contest_' . $model->id;
+
+      if (isset($options['includeActivity']) && $options['includeActivity']) {
+          $key .= '-activity_included';
+      }
+      return $key;
+
+    } else {
+      return '';
     }
-
-    return '';
 }
 
 /**

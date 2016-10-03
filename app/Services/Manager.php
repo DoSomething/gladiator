@@ -279,34 +279,71 @@ class Manager
     }
 
     /**
+     * Get the full contest overview.
+     *
+     * @param  \Gladiator\Models\Contest  $contest
+     * @return \Gladiator\Models\Contest
+     */
+    public function getContestOverview(Contest $contest)
+    {
+        foreach($contest->competitions as $competition) {
+
+          $key = generate_model_flash_session_key($competition, ['includeActivity' => true]);
+          if (session()->has($key)) {
+              $competition = session($key);
+              session()->reflash();
+          } else {
+              $competition = $this->getCompetitionOverview($competition, true);
+          }
+          $competition->statistics = $this->getStatisticsForCompetition($competition);
+        }
+
+        $contest->statistics = $this->getStatisticsForContest($contest);
+
+        $key = generate_model_flash_session_key($contest);
+        session()->flash($key, $contest);
+
+        return $contest;
+    }
+
+    /**
      * Get statistics for the specified contest by aggregating its competitions statistics.
      *
      * @param  \Gladiator\Models\Contest  $contest
      * @return object
      */
-    public function getStatisticsForContest(Contest $contest, $competition_statistics)
+    public function getStatisticsForContest(Contest $contest)
     {
-        if (! $contest) {
-             return null;
-        }
-
         $statistics = [];
-        $competitions = $contest->competitions;
 
-        $statistics['totalContestContestants'] = 0;
-        $statistics['totalContestReportbacks'] = 0;
-        $statistics['contestImpactQuantity'] = 0;
+        if (! $contest) {
+          return null;
 
-        foreach ($competition_statistics as $competition) {
-            //$competition_statistics = $this->getStatisticsForCompetition($competition);
-            $statistics['totalContestContestants'] += $competition->totalContestants;
-            $statistics['totalContestReportbacks']+= $competition->totalReportbacks;
-            $statistics['contestImpactQuantity'] += $competition->impactQuantity;
+          // Zero competitions in the contest
+        } elseif ($contest->competitions->count() == 0) {
+          $statistics['totalContestContestants'] = 0;
+          $statistics['totalContestReportbacks'] = 0;
+          $statistics['contestImpactQuantity'] = 0;
+          $statistics['contestReportbackRate'] = 0;
+
+          return (object) $statistics;
+
+        } else {
+
+          $statistics['totalContestContestants'] = 0;
+          $statistics['totalContestReportbacks'] = 0;
+          $statistics['contestImpactQuantity'] = 0;
+
+          foreach ($contest->competitions as $competition) {
+              $statistics['totalContestContestants'] += $competition->statistics->totalContestants;
+              $statistics['totalContestReportbacks']+= $competition->statistics->totalReportbacks;
+              $statistics['contestImpactQuantity'] += $competition->statistics->impactQuantity;
+          }
+
+          $statistics['contestReportbackRate'] = intval(round(($statistics['totalContestReportbacks'] / $statistics['totalContestContestants']) * 100));
+
+          return (object) $statistics;
         }
-
-        $statistics['contestReportbackRate'] = intval(round(($statistics['totalContestReportbacks'] / $statistics['totalContestContestants']) * 100));
-
-        return (object) $statistics;
     }
 
     /**

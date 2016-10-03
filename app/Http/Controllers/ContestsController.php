@@ -85,26 +85,18 @@ class ContestsController extends Controller
     {
         $contest = $this->manager->collectContestInfo($contest->id);
         $contest = $this->manager->appendCampaign($contest);
-        $competition_statistics = [];
 
-        foreach($contest->competitions as $competition) {
-          $key = generate_model_flash_session_key($competition, ['includeActivity' => true]);
-
-          if (session()->has($key)) {
-              $competition = session($key);
-
-              session()->reflash();
-          } else {
-              $competition = $this->manager->getCompetitionOverview($competition, true);
-          }
-
-          array_push($competition_statistics, $this->manager->getStatisticsForCompetition($competition));
+        $key = generate_model_flash_session_key($contest);
+        if (session()->has($key)) {
+            $contest = session($key);
+            session()->reflash();
+        } else {
+            $contest = $this->manager->getContestOverview($contest);
         }
 
-        $statistics = $this->manager->getStatisticsForContest($contest, $competition_statistics);
         $welcomeEmail = Message::where('contest_id', '=', $contest->id)->where('type', '=', 'welcome')->firstOrFail();
 
-        return view('contests.show', compact('contest', 'welcomeEmail','statistics'));
+        return view('contests.show', compact('contest', 'welcomeEmail'));
     }
 
     /**

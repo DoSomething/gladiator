@@ -74,10 +74,10 @@
             <div class="container__block">
                 <h2 class="heading">Statistics</h2>
                 <ul class="list">
-                    <li>Total number of contestants in contest: <strong>{{ $statistics->totalContestContestants }}</strong></li>
-                    <li>Number of contestants who have reported back: <strong>{{ $statistics->totalContestReportbacks }}</strong></li>
-                    <li>Reportback rate: <strong>{{ $statistics->contestReportbackRate . '%' }}</strong></li>
-                    <li>Approved reportbacks impact quantity: <strong>{{ number_format($statistics->contestImpactQuantity) . ' ' . $contest->campaign->reportback_info->noun . ' ' . $contest->campaign->reportback_info->verb }} </strong></li>
+                    <li>Total number of contestants in contest: <strong>{{ $contest->statistics->totalContestContestants }}</strong></li>
+                    <li>Number of contestants who have reported back: <strong>{{ $contest->statistics->totalContestReportbacks }}</strong></li>
+                    <li>Reportback rate: <strong>{{ $contest->statistics->contestReportbackRate . '%' }}</strong></li>
+                    <li>Approved reportbacks impact quantity: <strong>{{ number_format($contest->statistics->contestImpactQuantity) . ' ' . $contest->campaign->reportback_info->noun . ' ' . $contest->campaign->reportback_info->verb }} </strong></li>
                 </ul>
             </div>
         </div>
