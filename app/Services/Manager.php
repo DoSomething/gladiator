@@ -9,6 +9,7 @@ use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Northstar\Northstar;
 use Gladiator\Services\Phoenix\Phoenix;
 use Gladiator\Events\QueueMessageRequest;
+use Log;
 
 class Manager
 {
@@ -273,6 +274,37 @@ class Manager
         foreach ($competition->activity['active'] as $user) {
             $statistics['impactQuantity'] += intval($user->reportback->quantity);
         }
+
+        return (object) $statistics;
+    }
+
+    /**
+     * Get statistics for the specified contest by aggregating its competitions statistics.
+     *
+     * @param  \Gladiator\Models\Contest  $contest
+     * @return object
+     */
+    public function getStatisticsForContest(Contest $contest, $competition_statistics)
+    {
+        if (! $contest) {
+             return null;
+        }
+
+        $statistics = [];
+        $competitions = $contest->competitions;
+
+        $statistics['totalContestContestants'] = 0;
+        $statistics['totalContestReportbacks'] = 0;
+        $statistics['contestImpactQuantity'] = 0;
+
+        foreach ($competition_statistics as $competition) {
+            //$competition_statistics = $this->getStatisticsForCompetition($competition);
+            $statistics['totalContestContestants'] += $competition->totalContestants;
+            $statistics['totalContestReportbacks']+= $competition->totalReportbacks;
+            $statistics['contestImpactQuantity'] += $competition->impactQuantity;
+        }
+
+        $statistics['contestReportbackRate'] = intval(round(($statistics['totalContestReportbacks'] / $statistics['totalContestContestants']) * 100));
 
         return (object) $statistics;
     }
