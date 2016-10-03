@@ -85,6 +85,15 @@ class ContestsController extends Controller
     {
         $contest = $this->manager->collectContestInfo($contest->id);
         $contest = $this->manager->appendCampaign($contest);
+
+        $key = generate_model_flash_session_key($contest);
+        if (session()->has($key)) {
+            $contest = session($key);
+            session()->reflash();
+        } else {
+            $contest = $this->manager->getContestOverview($contest);
+        }
+
         $welcomeEmail = Message::where('contest_id', '=', $contest->id)->where('type', '=', 'welcome')->firstOrFail();
 
         return view('contests.show', compact('contest', 'welcomeEmail'));
