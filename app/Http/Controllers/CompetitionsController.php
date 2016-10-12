@@ -6,10 +6,12 @@ use Gladiator\Models\User;
 use Gladiator\Models\Contest;
 use Gladiator\Models\Message;
 use Gladiator\Models\FeaturedReportback;
+use Gladiator\Models\LeaderboardPhotos;
 use Gladiator\Services\Manager;
 use Gladiator\Models\Competition;
 use Gladiator\Http\Requests\CompetitionRequest;
 use Gladiator\Http\Requests\FeaturedReportbackRequest;
+use Gladiator\Http\Requests\LeaderboardPhotosRequest;
 use Gladiator\Repositories\UserRepositoryContract;
 use Illuminate\Http\Request;
 
@@ -247,5 +249,47 @@ class CompetitionsController extends Controller
         $reportback->fill($request->all())->save();
 
         return redirect()->route('competitions.message', [$competition, $competition->contest])->with('status', 'Featured reportback has been updated!');
+    }
+
+
+    /**
+     * Get the leaderboard photos form.
+     *
+     * @param  \Gladiator\Models\Competition  $competition
+     * @param  \Gladiator\Models\Message  $message
+     * @return \Illuminate\Http\Response
+     */
+    public function editLeaderboardPhotos(Competition $competition, Message $message)
+    {
+        $reportback = LeaderboardPhotos::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->first();
+
+        return view('competitions.leaderboard_photos.edit', compact('competition', 'message', 'reportback'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Gladiator\Requests\LeaderboardPhotosRequest  $request
+     * @param  \Gladiator\Models\Competition  $competition
+     * @param  \Gladiator\Models\Message  $message
+     * @return \Illuminate\Http\Response
+     */
+    public function updateLeaderboardPhotos(LeaderboardPhotosRequest $request, Competition $competition, Message $message)
+    {
+        $reportback = LeaderboardPhotos::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->first();
+
+        // @TODO: Make a function for this, potentially move it out of this controller.
+        if (! isset($reportback)) {
+            $reportback = new LeaderboardPhotos;
+            $reportback->competition_id = $competition->id;
+            $reportback->message_id = $message->id;
+            //$reportback->save();
+        }
+
+        return $reportback;
+
+        //$reportback->fill($request->all())->save();
+
+        //return redirect()->route('competitions.message', [$competition, $competition->contest])->with('status', 'Featured reportback has been updated!');
     }
 }
