@@ -9,6 +9,7 @@ use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Northstar\Northstar;
 use Gladiator\Services\Phoenix\Phoenix;
 use Gladiator\Events\QueueMessageRequest;
+use Illuminate\Support\Facades\Log;
 
 class Manager
 {
@@ -350,6 +351,33 @@ class Manager
         }
 
         return $topThree;
+    }
+
+    /**
+     * Get leaderboard from given competition and then get
+     * the top three reportbacks from said leaderboard.
+     * Abridged version of getTopThreeReportbacks()
+     *
+     * @param array $leaderboard
+     * @return array $topThree
+     */
+
+    public function getTopThreeReportbacksAbridged($leaderboard)
+    {
+      $topThreeUsers = array_slice($leaderboard, 0, 3);
+      $places = ['1st', '2nd', '3rd'];
+      
+      $topThree = [];
+      foreach ($topThreeUsers as $key => $user) {
+        $topThree[] = [
+            'place' => $places[$key],
+            'first_name' => $user->first_name,
+            'user_id' => $user->id,
+            'reportback_id' => $user->reportback->id,
+        ];
+      }
+
+      return $topThree;
     }
 
     /**

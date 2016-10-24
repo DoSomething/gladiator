@@ -21,9 +21,7 @@ class LeaderboardPhotosRequest extends Request
      */
     public function rules()
     {
-      return [
-          'reportback_id' => 'required|numeric',
-          'reportback_item_id' => 'required|numeric',
-      ];
+        return [
+        ];
     }
 }

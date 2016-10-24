@@ -17,15 +17,23 @@
 
                     @include('layouts.errors')
 
+                    @foreach ($topThree as $index => $reportback)
                     <div class="form-item -padded">
-                        <label class="field-label" for="contest_id">Reportback ID:</label>
-                        <input type="text" name="reportback_id" id="reportback_id" class="text-field" value="{{ $reportback->reportback_id or old('reportback_id') }}" />
+                        <h2>{{$reportback['place']}} Place: {{$reportback['first_name']}}</h2>
+                        <label class="field-label" for="user_id_{{$index}}">User ID:</label>
+                        <input type="text" name="user_id_{{$index}}" id="user_id_{{$index}}" class="text-field" value="{{ $reportback['user_id']}}" readonly/>
                     </div>
 
                     <div class="form-item -padded">
-                        <label class="field-label" for="contest_id">Reportback Item ID:</label>
-                        <input type="text" name="reportback_item_id" id="reportback_item_id" class="text-field" value="{{ $reportback->reportback_item_id or old('reportback_item_id') }}" />
+                        <label class="field-label" for="reportback_id_{{$index}}">Reportback ID:</label>
+                        <input type="text" name="reportback_id_{{$index}}" id="reportback_id_{{$index}}" class="text-field" value="{{ $reportback['reportback_id']}}" readonly/>
                     </div>
+
+                    <div class="form-item -padded">
+                        <label class="field-label" for="reportback_item_id_{{$index}}">Reportback Item ID:</label>
+                        <input type="text" name="reportback_item_id_{{$index}}" id="reportback_item_id_{{$index}}" class="text-field" value="{{ $photos[$index]['reportback_item_id'] or '' }}" />
+                    </div>
+                    @endforeach
 
                     <div class="form-item -padded">
                         <input type="submit" class="button" value="Submit" />
