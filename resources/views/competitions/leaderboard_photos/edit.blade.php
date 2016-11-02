@@ -20,13 +20,15 @@
                     @foreach ($topThree as $index => $reportback)
                     <div class="form-item -padded">
                         <h2>{{$reportback['place']}} Place: {{$reportback['first_name']}}</h2>
-                        <label class="field-label" for="user_id_{{$index}}">User ID:</label>
-                        <input type="text" name="user_id_{{$index}}" id="user_id_{{$index}}" class="text-field" value="{{ $reportback['user_id']}}" readonly/>
+                        <label class="field-label" for="user_id_{{$index}}">User ID: </label>
+                        <label>{{ $reportback['user_id']}}</label>
+                        <input type="text" name="user_id_{{$index}}" id="user_id_{{$index}}" class="text-field" value="{{ $reportback['user_id']}}" hidden/>
                     </div>
 
                     <div class="form-item -padded">
-                        <label class="field-label" for="reportback_id_{{$index}}">Reportback ID:</label>
-                        <input type="text" name="reportback_id_{{$index}}" id="reportback_id_{{$index}}" class="text-field" value="{{ $reportback['reportback_id']}}" readonly/>
+                        <label class="field-label" for="reportback_id_{{$index}}">Reportback ID: </label>
+                        <label>{{ $reportback['reportback_id']}}</label>
+                        <input type="text" name="reportback_id_{{$index}}" id="reportback_id_{{$index}}" class="text-field" value="{{ $reportback['reportback_id']}}" hidden/>
                     </div>
 
                     <div class="form-item -padded">
