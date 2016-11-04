@@ -324,37 +324,62 @@ class Manager
 
     /**
      * Get the top three reportbacks from a given leaderboard.
-     * Adds custom info about each placement for display.
+     * Adds custom info based on options passed in.
      *
-     * @param array $leaderboard
+     * @param array $leaderboard, array $options
      * @return array $topThree
      */
-    public function getTopThreeReportbacks($leaderboard, $competition_id, $message_id)
+    public function getTopThreeReportbacks($leaderboard, $options = [])
     {
         $topThreeUsers = array_slice($leaderboard, 0, 3);
         $places = ['1st', '2nd', '3rd'];
         $prizeCopy = ['Taking home the $100 AMEX gift card', 'Winner of the $50 amex gift card', 'Winner of the $25 amex gift card'];
 
         $topThree = [];
+        $includeUserIds = false;
+        $hasCompetitionId = false;
+        $hasMessageId = false;
+
+        if(isset($options['includeUserIds']) && $options['includeUserIds']){
+          $includeUserIds = true;
+        }
+
+        if(isset($options['competition_id']) && isset($options['message_id'])){
+          $hasCompetitionId = true;
+          $hasMessageId = true;
+        }
 
         foreach ($topThreeUsers as $key => $user) {
-            $reportbackItems = $user->reportback->reportback_items->data;
+            // Basic info on top three
+            $topThree[] = [
+              'place' => $places[$key],
+              'first_name' => $user->first_name,
+              'prize_copy' => $prizeCopy[$key],
+              'quantity' => $user->reportback->quantity,
+            ];
 
-            // @NOTE Connecting with Phoenix again to get reportback_items. Enhacements possible.
-            $leaderboardReportbackItem = $this->getLeaderboardPhoto($competition_id, $message_id, $user->id);
-
-            if (! isset($leaderboardReportbackItem)){
-              $leaderboardReportbackItem = array_pop($reportbackItems);
+            // Provide info on user & reportback ids
+            if($includeUserIds){
+              $topThree[$key]['user_id'] = $user->id;
+              $topThree[$key]['reportback_id'] = $user->reportback->id;
             }
 
-            $topThree[] = [
-                'place' => $places[$key],
-                'prize_copy' => $prizeCopy[$key],
-                'first_name' => $user->first_name,
-                'quantity' => $user->reportback->quantity,
-                'image_url' => $leaderboardReportbackItem->media->uri,
-                'caption' => $leaderboardReportbackItem->caption,
-            ];
+            // Provide image url/captaion of top three leaderboard images
+            if($hasCompetitionId && $hasMessageId) {
+              $competition_id = $options['competition_id'];
+              $message_id = $options['message_id'];
+
+              $leaderboardReportbackItem = $this->getLeaderboardPhoto($competition_id, $message_id, $user->id);   //@NOTE calling Phoenix again
+
+              if (! isset($leaderboardReportbackItem)){
+                $reportbackItems = $user->reportback->reportback_items->data;
+                $leaderboardReportbackItem = array_pop($reportbackItems);
+              }
+
+              $topThree[$key]['image_url'] = $leaderboardReportbackItem->media->uri;
+              $topThree[$key]['caption'] = $leaderboardReportbackItem->caption;
+
+            }
         }
 
         return $topThree;
@@ -384,32 +409,6 @@ class Manager
       }
 
       return null;
-    }
-
-    /**
-     * Get leaderboard from given competition and then get
-     * the top three reportbacks from said leaderboard.
-     * Abridged version of getTopThreeReportbacks()
-     *
-     * @param array $leaderboard
-     * @return array $topThree
-     */
-
-    public function getTopThreeReportbacksAbridged($leaderboard)
-    {
-      $topThreeUsers = array_slice($leaderboard, 0, 3);
-      $places = ['1st', '2nd', '3rd'];
-      $topThree = [];
-      foreach ($topThreeUsers as $key => $user) {
-        $topThree[] = [
-            'place' => $places[$key],
-            'first_name' => $user->first_name,
-            'user_id' => $user->id,
-            'reportback_id' => $user->reportback->id,
-        ];
-      }
-
-      return $topThree;
     }
 
     /**

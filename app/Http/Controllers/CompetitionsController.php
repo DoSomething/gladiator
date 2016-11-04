@@ -271,14 +271,14 @@ class CompetitionsController extends Controller
         }
 
         $leaderboard = $competition->activity['active'];
+        $topThree = $this->manager->getTopThreeReportbacks($leaderboard, ['includeUserIds' => true]);
 
-        $topThree = $this->manager->getTopThreeReportbacksAbridged($leaderboard);
         $photos = [];
 
         foreach ($topThree as $key => $user) {
           $photos[] = LeaderboardPhotos::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('user_id', '=', $user['user_id'])->first();
         }
-        
+
         return view('competitions.leaderboard_photos.edit', compact('competition', 'message', 'photos', 'topThree'));
     }
 
@@ -292,8 +292,6 @@ class CompetitionsController extends Controller
      */
     public function updateLeaderboardPhotos(LeaderboardPhotosRequest $request, Competition $competition, Message $message)
     {
-        $photos = [];
-
         foreach (range(0,2) as $i) {
           // request format: _method, _token, user_id_{{$index}},
           //                 reportback_id_{{$index}}, reportback_item_id_{{$index}}
@@ -318,7 +316,6 @@ class CompetitionsController extends Controller
           $photo->reportback_item_id = $reportback_item_id;
 
           $photo->save();
-          $photos[$i] = $photo;
         }
 
         return redirect()->route('competitions.message', [$competition, $competition->contest])->with('status', 'Leaderboard photos have been updated!');
