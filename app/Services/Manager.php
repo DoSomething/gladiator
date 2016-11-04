@@ -339,11 +339,11 @@ class Manager
         $hasCompetitionId = false;
         $hasMessageId = false;
 
-        if(isset($options['includeUserIds']) && $options['includeUserIds']){
+        if (isset($options['includeUserIds']) && $options['includeUserIds']) {
             $includeUserIds = true;
         }
 
-        if(isset($options['competition_id']) && isset($options['message_id'])){
+        if (isset($options['competition_id']) && isset($options['message_id'])) {
             $hasCompetitionId = true;
             $hasMessageId = true;
         }
@@ -358,19 +358,19 @@ class Manager
             ];
 
             // Provide info on user & reportback ids
-            if($includeUserIds){
+            if ($includeUserIds) {
                 $topThree[$key]['user_id'] = $user->id;
                 $topThree[$key]['reportback_id'] = $user->reportback->id;
             }
 
             // Provide image url/captaion of top three leaderboard images
-            if($hasCompetitionId && $hasMessageId) {
+            if ($hasCompetitionId && $hasMessageId) {
                 $competition_id = $options['competition_id'];
                 $message_id = $options['message_id'];
 
                 $leaderboardReportbackItem = $this->getLeaderboardPhoto($competition_id, $message_id, $user->id);   //@NOTE calling Phoenix again
 
-                if (! isset($leaderboardReportbackItem)){
+                if (! isset($leaderboardReportbackItem)) {
                     $reportbackItems = $user->reportback->reportback_items->data;
                     $leaderboardReportbackItem = array_pop($reportbackItems);
                 }

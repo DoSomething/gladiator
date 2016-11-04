@@ -290,7 +290,7 @@ class CompetitionsController extends Controller
      */
     public function updateLeaderboardPhotos(LeaderboardPhotosRequest $request, Competition $competition, Message $message)
     {
-        foreach (range(0,2) as $i) {
+        foreach (range(0, 2) as $i) {
             // request format: _method, _token, user_id_{{$index}},
             //                 reportback_id_{{$index}}, reportback_item_id_{{$index}}
             $user_id = $request->input('user_id_'.$i);
@@ -303,7 +303,7 @@ class CompetitionsController extends Controller
 
             $photo = LeaderboardPhotos::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('user_id', '=', $user_id)->first();
 
-            if (! isset($photo)){
+            if (! isset($photo)) {
                 $photo = new LeaderboardPhotos;
                 $photo->competition_id = $competition->id;
                 $photo->message_id = $message->id;
