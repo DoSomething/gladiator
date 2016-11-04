@@ -14,7 +14,6 @@ use Gladiator\Http\Requests\FeaturedReportbackRequest;
 use Gladiator\Http\Requests\LeaderboardPhotosRequest;
 use Gladiator\Repositories\UserRepositoryContract;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class CompetitionsController extends Controller
 {
@@ -252,7 +251,6 @@ class CompetitionsController extends Controller
         return redirect()->route('competitions.message', [$competition, $competition->contest])->with('status', 'Featured reportback has been updated!');
     }
 
-
     /**
      * Get the leaderboard photos form.
      *
@@ -276,7 +274,7 @@ class CompetitionsController extends Controller
         $photos = [];
 
         foreach ($topThree as $key => $user) {
-          $photos[] = LeaderboardPhotos::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('user_id', '=', $user['user_id'])->first();
+            $photos[] = LeaderboardPhotos::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('user_id', '=', $user['user_id'])->first();
         }
 
         return view('competitions.leaderboard_photos.edit', compact('competition', 'message', 'photos', 'topThree'));
@@ -293,29 +291,29 @@ class CompetitionsController extends Controller
     public function updateLeaderboardPhotos(LeaderboardPhotosRequest $request, Competition $competition, Message $message)
     {
         foreach (range(0,2) as $i) {
-          // request format: _method, _token, user_id_{{$index}},
-          //                 reportback_id_{{$index}}, reportback_item_id_{{$index}}
-          $user_id = $request->input('user_id_'.$i);
-          $reportback_id = $request->input('reportback_id_'.$i);
-          $reportback_item_id = $request->input('reportback_item_id_'.$i);
+            // request format: _method, _token, user_id_{{$index}},
+            //                 reportback_id_{{$index}}, reportback_item_id_{{$index}}
+            $user_id = $request->input('user_id_'.$i);
+            $reportback_id = $request->input('reportback_id_'.$i);
+            $reportback_item_id = $request->input('reportback_item_id_'.$i);
 
-          if ($reportback_item_id == 0) {   // If null
-            continue;
-          }
+            if ($reportback_item_id == 0) {   // If null
+                continue;
+            }
 
-          $photo = LeaderboardPhotos::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('user_id', '=', $user_id)->first();
+            $photo = LeaderboardPhotos::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('user_id', '=', $user_id)->first();
 
-          if (! isset($photo)){
-            $photo = new LeaderboardPhotos;
-            $photo->competition_id = $competition->id;
-            $photo->message_id = $message->id;
-            $photo->user_id = $user_id;
-          }
+            if (! isset($photo)){
+                $photo = new LeaderboardPhotos;
+                $photo->competition_id = $competition->id;
+                $photo->message_id = $message->id;
+                $photo->user_id = $user_id;
+            }
 
-          $photo->reportback_id = $reportback_id;
-          $photo->reportback_item_id = $reportback_item_id;
+            $photo->reportback_id = $reportback_id;
+            $photo->reportback_item_id = $reportback_item_id;
 
-          $photo->save();
+            $photo->save();
         }
 
         return redirect()->route('competitions.message', [$competition, $competition->contest])->with('status', 'Leaderboard photos have been updated!');
