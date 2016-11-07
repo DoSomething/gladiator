@@ -353,7 +353,6 @@ class Manager
 
             // Provide image url/captaion of top three leaderboard images
             if (isset($options['competition_id']) && isset($options['message_id'])) {
-
                 $leaderboardReportbackItem = $this->getLeaderboardPhoto($options['competition_id'], $options['message_id'], $user->id);   //@NOTE calling Phoenix again
 
                 if (! isset($leaderboardReportbackItem)) {

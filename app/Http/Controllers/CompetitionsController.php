@@ -298,7 +298,7 @@ class CompetitionsController extends Controller
             $reportbackItemId = $request->input('reportback_item_id_'.$i);
 
             // If none of ids null
-            if (($userId != 0) && ($reportbackId != 0) && ($reportbackItemId != 0)) {   
+            if (($userId != 0) && ($reportbackId != 0) && ($reportbackItemId != 0)) { 
                 $photo = LeaderboardPhotos::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('user_id', '=', $userId)->first();
 
                 if (! isset($photo)) {
