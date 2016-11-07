@@ -290,30 +290,29 @@ class CompetitionsController extends Controller
      */
     public function updateLeaderboardPhotos(LeaderboardPhotosRequest $request, Competition $competition, Message $message)
     {
-        foreach (range(0, 2) as $i) {
+        for ($i = 0; $i <= 2; $i++) {
             // request format: _method, _token, user_id_{{$index}},
             //                 reportback_id_{{$index}}, reportback_item_id_{{$index}}
-            $user_id = $request->input('user_id_'.$i);
-            $reportback_id = $request->input('reportback_id_'.$i);
-            $reportback_item_id = $request->input('reportback_item_id_'.$i);
+            $userId = $request->input('user_id_'.$i);
+            $reportbackId = $request->input('reportback_id_'.$i);
+            $reportbackItemId = $request->input('reportback_item_id_'.$i);
 
-            if ($reportback_item_id == 0) {   // If null
-                continue;
+            // If none of ids null
+            if (($userId != 0) && ($reportbackId != 0) && ($reportbackItemId != 0)) {   
+                $photo = LeaderboardPhotos::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('user_id', '=', $userId)->first();
+
+                if (! isset($photo)) {
+                    $photo = new LeaderboardPhotos;
+                    $photo->competition_id = $competition->id;
+                    $photo->message_id = $message->id;
+                    $photo->user_id = $userId;
+                }
+
+                $photo->reportback_id = $reportbackId;
+                $photo->reportback_item_id = $reportbackItemId;
+
+                $photo->save();
             }
-
-            $photo = LeaderboardPhotos::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('user_id', '=', $user_id)->first();
-
-            if (! isset($photo)) {
-                $photo = new LeaderboardPhotos;
-                $photo->competition_id = $competition->id;
-                $photo->message_id = $message->id;
-                $photo->user_id = $user_id;
-            }
-
-            $photo->reportback_id = $reportback_id;
-            $photo->reportback_item_id = $reportback_item_id;
-
-            $photo->save();
         }
 
         return redirect()->route('competitions.message', [$competition, $competition->contest])->with('status', 'Leaderboard photos have been updated!');

@@ -335,18 +335,6 @@ class Manager
         $prizeCopy = ['Taking home the $100 AMEX gift card', 'Winner of the $50 amex gift card', 'Winner of the $25 amex gift card'];
 
         $topThree = [];
-        $includeUserIds = false;
-        $hasCompetitionId = false;
-        $hasMessageId = false;
-
-        if (isset($options['includeUserIds']) && $options['includeUserIds']) {
-            $includeUserIds = true;
-        }
-
-        if (isset($options['competition_id']) && isset($options['message_id'])) {
-            $hasCompetitionId = true;
-            $hasMessageId = true;
-        }
 
         foreach ($topThreeUsers as $key => $user) {
             // Basic info on top three
@@ -358,17 +346,15 @@ class Manager
             ];
 
             // Provide info on user & reportback ids
-            if ($includeUserIds) {
+            if (isset($options['includeUserIds']) && $options['includeUserIds']) {
                 $topThree[$key]['user_id'] = $user->id;
                 $topThree[$key]['reportback_id'] = $user->reportback->id;
             }
 
             // Provide image url/captaion of top three leaderboard images
-            if ($hasCompetitionId && $hasMessageId) {
-                $competition_id = $options['competition_id'];
-                $message_id = $options['message_id'];
+            if (isset($options['competition_id']) && isset($options['message_id'])) {
 
-                $leaderboardReportbackItem = $this->getLeaderboardPhoto($competition_id, $message_id, $user->id);   //@NOTE calling Phoenix again
+                $leaderboardReportbackItem = $this->getLeaderboardPhoto($options['competition_id'], $options['message_id'], $user->id);   //@NOTE calling Phoenix again
 
                 if (! isset($leaderboardReportbackItem)) {
                     $reportbackItems = $user->reportback->reportback_items->data;
@@ -390,19 +376,19 @@ class Manager
      *
      * @return  array $reportback_item/null
      */
-    public function getLeaderboardPhoto($competition_id, $message_id, $user_id)
+    public function getLeaderboardPhoto($competitionId, $messageId, $userId)
     {
-        if (! isset($competition_id)) {
+        if (! isset($competitionId)) {
             return;
         }
 
-        $leaderboardPhoto = LeaderboardPhotos::where('competition_id', '=', $competition_id)->where('message_id', '=', $message_id)->where('user_id', '=', $user_id)->first();
+        $leaderboardPhoto = LeaderboardPhotos::where('competition_id', '=', $competitionId)->where('message_id', '=', $messageId)->where('user_id', '=', $userId)->first();
 
         if (isset($leaderboardPhoto) && isset($leaderboardPhoto->reportback_id) && isset($leaderboardPhoto->reportback_item_id)) {
-            $reportback_item = $this->appendReportbackItemToMessage($leaderboardPhoto->reportback_id, $leaderboardPhoto->reportback_item_id);
+            $reportbackItem = $this->appendReportbackItemToMessage($leaderboardPhoto->reportback_id, $leaderboardPhoto->reportback_item_id);
 
-            if ($reportback_item) {
-                return $reportback_item;
+            if ($reportbackItem) {
+                return $reportbackItem;
             }
         }
 

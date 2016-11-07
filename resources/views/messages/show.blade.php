@@ -29,13 +29,13 @@
                                 <td class="table__cell">{{ $message->subject or 'N/A'}}</td>
                                 <td class="table__cell">
                                     @if ($message->type === "leaderboard")
-                                        <a href="{{ route('competitions.editFeatureReportback', ['competition' => $competition->id, 'message' => $message->id]) }}" class="button -secondary">{{ isset($featuredReportbacks[$message->id]) ? 'Edit RB' : 'Set RB' }}</a>
+                                        <a href="{{ route('competitions.editFeatureReportback', ['competition' => $competition->id, 'message' => $message->id]) }}" class="button -tertiary">{{ isset($featuredReportbacks[$message->id]) ? 'Edit RB' : 'Set RB' }}</a>
                                     @endif
 
                                 </td>
                                 <td class="table__cell">
                                     @if ($message->type === "leaderboard")
-                                        <a href="{{ route('competitions.editLeaderboardPhotos', ['competition' => $competition->id, 'message' => $message->id]) }}" class="button -secondary">{{ isset($leaderboardPhotos[$message->id]) ? 'Edit Photos' : 'Set Photos' }}</a>
+                                        <a href="{{ route('competitions.editLeaderboardPhotos', ['competition' => $competition->id, 'message' => $message->id]) }}" class="button -tertiary">{{ isset($leaderboardPhotos[$message->id]) ? 'Edit Photos' : 'Set Photos' }}</a>
                                     @endif
 
                                 </td>
