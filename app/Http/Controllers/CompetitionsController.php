@@ -6,10 +6,12 @@ use Gladiator\Models\User;
 use Gladiator\Models\Contest;
 use Gladiator\Models\Message;
 use Gladiator\Models\FeaturedReportback;
+use Gladiator\Models\LeaderboardPhoto;
 use Gladiator\Services\Manager;
 use Gladiator\Models\Competition;
 use Gladiator\Http\Requests\CompetitionRequest;
 use Gladiator\Http\Requests\FeaturedReportbackRequest;
+use Gladiator\Http\Requests\LeaderboardPhotoRequest;
 use Gladiator\Repositories\UserRepositoryContract;
 use Illuminate\Http\Request;
 
@@ -247,5 +249,72 @@ class CompetitionsController extends Controller
         $reportback->fill($request->all())->save();
 
         return redirect()->route('competitions.message', [$competition, $competition->contest])->with('status', 'Featured reportback has been updated!');
+    }
+
+    /**
+     * Get the leaderboard photos form.
+     *
+     * @param  \Gladiator\Models\Competition  $competition
+     * @param  \Gladiator\Models\Message  $message
+     * @return \Illuminate\Http\Response
+     */
+    public function editLeaderboardPhotos(Competition $competition, Message $message)
+    {
+        $key = generate_model_flash_session_key($competition, ['includeActivity' => true]);
+        if (session()->has($key)) {
+            $competition = session($key);
+            session()->reflash();
+        } else {
+            $competition = $this->manager->getCompetitionOverview($competition, true);
+        }
+
+        $leaderboard = $competition->activity['active'];
+        $topThree = $this->manager->getTopThreeReportbacks($leaderboard, ['includeUserIds' => true]);
+
+        $photos = [];
+
+        foreach ($topThree as $key => $user) {
+            $photos[] = LeaderboardPhoto::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('user_id', '=', $user['user_id'])->first();
+        }
+
+        return view('competitions.leaderboard_photos.edit', compact('competition', 'message', 'photos', 'topThree'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Gladiator\Requests\LeaderboardPhotoRequest  $request
+     * @param  \Gladiator\Models\Competition  $competition
+     * @param  \Gladiator\Models\Message  $message
+     * @return \Illuminate\Http\Response
+     */
+    public function updateLeaderboardPhotos(LeaderboardPhotoRequest $request, Competition $competition, Message $message)
+    {
+        for ($i = 0; $i <= 2; $i++) {
+            // request format: _method, _token, user_id_{{$index}},
+            //                 reportback_id_{{$index}}, reportback_item_id_{{$index}}
+            $userId = $request->input('user_id_'.$i);
+            $reportbackId = $request->input('reportback_id_'.$i);
+            $reportbackItemId = $request->input('reportback_item_id_'.$i);
+
+            // If none of ids null
+            if (($userId != 0) && ($reportbackId != 0) && ($reportbackItemId != 0)) {
+                $photo = LeaderboardPhoto::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('user_id', '=', $userId)->first();
+
+                if (! isset($photo)) {
+                    $photo = new LeaderboardPhoto;
+                    $photo->competition_id = $competition->id;
+                    $photo->message_id = $message->id;
+                    $photo->user_id = $userId;
+                }
+
+                $photo->reportback_id = $reportbackId;
+                $photo->reportback_item_id = $reportbackItemId;
+
+                $photo->save();
+            }
+        }
+
+        return redirect()->route('competitions.message', [$competition, $competition->contest])->with('status', 'Leaderboard photos have been updated!');
     }
 }

@@ -30,6 +30,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('competitions/{competitions}/leaderboard', 'CompetitionsController@leaderboard')->name('competitions.leaderboard');
     Route::get('competitions/{competition}/featured/{message}', 'CompetitionsController@editFeatureReportback')->name('competitions.editFeatureReportback');
     Route::patch('competitions/{competition}/featured/{message}', 'CompetitionsController@updateFeaturedReportback')->name('competitions.updateFeaturedReportback');
+    Route::get('competitions/{competition}/leaderphotos/{message}', 'CompetitionsController@editLeaderboardPhotos')->name('competitions.editLeaderboardPhotos');
+    Route::patch('competitions/{competition}/leaderphotos/{message}', 'CompetitionsController@updateLeaderboardPhotos')->name('competitions.updateLeaderboardPhotos');
 
     // Contests
     Route::model('contests', 'Gladiator\Models\Contest');

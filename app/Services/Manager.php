@@ -9,6 +9,7 @@ use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Northstar\Northstar;
 use Gladiator\Services\Phoenix\Phoenix;
 use Gladiator\Events\QueueMessageRequest;
+use Gladiator\Models\LeaderboardPhoto;
 
 class Manager
 {
@@ -322,12 +323,12 @@ class Manager
 
     /**
      * Get the top three reportbacks from a given leaderboard.
-     * Adds custom info about each placement for display.
+     * Adds custom info based on options passed in.
      *
-     * @param array $leaderboard
+     * @param array $leaderboard, array $options
      * @return array $topThree
      */
-    public function getTopThreeReportbacks($leaderboard)
+    public function getTopThreeReportbacks($leaderboard, $options = [])
     {
         $topThreeUsers = array_slice($leaderboard, 0, 3);
         $places = ['1st', '2nd', '3rd'];
@@ -336,20 +337,61 @@ class Manager
         $topThree = [];
 
         foreach ($topThreeUsers as $key => $user) {
-            $reportbackItems = $user->reportback->reportback_items->data;
-            $latestReportbackItem = array_pop($reportbackItems);
-
+            // Basic info on top three
             $topThree[] = [
-                'place' => $places[$key],
-                'prize_copy' => $prizeCopy[$key],
-                'first_name' => $user->first_name,
-                'quantity' => $user->reportback->quantity,
-                'image_url' => $latestReportbackItem->media->uri,
-                'caption' => $latestReportbackItem->caption,
+              'place' => $places[$key],
+              'first_name' => $user->first_name,
+              'prize_copy' => $prizeCopy[$key],
+              'quantity' => $user->reportback->quantity,
             ];
+
+            // Provide info on user & reportback ids
+            if (isset($options['includeUserIds']) && $options['includeUserIds']) {
+                $topThree[$key]['user_id'] = $user->id;
+                $topThree[$key]['reportback_id'] = $user->reportback->id;
+            }
+
+            // Provide image url/captaion of top three leaderboard images
+            if (isset($options['competition_id']) && isset($options['message_id'])) {
+                $leaderboardReportbackItem = $this->getLeaderboardPhoto($options['competition_id'], $options['message_id'], $user->id);   //@NOTE calling Phoenix again
+
+                if (! isset($leaderboardReportbackItem)) {
+                    $reportbackItems = $user->reportback->reportback_items->data;
+                    $leaderboardReportbackItem = array_pop($reportbackItems);
+                }
+
+                $topThree[$key]['image_url'] = $leaderboardReportbackItem->media->uri;
+                $topThree[$key]['caption'] = $leaderboardReportbackItem->caption;
+            }
         }
 
         return $topThree;
+    }
+
+    /*
+     * Determines whether a valid reportback_item _id is present in the LeaderboardPhoto DB
+     * for given competition, message, and leaderboard user.
+     * Returns the associated reportback item if present.
+     *
+     * @return  array $reportback_item/null
+     */
+    public function getLeaderboardPhoto($competitionId, $messageId, $userId)
+    {
+        if (! isset($competitionId)) {
+            return;
+        }
+
+        $leaderboardPhoto = LeaderboardPhoto::where('competition_id', '=', $competitionId)->where('message_id', '=', $messageId)->where('user_id', '=', $userId)->first();
+
+        if (isset($leaderboardPhoto) && isset($leaderboardPhoto->reportback_id) && isset($leaderboardPhoto->reportback_item_id)) {
+            $reportbackItem = $this->appendReportbackItemToMessage($leaderboardPhoto->reportback_id, $leaderboardPhoto->reportback_item_id);
+
+            if ($reportbackItem) {
+                return $reportbackItem;
+            }
+        }
+
+        return null;
     }
 
     /**

@@ -200,7 +200,7 @@ class Email
         if ($leaderboard) {
             $vars = [
                 'leaderboard' => $leaderboard,
-                'topThree' => $this->manager->getTopThreeReportbacks($leaderboard),
+                'topThree' => $this->manager->getTopThreeReportbacks($leaderboard, ['competition_id' => $this->competition->id, 'message_id' => $this->message->id]),
                 'reportbackInfo' => $this->contest->campaign->reportback_info,
                 'featuredReportback' => $this->getFeaturedReportback(),
             ];
