@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFeaturedLeaderboardPhotosTable extends Migration
+class CreateLeaderboardPhotoTable extends Migration
 {
     /**
      * Run the migrations.

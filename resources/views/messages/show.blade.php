@@ -35,7 +35,7 @@
                                 </td>
                                 <td class="table__cell">
                                     @if ($message->type === "leaderboard")
-                                        <a href="{{ route('competitions.editLeaderboardPhotos', ['competition' => $competition->id, 'message' => $message->id]) }}" class="button -tertiary">{{ isset($leaderboardPhotos[$message->id]) ? 'Edit Photos' : 'Set Photos' }}</a>
+                                        <a href="{{ route('competitions.editLeaderboardPhotos', ['competition' => $competition->id, 'message' => $message->id]) }}" class="button -tertiary">{{ 'Set Photos' }}</a>
                                     @endif
 
                                 </td>

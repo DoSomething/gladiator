@@ -9,7 +9,7 @@ use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Northstar\Northstar;
 use Gladiator\Services\Phoenix\Phoenix;
 use Gladiator\Events\QueueMessageRequest;
-use Gladiator\Models\LeaderboardPhotos;
+use Gladiator\Models\LeaderboardPhoto;
 
 class Manager
 {
@@ -369,7 +369,7 @@ class Manager
     }
 
     /*
-     * Determines whether a valid reportback_item _id is present in the LeaderboardPhotos DB
+     * Determines whether a valid reportback_item _id is present in the LeaderboardPhoto DB
      * for given competition, message, and leaderboard user.
      * Returns the associated reportback item if present.
      *
@@ -381,7 +381,7 @@ class Manager
             return;
         }
 
-        $leaderboardPhoto = LeaderboardPhotos::where('competition_id', '=', $competitionId)->where('message_id', '=', $messageId)->where('user_id', '=', $userId)->first();
+        $leaderboardPhoto = LeaderboardPhoto::where('competition_id', '=', $competitionId)->where('message_id', '=', $messageId)->where('user_id', '=', $userId)->first();
 
         if (isset($leaderboardPhoto) && isset($leaderboardPhoto->reportback_id) && isset($leaderboardPhoto->reportback_item_id)) {
             $reportbackItem = $this->appendReportbackItemToMessage($leaderboardPhoto->reportback_id, $leaderboardPhoto->reportback_item_id);

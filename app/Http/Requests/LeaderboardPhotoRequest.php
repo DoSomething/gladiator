@@ -2,7 +2,7 @@
 
 namespace Gladiator\Http\Requests;
 
-class LeaderboardPhotosRequest extends Request
+class LeaderboardPhotoRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

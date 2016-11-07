@@ -4,7 +4,7 @@ namespace Gladiator\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class LeaderboardPhotos extends Model
+class LeaderboardPhoto extends Model
 {
     /**
      * Get the fillable attributes for the model.
@@ -14,7 +14,7 @@ class LeaderboardPhotos extends Model
     protected $fillable = ['reportback_id', 'reportback_item_id'];
 
     /**
-     * A LeaderboardPhotos belongs to one user.
+     * A LeaderboardPhoto belongs to one user.
      */
     public function user()
     {
@@ -22,7 +22,7 @@ class LeaderboardPhotos extends Model
     }
 
     /**
-     * A LeaderboardPhotos belongs to one competition.
+     * A LeaderboardPhoto belongs to one competition.
      */
     public function competition()
     {
@@ -30,7 +30,7 @@ class LeaderboardPhotos extends Model
     }
 
     /**
-     * A LeaderboardPhotos belongs to one message.
+     * A LeaderboardPhoto belongs to one message.
      */
     public function message()
     {

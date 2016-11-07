@@ -6,12 +6,12 @@ use Gladiator\Models\User;
 use Gladiator\Models\Contest;
 use Gladiator\Models\Message;
 use Gladiator\Models\FeaturedReportback;
-use Gladiator\Models\LeaderboardPhotos;
+use Gladiator\Models\LeaderboardPhoto;
 use Gladiator\Services\Manager;
 use Gladiator\Models\Competition;
 use Gladiator\Http\Requests\CompetitionRequest;
 use Gladiator\Http\Requests\FeaturedReportbackRequest;
-use Gladiator\Http\Requests\LeaderboardPhotosRequest;
+use Gladiator\Http\Requests\LeaderboardPhotoRequest;
 use Gladiator\Repositories\UserRepositoryContract;
 use Illuminate\Http\Request;
 
@@ -274,7 +274,7 @@ class CompetitionsController extends Controller
         $photos = [];
 
         foreach ($topThree as $key => $user) {
-            $photos[] = LeaderboardPhotos::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('user_id', '=', $user['user_id'])->first();
+            $photos[] = LeaderboardPhoto::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('user_id', '=', $user['user_id'])->first();
         }
 
         return view('competitions.leaderboard_photos.edit', compact('competition', 'message', 'photos', 'topThree'));
@@ -283,12 +283,12 @@ class CompetitionsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Gladiator\Requests\LeaderboardPhotosRequest  $request
+     * @param  \Gladiator\Requests\LeaderboardPhotoRequest  $request
      * @param  \Gladiator\Models\Competition  $competition
      * @param  \Gladiator\Models\Message  $message
      * @return \Illuminate\Http\Response
      */
-    public function updateLeaderboardPhotos(LeaderboardPhotosRequest $request, Competition $competition, Message $message)
+    public function updateLeaderboardPhotos(LeaderboardPhotoRequest $request, Competition $competition, Message $message)
     {
         for ($i = 0; $i <= 2; $i++) {
             // request format: _method, _token, user_id_{{$index}},
@@ -299,10 +299,10 @@ class CompetitionsController extends Controller
 
             // If none of ids null
             if (($userId != 0) && ($reportbackId != 0) && ($reportbackItemId != 0)) {
-                $photo = LeaderboardPhotos::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('user_id', '=', $userId)->first();
+                $photo = LeaderboardPhoto::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('user_id', '=', $userId)->first();
 
                 if (! isset($photo)) {
-                    $photo = new LeaderboardPhotos;
+                    $photo = new LeaderboardPhoto;
                     $photo->competition_id = $competition->id;
                     $photo->message_id = $message->id;
                     $photo->user_id = $userId;
