@@ -14,10 +14,23 @@ return [
     |
     */
 
+    // 'northstar' => [
+    //     'uri' => env('NORTHSTAR_URI'),
+    //     'version' => 'v1',
+    //     'api_key' => env('NORTHSTAR_API_KEY'),
+    // ],
+
     'northstar' => [
-        'uri' => env('NORTHSTAR_URI'),
+        'grant' => 'client_credentials', // Default OAuth grant to use: either 'authorization_code' or 'client_credentials'
+        'url' => 'http://northstar-qa.dosomething.org', // the environment you want to connect to
         'version' => 'v1',
-        'api_key' => env('NORTHSTAR_API_KEY'),
+        
+        // Then, configure client ID, client secret, and scopes per grant.
+        'client_credentials' => [
+            'client_id' => 'phoenix-qa',
+            'client_secret' => 'O5SQ0S4DU6Qyj6Lnp1LKbAduvhU2RvKk',
+            'scope' => ['admin'],
+        ],
     ],
 
     'mailgun' => [
