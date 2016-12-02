@@ -18,13 +18,12 @@ class AuthController extends Controller
     | a simple trait to add these behaviors. Why don't you explore it?
     |
     */
-    
+
     /**
      * Where to redirect users after login / registration.
      *
      * @var string
      */
-    //protected $redirectTo = '/';
     protected $redirectTo = '/contests';
 
     /**
@@ -32,9 +31,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    //protected $redirectAfterLogout = '/auth/login';
     protected $redirectAfterLogout = '/';
-
 
     /**
      * Handle a login request to the application.

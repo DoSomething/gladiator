@@ -18,8 +18,8 @@ class CreateLeaderboardPhotoTable extends Migration
             $table->foreign('competition_id')->references('id')->on('competitions')->onDelete('cascade');
             $table->integer('message_id')->unsigned();
             $table->foreign('message_id')->references('id')->on('messages')->onDelete('cascade');
-            $table->string('northstar_id');
-            $table->foreign('northstar_id')->references('northstar_id')->on('users')->onDelete('cascade');
+            $table->string('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('reportback_id')->nullable();
             $table->integer('reportback_item_id')->nullable();
             $table->timestamps();

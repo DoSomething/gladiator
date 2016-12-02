@@ -14,12 +14,6 @@ return [
     |
     */
 
-    // 'northstar' => [
-    //     'uri' => env('NORTHSTAR_URI'),
-    //     'version' => 'v1',
-    //     'api_key' => env('NORTHSTAR_API_KEY'),
-    // ],
-
     'northstar' => [
         'grant' => 'authorization_code',
         'url' => env('NORTHSTAR_URI'),

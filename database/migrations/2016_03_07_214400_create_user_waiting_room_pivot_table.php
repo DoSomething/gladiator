@@ -13,8 +13,8 @@ class CreateUserWaitingRoomPivotTable extends Migration
     public function up()
     {
         Schema::create('user_waiting_room', function (Blueprint $table) {
-            $table->string('northstar_id');
-            $table->foreign('northstar_id')->references('northstar_id')->on('users')->onDelete('cascade');
+            $table->string('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('waiting_room_id')->unsigned();
             $table->foreign('waiting_room_id')->references('id')->on('waiting_rooms')->onDelete('cascade');
         });

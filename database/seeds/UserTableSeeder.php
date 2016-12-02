@@ -32,14 +32,6 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        // Add Admin Users
-        $admins = [
-            'lcordoves@dosomething.org',
-        ];
-        // foreach ($admins as $admin) {
-        //     Artisan::call('add:user', ['email' => $admin, '--role' => 'admin']);
-        // }
-
         // Add Contestant Users
         $waitingRooms = WaitingRoom::all();
         $totalRooms = count($waitingRooms);

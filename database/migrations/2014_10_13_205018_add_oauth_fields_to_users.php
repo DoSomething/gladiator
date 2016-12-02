@@ -33,7 +33,6 @@ class AddOauthFieldsToUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropIndex('northstar_id');
             $table->dropColumn('northstar_id');
 
             $table->dropColumn('access_token');
