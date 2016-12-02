@@ -34,18 +34,11 @@ class UserTableSeeder extends Seeder
     {
         // Add Admin Users
         $admins = [
-            'agaither@dosomething.org',
-            'ssmith@dosomething.org',
-            'mfantini@dosomething.org',
-            'dlorenzo@dosomething.org',
-            'joe@dosomething.org',
-            'dfurnes@dosomething.org',
-            'charbur@dosomething.org',
-            'hrobbins@dosomething.org',
+            'lcordoves@dosomething.org',
         ];
-        foreach ($admins as $admin) {
-            Artisan::call('add:user', ['email' => $admin, '--role' => 'admin']);
-        }
+        // foreach ($admins as $admin) {
+        //     Artisan::call('add:user', ['email' => $admin, '--role' => 'admin']);
+        // }
 
         // Add Contestant Users
         $waitingRooms = WaitingRoom::all();

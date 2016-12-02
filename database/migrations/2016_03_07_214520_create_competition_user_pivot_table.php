@@ -15,8 +15,8 @@ class CreateCompetitionUserPivotTable extends Migration
         Schema::create('competition_user', function (Blueprint $table) {
             $table->integer('competition_id')->unsigned();
             $table->foreign('competition_id')->references('id')->on('competitions');
-            $table->string('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('northstar_id');
+            $table->foreign('northstar_id')->references('northstar_id')->on('users');
         });
     }
 

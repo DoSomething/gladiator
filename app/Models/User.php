@@ -2,11 +2,16 @@
 
 namespace Gladiator\Models;
 
-use Gladiator\Services\Northstar\Exceptions\NorthstarUserNotFoundException;
-use Illuminate\Foundation\Auth\User as BaseUser;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use DoSomething\Gateway\Contracts\NorthstarUserContract;
+use DoSomething\Gateway\Laravel\HasNorthstarToken;
 
-class User extends BaseUser
+class User extends Model implements AuthenticatableContract, NorthstarUserContract
 {
+    use Authenticatable, HasNorthstarToken;
+
     /**
      * Indicates if the IDs are auto-incrementing.
      *
@@ -53,12 +58,12 @@ class User extends BaseUser
     /**
      * Check if user has specified role.
      *
-     * @param  string|array
+     * @param  array|mixed $roles -role(s) to check
      * @return bool
      */
     public function hasRole($roles)
     {
-        $roles = is_array($roles) ? $roles : [$roles];
+        $roles = is_array($roles) ? $roles : func_get_arg();
 
         return in_array($this->role, $roles);
     }

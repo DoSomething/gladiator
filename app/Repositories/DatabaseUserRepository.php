@@ -74,7 +74,7 @@ class DatabaseUserRepository implements UserRepositoryContract
             return $accounts;
         }
 
-        $accounts = $this->getBatchedCollection(User::all()->pluck('id')->all());
+        $accounts = $this->getBatchedCollection(User::all()->pluck('northstar_id')->all());
 
         return $accounts;
     }
@@ -90,7 +90,7 @@ class DatabaseUserRepository implements UserRepositoryContract
         $users = User::where('role', '=', $role)->get();
 
         if ($users->count()) {
-            $users = $users->keyBy('id');
+            $users = $users->keyBy('northstar_id');
             $ids = array_keys($users->all());
 
             $accounts = $this->getBatchedCollection($ids);
@@ -142,7 +142,7 @@ class DatabaseUserRepository implements UserRepositoryContract
      */
     protected function getBatchedCollection($ids, $size = 50)
     {
-        // @TODO: Should this be a function in Northstar Client?
+        // @TODO: Should this be a function in Northstar Client
         $count = intval(ceil(count($ids) / 50));
         $index = 0;
         $data = [];

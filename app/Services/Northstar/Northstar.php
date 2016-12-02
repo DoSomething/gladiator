@@ -11,8 +11,7 @@ class Northstar extends RestApiClient
      */
     public function __construct()
     {
-        $base_uri = config('services.northstar.uri') . '/' . config('services.northstar.version') . '/';
-
+        $base_uri = config('services.northstar.url') . '/' . config('services.northstar.version') . '/';
         $headers = [
             'X-DS-REST-API-Key' => config('services.northstar.api_key'),
         ];

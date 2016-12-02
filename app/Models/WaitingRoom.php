@@ -26,7 +26,7 @@ class WaitingRoom extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'user_waiting_room', 'waiting_room_id', 'northstar_id');
     }
 
     /**
