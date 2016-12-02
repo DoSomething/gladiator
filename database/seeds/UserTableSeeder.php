@@ -3,7 +3,6 @@
 use Gladiator\Models\User;
 use Gladiator\Models\WaitingRoom;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Artisan;
 use Gladiator\Services\Northstar\Northstar;
 
 class UserTableSeeder extends Seeder
