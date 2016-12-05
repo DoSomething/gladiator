@@ -36,7 +36,7 @@ class CacheUserRepository implements UserRepositoryContract
     {
         $user = $this->repository->create($account);
 
-        $this->resolveUpdatedRoles($user->id, $user->role);
+        $this->resolveUpdatedRoles($user->northstar_id, $user->role);
 
         return $user;
     }
@@ -55,7 +55,7 @@ class CacheUserRepository implements UserRepositoryContract
         if (! $user) {
             $user = $this->repository->find($id);
 
-            $this->store($user->id, $user);
+            $this->store($user->northstar_id, $user);
         }
 
         return $user;

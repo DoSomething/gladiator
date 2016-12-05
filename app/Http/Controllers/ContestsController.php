@@ -34,7 +34,6 @@ class ContestsController extends Controller
     public function index()
     {
         $contests = Contest::all();
-
         $contests = $this->manager->appendCampaign($contests);
 
         return view('contests.index', compact('contests'));

@@ -20,6 +20,13 @@ class User extends Model implements AuthenticatableContract, NorthstarUserContra
     public $incrementing = false;
 
     /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    public $primaryKey = 'northstar_id';
+
+    /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
@@ -44,7 +51,7 @@ class User extends Model implements AuthenticatableContract, NorthstarUserContra
      */
     public function competitions()
     {
-        return $this->belongsToMany(Competition::class);
+        return $this->belongsToMany(Competition::class, 'competition_user', 'northstar_id', 'competition_id');
     }
 
     /**
@@ -52,7 +59,7 @@ class User extends Model implements AuthenticatableContract, NorthstarUserContra
      */
     public function waitingRooms()
     {
-        return $this->belongsToMany(WaitingRoom::class);
+        return $this->belongsToMany(WaitingRoom::class, 'user_waiting_room', 'northstar_id', 'waiting_room_id');
     }
 
     /**

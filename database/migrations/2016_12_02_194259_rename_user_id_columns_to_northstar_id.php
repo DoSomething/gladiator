@@ -41,19 +41,19 @@ class RenameUserIdColumnsToNorthstarId extends Migration
         Schema::table('user_waiting_room', function (Blueprint $table) {
             $table->dropForeign(['northstar_id']);
             $table->renameColumn('northstar_id', 'user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('northstar_id')->on('users')->onDelete('cascade');
         });
 
         Schema::table('competition_user', function (Blueprint $table) {
             $table->dropForeign(['northstar_id']);
             $table->renameColumn('northstar_id', 'user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('northstar_id')->on('users')->onDelete('cascade');
         });
 
         Schema::table('leaderboard_photos', function (Blueprint $table) {
             $table->dropForeign(['northstar_id']);
             $table->renameColumn('northstar_id', 'user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('northstar_id')->on('users')->onDelete('cascade');
         });
     }
 }
