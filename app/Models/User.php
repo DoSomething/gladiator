@@ -2,11 +2,11 @@
 
 namespace Gladiator\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Authenticatable;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use DoSomething\Gateway\Contracts\NorthstarUserContract;
+use Illuminate\Database\Eloquent\Model;
 use DoSomething\Gateway\Laravel\HasNorthstarToken;
+use DoSomething\Gateway\Contracts\NorthstarUserContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
 class User extends Model implements AuthenticatableContract, NorthstarUserContract
 {

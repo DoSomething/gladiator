@@ -1,8 +1,8 @@
 <?php
 
 use Gladiator\Models\User;
-use Gladiator\Models\WaitingRoom;
 use Illuminate\Database\Seeder;
+use Gladiator\Models\WaitingRoom;
 use Gladiator\Services\Northstar\Northstar;
 
 class UserTableSeeder extends Seeder
@@ -38,7 +38,7 @@ class UserTableSeeder extends Seeder
 
         foreach ($seedContestants as $contestant) {
             $index = mt_rand(0, ($totalRooms - 1));
-        
+            
             // Using first or create if someone is already an admin.
             $user = User::firstOrCreate([
                  'northstar_id' => $contestant->id,

@@ -2,14 +2,14 @@
 
 namespace Gladiator\Services;
 
-use Gladiator\Models\Message;
 use Gladiator\Models\Contest;
-use Gladiator\Repositories\CacheCampaignRepository;
-use Gladiator\Repositories\UserRepositoryContract;
-use Gladiator\Services\Northstar\Northstar;
+use Gladiator\Models\Message;
+use Gladiator\Models\LeaderboardPhoto;
 use Gladiator\Services\Phoenix\Phoenix;
 use Gladiator\Events\QueueMessageRequest;
-use Gladiator\Models\LeaderboardPhoto;
+use Gladiator\Services\Northstar\Northstar;
+use Gladiator\Repositories\UserRepositoryContract;
+use Gladiator\Repositories\CacheCampaignRepository;
 
 class Manager
 {

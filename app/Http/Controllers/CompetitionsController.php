@@ -3,17 +3,17 @@
 namespace Gladiator\Http\Controllers;
 
 use Gladiator\Models\User;
+use Illuminate\Http\Request;
 use Gladiator\Models\Contest;
 use Gladiator\Models\Message;
-use Gladiator\Models\FeaturedReportback;
-use Gladiator\Models\LeaderboardPhoto;
 use Gladiator\Services\Manager;
 use Gladiator\Models\Competition;
+use Gladiator\Models\LeaderboardPhoto;
+use Gladiator\Models\FeaturedReportback;
 use Gladiator\Http\Requests\CompetitionRequest;
-use Gladiator\Http\Requests\FeaturedReportbackRequest;
-use Gladiator\Http\Requests\LeaderboardPhotoRequest;
 use Gladiator\Repositories\UserRepositoryContract;
-use Illuminate\Http\Request;
+use Gladiator\Http\Requests\LeaderboardPhotoRequest;
+use Gladiator\Http\Requests\FeaturedReportbackRequest;
 
 class CompetitionsController extends Controller
 {
