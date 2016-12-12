@@ -74,7 +74,7 @@ class WaitingRoomsController extends Controller
 
         $contest = Contest::find($room->contest_id);
 
-        $ids = $room->users->pluck('id')->toArray();
+        $ids = $room->users->pluck('northstar_id')->toArray();
 
         if ($ids) {
             $users = $this->repository->getAll($ids);

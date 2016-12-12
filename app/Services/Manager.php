@@ -140,7 +140,7 @@ class Manager
             return null;
         }
 
-        $ids = $users->pluck('id')->all();
+        $ids = $users->pluck('northstar_id')->all();
 
         $users = $this->userRepository->getAll($ids);
 
