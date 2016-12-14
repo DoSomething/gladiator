@@ -64,7 +64,7 @@
 </key>
 </table>
 <table x="753" y="47" name="users">
-<row name="id" null="1" autoincrement="1">
+<row name="northstar_id" null="1" autoincrement="1">
 <datatype>VARCHAR</datatype>
 <default>NULL</default></row>
 <row name="role" null="1" autoincrement="0">
