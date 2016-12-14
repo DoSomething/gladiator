@@ -68,10 +68,11 @@ class Northstar extends RestApiClient
      * @param  object|null
      * @return arr
      */
-    public function rewriteMultipleKeys($usersResponse){
+    public function rewriteMultipleKeys($usersResponse)
+    {
         $newArr = [];
 
-        foreach($usersResponse as $user) {
+        foreach ($usersResponse as $user) {
             $userArr = [];
             $newArr[] = $this->rewriteKeys($user);
         }
@@ -85,15 +86,15 @@ class Northstar extends RestApiClient
      * @param  object|null
      * @return arr
      */
-    public function rewriteKeys($userResponse) {
+    public function rewriteKeys($userResponse)
+    {
         $rewriteKeys = ['id' => 'northstar_id', '_id' => '_northstar_id'];
         $newUserArr = [];
 
         foreach ($userResponse as $key => $value) {
             if ($key == 'id' || $key == '_id') {
                 $newUserArr [$rewriteKeys [$key ]] = $value;
-            }
-            else {
+            } else {
                 $newUserArr[$key] = $value;
             }
         }

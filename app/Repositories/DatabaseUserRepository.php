@@ -51,7 +51,7 @@ class DatabaseUserRepository implements UserRepositoryContract
 
         if ($account) {
             $account->role = $user->role;
-            
+    
             return $account;
         }
 

@@ -2,8 +2,8 @@
 
 namespace Gladiator\Repositories;
 
-use Gladiator\Services\Phoenix\Phoenix;
 use Illuminate\Support\Collection;
+use Gladiator\Services\Phoenix\Phoenix;
 
 class CacheCampaignRepository implements RepositoryContract
 {
