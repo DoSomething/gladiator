@@ -78,7 +78,7 @@ class CacheUserRepository implements UserRepositoryContract
                 $users = $this->repository->getAll($ids);
 
                 if ($users->count()) {
-                    $group = $users->keyBy('id')->all();
+                    $group = $users->keyBy('northstar_id')->all();
 
                     $this->storeMany($group);
                 }
@@ -122,10 +122,10 @@ class CacheUserRepository implements UserRepositoryContract
         $users = $this->repository->getAllByRole($role);
 
         if ($users->count()) {
-            $ids = $users->pluck('id')->all();
-            $collection = $users->keyBy('id')->all();
+            $ids = $users->pluck('northstar_id')->all();
+            $collection = $users->keyBy('northstar_id')->all();
 
-            $this->store($key . ':ids', $ids);
+            $this->store($key . ':nids', $ids);
             $this->storeMany($collection);
         }
 

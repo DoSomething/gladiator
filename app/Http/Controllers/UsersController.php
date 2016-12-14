@@ -105,7 +105,7 @@ class UsersController extends Controller
 
         foreach ($competitions as $competition) {
             $parameters = $this->manager->getCampaignParameters($competition);
-            $parameters['users'] = $user->id;
+            $parameters['users'] = $user->northstar_id;
 
             $activities[] = $this->manager->appendReportback($competition, $parameters);
         }
@@ -135,7 +135,7 @@ class UsersController extends Controller
      */
     public function update(UserRequest $request, $id)
     {
-        $this->repository->update($request, $id);
+        $user = $this->repository->update($request, $id);
 
         return redirect()->route('users.index')->with('status', 'User has been updated!');
     }

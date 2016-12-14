@@ -31,7 +31,7 @@ class DatabaseUserRepository implements UserRepositoryContract
     public function create($account)
     {
         $user = new User;
-        $user->northstar_id = $account->northstar_id;
+        $user->northstar_id = $account->id;
         $user->role = isset($account->role) ? $account->role : null;
         $user->save();
 
@@ -47,12 +47,10 @@ class DatabaseUserRepository implements UserRepositoryContract
     public function find($id)
     {
         $user = User::findOrFail($id);
-
-        $account = $this->northstar->getUser('_id', $user->id);
+        $account = $this->northstar->getUser('_id', $user->northstar_id);
 
         if ($account) {
             $account->role = $user->role;
-
             return $account;
         }
 
@@ -96,7 +94,7 @@ class DatabaseUserRepository implements UserRepositoryContract
             $accounts = $this->getBatchedCollection($ids);
 
             foreach ($accounts as $account) {
-                $account = $this->appendRole($account, $users[$account->id]->role);
+                $account = $this->appendRole($account, $users[$account->northstar_id]->role);
             }
 
             return collect($accounts);

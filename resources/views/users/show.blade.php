@@ -15,12 +15,12 @@
                     <dt>Email:</dt>
                     <dd>{{ $user->email }}</dd>
                     <dt>ID:</dt>
-                    <dd>{{ $user->id }}</dd>
+                    <dd>{{ $user->northstar_id }}</dd>
                     <dt>Role:</dt>
                     <dd>{{ $user->role or 'member' }}</dd>
                 </div>
 
-                <a href="{{ route('users.edit', $user->id) }}" class="button">Edit</a>
+                <a href="{{ route('users.edit', $user->northstar_id) }}" class="button">Edit</a>
             </div>
         </div>
     </div>
@@ -67,7 +67,7 @@
                                     <td class="table__cell">N/A</td>
                                 @endif
 
-                                <td class="table__cell"><a href="{{ route('competitions.users.destroy', ['user' => $user->id, 'competition' =>$competition->id]) }}" class="button -secondary -danger">Remove</a></td>
+                                <td class="table__cell"><a href="{{ route('competitions.users.destroy', ['user' => $user->northstar_id, 'competition' =>$competition->id]) }}" class="button -secondary -danger">Remove</a></td>
                             </tr>
                         @endforeach
                     </tbody>

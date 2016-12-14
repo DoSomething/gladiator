@@ -92,7 +92,7 @@ class UsersController extends ApiController
             return $this->item($user);
         }
 
-        $contest->waitingRoom->users()->attach($user->id);
+        $contest->waitingRoom->users()->attach($user->northstar_id);
         $contest = $this->manager->appendCampaign($contest);
 
         // Fire off welcome Email

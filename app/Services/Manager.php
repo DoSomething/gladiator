@@ -69,7 +69,7 @@ class Manager
 
         foreach ($users as $user) {
             $details = [
-                $user->id,
+                $user->northstar_id,
                 isset($user->first_name) ? $user->first_name : '',
                 isset($user->last_name) ? $user->last_name : '',
                 isset($user->email) ? $user->email : '',
@@ -347,13 +347,13 @@ class Manager
 
             // Provide info on user & reportback ids
             if (isset($options['includeUserIds']) && $options['includeUserIds']) {
-                $topThree[$key]['northstar_id'] = $user->id;
+                $topThree[$key]['northstar_id'] = $user->northstar_id;
                 $topThree[$key]['reportback_id'] = $user->reportback->id;
             }
 
             // Provide image url/captaion of top three leaderboard images
             if (isset($options['competition_id']) && isset($options['message_id'])) {
-                $leaderboardReportbackItem = $this->getLeaderboardPhoto($options['competition_id'], $options['message_id'], $user->id);   //@NOTE calling Phoenix again
+                $leaderboardReportbackItem = $this->getLeaderboardPhoto($options['competition_id'], $options['message_id'], $user->northstar_id);   //@NOTE calling Phoenix again
 
                 if (! isset($leaderboardReportbackItem)) {
                     $reportbackItems = $user->reportback->reportback_items->data;
@@ -450,15 +450,15 @@ class Manager
      */
     protected function appendReportbackToCollection($collection, $parameters)
     {
-        $activity = $this->getActivityForAllUsers($collection->pluck('id')->all(), $parameters);
+        $activity = $this->getActivityForAllUsers($collection->pluck('northstar_id')->all(), $parameters);
 
         $activity = $activity->keyBy(function ($item) {
-            return $item->user->id;
+            return $item->user->northstar_id;
         });
 
         foreach ($collection as $user) {
-            if (isset($activity[$user->id])) {
-                $user->reportback = $activity[$user->id]->reportback;
+            if (isset($activity[$user->northstar_id])) {
+                $user->reportback = $activity[$user->northstar_id]->reportback;
             } else {
                 $user->reportback = null;
             }
@@ -493,7 +493,7 @@ class Manager
      */
     protected function appendReportbackToUserObject($user, $parameters)
     {
-        $activity = $this->getActivityForUser($user->id, $parameters);
+        $activity = $this->getActivityForUser($user->northstar_id, $parameters);
 
         if ($activity) {
             $user->reportback = $activity->reportback;
@@ -565,7 +565,7 @@ class Manager
                 'message' => $message,
                 'contest' => $contest,
                 //@TODO -- fix the Email class so that it doesn't require this property to be sent as an array.
-                'users' => [$this->userRepository->find($user->id)],
+                'users' => [$this->userRepository->find($user->northstar_id)],
                 'test' => false,
             ];
 

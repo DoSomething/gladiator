@@ -29,6 +29,7 @@ class Northstar extends RestApiClient
     public function getAllUsers($inputs = [])
     {
         $response = $this->get('users', $inputs);
+        $response = $this->rewriteMultipleKeys($response);
 
         return is_null($response) ? null : $response;
     }
@@ -43,6 +44,7 @@ class Northstar extends RestApiClient
     public function getUser($type, $id)
     {
         $response = $this->get('users/' . $type . '/' . $id);
+        $response = $this->rewriteKeys($response);
 
         return is_null($response) ? null : $response;
     }
@@ -58,6 +60,46 @@ class Northstar extends RestApiClient
         $response = $this->post('auth/verify', $credentials);
 
         return $response ? true : false;
+    }
+
+    /**
+     * Rewrites 'id' keys in northstar response to 'northstar_id' of multiple users.
+     *
+     * @param  object|null
+     * @return arr
+     */
+
+    public function rewriteMultipleKeys($usersResponse){
+        $newArr = array();
+
+        foreach($usersResponse as $user) {
+            $userArr = array();
+            $newArr[] = $this->rewriteKeys($user);
+        }
+
+        return $newArr;
+    }
+
+    /**
+     * Rewrites 'id' keys in northstar response to 'northstar_id' of a single users.
+     *
+     * @param  object|null
+     * @return arr
+     */
+    public function rewriteKeys($userResponse) {
+        $rewriteKeys = array('id' => 'northstar_id', '_id' => '_northstar_id');
+        $newUserArr = array();
+
+        foreach($userResponse as $key => $value) {
+            if ($key == 'id' || $key == '_id') {
+                $newUserArr [ $rewriteKeys [ $key ] ] = $value;
+            }
+            else {
+                $newUserArr[ $key ] = $value;
+            }
+        }
+
+        return json_decode(json_encode($newUserArr), false);
     }
 
     /**

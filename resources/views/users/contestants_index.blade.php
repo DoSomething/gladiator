@@ -15,7 +15,7 @@
     </div>
 
     @if ($contestants->count())
-        @include('users.partials._table_users', ['users' => $contestants, 'role' => 'Contestants'])
+        @include('users.partials._table_users', ['users' => $contestants, 'role' => ''])
     @endif
 
 @stop
