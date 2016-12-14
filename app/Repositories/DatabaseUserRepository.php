@@ -31,7 +31,7 @@ class DatabaseUserRepository implements UserRepositoryContract
     public function create($account)
     {
         $user = new User;
-        $user->northstar_id = $account->id;
+        $user->northstar_id = $account->northstar_id;
         $user->role = isset($account->role) ? $account->role : null;
         $user->save();
 
@@ -51,6 +51,7 @@ class DatabaseUserRepository implements UserRepositoryContract
 
         if ($account) {
             $account->role = $user->role;
+            
             return $account;
         }
 

@@ -3,9 +3,9 @@
 namespace Gladiator\Http\Controllers;
 
 use Gladiator\Models\User;
+use Illuminate\Http\Request;
 use Gladiator\Services\Manager;
 use Gladiator\Services\Registrar;
-use Illuminate\Http\Request;
 use Gladiator\Http\Requests\UserRequest;
 use Gladiator\Repositories\UserRepositoryContract;
 

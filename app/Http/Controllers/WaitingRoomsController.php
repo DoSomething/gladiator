@@ -3,11 +3,11 @@
 namespace Gladiator\Http\Controllers;
 
 use Gladiator\Models\Contest;
+use Gladiator\Services\Manager;
 use Gladiator\Models\WaitingRoom;
+use Gladiator\Http\Requests\SplitRequest;
 use Gladiator\Http\Requests\WaitingRoomRequest;
 use Gladiator\Repositories\UserRepositoryContract;
-use Gladiator\Services\Manager;
-use Gladiator\Http\Requests\SplitRequest;
 
 class WaitingRoomsController extends Controller
 {
