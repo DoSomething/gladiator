@@ -93,7 +93,7 @@ class Northstar extends RestApiClient
 
         foreach ($userResponse as $key => $value) {
             if ($key == 'id' || $key == '_id') {
-                $newUserArr [$rewriteKeys [$key ]] = $value;
+                $newUserArr [$rewriteKeys [$key]] = $value;
             } else {
                 $newUserArr[$key] = $value;
             }
