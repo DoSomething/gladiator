@@ -31,7 +31,7 @@ class DatabaseUserRepository implements UserRepositoryContract
     public function create($account)
     {
         $user = new User;
-        $user->id = $account->id;
+        $user->northstar_id = $account->northstar_id;
         $user->role = isset($account->role) ? $account->role : null;
         $user->save();
 
@@ -47,8 +47,7 @@ class DatabaseUserRepository implements UserRepositoryContract
     public function find($id)
     {
         $user = User::findOrFail($id);
-
-        $account = $this->northstar->getUser('_id', $user->id);
+        $account = $this->northstar->getUser('_id', $user->northstar_id);
 
         if ($account) {
             $account->role = $user->role;
@@ -74,7 +73,7 @@ class DatabaseUserRepository implements UserRepositoryContract
             return $accounts;
         }
 
-        $accounts = $this->getBatchedCollection(User::all()->pluck('id')->all());
+        $accounts = $this->getBatchedCollection(User::all()->pluck('northstar_id')->all());
 
         return $accounts;
     }
@@ -90,13 +89,13 @@ class DatabaseUserRepository implements UserRepositoryContract
         $users = User::where('role', '=', $role)->get();
 
         if ($users->count()) {
-            $users = $users->keyBy('id');
+            $users = $users->keyBy('northstar_id');
             $ids = array_keys($users->all());
 
             $accounts = $this->getBatchedCollection($ids);
 
             foreach ($accounts as $account) {
-                $account = $this->appendRole($account, $users[$account->id]->role);
+                $account = $this->appendRole($account, $users[$account->northstar_id]->role);
             }
 
             return collect($accounts);
@@ -142,7 +141,7 @@ class DatabaseUserRepository implements UserRepositoryContract
      */
     protected function getBatchedCollection($ids, $size = 50)
     {
-        // @TODO: Should this be a function in Northstar Client?
+        // @TODO: Should this be a function in Northstar Client
         $count = intval(ceil(count($ids) / 50));
         $index = 0;
         $data = [];

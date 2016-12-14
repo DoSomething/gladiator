@@ -26,7 +26,7 @@ class WaitingRoom extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'user_waiting_room', 'waiting_room_id', 'northstar_id');
     }
 
     /**
@@ -74,7 +74,7 @@ class WaitingRoom extends Model
         // Split the users into them
         $index = 0;
         foreach ($users as $user) {
-            array_push($competitions[$index], $user->id);
+            array_push($competitions[$index], $user->northstar_id);
 
             // Reset the index once you go past the total number of groups
             $index++;

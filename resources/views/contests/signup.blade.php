@@ -20,9 +20,9 @@
                     <label class="field-label" for="term">Select user ID type:</label>
                     <div class="select">
                         <select name="term" id="term">
-                            <option value="email" {{! isset($user->id) ? 'selected' : '' }}>Email</option>
+                            <option value="email" {{! isset($user->northstar_id) ? 'selected' : '' }}>Email</option>
                             <option value="mobile">Mobile Phone Number</option>
-                            <option value="id" {{ isset($user->id) ? 'selected' : '' }}>Northstar ID</option>
+                            <option value="id" {{ isset($user->northstar_id) ? 'selected' : '' }}>Northstar ID</option>
                             <option value="drupal_id">Phoenix ID</option>
                         </select>
                     </div>

@@ -2,15 +2,15 @@
 
 namespace Gladiator\Http\Controllers;
 
+use Gladiator\Models\User;
 use Gladiator\Models\Contest;
 use Gladiator\Models\Message;
-use Gladiator\Models\User;
 use Gladiator\Services\Manager;
 use Gladiator\Services\Registrar;
 use Gladiator\Models\MessageSetting;
 use Gladiator\Http\Requests\ContestRequest;
-use Gladiator\Http\Requests\SignupUserRequest;
 use Gladiator\Repositories\MessageRepository;
+use Gladiator\Http\Requests\SignupUserRequest;
 
 class ContestsController extends Controller
 {
@@ -34,7 +34,6 @@ class ContestsController extends Controller
     public function index()
     {
         $contests = Contest::all();
-
         $contests = $this->manager->appendCampaign($contests);
 
         return view('contests.index', compact('contests'));

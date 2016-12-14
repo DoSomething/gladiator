@@ -164,6 +164,7 @@ return [
         Maknz\Slack\Laravel\ServiceProvider::class,
         Aws\Laravel\AwsServiceProvider::class,
 
+        DoSomething\Gateway\Laravel\GatewayServiceProvider::class,
     ],
 
     /*

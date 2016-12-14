@@ -10,7 +10,7 @@
     <div class="container">
         <div class="wrapper">
             <div class="container__block">
-                <form method="POST" action="{{ route('users.update', $user->id) }}">
+                <form method="POST" action="{{ route('users.update', $user->northstar_id) }}">
                     {{ method_field('PATCH') }}
 
                     @include('users.partials._form_users')

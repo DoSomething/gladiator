@@ -5,8 +5,8 @@ namespace Gladiator\Http\Controllers\Api;
 use Log;
 use Gladiator\Models\User;
 use Gladiator\Models\Contest;
-use Gladiator\Services\Registrar;
 use Gladiator\Services\Manager;
+use Gladiator\Services\Registrar;
 use Gladiator\Http\Requests\UserRequest;
 use Gladiator\Http\Transformers\UserTransformer;
 use Gladiator\Repositories\UserRepositoryContract;
@@ -92,7 +92,7 @@ class UsersController extends ApiController
             return $this->item($user);
         }
 
-        $contest->waitingRoom->users()->attach($user->id);
+        $contest->waitingRoom->users()->attach($user->northstar_id);
         $contest = $this->manager->appendCampaign($contest);
 
         // Fire off welcome Email

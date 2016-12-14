@@ -15,9 +15,17 @@ return [
     */
 
     'northstar' => [
-        'uri' => env('NORTHSTAR_URI'),
+        'grant' => 'authorization_code',
+        'url' => env('NORTHSTAR_URI'),
         'version' => 'v1',
         'api_key' => env('NORTHSTAR_API_KEY'),
+
+        'authorization_code' => [
+            'client_id' => env('NORTHSTAR_CLIENT_ID'),
+            'client_secret' => env('NORTHSTAR_CLIENT_SECRET'),
+            'scope' => ['user', 'role:admin', 'role:staff'],
+            'redirect_uri' => '/login',
+        ],
     ],
 
     'mailgun' => [

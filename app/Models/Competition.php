@@ -25,7 +25,7 @@ class Competition extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'competition_user', 'competition_id', 'northstar_id');
     }
 
     /**

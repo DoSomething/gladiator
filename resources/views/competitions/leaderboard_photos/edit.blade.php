@@ -20,9 +20,9 @@
                     @foreach ($topThree as $index => $reportback)
                     <div class="form-item -padded">
                         <h2>{{$reportback['place']}} Place: {{$reportback['first_name']}}</h2>
-                        <label class="field-label" for="user_id_{{$index}}">User ID: </label>
-                        <label>{{ $reportback['user_id']}}</label>
-                        <input type="text" name="user_id_{{$index}}" id="user_id_{{$index}}" class="text-field" value="{{ $reportback['user_id']}}" hidden/>
+                        <label class="field-label" for="northstar_id_{{$index}}">User ID: </label>
+                        <label>{{ $reportback['northstar_id']}}</label>
+                        <input type="text" name="northstar_id_{{$index}}" id="northstar_id_{{$index}}" class="text-field" value="{{ $reportback['northstar_id']}}" hidden/>
                     </div>
 
                     <div class="form-item -padded">

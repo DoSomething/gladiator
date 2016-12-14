@@ -2,15 +2,15 @@
 
 namespace Gladiator\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 use Gladiator\Models\Contest;
-use Gladiator\Models\Competition;
 use Gladiator\Models\Message;
+use Gladiator\Services\Manager;
+use Gladiator\Models\Competition;
 use Gladiator\Events\QueueMessageRequest;
 use Gladiator\Repositories\MessageRepository;
 use Gladiator\Repositories\UserRepositoryContract;
-use Gladiator\Services\Manager;
-use Auth;
 
 class MessagesController extends Controller
 {
@@ -113,7 +113,7 @@ class MessagesController extends Controller
         // Send test emails to authenticated user.
         if (request('test')) {
             $user = Auth::user();
-            $user = $this->userRepository->find($user->id);
+            $user = $this->userRepository->find($user->northstar_id);
             $user = $this->manager->appendReportback($user, []);
 
             $users = [$user];

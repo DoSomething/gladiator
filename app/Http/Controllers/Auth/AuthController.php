@@ -2,9 +2,9 @@
 
 namespace Gladiator\Http\Controllers\Auth;
 
+use Psr\Http\Message\ResponseInterface;
 use Gladiator\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Psr\Http\Message\ServerRequestInterface;
 
 class AuthController extends Controller
 {
@@ -19,29 +19,40 @@ class AuthController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
     /**
      * Where to redirect users after login / registration.
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/contests';
 
     /**
      * Where to redirect users after logout.
      *
      * @var string
      */
-    protected $redirectAfterLogout = '/auth/login';
+    protected $redirectAfterLogout = '/';
 
     /**
-     * Create a new authentication controller instance.
+     * Handle a login request to the application.
      *
-     * @return void
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function __construct()
+    public function getLogin(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        return gateway('northstar')->authorize($request, $response, $this->redirectTo);
+    }
+
+    /**
+     * Handle a logout request to the application.
+     *
+     * @param ResponseInterface $response
+     * @return ResponseInterface
+     */
+    public function getLogout(ResponseInterface $response)
+    {
+        return gateway('northstar')->logout($response, $this->redirectAfterLogout);
     }
 }
