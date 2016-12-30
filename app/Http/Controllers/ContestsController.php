@@ -59,19 +59,20 @@ class ContestsController extends Controller
      */
     public function store(ContestRequest $request)
     {
-        $contest = Contest::create([
-            'campaign_id' => $request->input('campaign_id'),
-            'campaign_run_id' => $request->input('campaign_run_id'),
-            'sender_email' => $request->input('sender_email'),
-            'sender_name' => $request->input('sender_name'),
-        ]);
+        return "hi";
+        // $contest = Contest::create([
+        //     'campaign_id' => $request->input('campaign_id'),
+        //     'campaign_run_id' => $request->input('campaign_run_id'),
+        //     'sender_email' => $request->input('sender_email'),
+        //     'sender_name' => $request->input('sender_name'),
+        // ]);
 
-        $contest->waitingRoom->fill($request->only(['signup_start_date', 'signup_end_date']))->save();
+        // $contest->waitingRoom->fill($request->only(['signup_start_date', 'signup_end_date']))->save();
 
-        $repository = new MessageRepository;
-        $repository->createMessagesForContest($contest, $request->input('messages'));
+        // $repository = new MessageRepository;
+        // $repository->createMessagesForContest($contest, $request->input('messages'));
 
-        return redirect()->action('ContestsController@show', $contest->id)->with('status', 'Contest has been saved!');
+        // return redirect()->action('ContestsController@show', $contest->id)->with('status', 'Contest has been saved!');
     }
 
     /**

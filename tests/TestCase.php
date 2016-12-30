@@ -16,6 +16,21 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      */
     protected $baseUrl = 'http://localhost';
 
+    /**
+     * A Faker generator instance
+     *
+     * @var \Faker\Generator
+     */
+    protected $faker;
+
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        // Get a new Faker generator from Laravel.
+        $this->faker = app(\Faker\Generator::class);
+    }
 
     /**
      * Set the currently logged in user to be a "fake" administrator.
