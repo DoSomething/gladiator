@@ -100,6 +100,10 @@ class RestApiClient
      */
     public function getJson($response, $asArray = false)
     {
+        if (! isset($response)) {
+            return null;
+        }
+        
         return json_decode($response->getBody(), $asArray);
     }
 
@@ -132,6 +136,10 @@ class RestApiClient
             return $this->client->request($method, $path, $options);
         } catch (RequestException $error) {
             $response = $this->getJson($error->getResponse());
+            if (! isset($response)) {
+                return;
+            }
+
             $response = $this->setErrorCode($response, $error->getCode());
 
             if ($error->getCode() === 404) {
