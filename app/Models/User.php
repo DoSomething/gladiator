@@ -2,29 +2,17 @@
 
 namespace Gladiator\Models;
 
-use Illuminate\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
-use DoSomething\Gateway\Laravel\HasNorthstarToken;
-use DoSomething\Gateway\Contracts\NorthstarUserContract;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Gladiator\Services\Northstar\Exceptions\NorthstarUserNotFoundException;
+use Illuminate\Foundation\Auth\User as BaseUser;
 
-class User extends Model implements AuthenticatableContract, NorthstarUserContract
+class User extends BaseUser
 {
-    use Authenticatable, HasNorthstarToken;
-
     /**
      * Indicates if the IDs are auto-incrementing.
      *
      * @var bool
      */
     public $incrementing = false;
-
-    /**
-     * The primary key for the model.
-     *
-     * @var string
-     */
-    public $primaryKey = 'northstar_id';
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -51,7 +39,7 @@ class User extends Model implements AuthenticatableContract, NorthstarUserContra
      */
     public function competitions()
     {
-        return $this->belongsToMany(Competition::class, 'competition_user', 'northstar_id', 'competition_id');
+        return $this->belongsToMany(Competition::class);
     }
 
     /**
@@ -59,18 +47,18 @@ class User extends Model implements AuthenticatableContract, NorthstarUserContra
      */
     public function waitingRooms()
     {
-        return $this->belongsToMany(WaitingRoom::class, 'user_waiting_room', 'northstar_id', 'waiting_room_id');
+        return $this->belongsToMany(WaitingRoom::class);
     }
 
     /**
      * Check if user has specified role.
      *
-     * @param  array|mixed $roles -role(s) to check
+     * @param  string|array
      * @return bool
      */
     public function hasRole($roles)
     {
-        $roles = is_array($roles) ? $roles : func_get_arg();
+        $roles = is_array($roles) ? $roles : [$roles];
 
         return in_array($this->role, $roles);
     }

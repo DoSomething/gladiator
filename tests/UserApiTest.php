@@ -25,13 +25,12 @@ class UserApiTest extends TestCase
      */
     public function testUserApiReturnsUsers()
     {
-        // $users = factory(User::class, 2)->create();
-        $users = factory(User::class)->create();
+        $users = factory(User::class, 2)->create();
 
         $this->json('GET', 'api/v1/users')
              ->seeJsonStructure([
                 '*' => [
-                    'northstar_id', 'created_at', 'updated_at', 'role',
+                    'id', 'created_at', 'updated_at', 'role',
                 ]
             ]);
     }

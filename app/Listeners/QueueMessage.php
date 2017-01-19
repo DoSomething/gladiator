@@ -3,12 +3,12 @@
 namespace Gladiator\Listeners;
 
 use Log;
-use Illuminate\Mail\Mailer;
-use Gladiator\Models\Message;
-use Gladiator\Services\Email;
 use Swift_RfcComplianceException;
+use Illuminate\Mail\Mailer;
 use Gladiator\Events\QueueMessageRequest;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Gladiator\Models\Message;
+use Gladiator\Services\Email;
 
 class QueueMessage implements ShouldQueue
 {

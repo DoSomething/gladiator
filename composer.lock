@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "7400a015cfb1a2cd6f842fd1f9acc05a",
+    "hash": "5d5a763fba603f085d022a2a5e78b5f0",
+    "content-hash": "274260f95b7490879d52acb442f7c6dd",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -84,7 +85,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2016-08-04T21:27:47+00:00"
+            "time": "2016-08-04 21:27:47"
         },
         {
             "name": "aws/aws-sdk-php-laravel",
@@ -140,7 +141,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2016-01-18T06:57:07+00:00"
+            "time": "2016-01-18 06:57:07"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -194,7 +195,7 @@
                 "class",
                 "preload"
             ],
-            "time": "2015-11-09T22:51:51+00:00"
+            "time": "2015-11-09 22:51:51"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -227,7 +228,7 @@
                 "MIT"
             ],
             "description": "implementation of xdg base directory specification for php",
-            "time": "2014-10-24T07:27:01+00:00"
+            "time": "2014-10-24 07:27:01"
         },
         {
             "name": "doctrine/annotations",
@@ -295,7 +296,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2015-08-31T12:32:49+00:00"
+            "time": "2015-08-31 12:32:49"
         },
         {
             "name": "doctrine/cache",
@@ -365,7 +366,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2015-12-31T16:37:02+00:00"
+            "time": "2015-12-31 16:37:02"
         },
         {
             "name": "doctrine/collections",
@@ -431,7 +432,7 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2015-04-14T22:21:58+00:00"
+            "time": "2015-04-14 22:21:58"
         },
         {
             "name": "doctrine/common",
@@ -504,7 +505,7 @@
                 "persistence",
                 "spl"
             ],
-            "time": "2015-12-25T13:18:31+00:00"
+            "time": "2015-12-25 13:18:31"
         },
         {
             "name": "doctrine/dbal",
@@ -575,7 +576,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2016-01-05T22:11:12+00:00"
+            "time": "2016-01-05 22:11:12"
         },
         {
             "name": "doctrine/inflector",
@@ -642,7 +643,7 @@
                 "singularize",
                 "string"
             ],
-            "time": "2015-11-06T14:35:42+00:00"
+            "time": "2015-11-06 14:35:42"
         },
         {
             "name": "doctrine/lexer",
@@ -696,167 +697,7 @@
                 "lexer",
                 "parser"
             ],
-            "time": "2014-09-09T13:34:57+00:00"
-        },
-        {
-            "name": "dosomething/gateway",
-            "version": "v1.0.0-rc14",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DoSomething/gateway.git",
-                "reference": "2de6ade1b724fc93353545996426ecee49b7cd7e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DoSomething/gateway/zipball/2de6ade1b724fc93353545996426ecee49b7cd7e",
-                "reference": "2de6ade1b724fc93353545996426ecee49b7cd7e",
-                "shasum": ""
-            },
-            "require": {
-                "giggsey/libphonenumber-for-php": "~7.0",
-                "guzzlehttp/guzzle": "^6.2.1",
-                "lcobucci/jwt": "^3.1",
-                "league/oauth2-client": "~1.4",
-                "nesbot/carbon": "~1.14",
-                "symfony/psr-http-message-bridge": "^1.0",
-                "zendframework/zend-diactoros": "^1.3"
-            },
-            "require-dev": {
-                "illuminate/database": "^5.2",
-                "phpunit/phpunit": "^4.8"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "DoSomething\\Gateway\\": "src/"
-                },
-                "files": [
-                    "src/Laravel/helpers.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "David Furnes",
-                    "email": "dfurnes@dosomething.org"
-                }
-            ],
-            "description": "Standard PHP API client for DoSomething.org services.",
-            "time": "2016-10-06T20:04:26+00:00"
-        },
-        {
-            "name": "giggsey/libphonenumber-for-php",
-            "version": "7.7.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/giggsey/libphonenumber-for-php.git",
-                "reference": "1f7ab8d8c0d56385e6d19b118e3827a526b85323"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/1f7ab8d8c0d56385e6d19b118e3827a526b85323",
-                "reference": "1f7ab8d8c0d56385e6d19b118e3827a526b85323",
-                "shasum": ""
-            },
-            "require": {
-                "ext-mbstring": "*",
-                "giggsey/locale": "^1.0",
-                "php": ">=5.3.2"
-            },
-            "require-dev": {
-                "pear/pear-core-minimal": "^1.9",
-                "pear/pear_exception": "^1.0",
-                "pear/versioncontrol_git": "dev-master",
-                "phing/phing": "^2.7",
-                "phpunit/phpunit": "^4.8|^5.0",
-                "satooshi/php-coveralls": "^1.0",
-                "symfony/console": "^2.8|^3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "7.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "libphonenumber": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Joshua Gigg",
-                    "email": "giggsey@gmail.com",
-                    "homepage": "http://giggsey.com/"
-                }
-            ],
-            "description": "PHP Port of Google's libphonenumber",
-            "homepage": "https://github.com/giggsey/libphonenumber-for-php",
-            "keywords": [
-                "geocoding",
-                "geolocation",
-                "libphonenumber",
-                "mobile",
-                "phonenumber",
-                "validation"
-            ],
-            "time": "2016-11-10T12:34:17+00:00"
-        },
-        {
-            "name": "giggsey/locale",
-            "version": "1.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/giggsey/Locale.git",
-                "reference": "8238764fa3f2c5bd8bdf981e2e019401d49229e3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/Locale/zipball/8238764fa3f2c5bd8bdf981e2e019401d49229e3",
-                "reference": "8238764fa3f2c5bd8bdf981e2e019401d49229e3",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2"
-            },
-            "require-dev": {
-                "pear/pear-core-minimal": "^1.9",
-                "pear/pear_exception": "^1.0",
-                "pear/versioncontrol_git": "dev-master",
-                "phing/phing": "~2.7",
-                "phpunit/phpunit": "^4.8|^5.0",
-                "satooshi/php-coveralls": "^1.0",
-                "symfony/console": "^2.8|^3.0",
-                "symfony/filesystem": "^2.8|^3.0",
-                "symfony/finder": "^2.8|^3.0",
-                "symfony/process": "^2.8|^3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Giggsey\\Locale\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Joshua Gigg",
-                    "email": "giggsey@gmail.com",
-                    "homepage": "http://giggsey.com/"
-                }
-            ],
-            "description": "Locale functions required by libphonenumber-for-php",
-            "time": "2016-10-24T20:49:55+00:00"
+            "time": "2014-09-09 13:34:57"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -918,7 +759,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2016-07-15T17:22:37+00:00"
+            "time": "2016-07-15 17:22:37"
         },
         {
             "name": "guzzlehttp/promises",
@@ -969,7 +810,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2016-05-18T16:56:05+00:00"
+            "time": "2016-05-18 16:56:05"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -1027,108 +868,7 @@
                 "stream",
                 "uri"
             ],
-            "time": "2016-06-24T23:00:38+00:00"
-        },
-        {
-            "name": "ircmaxell/random-lib",
-            "version": "v1.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ircmaxell/RandomLib.git",
-                "reference": "e9e0204f40e49fa4419946c677eccd3fa25b8cf4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ircmaxell/RandomLib/zipball/e9e0204f40e49fa4419946c677eccd3fa25b8cf4",
-                "reference": "e9e0204f40e49fa4419946c677eccd3fa25b8cf4",
-                "shasum": ""
-            },
-            "require": {
-                "ircmaxell/security-lib": "^1.1",
-                "php": ">=5.3.2"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^1.11",
-                "mikey179/vfsstream": "^1.6",
-                "phpunit/phpunit": "^4.8|^5.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "RandomLib": "lib"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Anthony Ferrara",
-                    "email": "ircmaxell@ircmaxell.com",
-                    "homepage": "http://blog.ircmaxell.com"
-                }
-            ],
-            "description": "A Library For Generating Secure Random Numbers",
-            "homepage": "https://github.com/ircmaxell/RandomLib",
-            "keywords": [
-                "cryptography",
-                "random",
-                "random-numbers",
-                "random-strings"
-            ],
-            "time": "2016-09-07T15:52:06+00:00"
-        },
-        {
-            "name": "ircmaxell/security-lib",
-            "version": "v1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ircmaxell/SecurityLib.git",
-                "reference": "f3db6de12c20c9bcd1aa3db4353a1bbe0e44e1b5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ircmaxell/SecurityLib/zipball/f3db6de12c20c9bcd1aa3db4353a1bbe0e44e1b5",
-                "reference": "f3db6de12c20c9bcd1aa3db4353a1bbe0e44e1b5",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2"
-            },
-            "require-dev": {
-                "mikey179/vfsstream": "1.1.*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "SecurityLib": "lib"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Anthony Ferrara",
-                    "email": "ircmaxell@ircmaxell.com",
-                    "homepage": "http://blog.ircmaxell.com"
-                }
-            ],
-            "description": "A Base Security Library",
-            "homepage": "https://github.com/ircmaxell/SecurityLib",
-            "time": "2015-03-20T14:31:23+00:00"
+            "time": "2016-06-24 23:00:38"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -1171,7 +911,7 @@
                     "homepage": "http://www.acci.cz"
                 }
             ],
-            "time": "2014-04-08T15:00:19+00:00"
+            "time": "2014-04-08 15:00:19"
         },
         {
             "name": "jakub-onderka/php-console-highlighter",
@@ -1215,7 +955,7 @@
                     "homepage": "http://www.acci.cz/"
                 }
             ],
-            "time": "2015-04-20T18:58:01+00:00"
+            "time": "2015-04-20 18:58:01"
         },
         {
             "name": "jeremeamia/SuperClosure",
@@ -1273,7 +1013,7 @@
                 "serialize",
                 "tokenizer"
             ],
-            "time": "2015-12-05T17:17:57+00:00"
+            "time": "2015-12-05 17:17:57"
         },
         {
             "name": "laravel/framework",
@@ -1401,7 +1141,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2016-04-01T18:26:27+00:00"
+            "time": "2016-04-01 18:26:27"
         },
         {
             "name": "laravelcollective/html",
@@ -1455,65 +1195,7 @@
             ],
             "description": "HTML and Form Builders for the Laravel Framework",
             "homepage": "http://laravelcollective.com",
-            "time": "2016-01-27T22:29:54+00:00"
-        },
-        {
-            "name": "lcobucci/jwt",
-            "version": "3.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/lcobucci/jwt.git",
-                "reference": "ddce703826f9c5229781933b1a39069e38e6a0f3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/ddce703826f9c5229781933b1a39069e38e6a0f3",
-                "reference": "ddce703826f9c5229781933b1a39069e38e6a0f3",
-                "shasum": ""
-            },
-            "require": {
-                "ext-openssl": "*",
-                "php": ">=5.5"
-            },
-            "require-dev": {
-                "mdanter/ecc": "~0.3.1",
-                "mikey179/vfsstream": "~1.5",
-                "phpmd/phpmd": "~2.2",
-                "phpunit/php-invoker": "~1.1",
-                "phpunit/phpunit": "~4.5",
-                "squizlabs/php_codesniffer": "~2.3"
-            },
-            "suggest": {
-                "mdanter/ecc": "Required to use Elliptic Curves based algorithms."
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Lcobucci\\JWT\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Luís Otávio Cobucci Oblonczyk",
-                    "email": "lcobucci@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A simple library to work with JSON Web Token and JSON Web Signature",
-            "keywords": [
-                "JWS",
-                "jwt"
-            ],
-            "time": "2016-10-31T20:09:32+00:00"
+            "time": "2016-01-27 22:29:54"
         },
         {
             "name": "league/csv",
@@ -1570,7 +1252,7 @@
                 "read",
                 "write"
             ],
-            "time": "2015-12-11T09:28:14+00:00"
+            "time": "2015-12-11 09:28:14"
         },
         {
             "name": "league/flysystem",
@@ -1653,7 +1335,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2016-07-18T12:22:57+00:00"
+            "time": "2016-07-18 12:22:57"
         },
         {
             "name": "league/flysystem-aws-s3-v3",
@@ -1700,7 +1382,7 @@
                 }
             ],
             "description": "Flysystem adapter for the AWS S3 SDK v3.x",
-            "time": "2016-06-21T21:34:35+00:00"
+            "time": "2016-06-21 21:34:35"
         },
         {
             "name": "league/fractal",
@@ -1763,70 +1445,7 @@
                 "league",
                 "rest"
             ],
-            "time": "2015-10-07T14:48:58+00:00"
-        },
-        {
-            "name": "league/oauth2-client",
-            "version": "1.4.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thephpleague/oauth2-client.git",
-                "reference": "01f955b85040b41cf48885b078f7fd39a8be5411"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth2-client/zipball/01f955b85040b41cf48885b078f7fd39a8be5411",
-                "reference": "01f955b85040b41cf48885b078f7fd39a8be5411",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "guzzlehttp/guzzle": "~6.0",
-                "ircmaxell/random-lib": "~1.1",
-                "php": ">=5.5.0"
-            },
-            "require-dev": {
-                "jakub-onderka/php-parallel-lint": "0.8.*",
-                "mockery/mockery": "~0.9",
-                "phpunit/phpunit": "~4.0",
-                "satooshi/php-coveralls": "0.6.*",
-                "squizlabs/php_codesniffer": "~2.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "League\\OAuth2\\Client\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Alex Bilbie",
-                    "email": "hello@alexbilbie.com",
-                    "homepage": "http://www.alexbilbie.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "OAuth 2.0 Client Library",
-            "keywords": [
-                "Authentication",
-                "SSO",
-                "authorization",
-                "identity",
-                "idp",
-                "oauth",
-                "oauth2",
-                "single sign on"
-            ],
-            "time": "2016-07-28T13:20:43+00:00"
+            "time": "2015-10-07 14:48:58"
         },
         {
             "name": "maknz/slack",
@@ -1875,7 +1494,7 @@
                 "laravel",
                 "slack"
             ],
-            "time": "2015-06-03T03:35:16+00:00"
+            "time": "2015-06-03 03:35:16"
         },
         {
             "name": "maknz/slack-laravel",
@@ -1916,7 +1535,7 @@
                 "laravel",
                 "slack"
             ],
-            "time": "2016-06-25T06:08:23+00:00"
+            "time": "2016-06-25 06:08:23"
         },
         {
             "name": "monolog/monolog",
@@ -1994,7 +1613,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2016-07-02T14:02:10+00:00"
+            "time": "2016-07-02 14:02:10"
         },
         {
             "name": "mtdowling/cron-expression",
@@ -2038,7 +1657,7 @@
                 "cron",
                 "schedule"
             ],
-            "time": "2016-01-26T21:23:30+00:00"
+            "time": "2016-01-26 21:23:30"
         },
         {
             "name": "mtdowling/jmespath.php",
@@ -2093,7 +1712,7 @@
                 "json",
                 "jsonpath"
             ],
-            "time": "2016-01-05T18:25:05+00:00"
+            "time": "2016-01-05 18:25:05"
         },
         {
             "name": "nesbot/carbon",
@@ -2140,7 +1759,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2015-11-04T20:07:17+00:00"
+            "time": "2015-11-04 20:07:17"
         },
         {
             "name": "nikic/php-parser",
@@ -2191,7 +1810,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2016-04-19T13:41:41+00:00"
+            "time": "2016-04-19 13:41:41"
         },
         {
             "name": "paragonie/random_compat",
@@ -2239,7 +1858,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-03-18T20:34:03+00:00"
+            "time": "2016-03-18 20:34:03"
         },
         {
             "name": "predis/predis",
@@ -2289,7 +1908,7 @@
                 "predis",
                 "redis"
             ],
-            "time": "2015-07-30T18:34:15+00:00"
+            "time": "2015-07-30 18:34:15"
         },
         {
             "name": "psr/http-message",
@@ -2338,7 +1957,7 @@
                 "request",
                 "response"
             ],
-            "time": "2015-05-04T20:22:00+00:00"
+            "time": "2015-05-04 20:22:00"
         },
         {
             "name": "psr/log",
@@ -2376,7 +1995,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2012-12-21T11:40:51+00:00"
+            "time": "2012-12-21 11:40:51"
         },
         {
             "name": "psy/psysh",
@@ -2448,7 +2067,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2016-03-09T05:03:14+00:00"
+            "time": "2016-03-09 05:03:14"
         },
         {
             "name": "spatie/db-dumper",
@@ -2498,7 +2117,7 @@
                 "mysqldump",
                 "spatie"
             ],
-            "time": "2016-06-14T13:23:01+00:00"
+            "time": "2016-06-14 13:23:01"
         },
         {
             "name": "spatie/laravel-backup",
@@ -2561,7 +2180,7 @@
                 "laravel-backup",
                 "spatie"
             ],
-            "time": "2016-08-07T10:37:03+00:00"
+            "time": "2016-08-07 10:37:03"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2614,7 +2233,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2016-07-08T11:51:25+00:00"
+            "time": "2016-07-08 11:51:25"
         },
         {
             "name": "symfony/console",
@@ -2674,7 +2293,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2016-06-29T07:02:21+00:00"
+            "time": "2016-06-29 07:02:21"
         },
         {
             "name": "symfony/debug",
@@ -2731,7 +2350,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2016-06-29T05:40:00+00:00"
+            "time": "2016-06-29 05:40:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -2791,7 +2410,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2016-06-29T05:41:56+00:00"
+            "time": "2016-06-29 05:41:56"
         },
         {
             "name": "symfony/finder",
@@ -2840,7 +2459,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2016-06-29T05:40:00+00:00"
+            "time": "2016-06-29 05:40:00"
         },
         {
             "name": "symfony/http-foundation",
@@ -2893,7 +2512,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2016-06-29T07:02:21+00:00"
+            "time": "2016-06-29 07:02:21"
         },
         {
             "name": "symfony/http-kernel",
@@ -2975,7 +2594,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
-            "time": "2016-06-30T16:30:17+00:00"
+            "time": "2016-06-30 16:30:17"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -3034,7 +2653,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-05-18T14:26:46+00:00"
+            "time": "2016-05-18 14:26:46"
         },
         {
             "name": "symfony/polyfill-php56",
@@ -3090,7 +2709,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-05-18T14:26:46+00:00"
+            "time": "2016-05-18 14:26:46"
         },
         {
             "name": "symfony/polyfill-util",
@@ -3142,7 +2761,7 @@
                 "polyfill",
                 "shim"
             ],
-            "time": "2016-05-18T14:26:46+00:00"
+            "time": "2016-05-18 14:26:46"
         },
         {
             "name": "symfony/process",
@@ -3191,67 +2810,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2016-06-29T05:40:00+00:00"
-        },
-        {
-            "name": "symfony/psr-http-message-bridge",
-            "version": "v1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/psr-http-message-bridge.git",
-                "reference": "66085f246d3893cbdbcec5f5ad15ac60546cf0de"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/psr-http-message-bridge/zipball/66085f246d3893cbdbcec5f5ad15ac60546cf0de",
-                "reference": "66085f246d3893cbdbcec5f5ad15ac60546cf0de",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3",
-                "psr/http-message": "~1.0",
-                "symfony/http-foundation": "~2.3|~3.0"
-            },
-            "require-dev": {
-                "symfony/phpunit-bridge": "~2.7|~3.0"
-            },
-            "suggest": {
-                "psr/http-message-implementation": "To use the HttpFoundation factory",
-                "zendframework/zend-diactoros": "To use the Zend Diactoros factory"
-            },
-            "type": "symfony-bridge",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Bridge\\PsrHttpMessage\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                },
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                }
-            ],
-            "description": "PSR HTTP message bridge",
-            "homepage": "http://symfony.com",
-            "keywords": [
-                "http",
-                "http-message",
-                "psr-7"
-            ],
-            "time": "2016-09-14T18:37:20+00:00"
+            "time": "2016-06-29 05:40:00"
         },
         {
             "name": "symfony/routing",
@@ -3326,7 +2885,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2016-06-29T05:40:00+00:00"
+            "time": "2016-06-29 05:40:00"
         },
         {
             "name": "symfony/translation",
@@ -3390,7 +2949,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2016-06-29T05:40:00+00:00"
+            "time": "2016-06-29 05:40:00"
         },
         {
             "name": "symfony/var-dumper",
@@ -3453,7 +3012,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2016-06-29T05:40:00+00:00"
+            "time": "2016-06-29 05:40:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -3503,57 +3062,7 @@
                 "env",
                 "environment"
             ],
-            "time": "2016-06-14T14:14:52+00:00"
-        },
-        {
-            "name": "zendframework/zend-diactoros",
-            "version": "1.3.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-diactoros.git",
-                "reference": "969ff423d3f201da3ff718a5831bb999bb0669b0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/969ff423d3f201da3ff718a5831bb999bb0669b0",
-                "reference": "969ff423d3f201da3ff718a5831bb999bb0669b0",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.4 || ^7.0",
-                "psr/http-message": "~1.0"
-            },
-            "provide": {
-                "psr/http-message-implementation": "~1.0.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.6 || ^5.5",
-                "squizlabs/php_codesniffer": "^2.3.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.3-dev",
-                    "dev-develop": "1.4-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Zend\\Diactoros\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-2-Clause"
-            ],
-            "description": "PSR HTTP Message implementations",
-            "homepage": "https://github.com/zendframework/zend-diactoros",
-            "keywords": [
-                "http",
-                "psr",
-                "psr-7"
-            ],
-            "time": "2016-10-11T13:25:21+00:00"
+            "time": "2016-06-14 14:14:52"
         }
     ],
     "packages-dev": [
@@ -3609,7 +3118,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2015-06-14T21:17:01+00:00"
+            "time": "2015-06-14 21:17:01"
         },
         {
             "name": "fzaninotto/faker",
@@ -3661,7 +3170,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2015-05-29T06:29:14+00:00"
+            "time": "2015-05-29 06:29:14"
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -3706,7 +3215,7 @@
             "keywords": [
                 "test"
             ],
-            "time": "2015-05-11T14:41:42+00:00"
+            "time": "2015-05-11 14:41:42"
         },
         {
             "name": "mockery/mockery",
@@ -3771,7 +3280,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2015-04-02T19:54:00+00:00"
+            "time": "2015-04-02 19:54:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -3825,7 +3334,7 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2015-12-27T11:43:31+00:00"
+            "time": "2015-12-27 11:43:31"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -3870,7 +3379,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2016-06-10T09:48:41+00:00"
+            "time": "2016-06-10 09:48:41"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -3917,7 +3426,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2016-06-10T07:14:17+00:00"
+            "time": "2016-06-10 07:14:17"
         },
         {
             "name": "phpspec/prophecy",
@@ -3979,7 +3488,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2016-06-07T08:13:47+00:00"
+            "time": "2016-06-07 08:13:47"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -4041,7 +3550,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-10-06T15:47:00+00:00"
+            "time": "2015-10-06 15:47:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -4088,7 +3597,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2015-06-21T13:08:43+00:00"
+            "time": "2015-06-21 13:08:43"
         },
         {
             "name": "phpunit/php-text-template",
@@ -4129,7 +3638,7 @@
             "keywords": [
                 "template"
             ],
-            "time": "2015-06-21T13:50:34+00:00"
+            "time": "2015-06-21 13:50:34"
         },
         {
             "name": "phpunit/php-timer",
@@ -4173,7 +3682,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2016-05-12T18:03:57+00:00"
+            "time": "2016-05-12 18:03:57"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -4222,7 +3731,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2015-09-15T10:49:45+00:00"
+            "time": "2015-09-15 10:49:45"
         },
         {
             "name": "phpunit/phpunit",
@@ -4294,7 +3803,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-03-14T06:16:08+00:00"
+            "time": "2016-03-14 06:16:08"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -4350,7 +3859,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2015-10-02T06:51:40+00:00"
+            "time": "2015-10-02 06:51:40"
         },
         {
             "name": "sebastian/comparator",
@@ -4414,7 +3923,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2015-07-26T15:48:44+00:00"
+            "time": "2015-07-26 15:48:44"
         },
         {
             "name": "sebastian/diff",
@@ -4466,7 +3975,7 @@
             "keywords": [
                 "diff"
             ],
-            "time": "2015-12-08T07:14:41+00:00"
+            "time": "2015-12-08 07:14:41"
         },
         {
             "name": "sebastian/environment",
@@ -4516,7 +4025,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2016-05-17T03:18:57+00:00"
+            "time": "2016-05-17 03:18:57"
         },
         {
             "name": "sebastian/exporter",
@@ -4583,7 +4092,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2016-06-17T09:04:28+00:00"
+            "time": "2016-06-17 09:04:28"
         },
         {
             "name": "sebastian/global-state",
@@ -4634,7 +4143,7 @@
             "keywords": [
                 "global state"
             ],
-            "time": "2015-10-12T03:26:01+00:00"
+            "time": "2015-10-12 03:26:01"
         },
         {
             "name": "sebastian/recursion-context",
@@ -4687,7 +4196,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2015-11-11T19:50:13+00:00"
+            "time": "2015-11-11 19:50:13"
         },
         {
             "name": "sebastian/version",
@@ -4722,7 +4231,7 @@
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
-            "time": "2015-06-21T13:59:46+00:00"
+            "time": "2015-06-21 13:59:46"
         },
         {
             "name": "symfony/css-selector",
@@ -4775,7 +4284,7 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-04T07:55:57+00:00"
+            "time": "2016-03-04 07:55:57"
         },
         {
             "name": "symfony/dom-crawler",
@@ -4831,7 +4340,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-23T13:23:25+00:00"
+            "time": "2016-03-23 13:23:25"
         },
         {
             "name": "symfony/yaml",
@@ -4880,7 +4389,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-06-29T05:41:56+00:00"
+            "time": "2016-06-29 05:41:56"
         },
         {
             "name": "webmozart/assert",
@@ -4929,14 +4438,12 @@
                 "check",
                 "validate"
             ],
-            "time": "2015-08-24T13:29:44+00:00"
+            "time": "2015-08-24 13:29:44"
         }
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "dosomething/gateway": 5
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

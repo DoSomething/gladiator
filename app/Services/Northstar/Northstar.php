@@ -11,7 +11,8 @@ class Northstar extends RestApiClient
      */
     public function __construct()
     {
-        $base_uri = config('services.northstar.url') . '/' . config('services.northstar.version') . '/';
+        $base_uri = config('services.northstar.uri') . '/' . config('services.northstar.version') . '/';
+
         $headers = [
             'X-DS-REST-API-Key' => config('services.northstar.api_key'),
         ];
@@ -29,7 +30,6 @@ class Northstar extends RestApiClient
     public function getAllUsers($inputs = [])
     {
         $response = $this->get('users', $inputs);
-        $response = $this->rewriteMultipleKeys($response);
 
         return is_null($response) ? null : $response;
     }
@@ -44,7 +44,6 @@ class Northstar extends RestApiClient
     public function getUser($type, $id)
     {
         $response = $this->get('users/' . $type . '/' . $id);
-        $response = $this->rewriteKeys($response);
 
         return is_null($response) ? null : $response;
     }
@@ -60,46 +59,6 @@ class Northstar extends RestApiClient
         $response = $this->post('auth/verify', $credentials);
 
         return $response ? true : false;
-    }
-
-    /**
-     * Rewrites 'id' keys in northstar response to 'northstar_id' of multiple users.
-     *
-     * @param  object|null
-     * @return arr
-     */
-    public function rewriteMultipleKeys($usersResponse)
-    {
-        $newArr = [];
-
-        foreach ($usersResponse as $user) {
-            $userArr = [];
-            $newArr[] = $this->rewriteKeys($user);
-        }
-
-        return $newArr;
-    }
-
-    /**
-     * Rewrites 'id' keys in northstar response to 'northstar_id' of a single users.
-     *
-     * @param  object|null
-     * @return arr
-     */
-    public function rewriteKeys($userResponse)
-    {
-        $rewriteKeys = ['id' => 'northstar_id', '_id' => '_northstar_id'];
-        $newUserArr = [];
-
-        foreach ($userResponse as $key => $value) {
-            if ($key == 'id' || $key == '_id') {
-                $newUserArr [$rewriteKeys [$key]] = $value;
-            } else {
-                $newUserArr[$key] = $value;
-            }
-        }
-
-        return json_decode(json_encode($newUserArr), false);
     }
 
     /**

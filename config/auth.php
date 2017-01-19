@@ -66,7 +66,7 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'northstar',
+            'driver' => 'eloquent',
             'model' => Gladiator\Models\User::class,
         ],
         'gladiator' => [
@@ -108,5 +108,4 @@ return [
         ],
     ],
 
-    'model' => Gladiator\Models\User::class,
 ];

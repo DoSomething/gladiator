@@ -2,8 +2,8 @@
 
 use Gladiator\Models\Contest;
 use Gladiator\Models\Message;
-use Illuminate\Database\Seeder;
 use Gladiator\Repositories\MessageRepository;
+use Illuminate\Database\Seeder;
 
 class MessageTableSeeder extends Seeder
 {

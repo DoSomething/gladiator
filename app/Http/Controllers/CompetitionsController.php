@@ -3,17 +3,17 @@
 namespace Gladiator\Http\Controllers;
 
 use Gladiator\Models\User;
-use Illuminate\Http\Request;
 use Gladiator\Models\Contest;
 use Gladiator\Models\Message;
+use Gladiator\Models\FeaturedReportback;
+use Gladiator\Models\LeaderboardPhoto;
 use Gladiator\Services\Manager;
 use Gladiator\Models\Competition;
-use Gladiator\Models\LeaderboardPhoto;
-use Gladiator\Models\FeaturedReportback;
 use Gladiator\Http\Requests\CompetitionRequest;
-use Gladiator\Repositories\UserRepositoryContract;
-use Gladiator\Http\Requests\LeaderboardPhotoRequest;
 use Gladiator\Http\Requests\FeaturedReportbackRequest;
+use Gladiator\Http\Requests\LeaderboardPhotoRequest;
+use Gladiator\Repositories\UserRepositoryContract;
+use Illuminate\Http\Request;
 
 class CompetitionsController extends Controller
 {
@@ -274,7 +274,7 @@ class CompetitionsController extends Controller
         $photos = [];
 
         foreach ($topThree as $key => $user) {
-            $photos[] = LeaderboardPhoto::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('northstar_id', '=', $user['northstar_id'])->first();
+            $photos[] = LeaderboardPhoto::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('user_id', '=', $user['user_id'])->first();
         }
 
         return view('competitions.leaderboard_photos.edit', compact('competition', 'message', 'photos', 'topThree'));
@@ -291,21 +291,21 @@ class CompetitionsController extends Controller
     public function updateLeaderboardPhotos(LeaderboardPhotoRequest $request, Competition $competition, Message $message)
     {
         for ($i = 0; $i <= 2; $i++) {
-            // request format: _method, _token, northstar_id_{{$index}},
+            // request format: _method, _token, user_id_{{$index}},
             //                 reportback_id_{{$index}}, reportback_item_id_{{$index}}
-            $userId = $request->input('northstar_id_'.$i);
+            $userId = $request->input('user_id_'.$i);
             $reportbackId = $request->input('reportback_id_'.$i);
             $reportbackItemId = $request->input('reportback_item_id_'.$i);
 
             // If none of ids null
             if (($userId != 0) && ($reportbackId != 0) && ($reportbackItemId != 0)) {
-                $photo = LeaderboardPhoto::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('northstar_id', '=', $userId)->first();
+                $photo = LeaderboardPhoto::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('user_id', '=', $userId)->first();
 
                 if (! isset($photo)) {
                     $photo = new LeaderboardPhoto;
                     $photo->competition_id = $competition->id;
                     $photo->message_id = $message->id;
-                    $photo->northstar_id = $userId;
+                    $photo->user_id = $userId;
                 }
 
                 $photo->reportback_id = $reportbackId;

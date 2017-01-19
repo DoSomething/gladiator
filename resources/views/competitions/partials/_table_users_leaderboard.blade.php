@@ -21,7 +21,7 @@
                     @foreach ($leaderboard as $user)
                         <tr class="table__row">
                             <td class="table__cell">{{ $user->rank }}</td>
-                            <td class="table__cell"><a href="{{ route('users.show', $user->northstar_id) }}" target="_blank">{{ $user->first_name or 'Anonymous' }} {{ $user->last_initial or '' }}</a></td>
+                            <td class="table__cell"><a href="{{ route('users.show', $user->id) }}" target="_blank">{{ $user->first_name or 'Anonymous' }} {{ $user->last_initial or '' }}</a></td>
                             {{-- <td class="table__cell">{{ $user->email or '' }}</td> --}}
                             <td class="table__cell">{{ $user->reportback->quantity or 'n/a' }}</td>
                             <td class="table__cell">{{ $user->reportback->reportback_items->count_by_status['promoted'] or 'n/a' }}</td>

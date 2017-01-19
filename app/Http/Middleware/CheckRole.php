@@ -3,24 +3,10 @@
 namespace Gladiator\Http\Middleware;
 
 use Closure;
-use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Facades\Auth;
 
 class CheckRole
 {
-    /**
-     * The Guard implementation.
-     */
-    protected $auth;
-
-    /**
-     * Create a new filter instance.
-     * @param Guard $auth
-     */
-    public function __construct(Guard $auth)
-    {
-        $this->auth = $auth;
-    }
-
     /**
      * Handle an incoming request.
      *
@@ -28,12 +14,15 @@ class CheckRole
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, ...$roles)
+    public function handle($request, Closure $next, $guard = null)
     {
-        if ($this->auth->guest() || ! $this->auth->user()->hasRole($roles)) {
+        $roles = array_slice(func_get_args(), 2);
+
+        if (Auth::guest() || ! Auth::user()->hasRole($roles)) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
+                // @TODO: respond with a more custom unauthorized access page or whatevs.
                 return redirect('/');
             }
         }

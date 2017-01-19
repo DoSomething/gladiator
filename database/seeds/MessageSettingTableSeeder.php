@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use Gladiator\Models\MessageSetting;
+use Illuminate\Database\Seeder;
 
 class MessageSettingTableSeeder extends Seeder
 {

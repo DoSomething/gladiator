@@ -13,8 +13,8 @@ class ExampleTest extends TestCase
      */
     public function testExample()
     {
-        $this->asAdminUser()->visit('/contests');
-
+        $this->asAdminUser()->visit('/');
+        
         $this->assertTrue(true);
     }
 }

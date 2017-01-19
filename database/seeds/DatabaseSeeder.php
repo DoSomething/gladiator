@@ -12,9 +12,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(ContestTableSeeder::class);
+        $this->call(UserTableSeeder::class);
         $this->call(MessageSettingTableSeeder::class);
         $this->call(MessageTableSeeder::class);
-        $this->call(UserTableSeeder::class);
 
         // @TODO: We shouldn't be seeding the Competitions for a Contest without afterwards
         // handling and removing the users in that respective Contest's WaitingRoom. It

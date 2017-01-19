@@ -11,14 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-})->middleware('guest');
-
 Route::group(['middleware' => ['web']], function () {
+    Route::get('/', function () {
+        return redirect()->route('contests.index');
+    });
+
     // Authentication
-    Route::get('login', 'Auth\AuthController@getLogin');
-    Route::get('logout', 'Auth\AuthController@getLogout');
+    Route::get('auth/login', 'Auth\AuthController@showLoginForm');
+    Route::post('auth/login', 'Auth\AuthController@login');
+    Route::get('auth/logout', 'Auth\AuthController@logout');
 
     // Competitions
     Route::model('competitions', 'Gladiator\Models\Competition');

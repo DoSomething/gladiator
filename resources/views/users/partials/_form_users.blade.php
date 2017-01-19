@@ -25,16 +25,16 @@
 
 <div class="form-item -padded">
     <label class="field-label" for="id">User identification:</label>
-    <input type="text" name="id" id="id" class="text-field" placeholder="Email, Mobile Phone Number, Northstar ID or Phoenix ID" value="{{ $user->northstar_id or old('id') }}"/>
+    <input type="text" name="id" id="id" class="text-field" placeholder="Email, Mobile Phone Number, Northstar ID or Phoenix ID" value="{{ $user->id or old('id') }}"/>
 </div>
 
 <div class="form-item -padded">
     <label class="field-label" for="term">Select user ID type:</label>
     <div class="select">
         <select name="term" id="term">
-            <option value="email" {{! isset($user->northstar_id) ? 'selected' : '' }}>Email</option>
+            <option value="email" {{! isset($user->id) ? 'selected' : '' }}>Email</option>
             <option value="mobile">Mobile Phone Number</option>
-            <option value="id" {{ isset($user->northstar_id) ? 'selected' : '' }}>Northstar ID</option>
+            <option value="id" {{ isset($user->id) ? 'selected' : '' }}>Northstar ID</option>
             <option value="drupal_id">Phoenix ID</option>
         </select>
     </div>
