@@ -17,7 +17,7 @@ class UserTest extends TestCase
     public function testStoreNewUserUsingRepository()
     {
         $account = (object) [
-            'northstar_id' => str_random(24),
+            'id' => str_random(24),
         ];
 
         $repository = app(UserRepositoryContract::class);
@@ -26,7 +26,7 @@ class UserTest extends TestCase
         $this->assertTrue($user instanceof User);
 
         $this->seeInDatabase('users', [
-            'northstar_id' => $account->northstar_id,
+            'id' => $account->id,
             'role' => null,
         ]);
     }
@@ -45,16 +45,16 @@ class UserTest extends TestCase
         $mock = $this->mock(Northstar::class)
             ->shouldReceive('getUser')
             ->andReturn((object) [
-                'northstar_id' => $model->northstar_id,
+                'id' => $model->id,
                 'first_name' => 'Kallark',
                 // ...
             ]);
 
         $repository = app(UserRepositoryContract::class);
 
-        $user = $repository->find($model->northstar_id);
+        $user = $repository->find($model->id);
 
-        $this->assertEquals($model->northstar_id, $user->northstar_id);
+        $this->assertEquals($model->id, $user->id);
         $this->assertEquals($model->role, $user->role);
         $this->assertEquals('Kallark', $user->first_name);
     }

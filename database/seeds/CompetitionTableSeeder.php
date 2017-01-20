@@ -2,8 +2,8 @@
 
 use Carbon\Carbon;
 use Gladiator\Models\Contest;
-use Illuminate\Database\Seeder;
 use Gladiator\Models\Competition;
+use Illuminate\Database\Seeder;
 
 class CompetitionTableSeeder extends Seeder
 {

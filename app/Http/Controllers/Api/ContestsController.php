@@ -2,10 +2,10 @@
 
 namespace Gladiator\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
+use Gladiator\Http\Transformers\ContestTransformer;
 use Gladiator\Models\Contest;
 use Gladiator\Models\WaitingRoom;
-use Gladiator\Http\Transformers\ContestTransformer;
+use Illuminate\Http\Request;
 
 class ContestsController extends ApiController
 {

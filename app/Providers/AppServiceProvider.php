@@ -3,10 +3,10 @@
 namespace Gladiator\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Gladiator\Services\Northstar\Northstar;
 use Gladiator\Repositories\CacheUserRepository;
 use Gladiator\Repositories\DatabaseUserRepository;
 use Gladiator\Repositories\UserRepositoryContract;
+use Gladiator\Services\Northstar\Northstar;
 
 class AppServiceProvider extends ServiceProvider
 {

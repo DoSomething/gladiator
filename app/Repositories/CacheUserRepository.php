@@ -36,7 +36,7 @@ class CacheUserRepository implements UserRepositoryContract
     {
         $user = $this->repository->create($account);
 
-        $this->resolveUpdatedRoles($user->northstar_id, $user->role);
+        $this->resolveUpdatedRoles($user->id, $user->role);
 
         return $user;
     }
@@ -55,7 +55,7 @@ class CacheUserRepository implements UserRepositoryContract
         if (! $user) {
             $user = $this->repository->find($id);
 
-            $this->store($user->northstar_id, $user);
+            $this->store($user->id, $user);
         }
 
         return $user;
@@ -78,7 +78,7 @@ class CacheUserRepository implements UserRepositoryContract
                 $users = $this->repository->getAll($ids);
 
                 if ($users->count()) {
-                    $group = $users->keyBy('northstar_id')->all();
+                    $group = $users->keyBy('id')->all();
 
                     $this->storeMany($group);
                 }
@@ -122,10 +122,10 @@ class CacheUserRepository implements UserRepositoryContract
         $users = $this->repository->getAllByRole($role);
 
         if ($users->count()) {
-            $ids = $users->pluck('northstar_id')->all();
-            $collection = $users->keyBy('northstar_id')->all();
+            $ids = $users->pluck('id')->all();
+            $collection = $users->keyBy('id')->all();
 
-            $this->store($key . ':nids', $ids);
+            $this->store($key . ':ids', $ids);
             $this->storeMany($collection);
         }
 

@@ -3,11 +3,11 @@
 namespace Gladiator\Http\Controllers;
 
 use Gladiator\Models\Contest;
-use Gladiator\Services\Manager;
 use Gladiator\Models\WaitingRoom;
-use Gladiator\Http\Requests\SplitRequest;
 use Gladiator\Http\Requests\WaitingRoomRequest;
 use Gladiator\Repositories\UserRepositoryContract;
+use Gladiator\Services\Manager;
+use Gladiator\Http\Requests\SplitRequest;
 
 class WaitingRoomsController extends Controller
 {
@@ -74,7 +74,7 @@ class WaitingRoomsController extends Controller
 
         $contest = Contest::find($room->contest_id);
 
-        $ids = $room->users->pluck('northstar_id')->toArray();
+        $ids = $room->users->pluck('id')->toArray();
 
         if ($ids) {
             $users = $this->repository->getAll($ids);

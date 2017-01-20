@@ -13,7 +13,7 @@
                 <tbody>
                     @foreach ($flagged as $user)
                         <tr class="table__row">
-                            <td class="table__cell"><a href="{{ route('users.show', $user->northstar_id) }}" target="_blank">{{ $user->first_name or 'Anonymous' }} {{ $user->last_initial or '' }}</a></td>
+                            <td class="table__cell"><a href="{{ route('users.show', $user->id) }}" target="_blank">{{ $user->first_name or 'Anonymous' }} {{ $user->last_initial or '' }}</a></td>
                             <td class="table__cell">{{ $user->reportback->quantity or 'n/a' }}</td>
                         </tr>
                     @endforeach

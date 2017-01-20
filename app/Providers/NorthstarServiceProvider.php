@@ -2,8 +2,8 @@
 
 namespace Gladiator\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Gladiator\Services\Northstar\Northstar;
+use Illuminate\Support\ServiceProvider;
 
 class NorthstarServiceProvider extends ServiceProvider
 {

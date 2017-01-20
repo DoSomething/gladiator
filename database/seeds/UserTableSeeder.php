@@ -1,8 +1,9 @@
 <?php
 
 use Gladiator\Models\User;
-use Illuminate\Database\Seeder;
 use Gladiator\Models\WaitingRoom;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 use Gladiator\Services\Northstar\Northstar;
 
 class UserTableSeeder extends Seeder
@@ -31,6 +32,21 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
+        // Add Admin Users
+        $admins = [
+            'agaither@dosomething.org',
+            'ssmith@dosomething.org',
+            'mfantini@dosomething.org',
+            'dlorenzo@dosomething.org',
+            'joe@dosomething.org',
+            'dfurnes@dosomething.org',
+            'charbur@dosomething.org',
+            'hrobbins@dosomething.org',
+        ];
+        foreach ($admins as $admin) {
+            Artisan::call('add:user', ['email' => $admin, '--role' => 'admin']);
+        }
+
         // Add Contestant Users
         $waitingRooms = WaitingRoom::all();
         $totalRooms = count($waitingRooms);
@@ -41,7 +57,7 @@ class UserTableSeeder extends Seeder
 
             // Using first or create if someone is already an admin.
             $user = User::firstOrCreate([
-                 'northstar_id' => $contestant->northstar_id,
+                 'id' => $contestant->id,
                 ]);
 
             $user->waitingRooms()->save($waitingRooms[$index]);

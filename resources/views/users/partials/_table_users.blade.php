@@ -14,7 +14,7 @@
                 <tbody>
                     @foreach ($users as $user)
                         <tr class="table__row">
-                            <td class="table__cell"><a href="{{ route('users.show', $user->northstar_id) }}">{{ $user->first_name or 'Anonymous' }} {{ $user->last_name or '' }}</a></td>
+                            <td class="table__cell"><a href="{{ route('users.show', $user->id) }}">{{ $user->first_name or 'Anonymous' }} {{ $user->last_name or '' }}</a></td>
                             <td class="table__cell">{{ $user->email or ''}}</td>
                             <td class="table__cell">{{ $user->mobile or ''}}</td>
                         </tr>
