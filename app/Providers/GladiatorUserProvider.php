@@ -2,10 +2,10 @@
 
 namespace Gladiator\Providers;
 
-use Gladiator\Services\Northstar\Northstar;
 use Illuminate\Auth\EloquentUserProvider;
-use Illuminate\Contracts\Auth\Authenticatable;
+use Gladiator\Services\Northstar\Northstar;
 use Illuminate\Contracts\Auth\UserProvider;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 class GladiatorUserProvider extends EloquentUserProvider implements UserProvider
 {

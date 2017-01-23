@@ -3,10 +3,10 @@
 namespace Gladiator\Services;
 
 use Log;
-use Gladiator\Models\FeaturedReportback;
 use Gladiator\Models\Contest;
-use Gladiator\Models\Competition;
 use Gladiator\Models\Message;
+use Gladiator\Models\Competition;
+use Gladiator\Models\FeaturedReportback;
 
 class Email
 {

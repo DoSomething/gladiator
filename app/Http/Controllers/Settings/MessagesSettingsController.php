@@ -2,9 +2,9 @@
 
 namespace Gladiator\Http\Controllers\Settings;
 
+use Illuminate\Http\Request;
 use Gladiator\Models\MessageSetting;
 use Gladiator\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class MessagesSettingsController extends Controller
 {
@@ -46,7 +46,6 @@ class MessagesSettingsController extends Controller
                 $data['type'] = $type;
                 $data['key'] = $key;
                 $message = MessageSetting::where('type', $type)->where('key', $key)->first();
-
 
                 $attributes = $message->getFillable();
 
