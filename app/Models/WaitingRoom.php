@@ -97,6 +97,7 @@ class WaitingRoom extends Model
     {
         $startDate = Carbon::now()->startOfDay();
         $endDate = new Carbon($request->competition_end_date);
+        $waitingRoom = $contest->waitingRoom;
 
         foreach ($split as $competitionGroup) {
             // For each split, create a competition.
@@ -113,8 +114,8 @@ class WaitingRoom extends Model
             foreach ($competitionGroup as $userId) {
                 $user = User::find($userId);
 
-                // Remove them from the waiting room pivot table
-                $user->waitingRooms()->detach();
+                // Remove the user from the waiting room being split.
+                $user->waitingRooms()->detach($waitingRoom->id);
 
                 // Add them to the competitions pivot table
                 $user->competitions()->attach($competition->id);
