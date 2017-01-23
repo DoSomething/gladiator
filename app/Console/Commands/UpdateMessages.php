@@ -3,8 +3,8 @@
 namespace Gladiator\Console\Commands;
 
 use Gladiator\Models\Contest;
-use Gladiator\Repositories\MessageRepository;
 use Illuminate\Console\Command;
+use Gladiator\Repositories\MessageRepository;
 
 class UpdateMessages extends Command
 {

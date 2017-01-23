@@ -2,8 +2,8 @@
 
 namespace Gladiator\Models;
 
-use Gladiator\Services\Northstar\Exceptions\NorthstarUserNotFoundException;
 use Illuminate\Foundation\Auth\User as BaseUser;
+use Gladiator\Services\Northstar\Exceptions\NorthstarUserNotFoundException;
 
 class User extends BaseUser
 {
