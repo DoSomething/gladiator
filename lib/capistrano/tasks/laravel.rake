@@ -3,7 +3,7 @@ namespace :laravel do
   task :artisan_tasks do
     on roles(:all) do
       within "#{release_path}" do
-        execute :php, "artisan migrate --force && php artisan cache:clear"
+        execute :php, "artisan migrate && php artisan cache:clear"
       end
     end
   end
