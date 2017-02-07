@@ -493,7 +493,7 @@ class Manager
      */
     protected function appendReportbackToUserObject($user, $parameters)
     {
-        $activity = $this->getActivityForUser($user->northstar_id, $parameters);
+        $activity = $this->getActivityForUser($user->id, $parameters);
 
         if ($activity) {
             $user->reportback = $activity->reportback;
