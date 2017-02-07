@@ -69,7 +69,7 @@ class Manager
 
         foreach ($users as $user) {
             $details = [
-                $user->northstar_id,
+                $user->id,
                 isset($user->first_name) ? $user->first_name : '',
                 isset($user->last_name) ? $user->last_name : '',
                 isset($user->email) ? $user->email : '',
