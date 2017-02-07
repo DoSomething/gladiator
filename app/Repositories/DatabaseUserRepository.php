@@ -48,7 +48,7 @@ class DatabaseUserRepository implements UserRepositoryContract
     {
         $user = User::findOrFail($id);
 
-        $account = $this->northstar->getUser('_id', $user->id);
+        $account = $this->northstar->getUser('_id', $user->northstar_id);
 
         if ($account) {
             $account->role = $user->role;
