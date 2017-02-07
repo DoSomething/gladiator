@@ -26,7 +26,7 @@ class GladiatorUserProvider extends EloquentUserProvider implements UserProvider
         }
 
         // If a matching Northstar user is found, try to find corresponding Gladiator user.
-        return $this->createModel()->where('id', $user->id)->first();
+        return $this->createModel()->where('northstar_id', $user->id)->first();
     }
 
     /**
