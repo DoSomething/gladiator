@@ -537,7 +537,7 @@ class Manager
     public function addUserToModel($model, $id, $user)
     {
         // Attach the user to the room, if it isn't alredy.
-        if (! $user->{$model}()->where('northstar_id', $id)->first()) {
+        if (! $user->{$model}()->where('id', $id)->first()) {
             $user->{$model}()->attach($id);
         }
 
