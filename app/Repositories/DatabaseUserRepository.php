@@ -96,7 +96,7 @@ class DatabaseUserRepository implements UserRepositoryContract
             $accounts = $this->getBatchedCollection($ids);
 
             foreach ($accounts as $account) {
-                $account = $this->appendRole($account, $users[$account->northstar_id]->role);
+                $account = $this->appendRole($account, $users[$account->id]->role);
             }
 
             return collect($accounts);
