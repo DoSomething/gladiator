@@ -57,7 +57,7 @@ class UserTableSeeder extends Seeder
 
             // Using first or create if someone is already an admin.
             $user = User::firstOrCreate([
-                 'id' => $contestant->northstar_id,
+                 'northstar_id' => $contestant->id,
                 ]);
 
             $user->waitingRooms()->save($waitingRooms[$index]);
