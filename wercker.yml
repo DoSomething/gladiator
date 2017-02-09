@@ -23,12 +23,12 @@ build:
           code: sudo composer self-update
       - leipert/composer-install@0.9.1
       - wercker/bundle-install@1.1.1
-      - script:
-          name: phpunit
-          code: |-
-              cp .env.example .env
-              mysql -u homestead -psecret -e "CREATE DATABASE gladiator_testing;"
-              vendor/bin/phpunit
+      # - script:
+      #     name: phpunit
+      #     code: |-
+      #         cp .env.example .env
+      #         mysql -u homestead -psecret -e "CREATE DATABASE gladiator_testing;"
+      #         vendor/bin/phpunit
       - script:
           name: npm install
           code: |-
