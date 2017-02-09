@@ -87,7 +87,7 @@ class Manager
                 $details[] = $user->reportback->why_participated;
                 $latestReportBackItem = array_pop($user->reportback->reportback_items->data);
                 $details[] = $latestReportBackItem->caption;
-                $details[] = date("m/d/Y H:i", $latestReportBackItem->created_at);
+                $details[] = date('m/d/Y H:i', $latestReportBackItem->created_at);
             }
 
             $data[] = $details;
