@@ -113,7 +113,7 @@ class MessagesController extends Controller
         // Send test emails to authenticated user.
         if (request('test')) {
             $user = Auth::user();
-            $user = $this->userRepository->find($user->northstar_id);
+            $user = $this->userRepository->find($user->id);
             $user = $this->manager->appendReportback($user, []);
 
             $users = [$user];

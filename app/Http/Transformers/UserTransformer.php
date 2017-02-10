@@ -16,7 +16,7 @@ class UserTransformer extends TransformerAbstract
     public function transform(User $user)
     {
         return [
-            'id' => (string) $user->northstar_id,
+            'id' => (string) $user->id,
             'first_name' => null,
             'last_name' => null,
             'email' => null,
