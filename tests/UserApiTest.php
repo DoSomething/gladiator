@@ -30,7 +30,7 @@ class UserApiTest extends TestCase
         $this->json('GET', 'api/v1/users')
              ->seeJsonStructure([
                 '*' => [
-                    'northstar_id', 'created_at', 'updated_at', 'role',
+                    'id', 'created_at', 'updated_at', 'role',
                 ]
             ]);
     }
