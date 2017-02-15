@@ -17,21 +17,21 @@ class RenameIdToNorthstarId extends Migration
         });
 
         Schema::table('user_waiting_room', function (Blueprint $table) {
-             $table->dropForeign('user_waiting_room_user_id_foreign');
-             $table->renameColumn('user_id', 'northstar_id');
-             $table->foreign('northstar_id')->references('northstar_id')->on('users')->onDelete('cascade');
+            $table->dropForeign('user_waiting_room_user_id_foreign');
+            $table->renameColumn('user_id', 'northstar_id');
+            $table->foreign('northstar_id')->references('northstar_id')->on('users')->onDelete('cascade');
         });
 
         Schema::table('competition_user', function (Blueprint $table) {
-             $table->dropForeign('competition_user_user_id_foreign');
-             $table->renameColumn('user_id', 'northstar_id');
-             $table->foreign('northstar_id')->references('northstar_id')->on('users')->onDelete('cascade');
+            $table->dropForeign('competition_user_user_id_foreign');
+            $table->renameColumn('user_id', 'northstar_id');
+            $table->foreign('northstar_id')->references('northstar_id')->on('users')->onDelete('cascade');
         });
 
         Schema::table('leaderboard_photos', function (Blueprint $table) {
-             $table->dropForeign('leaderboard_photos_user_id_foreign');
-             $table->renameColumn('user_id', 'northstar_id');
-             $table->foreign('northstar_id')->references('northstar_id')->on('users')->onDelete('cascade');
+            $table->dropForeign('leaderboard_photos_user_id_foreign');
+            $table->renameColumn('user_id', 'northstar_id');
+            $table->foreign('northstar_id')->references('northstar_id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -53,15 +53,15 @@ class RenameIdToNorthstarId extends Migration
         });
 
         Schema::table('competition_user', function (Blueprint $table) {
-             $table->dropForeign('competition_user_northstar_id_foreign');
-             $table->renameColumn('northstar_id', 'user_id');
-             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->dropForeign('competition_user_northstar_id_foreign');
+            $table->renameColumn('northstar_id', 'user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
         Schema::table('leaderboard_photos', function (Blueprint $table) {
-             $table->dropForeign('leaderboard_photos_northstar_id_foreign');
-             $table->renameColumn('northstar_id', 'user_id');
-             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->dropForeign('leaderboard_photos_northstar_id_foreign');
+            $table->renameColumn('northstar_id', 'user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 }
