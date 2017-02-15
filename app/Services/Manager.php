@@ -140,7 +140,7 @@ class Manager
             return null;
         }
 
-        $ids = $users->pluck('id')->all();
+        $ids = $users->pluck('northstar_id')->all();
 
         $users = $this->userRepository->getAll($ids);
 
@@ -347,13 +347,13 @@ class Manager
 
             // Provide info on user & reportback ids
             if (isset($options['includeUserIds']) && $options['includeUserIds']) {
-                $topThree[$key]['user_id'] = $user->id;
+                $topThree[$key]['northstar_id'] = $user->northstar_id;
                 $topThree[$key]['reportback_id'] = $user->reportback->id;
             }
 
             // Provide image url/captaion of top three leaderboard images
             if (isset($options['competition_id']) && isset($options['message_id'])) {
-                $leaderboardReportbackItem = $this->getLeaderboardPhoto($options['competition_id'], $options['message_id'], $user->id);   //@NOTE calling Phoenix again
+                $leaderboardReportbackItem = $this->getLeaderboardPhoto($options['competition_id'], $options['message_id'], $user->northstar_id);   //@NOTE calling Phoenix again
 
                 if (! isset($leaderboardReportbackItem)) {
                     $reportbackItems = $user->reportback->reportback_items->data;
@@ -450,7 +450,7 @@ class Manager
      */
     protected function appendReportbackToCollection($collection, $parameters)
     {
-        $activity = $this->getActivityForAllUsers($collection->pluck('id')->all(), $parameters);
+        $activity = $this->getActivityForAllUsers($collection->pluck('northstar_id')->all(), $parameters);
 
         $activity = $activity->keyBy(function ($item) {
             return $item->user->id;
@@ -565,7 +565,7 @@ class Manager
                 'message' => $message,
                 'contest' => $contest,
                 //@TODO -- fix the Email class so that it doesn't require this property to be sent as an array.
-                'users' => [$this->userRepository->find($user->id)],
+                'users' => [$this->userRepository->find($user->northstar_id)],
                 'test' => false,
             ];
 
