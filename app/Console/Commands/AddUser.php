@@ -45,7 +45,7 @@ class AddUser extends Command
 
         if (is_null($gladiatorUser)) {
             $user = new User;
-            $user->id = $northstarUser->id;
+            $user->northstar_id = $northstarUser->id;
             $user->role = $role;
             $user->save();
 

@@ -8,6 +8,13 @@ use Gladiator\Services\Northstar\Exceptions\NorthstarUserNotFoundException;
 class User extends BaseUser
 {
     /**
+     * The primary key for the model
+     *
+     * @var string
+     */
+    protected $primaryKey = 'northstar_id';
+
+    /**
      * Indicates if the IDs are auto-incrementing.
      *
      * @var bool

@@ -19,7 +19,7 @@ use Gladiator\Services\Phoenix\Phoenix;
 // User Factory.
 $factory->define(User::class, function (Generator $faker) {
     return [
-        'id' => str_random(24),
+        'northstar_id' => str_random(24),
         'role' => null,
     ];
 });
