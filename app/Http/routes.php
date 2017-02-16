@@ -17,9 +17,12 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     // Authentication
-    Route::get('auth/login', 'Auth\AuthController@showLoginForm');
+    // Route::get('auth/login', 'Auth\AuthController@showLoginForm');
     Route::post('auth/login', 'Auth\AuthController@login');
-    Route::get('auth/logout', 'Auth\AuthController@logout');
+    // Route::get('auth/logout', 'Auth\AuthController@logout');
+
+    Route::get('login', 'Auth\AuthController@getLogin');
+    Route::get('logout', 'Auth\AuthController@getLogout');
 
     // Competitions
     Route::model('competitions', 'Gladiator\Models\Competition');
