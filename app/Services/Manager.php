@@ -65,7 +65,7 @@ class Manager
     {
         $data = [];
 
-        $data[] = ['Northstar ID', 'First Name', 'Last Name', 'Email', 'Mobile Number', 'Reportback Admin Link', 'Reported Quantity', '# Promoted', '# Approved', '# Excluded', '# Flagged', '# Pending', 'Why Participated', 'Caption for latest Reportback Item'];
+        $data[] = ['Northstar ID', 'First Name', 'Last Name', 'Email', 'Mobile Number', 'Reportback Admin Link', 'Reported Quantity', '# Promoted', '# Approved', '# Excluded', '# Flagged', '# Pending', 'Why Participated', 'Caption for latest Reportback Item', 'Latest Reportback Date'];
 
         foreach ($users as $user) {
             $details = [
@@ -85,7 +85,9 @@ class Manager
                 $details[] = $user->reportback->reportback_items->count_by_status['flagged'];
                 $details[] = $user->reportback->reportback_items->count_by_status['pending'];
                 $details[] = $user->reportback->why_participated;
-                $details[] = array_pop($user->reportback->reportback_items->data)->caption;
+                $latestReportBackItem = array_pop($user->reportback->reportback_items->data);
+                $details[] = $latestReportBackItem->caption;
+                $details[] = date('m/d/Y H:i', $latestReportBackItem->created_at);
             }
 
             $data[] = $details;
