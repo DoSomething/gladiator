@@ -46,7 +46,7 @@ class User extends BaseUser
      */
     public function competitions()
     {
-        return $this->belongsToMany(Competition::class);
+        return $this->belongsToMany(Competition::class, 'competition_user', 'northstar_id', 'competition_id');
     }
 
     /**
@@ -54,7 +54,7 @@ class User extends BaseUser
      */
     public function waitingRooms()
     {
-        return $this->belongsToMany(WaitingRoom::class);
+        return $this->belongsToMany(WaitingRoom::class, 'user_waiting_room', 'northstar_id', 'waiting_room_id');
     }
 
     /**
