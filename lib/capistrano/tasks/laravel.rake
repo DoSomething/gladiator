@@ -3,7 +3,7 @@ namespace :laravel do
   task :phpunit do
     on roles(:all) do
       within "#{release_path}" do
-        execute "vendor/bin/phpunit"
+        execute "phpunit"
       end
     end
   end
@@ -28,9 +28,6 @@ namespace :laravel do
 end
 
 namespace :deploy do
- if ENV["TIER"] == "qa"
-   after :updated, "laravel:phpunit"
- end
  after :updated, "laravel:gulp"
  after :updated, "laravel:artisan_tasks"
 end
