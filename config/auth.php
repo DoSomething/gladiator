@@ -108,4 +108,6 @@ return [
         ],
     ],
 
+    'model' => Gladiator\Models\User::class,
+
 ];

@@ -2,11 +2,16 @@
 
 namespace Gladiator\Models;
 
-use Illuminate\Foundation\Auth\User as BaseUser;
-use Gladiator\Services\Northstar\Exceptions\NorthstarUserNotFoundException;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use DoSomething\Gateway\Laravel\HasNorthstarToken;
+use DoSomething\Gateway\Contracts\NorthstarUserContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
-class User extends BaseUser
+class User extends Model implements AuthenticatableContract, NorthstarUserContract
 {
+    use Authenticatable, HasNorthstarToken;
+
     /**
      * The primary key for the model
      *
