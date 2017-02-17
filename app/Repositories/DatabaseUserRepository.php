@@ -74,7 +74,7 @@ class DatabaseUserRepository implements UserRepositoryContract
             return $accounts;
         }
 
-        $accounts = $this->getBatchedCollection(User::all()->pluck('id')->all());
+        $accounts = $this->getBatchedCollection(User::all()->pluck('northstar_id')->all());
 
         return $accounts;
     }
