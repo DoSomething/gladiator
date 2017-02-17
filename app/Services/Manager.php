@@ -92,7 +92,7 @@ class Manager
                 $details[] = $latestReportBackItem->caption;
                 $details[] = date('m/d/Y H:i', $latestReportBackItem->created_at);
 
-                if(!is_null($filteredReportbacks)) {
+                if (! is_null($filteredReportbacks)) {
                     $details[] = array_pop($filteredReportbacks)->media->uri;
                 }
             }
@@ -104,18 +104,19 @@ class Manager
     }
 
     /**
-    * Return array of reportback items with specific status
-    *
-    *
-    * @param array  $data
-    * @param string $status
-    * @return array
-    */
-    public function getStatus($data, $status) {
+     * Return array of reportback items with specific status
+     *
+     *
+     * @param array  $data
+     * @param string $status
+     * @return array
+     */
+    public function getStatus($data, $status)
+    {
         $list = [];
 
         foreach ($data as $reportbackitem) {
-            if($reportbackitem->status == $status ){
+            if ($reportbackitem->status == $status){
                 $list[] = $reportbackitem;
             }
         }
