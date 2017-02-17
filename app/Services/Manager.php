@@ -407,12 +407,11 @@ class Manager
         $campaignIds = $collection->pluck('campaign_id')->all();
 
         $campaigns = $this->campaignRepository->getAll($campaignIds);
-
         $campaigns = $campaigns->keyBy('id')->all();
 
         foreach ($collection as $contest) {
             if (isset($campaigns[$contest->campaign_id])) {
-                $contest->setAttribute('campaign', $campaigns[$contest->campaign_id]);
+                $contest->setAttribute('campaign', (object) $campaigns[$contest->campaign_id]);
             } else {
                 $contest->setAttribute('campaign', null);
             }
