@@ -14,7 +14,7 @@ if ENV['branch']
 end
 
 
-set :keep_releases, 1
+set :keep_releases, 5
 
 set :npm_flags, ''
 set :composer_install_flags, '--no-dev --optimize-autoloader'
