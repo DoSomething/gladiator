@@ -123,6 +123,7 @@ class Manager
 
         return $list;
     }
+
     /**
      * Catalog a list of users and sort by a specified method.
      *
