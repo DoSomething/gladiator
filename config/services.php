@@ -15,9 +15,24 @@ return [
     */
 
     'northstar' => [
+        // @TODO - Used for api calls for now. Remove this and use gateway for API calls.
         'uri' => env('NORTHSTAR_URI'),
         'version' => 'v1',
         'api_key' => env('NORTHSTAR_API_KEY'),
+
+        'grant' => 'client_credentials',
+        'url' => env('NORTHSTAR_URL'),
+        'client_credentials' => [
+            'client_id' => env('NORTHSTAR_CLIENT_ID'),
+            'client_secret' => env('NORTHSTAR_CLIENT_SECRET'),
+            'scope' => ['user', 'admin'],
+        ],
+        'authorization_code' => [
+            'client_id' => env('NORTHSTAR_AUTH_ID'),
+            'client_secret' => env('NORTHSTAR_AUTH_SECRET'),
+            'scope' => ['user', 'role:staff', 'role:admin'],
+            'redirect_uri' => '/login',
+        ],
     ],
 
     'mailgun' => [
