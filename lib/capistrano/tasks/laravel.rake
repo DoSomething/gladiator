@@ -3,7 +3,7 @@ namespace :laravel do
   task :phpunit do
     on roles(:all) do
       within "#{release_path}" do
-        execute "phpunit"
+        execute "composer install --dev" && "phpunit"
       end
     end
   end
