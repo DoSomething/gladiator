@@ -17,7 +17,11 @@ class Northstar extends RestApiClient
             'X-DS-REST-API-Key' => config('services.northstar.api_key'),
         ];
 
-        parent::__construct($base_uri, $headers);
+        parent::__construct($base_uri, [
+            'defaults' => [
+                'headers' => $headers
+            ]
+        ]);
     }
 
     /**

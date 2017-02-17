@@ -3,7 +3,7 @@
 namespace Gladiator\Repositories;
 
 use Gladiator\Models\User;
-use Gladiator\Services\Northstar\Northstar;
+use DoSomething\Gateway\Northstar;
 
 class DatabaseUserRepository implements UserRepositoryContract
 {
@@ -154,7 +154,7 @@ class DatabaseUserRepository implements UserRepositoryContract
             $parameters['filter[_id]'] = implode(',', $batch);
 
             $accounts = $this->northstar->getAllUsers($parameters);
-            $data = array_merge($data, $accounts);
+            $data = array_merge($data, $accounts->toArray());
 
             $index += $size;
         }
