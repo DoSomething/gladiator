@@ -2,6 +2,7 @@
 
 namespace Gladiator\Services\Phoenix;
 
+// use Gladiator\Services\RestApiClient;
 use DoSomething\Gateway\Common\RestApiClient;
 
 class Phoenix extends RestApiClient
@@ -14,6 +15,11 @@ class Phoenix extends RestApiClient
     public function __construct()
     {
         $this->base_uri = config('services.phoenix.uri') . '/api/' . config('services.phoenix.version') . '/';
+
+        // $headers = [
+        //    'Content-type' => 'application/json',
+        //    'Accept' => 'application/json',
+        // ];
 
         parent::__construct($this->base_uri);
     }
