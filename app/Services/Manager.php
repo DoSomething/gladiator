@@ -65,7 +65,7 @@ class Manager
     {
         $data = [];
 
-        $data[] = ['Northstar ID', 'First Name', 'Last Name', 'Email', 'Mobile Number', 'Reportback Admin Link', 'Reported Quantity', '# Promoted', '# Approved', '# Excluded', '# Flagged', '# Pending', 'Why Participated','Caption for latest Reportback Item', 'Latest Reportback Date' , 'Reportback Admin Promoted Link' ];
+        $data[] = ['Northstar ID', 'First Name', 'Last Name', 'Email', 'Mobile Number', 'Reportback Admin Link', 'Reported Quantity', '# Promoted', '# Approved', '# Excluded', '# Flagged', '# Pending', 'Why Participated','Caption for latest Reportback Item', 'Latest Reportback Date' , 'Reportback Admin Promoted Link'];
 
         foreach ($users as $user) {
             $details = [
@@ -116,7 +116,7 @@ class Manager
         $list = [];
 
         foreach ($data as $reportbackitem) {
-            if ($reportbackitem->status == $status){
+            if ($reportbackitem->status == $status) {
                 $list[] = $reportbackitem;
             }
         }
