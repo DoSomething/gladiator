@@ -2,8 +2,8 @@
 
 namespace Gladiator\Http\Controllers\Auth;
 
-use Gladiator\Http\Controllers\Controller;
 use Psr\Http\Message\ResponseInterface;
+use Gladiator\Http\Controllers\Controller;
 use Psr\Http\Message\ServerRequestInterface;
 
 class AuthController extends Controller
