@@ -16,7 +16,8 @@
         "spatie/laravel-backup": "^3.9",
         "maknz/slack-laravel": "^1.0",
         "league/flysystem-aws-s3-v3": "~1.0",
-        "aws/aws-sdk-php-laravel": "^3.1"
+        "aws/aws-sdk-php-laravel": "^3.1",
+        "dosomething/gateway": "1.0.0-rc16"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
