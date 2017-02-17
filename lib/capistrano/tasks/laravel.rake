@@ -4,7 +4,7 @@ namespace :laravel do
     on roles(:all) do
       within "#{release_path}" do
         execute "pwd"
-        execute "composer install --dev"
+        execute "composer install"
         execute "phpunit"
       end
     end
