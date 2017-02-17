@@ -32,3 +32,4 @@ namespace :deploy do
  after :updated, "laravel:gulp"
  after :updated, "laravel:artisan_tasks"
 end
+
