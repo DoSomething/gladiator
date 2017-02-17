@@ -4,7 +4,7 @@ namespace :laravel do
     on roles(:all) do
       within "#{release_path}" do
         execute "cd '#{release_path}'; composer install"
-        execute "phpunit"
+        execute "vendor/bin/phpunit"
       end
     end
   end
