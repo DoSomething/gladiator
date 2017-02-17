@@ -2,7 +2,7 @@
 
 namespace Gladiator\Services\Phoenix;
 
-use Gladiator\Services\RestApiClient;
+use DoSomething\Gateway\Common\RestApiClient;
 
 class Phoenix extends RestApiClient
 {

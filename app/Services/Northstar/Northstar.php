@@ -2,7 +2,7 @@
 
 namespace Gladiator\Services\Northstar;
 
-use Gladiator\Services\RestApiClient;
+use DoSomething\Gateway\Common\RestApiClient;
 
 class Northstar extends RestApiClient
 {
