@@ -21,9 +21,7 @@ return [
         'api_key' => env('NORTHSTAR_API_KEY'),
 
         'grant' => 'client_credentials',
-        'url' => env('NORTHSTAR_URL'), // the environment you want to connect to
-
-        // Then, configure client ID, client secret, and scopes per grant.
+        'url' => env('NORTHSTAR_URL'),
         'client_credentials' => [
             'client_id' => env('NORTHSTAR_CLIENT_ID'),
             'client_secret' => env('NORTHSTAR_CLIENT_SECRET'),

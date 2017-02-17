@@ -11,16 +11,17 @@
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    Route::get('/', function () {
-        return redirect()->route('contests.index');
-    });
+Route::get('/', function () {
+    return view('pages.home');
+})->middleware('guest');
 
-    // Authentication
+Route::group(['middleware' => ['web']], function () {
+
     // Route::get('auth/login', 'Auth\AuthController@showLoginForm');
-    Route::post('auth/login', 'Auth\AuthController@login');
+    // Route::post('auth/login', 'Auth\AuthController@login');
     // Route::get('auth/logout', 'Auth\AuthController@logout');
 
+    // Authentication
     Route::get('login', 'Auth\AuthController@getLogin');
     Route::get('logout', 'Auth\AuthController@getLogout');
 
