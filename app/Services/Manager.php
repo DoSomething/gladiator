@@ -434,7 +434,7 @@ class Manager
 
         // @TODO: RestApiClient is a bit wonky with Phoenix calls and error responses.
         if ($campaign) {
-            $model->setAttribute('campaign', $campaign);
+            $model->setAttribute('campaign', (object) $campaign);
         } else {
             $model->setAttribute('campaign', null);
         }
