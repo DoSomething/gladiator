@@ -412,7 +412,7 @@ class Manager
 
         foreach ($collection as $contest) {
             if (isset($campaigns[$contest->campaign_id])) {
-                $contest->setAttribute('campaign', $campaigns[$contest->campaign_id]);
+                $contest->setAttribute('campaign', (object) $campaigns[$contest->campaign_id]);
             } else {
                 $contest->setAttribute('campaign', null);
             }
@@ -435,7 +435,7 @@ class Manager
 
         // @TODO: RestApiClient is a bit wonky with Phoenix calls and error responses.
         if ($campaign) {
-            $model->setAttribute('campaign', $campaign);
+            $model->setAttribute('campaign', (object) $campaign);
         } else {
             $model->setAttribute('campaign', null);
         }

@@ -60,11 +60,11 @@ class CacheCampaignRepository implements RepositoryContract
                 $parameters['ids'] = implode(',', $ids);
 
                 $campaigns = $this->phoenix->getAllCampaigns($parameters);
-                $campaigns = collect($campaigns);
+                $campaigns = collect($campaigns['data']);
 
                 if ($campaigns) {
                     $group = $campaigns->keyBy(function ($item) {
-                        return $this->setPrefix($item->id);
+                        return $this->setPrefix($item['id']);
                     })->all();
 
                     $this->storeMany($group);
