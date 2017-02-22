@@ -168,7 +168,7 @@ class Manager
         // @TODO: Investigat NS proxy; passing a bad ID results in general index of signups response.
         $signup = $this->northstar->getUserSignups($parameters);
 
-        return array_shift($signup);
+        return (object) array_shift($signup['data']);
     }
 
     /**
