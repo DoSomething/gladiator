@@ -316,7 +316,7 @@ class Manager
             return $this->appendReportbackToModel($data, $parameters);
         }
 
-        if ($data instanceof \stdClass) {
+        if ($data instanceof \DoSomething\Gateway\Resources\NorthstarUser) {
             return $this->appendReportbackToUserObject($data, $parameters);
         }
 

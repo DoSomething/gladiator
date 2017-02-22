@@ -58,6 +58,7 @@ class Email
         $this->contest = isset($resources['contest']) ? $resources['contest'] : $this->competition->contest;
 
         $this->users = $resources['users'];
+
         $this->manager = app(\Gladiator\Services\Manager::class);
 
         $this->setupEmail();
@@ -81,8 +82,8 @@ class Email
             ':leaderboard_msg_day-1:' => ! is_null($this->competition) ? get_day_of_week($this->competition->leaderboard_msg_day - 1) : '',
             ':pro_tip:'               => $this->message->pro_tip,
             ':prove_it_link:'         => url(config('services.phoenix.uri') .'/node/' . $this->contest->campaign_id . '#prove'),
-            ':reportback_noun:'       => strtolower($this->contest->campaign->reportback_info->noun),
-            ':reportback_verb:'       => strtolower($this->contest->campaign->reportback_info->verb),
+            ':reportback_noun:'       => strtolower($this->contest->campaign->reportback_info['noun']),
+            ':reportback_verb:'       => strtolower($this->contest->campaign->reportback_info['verb']),
             ':sender_name:'           => $this->contest->sender_name,
             ':rules_url:'             => ! is_null($this->competition) ? $this->competition->rules_url : '',
             ':share_link:'            => url(config('services.phoenix.uri') .'/us/node/' . $this->contest->campaign_id . '?source=user/' . $user->id),
