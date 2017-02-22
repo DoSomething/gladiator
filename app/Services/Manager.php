@@ -196,7 +196,7 @@ class Manager
             $index += $batchSize;
         }
 
-        return collect($signups);
+        return collect($signups['data']);
     }
 
     /**
@@ -434,7 +434,7 @@ class Manager
 
         // @TODO: RestApiClient is a bit wonky with Phoenix calls and error responses.
         if ($campaign) {
-            $model->setAttribute('campaign', (object) $campaign);
+            $model->setAttribute('campaign', (object) $campaign['data']);
         } else {
             $model->setAttribute('campaign', null);
         }
@@ -454,7 +454,7 @@ class Manager
         $activity = $this->getActivityForAllUsers($collection->pluck('northstar_id')->all(), $parameters);
 
         $activity = $activity->keyBy(function ($item) {
-            return $item->user->id;
+            return $item['user']['id'];
         });
 
         foreach ($collection as $user) {
