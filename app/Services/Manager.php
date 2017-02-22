@@ -407,6 +407,7 @@ class Manager
         $campaignIds = $collection->pluck('campaign_id')->all();
 
         $campaigns = $this->campaignRepository->getAll($campaignIds);
+
         $campaigns = $campaigns->keyBy('id')->all();
 
         foreach ($collection as $contest) {

@@ -34,11 +34,12 @@ class CacheCampaignRepository implements RepositoryContract
         if (! $campaign) {
             // @see https://github.com/DoSomething/gladiator/issues/180
             $campaign = $this->phoenix->getCampaign($id);
+            $campaign = $campaign['data'];
 
             $this->store($key, $campaign);
         }
 
-        return (object) $campaign['data'];
+        return (object) $campaign;
     }
 
     /**
