@@ -38,7 +38,7 @@ class CacheCampaignRepository implements RepositoryContract
             $this->store($key, $campaign);
         }
 
-        return $campaign;
+        return (object) $campaign['data'];
     }
 
     /**
