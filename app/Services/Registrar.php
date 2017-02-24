@@ -3,7 +3,7 @@
 namespace Gladiator\Services;
 
 use Gladiator\Models\User;
-use Gladiator\Services\Northstar\Northstar;
+use DoSomething\Gateway\Northstar;
 use Gladiator\Repositories\UserRepositoryContract;
 use Gladiator\Services\Northstar\Exceptions\NorthstarUserNotFoundException;
 

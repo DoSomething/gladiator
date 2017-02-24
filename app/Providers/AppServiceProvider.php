@@ -2,8 +2,8 @@
 
 namespace Gladiator\Providers;
 
+use DoSomething\Gateway\Northstar;
 use Illuminate\Support\ServiceProvider;
-use Gladiator\Services\Northstar\Northstar;
 use Gladiator\Repositories\CacheUserRepository;
 use Gladiator\Repositories\DatabaseUserRepository;
 use Gladiator\Repositories\UserRepositoryContract;

@@ -57,7 +57,7 @@
 
                                 @if ($competition->reportback)
                                     <td class="table__cell"><a href="{{ reportback_admin_url($competition->reportback->id) }}">{{ $competition->reportback->id }}</a></td>
-                                    <td class="table__cell">{{ $competition->reportback->reportback_items->total }}</td>
+                                    <td class="table__cell">{{ $competition->reportback->reportback_items['total'] }}</td>
                                     <td class="table__cell">{{ $competition->reportback->quantity }}</td>
                                     <td class="table__cell">{{ format_timestamp_for_display($competition->reportback->updated_at) }}</td>
                                 @else

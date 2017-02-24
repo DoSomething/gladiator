@@ -168,7 +168,7 @@ class Manager
         // @TODO: Investigat NS proxy; passing a bad ID results in general index of signups response.
         $signup = $this->northstar->getUserSignups($parameters);
 
-        return array_shift($signup);
+        return (object) array_shift($signup['data']);
     }
 
     /**
@@ -196,7 +196,7 @@ class Manager
             $index += $batchSize;
         }
 
-        return collect($signups);
+        return collect($signups['data']);
     }
 
     /**
@@ -316,7 +316,7 @@ class Manager
             return $this->appendReportbackToModel($data, $parameters);
         }
 
-        if ($data instanceof \stdClass) {
+        if ($data instanceof \DoSomething\Gateway\Resources\NorthstarUser) {
             return $this->appendReportbackToUserObject($data, $parameters);
         }
 
@@ -412,7 +412,7 @@ class Manager
 
         foreach ($collection as $contest) {
             if (isset($campaigns[$contest->campaign_id])) {
-                $contest->setAttribute('campaign', $campaigns[$contest->campaign_id]);
+                $contest->setAttribute('campaign', (object) $campaigns[$contest->campaign_id]);
             } else {
                 $contest->setAttribute('campaign', null);
             }
@@ -455,7 +455,7 @@ class Manager
         $activity = $this->getActivityForAllUsers($collection->pluck('northstar_id')->all(), $parameters);
 
         $activity = $activity->keyBy(function ($item) {
-            return $item->user->id;
+            return $item['user']['id'];
         });
 
         foreach ($collection as $user) {
@@ -478,7 +478,7 @@ class Manager
         $activity = $this->getActivityForUser($userId, $parameters);
 
         if ($activity) {
-            $model->setAttribute('reportback', $activity->reportback);
+            $model->setAttribute('reportback', (object) $activity->reportback);
         } else {
             $model->setAttribute('reportback', null);
         }

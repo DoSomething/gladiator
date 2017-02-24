@@ -34,11 +34,12 @@ class CacheCampaignRepository implements RepositoryContract
         if (! $campaign) {
             // @see https://github.com/DoSomething/gladiator/issues/180
             $campaign = $this->phoenix->getCampaign($id);
+            $campaign = $campaign['data'];
 
             $this->store($key, $campaign);
         }
 
-        return $campaign;
+        return (object) $campaign;
     }
 
     /**
@@ -60,11 +61,11 @@ class CacheCampaignRepository implements RepositoryContract
                 $parameters['ids'] = implode(',', $ids);
 
                 $campaigns = $this->phoenix->getAllCampaigns($parameters);
-                $campaigns = collect($campaigns);
+                $campaigns = collect($campaigns['data']);
 
                 if ($campaigns) {
                     $group = $campaigns->keyBy(function ($item) {
-                        return $this->setPrefix($item->id);
+                        return $this->setPrefix($item['id']);
                     })->all();
 
                     $this->storeMany($group);
