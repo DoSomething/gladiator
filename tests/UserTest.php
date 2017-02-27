@@ -1,7 +1,7 @@
 <?php
 
 use Gladiator\Models\User;
-use Gladiator\Services\Northstar\Northstar;
+use DoSomething\Gateway\Northstar;
 use Gladiator\Repositories\UserRepositoryContract;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
