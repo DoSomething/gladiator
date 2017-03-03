@@ -134,9 +134,13 @@ class Manager
      * @param  bool  $withReportback
      * @return \Illuminate\Support\Collection  $users
      */
-    public function getModelUsers($model, $withReportback = false)
+    public function getModelUsers($model, $withReportback = false, $subscribed = false)
     {
-        $users = $model->users;
+        if(! $subscribed){
+            $users = $model->users;
+        } else {
+            $users = $model->subscribers;
+        }
 
         if (! $users) {
             return null;
@@ -231,13 +235,15 @@ class Manager
      * @param  bool $includeActivity
      * @return \Gladiator\Models\Competition
      */
-    public function getCompetitionOverview($competition, $includeActivity = false)
+    public function getCompetitionOverview($competition, $includeActivity = false, $subscribed = false)
     {
         $competition = $competition->load('contest');
 
         $competition->contest = $this->appendCampaign($competition->contest);
 
         $competition->contestants = $this->getModelUsers($competition, $includeActivity);
+
+        $competition->subscribers = $this->getModelUsers($competition, $includeActivity, $subscribed);
 
         if ($includeActivity) {
             $competition->activity = $this->catalogUsers($competition->contestants);

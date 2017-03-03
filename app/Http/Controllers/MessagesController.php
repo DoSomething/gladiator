@@ -106,18 +106,20 @@ class MessagesController extends Controller
             if (session()->has($key)) {
                 $competition = session($key);
             } else {
-                $competition = $this->manager->getCompetitionOverview($competition, true);
+                $competition = $this->manager->getCompetitionOverview($competition, true, true);
             }
         }
 
         // Send test emails to authenticated user.
         if (request('test')) {
+            $users = $competition->subscribers;
             $user = Auth::user();
             $user = $this->userRepository->find($user->northstar_id);
             $user = $this->manager->appendReportback($user, []);
 
             $users = [$user];
         } else {
+            //Send messages to those who are subscribed
             $users = $competition->contestants;
 
             // Only send checkin messages to users who haven't reported back.
