@@ -112,7 +112,6 @@ class MessagesController extends Controller
 
         // Send test emails to authenticated user.
         if (request('test')) {
-            $users = $competition->subscribers;
             $user = Auth::user();
             $user = $this->userRepository->find($user->northstar_id);
             $user = $this->manager->appendReportback($user, []);
@@ -120,7 +119,7 @@ class MessagesController extends Controller
             $users = [$user];
         } else {
             //Send messages to those who are subscribed
-            $users = $competition->contestants;
+            $users = $competition->subscribers;
 
             // Only send checkin messages to users who haven't reported back.
             if ($message->type === 'checkin') {
