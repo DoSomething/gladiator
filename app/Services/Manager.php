@@ -136,7 +136,7 @@ class Manager
      */
     public function getModelUsers($model, $withReportback = false, $subscribed = false)
     {
-        if(! $subscribed){
+        if (! $subscribed) {
             $users = $model->users;
         } else {
             $users = $model->subscribers;
