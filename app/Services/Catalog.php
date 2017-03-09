@@ -63,7 +63,7 @@ class Catalog
         foreach ($users as $user) {
             if (! $user->reportback) {
                 $inactive[] = $user;
-            } elseif ($user->reportback && $user->reportback->flagged) {
+            } elseif ($user->reportback && $user->reportback['flagged']) {
                 $flagged[] = $user;
             } else {
                 $active[] = $user;
@@ -163,11 +163,11 @@ class Catalog
             'pending' => 0,
         ];
 
-        foreach ($reportback->reportback_items->data as $item) {
-            $statuses[$item->status]++;
+        foreach ($reportback['reportback_items']['data'] as $item) {
+            $statuses[$item['status']]++;
         }
 
-        $reportback->reportback_items->count_by_status = $statuses;
+        $reportback['reportback_items']['count_by_status'] = $statuses;
 
         return $reportback;
     }

@@ -274,7 +274,7 @@ class Manager
         $statistics['impactQuantity'] = 0;
 
         foreach ($competition->activity['active'] as $user) {
-            $statistics['impactQuantity'] += intval($user->reportback->quantity);
+            $statistics['impactQuantity'] += intval($user->reportback['quantity']);
         }
 
         return (object) $statistics;
