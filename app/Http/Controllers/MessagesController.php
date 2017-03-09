@@ -106,7 +106,7 @@ class MessagesController extends Controller
             if (session()->has($key)) {
                 $competition = session($key);
             } else {
-                $competition = $this->manager->getCompetitionOverview($competition, true);
+                $competition = $this->manager->getCompetitionOverview($competition, true, true);
             }
         }
 
@@ -118,7 +118,8 @@ class MessagesController extends Controller
 
             $users = [$user];
         } else {
-            $users = $competition->contestants;
+            //Send messages to those who are subscribed
+            $users = $competition->subscribers;
 
             // Only send checkin messages to users who haven't reported back.
             if ($message->type === 'checkin') {
