@@ -460,7 +460,7 @@ class Manager
 
         foreach ($collection as $user) {
             if (isset($activity[$user->id])) {
-                $user->reportback = $activity[$user->id]->reportback;
+                $user->reportback = $activity[$user->id]['reportback'];
             } else {
                 $user->reportback = null;
             }
