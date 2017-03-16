@@ -65,7 +65,7 @@ class Manager
     {
         $data = [];
 
-        $data[] = ['Northstar ID', 'First Name', 'Last Name', 'Email', 'Mobile Number', 'Reportback Admin Link', 'Reported Quantity', '# Promoted', '# Approved', '# Excluded', '# Flagged', '# Pending', 'Why Participated', 'Caption for latest Reportback Item', 'Latest Reportback Date'];
+        $data[] = ['Northstar ID', 'First Name', 'Last Name', 'Email', 'Mobile Number', 'Reportback Admin Link', 'Reported Quantity', '# Promoted', '# Approved', '# Excluded', '# Flagged', '# Pending', 'Why Participated', 'Caption for latest Reportback Item', 'Latest Reportback Date', 'Reportback Admin Promoted Link'];
 
         foreach ($users as $user) {
             $details = [
@@ -85,15 +85,43 @@ class Manager
                 $details[] = $user->reportback->reportback_items->count_by_status['flagged'];
                 $details[] = $user->reportback->reportback_items->count_by_status['pending'];
                 $details[] = $user->reportback->why_participated;
+
+                $filteredReportbacks = $this->getStatus($user->reportback->reportback_items->data, 'pending');
                 $latestReportBackItem = array_pop($user->reportback->reportback_items->data);
+
                 $details[] = $latestReportBackItem->caption;
                 $details[] = date('m/d/Y H:i', $latestReportBackItem->created_at);
+
+                if (! is_null($filteredReportbacks)) {
+                    $details[] = array_pop($filteredReportbacks)->media->uri;
+                }
             }
 
             $data[] = $details;
         }
 
         return build_csv($data);
+    }
+
+    /**
+     * Return array of reportback items with specific status
+     *
+     *
+     * @param array  $data
+     * @param string $status
+     * @return array
+     */
+    public function getStatus($data, $status)
+    {
+        $list = [];
+
+        foreach ($data as $reportbackitem) {
+            if ($reportbackitem->status == $status) {
+                $list[] = $reportbackitem;
+            }
+        }
+
+        return $list;
     }
 
     /**
