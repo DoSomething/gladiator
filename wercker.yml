@@ -1,34 +1,18 @@
-box: blisteringherb/scholarship@0.0.8
+box: dosomething/ds-docker-php
 build:
     # The steps that will be executed on build
     steps:
       - script:
-          name: Update apt
-          code: sudo apt-get update
-      - script:
-          name: install mysql
-          code: |-
-            export DEBIAN_FRONTEND=noninteractive
-            sudo -E apt-get -q -y install mysql-server
-            mysqladmin -u root password root
-            mysql -u root -proot -e "CREATE USER 'homestead'@'localhost' IDENTIFIED BY 'secret';"
-            mysql -u root -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'homestead'@'localhost' WITH GRANT OPTION;"
-      - script:
-          name: install php extensions
-          code: |-
-            sudo apt-get install php5-mysql
-            sudo apt-get install php5-gd
-      - script:
-          name: Update Composer
-          code: sudo composer self-update
+          name: start mysql
+          code: sudo service mysql start
       - leipert/composer-install@0.9.1
       - wercker/bundle-install@1.1.1
-      # - script:
-      #     name: phpunit
-      #     code: |-
-      #         cp .env.example .env
-      #         mysql -u homestead -psecret -e "CREATE DATABASE gladiator_testing;"
-      #         vendor/bin/phpunit
+      - script:
+          name: phpunit
+          code: |-
+              cp .env.example .env
+              mysql -u homestead -psecret -e "CREATE DATABASE gladiator_testing;"
+              vendor/bin/phpunit
       - script:
           name: npm install
           code: |-
@@ -38,15 +22,10 @@ build:
       - script:
           name: build assets
           code: gulp
-      - script:
-          name: change permissions
-          code: sudo chown -R ubuntu:ubuntu ./
+
 deploy:
   steps:
     - bundle-install
-    - script:
-        name: Make all files readable
-        code: find . -type f -exec chmod 644 {} \;
     - script:
         name: write private key env var
         code: |-
