@@ -507,7 +507,7 @@ class Manager
 
         $activity = $this->getActivityForUser($userId, $parameters);
 
-        if ($activity) {
+        if (isset($activity->reportback)) {
             $model->setAttribute('reportback', (object) $activity->reportback);
         } else {
             $model->setAttribute('reportback', null);
