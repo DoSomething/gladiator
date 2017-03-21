@@ -33,6 +33,14 @@ class Competition extends Model
         return $this->belongsToMany(User::class, 'competition_user', 'competition_id', 'northstar_id')->wherePivot('unsubscribed', '=', 0);
     }
 
+    public function unsubscribeUser($competition_id, $northstar_id)
+    {
+        return $this->belongsToMany(User::class, 'competition_user', 'competition_id', 'northstar_id')
+                    ->wherePivot('competition_id', '=', $competition_id)
+                    ->wherePivot('northstar_id', '=', $northstar_id)
+                    ->update(['unsubscribed' => 1]);
+    }
+
     /**
      * A competition belongs to one contest.
      */
