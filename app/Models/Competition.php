@@ -28,6 +28,7 @@ class Competition extends Model
     {
         return $this->belongsToMany(User::class, 'competition_user', 'competition_id', 'northstar_id');
     }
+
     /**
      * A Competition has many Subscribers.
      */
