@@ -29,7 +29,13 @@ class UnsubscribeController extends ApiController
             $competition = $this->manager->getCompetitionOverview($competition, true, true);
         }
 
-        $competition->unsubscribeUser($credentials['competition_id'], $credentials['northstar_id']);
+        $unsubscribed = $competition->unsubscribeUser($credentials['competition_id'], $credentials['northstar_id']);
+
+        if ($unsubscribed == 1) {
+            return response()->json(['message' =>'success'], 200, [], JSON_UNESCAPED_SLASHES);
+        } else {
+            return response()->json(['message' =>'error'], 500, [], JSON_UNESCAPED_SLASHES);
+        }
     }
 
     /**
