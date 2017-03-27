@@ -42,9 +42,9 @@ class Competition extends Model
      */
     public function unsubscribe($northstar_id)
     {
-        return DB::table('competitions_users')->where([
+        return DB::table('competition_user')->where([
             ['northstar_id', '=', $northstar_id],
-            ['competition', '=', $this->id],
+            ['competition_id', '=', $this->id],
         ])->update(['unsubscribed' => 1]);
     }
 
