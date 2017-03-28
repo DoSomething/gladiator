@@ -58,7 +58,7 @@ class CompetitionsController extends Controller
 
             session()->reflash();
         } else {
-            $competition = $this->manager->getCompetitionOverview($competition, true);
+            $competition = $this->manager->getCompetitionOverview($competition, true, true);
         }
 
         $statistics = $this->manager->getStatisticsForCompetition($competition);
@@ -174,7 +174,7 @@ class CompetitionsController extends Controller
 
             session()->reflash();
         } else {
-            $competition = $this->manager->getCompetitionOverview($competition, true);
+            $competition = $this->manager->getCompetitionOverview($competition, true, true);
 
             session()->flash($key, $competition);
         }
@@ -200,7 +200,7 @@ class CompetitionsController extends Controller
 
             session()->reflash();
         } else {
-            $competition = $this->manager->getCompetitionOverview($competition, true);
+            $competition = $this->manager->getCompetitionOverview($competition, true, true);
 
             session()->flash($key, $competition);
         }
@@ -265,7 +265,7 @@ class CompetitionsController extends Controller
             $competition = session($key);
             session()->reflash();
         } else {
-            $competition = $this->manager->getCompetitionOverview($competition, true);
+            $competition = $this->manager->getCompetitionOverview($competition, true, true);
         }
 
         $leaderboard = $competition->activity['active'];
