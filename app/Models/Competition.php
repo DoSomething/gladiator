@@ -2,6 +2,7 @@
 
 namespace Gladiator\Models;
 
+use DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Competition extends Model
@@ -28,9 +29,23 @@ class Competition extends Model
         return $this->belongsToMany(User::class, 'competition_user', 'competition_id', 'northstar_id');
     }
 
+    /**
+     * A Competition has many Subscribers.
+     */
     public function subscribers()
     {
         return $this->belongsToMany(User::class, 'competition_user', 'competition_id', 'northstar_id')->wherePivot('unsubscribed', '=', 0);
+    }
+
+    /**
+     * Unsubscribe user from Competition.
+     */
+    public function unsubscribe($northstar_id)
+    {
+        return DB::table('competition_user')->where([
+            ['northstar_id', '=', $northstar_id],
+            ['competition_id', '=', $this->id],
+        ])->update(['unsubscribed' => 1]);
     }
 
     /**
