@@ -32,10 +32,10 @@ trait AuthorizesWithDrupal
      */
     private function authenticate()
     {
-        $authentication = cache()->remember('drupal.authentication', 30, function () {
+        $authentication = app('cache')->remember('drupal.authentication', 30, function () {
             $response = $this->post('v1/auth/login', [
-                'username' => config('services.phoenix-legacy.username'),
-                'password' => config('services.phoenix-legacy.password'),
+                'username' => config('services.phoenix.username'),
+                'password' => config('services.phoenix.password'),
             ], false);
 
             $session_name = $response['session_name'];
@@ -67,7 +67,7 @@ trait AuthorizesWithDrupal
      */
     private function getAuthenticationCookie()
     {
-        $cookieDomain = parse_url(config('services.phoenix-legacy.url'))['host'];
+        $cookieDomain = parse_url(config('services.phoenix.uri'))['host'];
 
         return CookieJar::fromArray($this->authenticate()['cookie'], $cookieDomain);
     }
