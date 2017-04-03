@@ -4,7 +4,6 @@ namespace Gladiator\Http\Controllers;
 
 use Gladiator\Models\User;
 use Illuminate\Http\Request;
-use Gladiator\Models\Contest;
 use Gladiator\Models\Message;
 use Gladiator\Services\Manager;
 use Gladiator\Models\Competition;
