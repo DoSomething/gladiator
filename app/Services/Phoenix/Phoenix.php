@@ -61,7 +61,6 @@ class Phoenix extends RestApiClient
         return $this->get('reportbacks/' . $reportback_id);
     }
 
-
     /**
      * Get an index of (optionally filtered) campaign signups from Phoenix.
      * @see: https://github.com/DoSomething/phoenix/wiki/API#retrieve-a-signup-collection
