@@ -194,7 +194,7 @@ class Manager
         $parameters['count'] = 25;
 
         // @TODO: Investigat NS proxy; passing a bad ID results in general index of signups response.
-        $signup = $this->northstar->getUserSignups($parameters);
+        $signup = $this->phoenix->getAllSignups($parameters);
 
         return (object) array_shift($signup['data']);
     }
@@ -219,7 +219,7 @@ class Manager
             $parameters['users'] = implode(',', $batch);
             $parameters['count'] = $batchSize;
 
-            $signups = array_merge($signups, $this->northstar->getAllUserSignups($parameters));
+            $signups = array_merge($signups, $this->phoenix->getAllSignups($parameters));
 
             $index += $batchSize;
         }
@@ -482,7 +482,7 @@ class Manager
      */
     protected function appendReportbackToCollection($collection, $parameters)
     {
-        $activity = $this->getActivityForAllUsers($collection->pluck('northstar_id')->all(), $parameters);
+        $activity = $this->getActivityForAllUsers($collection->pluck('id')->all(), $parameters);
 
         $activity = $activity->keyBy(function ($item) {
             return $item['user']['id'];
