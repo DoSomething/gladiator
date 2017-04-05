@@ -94,7 +94,7 @@ class Catalog
             // Don't perform this logic on the first element
             if ($index > 0) {
                 // If the last row quantity equals this rows quantity, just increment.
-                if ($user->reportback->quantity === $users[$index - 1]->reportback->quantity) {
+                if ($user->reportback['quantity'] === $users[$index - 1]->reportback['quantity']) {
                     $increment++;
                 // Otherwise apply the increment to the rank and reset it back to 1.
                 } else {
@@ -141,7 +141,7 @@ class Catalog
     protected function sortByReportbackQuantity($users)
     {
         usort($users, function ($a, $b) {
-            return $a->reportback->quantity <= $b->reportback->quantity;
+            return $a->reportback['quantity'] <= $b->reportback['quantity'];
         });
 
         return $users;
