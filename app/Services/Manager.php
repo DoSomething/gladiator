@@ -116,7 +116,7 @@ class Manager
         $list = [];
 
         foreach ($data as $reportbackitem) {
-            if ($reportbackitem['status'] == $status) {
+            if ($reportbackitem['status'] === $status) {
                 $list[] = $reportbackitem;
             }
         }
