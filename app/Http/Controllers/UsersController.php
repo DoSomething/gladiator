@@ -186,7 +186,7 @@ class UsersController extends Controller
         }
 
         // Attempt to fetch all users.
-        $users = $this->manager->search($query);
+        $users = $this->registrar->search($query);
 
         if (! $users) {
             return redirect()->route('users.index')->with('status', 'No user found!');
