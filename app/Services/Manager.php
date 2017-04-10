@@ -77,23 +77,23 @@ class Manager
             ];
 
             if (isset($user->reportback)) {
-                $details[] = reportback_admin_url($user->reportback->id);
-                $details[] = $user->reportback->quantity;
-                $details[] = $user->reportback->reportback_items->count_by_status['promoted'];
-                $details[] = $user->reportback->reportback_items->count_by_status['approved'];
-                $details[] = $user->reportback->reportback_items->count_by_status['excluded'];
-                $details[] = $user->reportback->reportback_items->count_by_status['flagged'];
-                $details[] = $user->reportback->reportback_items->count_by_status['pending'];
-                $details[] = $user->reportback->why_participated;
+                $details[] = reportback_admin_url($user->reportback['id']);
+                $details[] = $user->reportback['quantity'];
+                $details[] = $user->reportback['reportback_items']['count_by_status']['promoted'];
+                $details[] = $user->reportback['reportback_items']['count_by_status']['approved'];
+                $details[] = $user->reportback['reportback_items']['count_by_status']['excluded'];
+                $details[] = $user->reportback['reportback_items']['count_by_status']['flagged'];
+                $details[] = $user->reportback['reportback_items']['count_by_status']['pending'];
+                $details[] = $user->reportback['why_participated'];
 
-                $filteredReportbacks = $this->getStatus($user->reportback->reportback_items->data, 'pending');
-                $latestReportBackItem = array_pop($user->reportback->reportback_items->data);
+                $filteredReportbacks = $this->getStatus($user->reportback['reportback_items']['data'], 'pending');
+                $latestReportBackItem = array_pop($user->reportback['reportback_items']['data']);
 
-                $details[] = $latestReportBackItem->caption;
-                $details[] = date('m/d/Y H:i', $latestReportBackItem->created_at);
+                $details[] = $latestReportBackItem['caption'];
+                $details[] = date('m/d/Y H:i', $latestReportBackItem['created_at']);
 
                 if (! is_null($filteredReportbacks)) {
-                    $details[] = array_pop($filteredReportbacks)->media->uri;
+                    $details[] = array_pop($filteredReportbacks)['media']['uri'];
                 }
             }
 
@@ -116,7 +116,7 @@ class Manager
         $list = [];
 
         foreach ($data as $reportbackitem) {
-            if ($reportbackitem->status == $status) {
+            if ($reportbackitem['status'] == $status) {
                 $list[] = $reportbackitem;
             }
         }
