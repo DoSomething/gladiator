@@ -84,4 +84,27 @@ class Registrar
 
         return $user;
     }
+
+    /**
+     * Search for users in Northstar.
+     *
+     * @param  string $query
+     * @param  int $page
+     * @return collection|null
+     */
+    public function search($query, $page = null)
+    {
+        // Attempt to fetch all users.
+        $users = $this->northstar->getAllUsers([
+            'search' => [
+                '_id' => $query,
+                'drupal_id' => $query,
+                'email' => $query,
+                'mobile' => $query,
+            ],
+            'page' => is_null($page) ? 1 : $page,
+        ]);
+
+        return $users ? collect($users) : null;
+    }
 }
