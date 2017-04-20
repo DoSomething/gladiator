@@ -219,12 +219,14 @@ class Manager
             $parameters['users'] = implode(',', $batch);
             $parameters['count'] = $batchSize;
 
-            $signups = array_merge($signups, $this->phoenix->getAllSignups($parameters));
+            $batchSignups = $this->phoenix->getAllSignups($parameters);
+
+            $signups = array_merge($signups, $batchSignups['data']);
 
             $index += $batchSize;
         }
 
-        return collect($signups['data']);
+        return collect($signups);
     }
 
     /**
