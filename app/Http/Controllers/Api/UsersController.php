@@ -81,7 +81,6 @@ class UsersController extends ApiController
 
         Log::debug('Gladiator\Http\Controllers\Api\UsersController -- Storing user', ['user' => $user]);
 
-
         $contest = Contest::with(['waitingRoom', 'competitions'])->where('campaign_id', '=', $request['campaign_id'])
                             ->where('campaign_run_id', '=', $request['campaign_run_id'])
                             ->firstOrFail();
@@ -104,7 +103,6 @@ class UsersController extends ApiController
 
         $contest->waitingRoom->users()->attach($user->northstar_id);
         $contest = $this->manager->appendCampaign($contest);
-
 
         // Fire off welcome Email
         $params = [
