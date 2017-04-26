@@ -619,13 +619,11 @@ class Manager
     public function findUserInContest($contest, $id)
     {
         $userCompetitions = $contest->competitions->filter(function ($competition, $key) use ($id) {
-
             $users = $competition->users->where('northstar_id', $id);
 
             if (! $users->isEmpty()) {
                 return $competition;
             }
-
         });
 
         return $userCompetitions->isEmpty() ? null : $userCompetitions;
