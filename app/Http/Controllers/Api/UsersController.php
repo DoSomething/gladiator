@@ -85,6 +85,15 @@ class UsersController extends ApiController
                             ->where('campaign_run_id', '=', $request['campaign_run_id'])
                             ->firstOrFail();
 
+        if ($this->manager->findUserInContest($contest, $user->northstar_id)) {
+            return response()->json([
+                'error' => [
+                    'code' => 422,
+                    'message' => 'User Already In Competition',
+                ],
+            ]);
+        }
+
         $roomAssignment = $user->waitingRooms()->find($contest->waitingRoom->id);
 
         if ($roomAssignment) {

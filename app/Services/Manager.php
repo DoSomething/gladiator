@@ -608,4 +608,25 @@ class Manager
             return null;
         }
     }
+
+    /**
+     * Finds if user exists in a competition for a given contest
+     *
+     * @param app\Models\Contest         $contest
+     * @param string                     $id
+     * @return array|null
+     */
+    public function findUserInContest($contest, $id)
+    {
+        // Collection of competitions the user belongs to in contest
+        $result = $contest->competitions->filter(function ($competition, $key) use ($id) {
+            $user = $competition->users->where('northstar_id', $id);
+
+            if (! $user->isEmpty()) {
+                return $competition;
+            }
+        });
+
+        return $result->isEmpty() ? null : $result;
+    }
 }
