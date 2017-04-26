@@ -90,8 +90,8 @@ class UsersController extends ApiController
             return response()->json([
                 'error' => [
                     'code' => 422,
-                    'message' => 'User Already In Competition'
-                ]
+                    'message' => 'User Already In Competition',
+                ],
             ]);
         }
 
