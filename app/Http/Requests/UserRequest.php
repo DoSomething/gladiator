@@ -23,7 +23,7 @@ class UserRequest extends Request
     {
         $rules = [
             'id' => 'required',
-            'term' => 'required',
+            'term' => 'string',
         ];
 
         if ($this->wantsJson()) {
