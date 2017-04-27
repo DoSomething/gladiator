@@ -53,10 +53,39 @@ class UsersController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(UserRequest $request)
     {
-        // @TODO: temp for now, likely want to use repository and transform.
-        return User::all();
+        $data = $request->all();
+
+        $user = User::find($data['id']);
+
+        $contest = $this->getContest($request['campaign_id'], $request['campaign_run_id']);
+
+        if ($contest) {
+            $roomAssignment = $user->waitingRooms()->find($contest->waitingRoom->id);
+
+            // If a user is in a waiting room attach the waitingRoom to the users object
+            if ($roomAssignment) {
+                $user->setAttribute('roomAssignment', $roomAssignment);
+            }
+
+            $competitionAssignment = $this->manager->findUserInCompetition($contest , $user->northstar_id);
+
+            // If a user is in a competition for a given contest attach the competition to the users object
+            if ($competitionAssignment) {
+                $user->setAttribute('competitionAssignment', $competitionAssignment);
+            }
+
+            return $this->item($user);
+
+        } else {
+            return response()->json([
+                'error' => [
+                    'code' => 404,
+                    'message' => 'Contest Not Found',
+                ],
+            ]);
+        }
     }
 
     /**
@@ -81,11 +110,11 @@ class UsersController extends ApiController
 
         Log::debug('Gladiator\Http\Controllers\Api\UsersController -- Storing user', ['user' => $user]);
 
-        $contest = Contest::with(['waitingRoom', 'competitions'])->where('campaign_id', '=', $request['campaign_id'])
-                            ->where('campaign_run_id', '=', $request['campaign_run_id'])
-                            ->firstOrFail();
+        $contest = $this->getContest($request['campaign_id'], $request['campaign_run_id']);
 
-        if ($this->manager->findUserInContest($contest, $user->northstar_id)) {
+        $competitionAssignment = $this->manager->findUserInCompetition($contest, $user->northstar_id);
+
+        if ($competitionAssignment) {
             return response()->json([
                 'error' => [
                     'code' => 422,
@@ -115,5 +144,20 @@ class UsersController extends ApiController
 
         // @TODO: maybe add more detail to response to indicate which room user was added to?
         return $this->item($user);
+    }
+
+    /**
+     * Return contest for a given campaignId & campaignRunId
+     *
+     * @param int                   $campaign_id
+     * @param int                   $campaign_run_id
+     * @return app\Models\Contest
+     */
+    public function getContest($campaign_id, $campaign_run_id) {
+        $contest = Contest::with(['waitingRoom', 'competitions'])->where('campaign_id', '=', $campaign_id)
+                            ->where('campaign_run_id', '=', $campaign_run_id)
+                            ->firstOrFail();
+
+        return $contest;
     }
 }
