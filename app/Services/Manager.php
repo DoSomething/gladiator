@@ -2,6 +2,7 @@
 
 namespace Gladiator\Services;
 
+use Gladiator\Models\User;
 use Gladiator\Models\Contest;
 use Gladiator\Models\Message;
 use Gladiator\Models\LeaderboardPhoto;
@@ -612,21 +613,16 @@ class Manager
     /**
      * Finds if user exists in a competition for a given contest
      *
-     * @param app\Models\Contest         $contest
-     * @param string                     $id
-     * @return array|null
+     * @param app\Models\Contest                $contest
+     * @param string                            $id
+     * @return app\Models\Competition|null
      */
-    public function findUserInContest($contest, $id)
+    public function findUserInCompetition($contest, $id)
     {
-        // Collection of competitions the user belongs to in contest
-        $result = $contest->competitions->filter(function ($competition, $key) use ($id) {
-            $user = $competition->users->where('northstar_id', $id);
+        $user = User::find($id);
 
-            if (! $user->isEmpty()) {
-                return $competition;
-            }
-        });
+        $competition = $user->competitions->where('contest_id', $contest->id)->first();
 
-        return $result->isEmpty() ? null : $result;
+        return $competition ? $competition : null;
     }
 }
