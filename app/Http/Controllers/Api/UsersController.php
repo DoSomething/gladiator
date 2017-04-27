@@ -69,7 +69,7 @@ class UsersController extends ApiController
                 $user->setAttribute('roomAssignment', $roomAssignment);
             }
 
-            $competitionAssignment = $this->manager->findUserInCompetition($contest , $user->northstar_id);
+            $competitionAssignment = $this->manager->findUserInCompetition($contest, $user->northstar_id);
 
             // If a user is in a competition for a given contest attach the competition to the users object
             if ($competitionAssignment) {
@@ -77,7 +77,6 @@ class UsersController extends ApiController
             }
 
             return $this->item($user);
-
         } else {
             return response()->json([
                 'error' => [
@@ -153,7 +152,8 @@ class UsersController extends ApiController
      * @param int                   $campaign_run_id
      * @return app\Models\Contest
      */
-    public function getContest($campaign_id, $campaign_run_id) {
+    public function getContest($campaign_id, $campaign_run_id)
+    {
         $contest = Contest::with(['waitingRoom', 'competitions'])->where('campaign_id', '=', $campaign_id)
                             ->where('campaign_run_id', '=', $campaign_run_id)
                             ->firstOrFail();

@@ -7,7 +7,6 @@ use League\Fractal\TransformerAbstract;
 
 class UserTransformer extends TransformerAbstract
 {
-
     /**
      * List of resources to automatically include
      *
@@ -15,7 +14,7 @@ class UserTransformer extends TransformerAbstract
      */
     protected $defaultIncludes = [
         'waitingRoom',
-        'competition'
+        'competition',
     ];
 
     /**
@@ -40,7 +39,6 @@ class UserTransformer extends TransformerAbstract
         ];
     }
 
-
     /**
      * Include Contest
      *
@@ -52,8 +50,7 @@ class UserTransformer extends TransformerAbstract
 
         if ($waitingRoom) {
             return $this->item($waitingRoom, new WaitingRoomTransformer);
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -63,7 +60,8 @@ class UserTransformer extends TransformerAbstract
      *
      * @return League\Fractal\ItemResource
      */
-    public function includeCompetition(User $user) {
+    public function includeCompetition(User $user)
+    {
         $competition = $user->competitionAssignment;
 
         if ($competition) {
@@ -71,6 +69,5 @@ class UserTransformer extends TransformerAbstract
         } else {
             return null;
         }
-
     }
 }
