@@ -55,9 +55,7 @@ class UsersController extends ApiController
      */
     public function index(UserRequest $request)
     {
-        $data = $request->all();
-
-        $user = User::find($data['id']);
+        $user = User::find($request['id']);
 
         $contest = $this->getContest($request['campaign_id'], $request['campaign_run_id']);
 
