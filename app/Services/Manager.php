@@ -613,8 +613,8 @@ class Manager
     /**
      * Finds if user exists in a competition for a given contest
      *
-     * @param app\Models\Contest                $contest
-     * @param string                            $id
+     * @param app\Models\Contest $contest
+     * @param string $id
      * @return app\Models\Competition|null
      */
     public function findUserInCompetition($contest, $id)
