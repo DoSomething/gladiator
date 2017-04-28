@@ -57,6 +57,10 @@ class UsersController extends ApiController
     {
         $user = User::find($request['id']);
 
+        if (is_null($user)) {
+            return response()->json([]);
+        }
+
         $contest = $this->getContest($request['campaign_id'], $request['campaign_run_id']);
 
         if ($contest) {
