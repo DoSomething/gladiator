@@ -87,6 +87,7 @@ class Email
             ':sender_name:'           => $this->contest->sender_name,
             ':rules_url:'             => ! is_null($this->competition) ? $this->competition->rules_url : '',
             ':share_link:'            => url(config('services.phoenix.uri') .'/us/node/' . $this->contest->campaign_id . '?source=user/' . $user->id),
+            ':unsubscribe_link:'      => url(config('services.northstar.profile_url') . '/unsubscribe?' . 'northstar_id='.$user->id . '&competition_id=' . $this->competition->id),
         ];
 
         return $tokens;

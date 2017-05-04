@@ -29,6 +29,7 @@ return [
             'scope' => ['user', 'role:staff', 'role:admin'],
             'redirect_uri' => '/login',
         ],
+        'profile_url' => env('NORTHSTAR_PROFILE_URL'),
     ],
 
     'mailgun' => [
