@@ -273,7 +273,7 @@ class CompetitionsController extends Controller
         $photos = [];
 
         foreach ($topThree as $key => $user) {
-            $photos[] = LeaderboardPhoto::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('user_id', '=', $user['user_id'])->first();
+            $photos[] = LeaderboardPhoto::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('northstar_id', '=', $user['northstar_id'])->first();
         }
 
         return view('competitions.leaderboard_photos.edit', compact('competition', 'message', 'photos', 'topThree'));
