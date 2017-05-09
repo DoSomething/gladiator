@@ -382,7 +382,7 @@ class Manager
 
             // Provide info on user & reportback ids
             if (isset($options['includeUserIds']) && $options['includeUserIds']) {
-                $topThree[$key]['northstar_id'] = $user->northstar_id;
+                $topThree[$key]['northstar_id'] = $user->id;
                 $topThree[$key]['reportback_id'] = $user->reportback['id'];
             }
 
@@ -416,7 +416,7 @@ class Manager
             return;
         }
 
-        $leaderboardPhoto = LeaderboardPhoto::where('competition_id', '=', $competitionId)->where('message_id', '=', $messageId)->where('nortstar_id', '=', $userId)->first();
+        $leaderboardPhoto = LeaderboardPhoto::where('competition_id', '=', $competitionId)->where('message_id', '=', $messageId)->where('northstar_id', '=', $userId)->first();
 
         if (isset($leaderboardPhoto) && isset($leaderboardPhoto->reportback_id) && isset($leaderboardPhoto->reportback_item_id)) {
             $reportbackItem = $this->appendReportbackItemToMessage($leaderboardPhoto->reportback_id, $leaderboardPhoto->reportback_item_id);
