@@ -377,13 +377,13 @@ class Manager
               'place' => $places[$key],
               'first_name' => $user->first_name,
               'prize_copy' => $prizeCopy[$key],
-              'quantity' => $user->reportback->quantity,
+              'quantity' => $user->reportback['quantity'],
             ];
 
             // Provide info on user & reportback ids
             if (isset($options['includeUserIds']) && $options['includeUserIds']) {
-                $topThree[$key]['northstar_id'] = $user->northstar_id;
-                $topThree[$key]['reportback_id'] = $user->reportback->id;
+                $topThree[$key]['northstar_id'] = $user->id;
+                $topThree[$key]['reportback_id'] = $user->reportback['id'];
             }
 
             // Provide image url/captaion of top three leaderboard images
@@ -391,12 +391,12 @@ class Manager
                 $leaderboardReportbackItem = $this->getLeaderboardPhoto($options['competition_id'], $options['message_id'], $user->northstar_id);   //@NOTE calling Phoenix again
 
                 if (! isset($leaderboardReportbackItem)) {
-                    $reportbackItems = $user->reportback->reportback_items->data;
+                    $reportbackItems = $user->reportback['reportback_items']['data'];
                     $leaderboardReportbackItem = array_pop($reportbackItems);
                 }
 
-                $topThree[$key]['image_url'] = $leaderboardReportbackItem->media->uri;
-                $topThree[$key]['caption'] = $leaderboardReportbackItem->caption;
+                $topThree[$key]['image_url'] = $leaderboardReportbackItem['media']['uri'];
+                $topThree[$key]['caption'] = $leaderboardReportbackItem['caption'];
             }
         }
 
@@ -416,7 +416,7 @@ class Manager
             return;
         }
 
-        $leaderboardPhoto = LeaderboardPhoto::where('competition_id', '=', $competitionId)->where('message_id', '=', $messageId)->where('user_id', '=', $userId)->first();
+        $leaderboardPhoto = LeaderboardPhoto::where('competition_id', '=', $competitionId)->where('message_id', '=', $messageId)->where('northstar_id', '=', $userId)->first();
 
         if (isset($leaderboardPhoto) && isset($leaderboardPhoto->reportback_id) && isset($leaderboardPhoto->reportback_item_id)) {
             $reportbackItem = $this->appendReportbackItemToMessage($leaderboardPhoto->reportback_id, $leaderboardPhoto->reportback_item_id);
