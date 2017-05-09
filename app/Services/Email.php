@@ -196,11 +196,27 @@ class Email
     {
         $leaderboard = $this->competition->activity['active'];
 
+        // @TEMP - Convert the NorthstarUser objects that make up the leaderboard array into smaller arrays with just the information we need to display in the email. This is a hacky way of getting around an issue where we can't pass serialized objects to the message view through the mail queue.
+        $entryArray = [];
+
+        foreach ($leaderboard as $user) {
+            $entry = [];
+
+            $entry = [
+                'first_name' => $user->first_name,
+                'last_initial' => $user->last_initial,
+                'rank' => $user->rank,
+                'quantity' => $user->reportback['quantity'],
+            ];
+
+            $entryArray[] = $entry;
+        }
+
         $vars = [];
 
         if ($leaderboard) {
             $vars = [
-                'leaderboard' => $leaderboard,
+                'leaderboard' => $entryArray,
                 'topThree' => $this->manager->getTopThreeReportbacks($leaderboard, ['competition_id' => $this->competition->id, 'message_id' => $this->message->id]),
                 'reportbackInfo' => $this->contest->campaign->reportback_info,
                 'featuredReportback' => $this->getFeaturedReportback(),

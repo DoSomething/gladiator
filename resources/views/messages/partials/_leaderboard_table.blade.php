@@ -13,7 +13,7 @@
             <tr class="table__row">
                 <td class="table__cell" style="border-bottom: 1px solid #ddd; padding: 10px 10px 10px 0px; text-align: left;">{{ $user['rank'] }}</td>
                 <td class="table__cell" style="border-bottom: 1px solid #ddd; padding: 10px 10px 10px 0px; text-align: left;">{{ $user['first_name'] or 'Anonymous' }} {{ $user['last_initial'] or '' }}</td>
-                <td class="table__cell" style="border-bottom: 1px solid #ddd; padding: 10px 10px 10px 0px; text-align: left;">{{ $user['reportback']['quantity'] or 'n/a' }}</td>
+                <td class="table__cell" style="border-bottom: 1px solid #ddd; padding: 10px 10px 10px 0px; text-align: left;">{{ $user['quantity'] or 'n/a' }}</td>
             </tr>
         @endforeach
     </tbody>
