@@ -98,14 +98,16 @@ class Email
      *
      * @param  array $tokens
      * @param  \Gladiator\Models\Message $message
+     * @param  object $user
      * @return \Gladiator\Models\Message $preparedMessage
      */
-    protected function processMessage($tokens, $message)
+    protected function processMessage($tokens, $message, $user)
     {
         $parsableProperties = ['subject', 'body', 'signoff', 'pro_tip', 'shoutout'];
         $processedMessage['type'] = $message->type;
         $processedMessage['key'] = $message->key;
         $processedMessage['show_images'] = $message->show_images;
+        $processedMessage['unsubscribe_link'] = url((config('services.northstar.profile_url') . '/unsubscribe?' . http_build_query(['northstar_id' => $user->id, 'competition_id' => $this->competition->id])));
 
         foreach ($parsableProperties as $prop) {
             $processedMessage[$prop] = $this->replaceTokens($tokens, $message->$prop);
@@ -175,7 +177,7 @@ class Email
 
                 $tokens = $this->defineTokens($user);
 
-                $processedMessage = $this->processMessage($tokens, $this->message);
+                $processedMessage = $this->processMessage($tokens, $this->message, $user);
 
                 $message = isset($leaderboardVars) ? array_merge($processedMessage, $leaderboardVars) : $processedMessage;
 
