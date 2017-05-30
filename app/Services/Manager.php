@@ -530,7 +530,7 @@ class Manager
     {
         $activity = $this->getActivityForUser($user->id, $parameters);
 
-        if ($activity) {
+        if (isset($activity->reportback)) {
             $user->reportback = $activity->reportback;
         } else {
             $user->reportback = null;
