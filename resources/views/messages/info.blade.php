@@ -1,3 +1,3 @@
-{!! $content['body'] !!}
+<p>{!! $content['body'] !!}</p>
 
-{!! $content['unsubscribe_link'] !!}
+<p><a href="{!! $content['unsubscribe_link'] !!}">Unsubscribe</a></p>
