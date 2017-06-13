@@ -167,7 +167,7 @@ class Manager
     {
         $users = ! $subscribed ? $model->users : $model->subscribers;
 
-        if (! $users) {
+        if (! $users || $users->isEmpty()) {
             return null;
         }
 
