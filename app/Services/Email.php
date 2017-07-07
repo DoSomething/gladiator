@@ -87,7 +87,6 @@ class Email
             ':sender_name:'           => $this->contest->sender_name,
             ':rules_url:'             => ! is_null($this->competition) ? $this->competition->rules_url : '',
             ':share_link:'            => url(config('services.phoenix.uri') .'/us/node/' . $this->contest->campaign_id . '?source=user/' . $user->id),
-            ':unsubscribe_link:'      => url((config('services.northstar.profile_url') . '/unsubscribe?' . http_build_query(['northstar_id' => $user->id, 'competition_id' => $this->competition->id]))),
         ];
 
         return $tokens;
@@ -107,7 +106,10 @@ class Email
         $processedMessage['type'] = $message->type;
         $processedMessage['key'] = $message->key;
         $processedMessage['show_images'] = $message->show_images;
-        $processedMessage['unsubscribe_link'] = url((config('services.northstar.profile_url') . '/unsubscribe?' . http_build_query(['northstar_id' => $user->id, 'competition_id' => $this->competition->id])));
+
+        if ($message->type !== 'welcome' && $this->competition->id) {
+            $processedMessage['unsubscribe_link'] = url((config('services.northstar.profile_url') . '/unsubscribe?' . http_build_query(['northstar_id' => $user->id, 'competition_id' => $this->competition->id])));
+        }
 
         foreach ($parsableProperties as $prop) {
             $processedMessage[$prop] = $this->replaceTokens($tokens, $message->$prop);
