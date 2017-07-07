@@ -106,7 +106,10 @@ class Email
         $processedMessage['type'] = $message->type;
         $processedMessage['key'] = $message->key;
         $processedMessage['show_images'] = $message->show_images;
-        $processedMessage['unsubscribe_link'] = url((config('services.northstar.profile_url') . '/unsubscribe?' . http_build_query(['northstar_id' => $user->id, 'competition_id' => $this->competition->id])));
+
+        if ($message->type !== 'welcome' &&  $this->competition->id) {
+            $processedMessage['unsubscribe_link'] = url((config('services.northstar.profile_url') . '/unsubscribe?' . http_build_query(['northstar_id' => $user->id, 'competition_id' => $this->competition->id])));
+        }
 
         foreach ($parsableProperties as $prop) {
             $processedMessage[$prop] = $this->replaceTokens($tokens, $message->$prop);
