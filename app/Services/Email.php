@@ -107,7 +107,7 @@ class Email
         $processedMessage['key'] = $message->key;
         $processedMessage['show_images'] = $message->show_images;
 
-        if ($message->type !== 'welcome' &&  $this->competition->id) {
+        if ($message->type !== 'welcome' && $this->competition->id) {
             $processedMessage['unsubscribe_link'] = url((config('services.northstar.profile_url') . '/unsubscribe?' . http_build_query(['northstar_id' => $user->id, 'competition_id' => $this->competition->id])));
         }
 
