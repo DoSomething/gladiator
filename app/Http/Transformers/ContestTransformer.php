@@ -15,6 +15,7 @@ class ContestTransformer extends TransformerAbstract
     protected $defaultIncludes = [
         'waitingRoom',
         'competitions',
+        'messages',
     ];
 
     /**
@@ -41,7 +42,7 @@ class ContestTransformer extends TransformerAbstract
     /**
      * Include Competitions
      *
-     * @return League\Fractal\ItemResource
+     * @return League\Fractal\CollectionResource
      */
     public function includeCompetitions(Contest $contest)
     {
@@ -60,5 +61,18 @@ class ContestTransformer extends TransformerAbstract
         $waitingRoom = $contest->waitingRoom;
 
         return $this->item($waitingRoom, new WaitingRoomTransformer);
+    }
+
+    /**
+     * Include Messages
+     *
+     * @return League\Fractal\CollectionResource
+     */
+    public function includeMessages(Contest $contest)
+    {
+        // $competitions = $contest->competitions;
+        $messages = $contest->messages;
+
+        return $this->collection($messages, new MessageTransformer);
     }
 }
