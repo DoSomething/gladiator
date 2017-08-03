@@ -13,6 +13,7 @@ class ContestTransformer extends TransformerAbstract
      * @var array
      */
     protected $defaultIncludes = [
+        'waitingRoom',
         'competitions',
     ];
 
@@ -34,16 +35,6 @@ class ContestTransformer extends TransformerAbstract
             ],
             'created_at' => $contest->created_at->toIso8601String(),
             'updated_at' => $contest->updated_at->toIso8601String(),
-            'waiting_room' => [
-                'open' => $contest->waitingRoom->isOpen(),
-                'signup_dates' => [
-                    'start' => $contest->waitingRoom->signup_start_date->toIso8601String(),
-                    'end' => $contest->waitingRoom->signup_end_date->toIso8601String(),
-                ],
-                'users' => $contest->waitingRoom->users->pluck('northstar_id'),
-                'created_at' => $contest->waitingRoom->created_at->toIso8601String(),
-                'updated_at' => $contest->waitingRoom->updated_at->toIso8601String(),
-            ],
         ];
     }
 
@@ -57,5 +48,17 @@ class ContestTransformer extends TransformerAbstract
         $competitions = $contest->competitions;
 
         return $this->collection($competitions, new CompetitionTransformer);
+    }
+
+    /**
+     * Include Waiting Room
+     *
+     * @return League\Fractal\ItemResource
+     */
+    public function includeWaitingRoom(Contest $contest)
+    {
+        $waitingRoom = $contest->waitingRoom;
+
+        return $this->item($waitingRoom, new WaitingRoomTransformer);
     }
 }

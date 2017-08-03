@@ -28,6 +28,9 @@ class CompetitionTransformer extends TransformerAbstract
             'unsubscribed_users' => $competition->unsubscribers->pluck('northstar_id'),
             'created_at' => $competition->created_at->toIso8601String(),
             'updated_at' => $competition->updated_at->toIso8601String(),
+            // @TODO - figure out if this should be on the comptition or the message.
+            'featured_reportback' => [],
+            'leaderboard_photos' => [],
         ];
     }
 }
