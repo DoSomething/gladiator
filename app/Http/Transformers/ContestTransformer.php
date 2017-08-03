@@ -8,6 +8,15 @@ use League\Fractal\TransformerAbstract;
 class ContestTransformer extends TransformerAbstract
 {
     /**
+     * List of resources to automatically include
+     *
+     * @var array
+     */
+    protected $defaultIncludes = [
+        'competitions',
+    ];
+
+    /**
      * Transform resource data.
      *
      * @param  Contest  $contest
@@ -31,10 +40,22 @@ class ContestTransformer extends TransformerAbstract
                     'start' => $contest->waitingRoom->signup_start_date->toIso8601String(),
                     'end' => $contest->waitingRoom->signup_end_date->toIso8601String(),
                 ],
-                'users' => $contest->waitingRoom->users->toArray(),
+                'users' => $contest->waitingRoom->users->pluck('northstar_id'),
                 'created_at' => $contest->waitingRoom->created_at->toIso8601String(),
                 'updated_at' => $contest->waitingRoom->updated_at->toIso8601String(),
             ],
         ];
+    }
+
+    /**
+     * Include Competitions
+     *
+     * @return League\Fractal\ItemResource
+     */
+    public function includeCompetitions(Contest $contest)
+    {
+        $competitions = $contest->competitions;
+
+        return $this->collection($competitions, new CompetitionTransformer);
     }
 }

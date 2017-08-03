@@ -17,8 +17,17 @@ class CompetitionTransformer extends TransformerAbstract
     {
         return [
             'id' => $competition->id,
-            'competition_start_date' => $competition->competition_start_date,
-            'competition_end_date' => $competition->competition_end_date,
+            'competition_dates' => [
+                'start_date' => $competition->competition_start_date->toIso8601String(),
+                'end_date' => $competition->competition_end_date->toIso8601String(),
+            ],
+            'leaderboard_msg_day' => jddayofweek($competition->leaderboard_msg_day, 1),
+            'rules' => $competition->rules_url,
+            'users' => $competition->users->pluck('northstar_id'),
+            'subscribed_users' => $competition->subscribers->pluck('northstar_id'),
+            'unsubscribed_users' => $competition->unsubscribers->pluck('northstar_id'),
+            'created_at' => $competition->created_at->toIso8601String(),
+            'updated_at' => $competition->updated_at->toIso8601String(),
         ];
     }
 }
