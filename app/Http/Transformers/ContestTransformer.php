@@ -31,6 +31,9 @@ class ContestTransformer extends TransformerAbstract
                     'start' => $contest->waitingRoom->signup_start_date->toIso8601String(),
                     'end' => $contest->waitingRoom->signup_end_date->toIso8601String(),
                 ],
+                'users' => $contest->waitingRoom->users->toArray(),
+                'created_at' => $contest->waitingRoom->created_at->toIso8601String(),
+                'updated_at' => $contest->waitingRoom->updated_at->toIso8601String(),
             ],
         ];
     }
