@@ -34,20 +34,26 @@ class ContestsController extends ApiController
      */
     public function index(Request $request)
     {
-        $campaignRunId = $request->query('campaign_run_id');
+        $query = $this->newQuery(Contest::class)->with(['waitingRoom', 'competitions', 'messages']);
+        $filters = $request->query('filter');
+        $query = $this->filter($query, $filters, Contest::$indexes);
 
-        // @TODO: below is temporary fix until Phoenix GET request updates run_nid param to run_id.
-        // We want to aim to not have any proprietary Drupal id names :P
-        if (! $campaignRunId) {
-            $campaignRunId = $request->query('run_nid');
-        }
+        return $this->paginatedCollection($query, $request);
 
-        if (isset($campaignRunId)) {
-            $contest = Contest::with('waitingRoom')->where('campaign_run_id', $campaignRunId)->firstOrFail();
+        // $campaignRunId = $request->query('campaign_run_id');
 
-            return $this->item($contest);
-        }
+        // // @TODO: below is temporary fix until Phoenix GET request updates run_nid param to run_id.
+        // // We want to aim to not have any proprietary Drupal id names :P
+        // if (! $campaignRunId) {
+        //     $campaignRunId = $request->query('run_nid');
+        // }
 
-        return $this->collection(Contest::all());
+        // if (isset($campaignRunId)) {
+        //     $contest = Contest::with('waitingRoom')->where('campaign_run_id', $campaignRunId)->firstOrFail();
+
+        //     return $this->item($contest);
+        // }
+
+        // return $this->collection(Contest::all());
     }
 }
