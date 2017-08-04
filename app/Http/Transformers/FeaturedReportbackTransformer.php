@@ -2,8 +2,8 @@
 
 namespace Gladiator\Http\Transformers;
 
-use Gladiator\Models\FeaturedReportback;
 use League\Fractal\TransformerAbstract;
+use Gladiator\Models\FeaturedReportback;
 
 class FeaturedReportbackTransformer extends TransformerAbstract
 {

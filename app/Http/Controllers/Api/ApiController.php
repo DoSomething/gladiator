@@ -10,7 +10,6 @@ use Gladiator\Http\Controllers\Traits\FiltersRequests;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use Gladiator\Http\Controllers\Controller as BaseController;
 
-
 class ApiController extends BaseController
 {
     use FiltersRequests;

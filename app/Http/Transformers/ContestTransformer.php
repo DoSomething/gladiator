@@ -31,8 +31,8 @@ class ContestTransformer extends TransformerAbstract
             'campaign_id' => $contest->campaign_id,
             'campaign_run_id' => $contest->campaign_run_id,
             'sender' => [
-                "name" => $contest->sender_name,
-                "email" => $contest->sender_email,
+                'name' => $contest->sender_name,
+                'email' => $contest->sender_email,
             ],
             'created_at' => $contest->created_at->toIso8601String(),
             'updated_at' => $contest->updated_at->toIso8601String(),

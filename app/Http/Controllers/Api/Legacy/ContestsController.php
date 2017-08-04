@@ -5,8 +5,8 @@ namespace Gladiator\Http\Controllers\Api\Legacy;
 use Illuminate\Http\Request;
 use Gladiator\Models\Contest;
 use Gladiator\Models\WaitingRoom;
-use Gladiator\Http\Transformers\Legacy\ContestTransformer;
 use Gladiator\Http\Controllers\Api\ApiController;
+use Gladiator\Http\Transformers\Legacy\ContestTransformer;
 
 class ContestsController extends ApiController
 {
