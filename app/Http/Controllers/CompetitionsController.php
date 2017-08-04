@@ -290,21 +290,21 @@ class CompetitionsController extends Controller
     public function updateLeaderboardPhotos(LeaderboardPhotoRequest $request, Competition $competition, Message $message)
     {
         for ($i = 0; $i <= 2; $i++) {
-            // request format: _method, _token, user_id_{{$index}},
+            // request format: _method, _token, northstar_id_{{$index}},
             //                 reportback_id_{{$index}}, reportback_item_id_{{$index}}
-            $userId = $request->input('user_id_'.$i);
+            $northstarId = $request->input('northstar_id_'.$i);
             $reportbackId = $request->input('reportback_id_'.$i);
             $reportbackItemId = $request->input('reportback_item_id_'.$i);
 
             // If none of ids null
-            if (($userId != 0) && ($reportbackId != 0) && ($reportbackItemId != 0)) {
-                $photo = LeaderboardPhoto::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('user_id', '=', $userId)->first();
+            if (($northstarId != 0) && ($reportbackId != 0) && ($reportbackItemId != 0)) {
+                $photo = LeaderboardPhoto::where('competition_id', '=', $competition->id)->where('message_id', '=', $message->id)->where('northstar_id', '=', $northstarId)->first();
 
                 if (! isset($photo)) {
                     $photo = new LeaderboardPhoto;
                     $photo->competition_id = $competition->id;
                     $photo->message_id = $message->id;
-                    $photo->user_id = $userId;
+                    $photo->northstar_id = $northstarId;
                 }
 
                 $photo->reportback_id = $reportbackId;
