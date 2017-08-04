@@ -14,6 +14,16 @@ class Contest extends Model
     protected $fillable = ['campaign_id', 'campaign_run_id', 'sender_email', 'sender_name'];
 
     /**
+     * Attributes that can be queried when filtering.
+     *
+     * This array is manually maintained. It does not necessarily mean that
+     * any of these are actual indexes on the database... but they should be!
+     *
+     * @var array
+     */
+    public static $indexes = ['id', 'campaign_id', 'campaign_run_id'];
+
+    /**
      * Get the waiting room associated with this contest.
      */
     public function waitingRoom()

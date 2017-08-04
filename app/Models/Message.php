@@ -64,4 +64,20 @@ class Message extends Model
     {
         return static::$types;
     }
+
+    /**
+     * Get the featured reportbacks associated with this message.
+     */
+    public function featuredReportbacks()
+    {
+        return $this->hasMany(FeaturedReportback::class);
+    }
+
+    /**
+     * Get the leaderboard photos associated with this message.
+     */
+    public function leaderboardPhotos()
+    {
+        return $this->hasMany(LeaderboardPhoto::class);
+    }
 }

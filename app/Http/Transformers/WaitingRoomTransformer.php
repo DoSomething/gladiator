@@ -16,9 +16,15 @@ class WaitingRoomTransformer extends TransformerAbstract
     public function transform(WaitingRoom $waitingRoom)
     {
         return [
-            'id' => $waitingRoom->contest_id,
-            'competition_start_date' => $waitingRoom->signup_start_date,
-            'competition_end_date' => $waitingRoom->signup_end_date,
+            'id' => $waitingRoom->id,
+            'open' => $waitingRoom->isOpen(),
+            'signup_dates' => [
+                'start' => $waitingRoom->signup_start_date->toIso8601String(),
+                'end' => $waitingRoom->signup_end_date->toIso8601String(),
+            ],
+            'users' => $waitingRoom->users->pluck('northstar_id'),
+            'created_at' => $waitingRoom->created_at->toIso8601String(),
+            'updated_at' => $waitingRoom->updated_at->toIso8601String(),
         ];
     }
 }

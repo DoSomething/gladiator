@@ -8,6 +8,17 @@ use League\Fractal\TransformerAbstract;
 class ContestTransformer extends TransformerAbstract
 {
     /**
+     * List of resources to automatically include
+     *
+     * @var array
+     */
+    protected $defaultIncludes = [
+        'waitingRoom',
+        'competitions',
+        'messages',
+    ];
+
+    /**
      * Transform resource data.
      *
      * @param  Contest  $contest
@@ -17,19 +28,50 @@ class ContestTransformer extends TransformerAbstract
     {
         return [
             'id' => $contest->id,
-            'campaign' => [
-                'id' => $contest->campaign_id,
-                'campaign_run' => [
-                    'id' => $contest->campaign_run_id,
-                ],
+            'campaign_id' => $contest->campaign_id,
+            'campaign_run_id' => $contest->campaign_run_id,
+            'sender' => [
+                'name' => $contest->sender_name,
+                'email' => $contest->sender_email,
             ],
-            'waiting_room' => [
-                'open' => $contest->waitingRoom->isOpen(),
-                'signup_dates' => [
-                    'start' => $contest->waitingRoom->signup_start_date->toIso8601String(),
-                    'end' => $contest->waitingRoom->signup_end_date->toIso8601String(),
-                ],
-            ],
+            'created_at' => $contest->created_at->toIso8601String(),
+            'updated_at' => $contest->updated_at->toIso8601String(),
         ];
+    }
+
+    /**
+     * Include Competitions
+     *
+     * @return League\Fractal\CollectionResource
+     */
+    public function includeCompetitions(Contest $contest)
+    {
+        $competitions = $contest->competitions;
+
+        return $this->collection($competitions, new CompetitionTransformer)->setMeta(['total' => $competitions->count()]);
+    }
+
+    /**
+     * Include Waiting Room
+     *
+     * @return League\Fractal\ItemResource
+     */
+    public function includeWaitingRoom(Contest $contest)
+    {
+        $waitingRoom = $contest->waitingRoom;
+
+        return $this->item($waitingRoom, new WaitingRoomTransformer);
+    }
+
+    /**
+     * Include Messages
+     *
+     * @return League\Fractal\CollectionResource
+     */
+    public function includeMessages(Contest $contest)
+    {
+        $messages = $contest->messages;
+
+        return $this->collection($messages, new MessageTransformer);
     }
 }

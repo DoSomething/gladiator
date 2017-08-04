@@ -1,11 +1,12 @@
 <?php
 
-namespace Gladiator\Http\Controllers\Api;
+namespace Gladiator\Http\Controllers\Api\Legacy;
 
 use Illuminate\Http\Request;
 use Gladiator\Models\Contest;
 use Gladiator\Models\WaitingRoom;
-use Gladiator\Http\Transformers\ContestTransformer;
+use Gladiator\Http\Controllers\Api\ApiController;
+use Gladiator\Http\Transformers\Legacy\ContestTransformer;
 
 class ContestsController extends ApiController
 {
@@ -34,10 +35,20 @@ class ContestsController extends ApiController
      */
     public function index(Request $request)
     {
-        $query = $this->newQuery(Contest::class)->with(['waitingRoom', 'competitions', 'messages']);
-        $filters = $request->query('filter');
-        $query = $this->filter($query, $filters, Contest::$indexes);
+        $campaignRunId = $request->query('campaign_run_id');
 
-        return $this->paginatedCollection($query, $request);
+        // @TODO: below is temporary fix until Phoenix GET request updates run_nid param to run_id.
+        // We want to aim to not have any proprietary Drupal id names :P
+        if (! $campaignRunId) {
+            $campaignRunId = $request->query('run_nid');
+        }
+
+        if (isset($campaignRunId)) {
+            $contest = Contest::with('waitingRoom')->where('campaign_run_id', $campaignRunId)->firstOrFail();
+
+            return $this->item($contest);
+        }
+
+        return $this->collection(Contest::all());
     }
 }

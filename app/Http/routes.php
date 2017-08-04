@@ -73,6 +73,19 @@ Route::group(['prefix' => 'api/v1'], function () {
         return 'Gladiator API version 1';
     });
 
+    Route::get('contests', 'Api\Legacy\ContestsController@index');
+
+    Route::get('users', 'Api\UsersController@index');
+    Route::post('users', 'Api\UsersController@store');
+
+    Route::post('unsubscribe', 'Api\UnsubscribeController@unsubscribe');
+});
+
+Route::group(['prefix' => 'api/v2'], function () {
+    Route::get('/', function () {
+        return 'Gladiator API version 2';
+    });
+
     Route::get('contests', 'Api\ContestsController@index');
 
     Route::get('users', 'Api\UsersController@index');

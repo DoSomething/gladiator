@@ -38,6 +38,14 @@ class Competition extends Model
     }
 
     /**
+     * A Competition has many Unsubscribers.
+     */
+    public function unsubscribers()
+    {
+        return $this->belongsToMany(User::class, 'competition_user', 'competition_id', 'northstar_id')->wherePivot('unsubscribed', '=', 1);
+    }
+
+    /**
      * Unsubscribe user from Competition.
      */
     public function unsubscribe($northstar_id)
