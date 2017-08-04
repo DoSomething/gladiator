@@ -72,4 +72,12 @@ class Message extends Model
     {
         return $this->hasMany(FeaturedReportback::class);
     }
+
+    /**
+     * Get the leaderboard photos associated with this message.
+     */
+    public function leaderboardPhotos()
+    {
+        return $this->hasMany(LeaderboardPhoto::class);
+    }
 }

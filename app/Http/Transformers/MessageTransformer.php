@@ -14,6 +14,7 @@ class MessageTransformer extends TransformerAbstract
      */
     protected $defaultIncludes = [
         'featuredReportbacks',
+        'leaderboardPhotos',
     ];
 
     /**
@@ -52,5 +53,17 @@ class MessageTransformer extends TransformerAbstract
         $featuredReportbacks = $message->featuredReportbacks;
 
         return $this->collection($featuredReportbacks, new FeaturedReportbackTransformer);
+    }
+
+    /**
+     * Include Leaderboard Photos
+     *
+     * @return League\Fractal\CollectionResource
+     */
+    public function includeLeaderboardPhotos(Message $message)
+    {
+        $leaderboardPhotos = $message->leaderboardPhotos;
+
+        return $this->collection($leaderboardPhotos, new LeaderboardPhotoTransformer);
     }
 }
