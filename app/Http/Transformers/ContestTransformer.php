@@ -34,7 +34,6 @@ class ContestTransformer extends TransformerAbstract
                 "name" => $contest->sender_name,
                 "email" => $contest->sender_email,
             ],
-            'total_competitions' => $contest->competitions->count(),
             'created_at' => $contest->created_at->toIso8601String(),
             'updated_at' => $contest->updated_at->toIso8601String(),
         ];
