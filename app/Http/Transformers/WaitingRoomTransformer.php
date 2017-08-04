@@ -16,6 +16,7 @@ class WaitingRoomTransformer extends TransformerAbstract
     public function transform(WaitingRoom $waitingRoom)
     {
         return [
+            'id' => $waitingRoom->id,
             'open' => $waitingRoom->isOpen(),
             'signup_dates' => [
                 'start' => $waitingRoom->signup_start_date->toIso8601String(),

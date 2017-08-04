@@ -39,21 +39,5 @@ class ContestsController extends ApiController
         $query = $this->filter($query, $filters, Contest::$indexes);
 
         return $this->paginatedCollection($query, $request);
-
-        // $campaignRunId = $request->query('campaign_run_id');
-
-        // // @TODO: below is temporary fix until Phoenix GET request updates run_nid param to run_id.
-        // // We want to aim to not have any proprietary Drupal id names :P
-        // if (! $campaignRunId) {
-        //     $campaignRunId = $request->query('run_nid');
-        // }
-
-        // if (isset($campaignRunId)) {
-        //     $contest = Contest::with('waitingRoom')->where('campaign_run_id', $campaignRunId)->firstOrFail();
-
-        //     return $this->item($contest);
-        // }
-
-        // return $this->collection(Contest::all());
     }
 }
