@@ -8,6 +8,15 @@ use League\Fractal\TransformerAbstract;
 class MessageTransformer extends TransformerAbstract
 {
     /**
+     * List of resources to automatically include
+     *
+     * @var array
+     */
+    protected $defaultIncludes = [
+        'featuredReportbacks',
+    ];
+
+    /**
      * Transform resource data.
      *
      * @param  Contest  $contest
@@ -31,5 +40,17 @@ class MessageTransformer extends TransformerAbstract
             'created_at' => $message->created_at->toIso8601String(),
             'updated_at' => $message->updated_at->toIso8601String(),
         ];
+    }
+
+    /**
+     * Include Featured Reportbacks
+     *
+     * @return League\Fractal\CollectionResource
+     */
+    public function includeFeaturedReportbacks(Message $message)
+    {
+        $featuredReportbacks = $message->featuredReportbacks;
+
+        return $this->collection($featuredReportbacks, new FeaturedReportbackTransformer);
     }
 }

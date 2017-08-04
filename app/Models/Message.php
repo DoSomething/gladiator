@@ -64,4 +64,12 @@ class Message extends Model
     {
         return static::$types;
     }
+
+    /**
+     * Get the featured reportbacks associated with this message.
+     */
+    public function featuredReportbacks()
+    {
+        return $this->hasMany(FeaturedReportback::class);
+    }
 }

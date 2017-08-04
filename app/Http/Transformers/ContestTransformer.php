@@ -70,7 +70,6 @@ class ContestTransformer extends TransformerAbstract
      */
     public function includeMessages(Contest $contest)
     {
-        // $competitions = $contest->competitions;
         $messages = $contest->messages;
 
         return $this->collection($messages, new MessageTransformer);
