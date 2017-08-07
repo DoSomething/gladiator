@@ -75,8 +75,8 @@ Route::group(['prefix' => 'api/v1'], function () {
 
     Route::get('contests', 'Api\Legacy\ContestsController@index');
 
-    Route::get('users', 'Api\UsersController@index');
-    Route::post('users', 'Api\UsersController@store');
+    Route::get('users', 'Api\Legacy\UsersController@index');
+    Route::post('users', 'Api\Legacy\UsersController@store');
 
     Route::post('unsubscribe', 'Api\UnsubscribeController@unsubscribe');
 });
