@@ -13,8 +13,8 @@ class UserTransformer extends TransformerAbstract
      * @var array
      */
     protected $defaultIncludes = [
-        'waitingRoom',
-        'competition',
+        'waitingRooms',
+        'competitions',
     ];
 
     /**
@@ -27,46 +27,32 @@ class UserTransformer extends TransformerAbstract
     {
         return [
             'id' => (string) $user->northstar_id,
-            'first_name' => null,
-            'last_name' => null,
-            'email' => null,
-            'mobile' => null,
-            'signup' => null,
-            'reportback' => null,
             'created_at' => $user->created_at->toIso8601String(),
             'updated_at' => $user->updated_at->toIso8601String(),
         ];
     }
 
     /**
-     * Include Contest
+     * Include the Waiting Rooms the user is assigned to.
      *
-     * @return League\Fractal\ItemResource
+     * @return League\Fractal\CollectionResource
      */
-    public function includeWaitingRoom(User $user)
+    public function includeWaitingRooms(User $user)
     {
-        $waitingRoom = $user->roomAssignment;
+        $waitingRoom = $user->waitingRooms;
 
-        if ($waitingRoom) {
-            return $this->item($waitingRoom, new WaitingRoomTransformer);
-        } else {
-            return null;
-        }
+        return $this->collection($waitingRoom, new WaitingRoomTransformer);
     }
 
     /**
-     * Include Contest
+     * Include the Comptetitions that the user is assigned to.
      *
-     * @return League\Fractal\ItemResource
+     * @return League\Fractal\CollectionResource
      */
-    public function includeCompetition(User $user)
+    public function includeCompetitions(User $user)
     {
-        $competition = $user->competitionAssignment;
+        $competition = $user->competitions;
 
-        if ($competition) {
-            return $this->item($competition, new CompetitionTransformer);
-        } else {
-            return null;
-        }
+        return $this->collection($competition, new CompetitionTransformer);
     }
 }

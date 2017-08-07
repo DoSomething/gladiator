@@ -8,8 +8,8 @@ use Gladiator\Models\Contest;
 use Gladiator\Services\Manager;
 use Gladiator\Services\Registrar;
 use Gladiator\Http\Requests\UserRequest;
-use Gladiator\Http\Transformers\UserTransformer;
 use Gladiator\Repositories\UserRepositoryContract;
+use Gladiator\Http\Transformers\Legacy\UserTransformer;
 
 class UsersController extends ApiController
 {

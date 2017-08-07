@@ -4,6 +4,7 @@ namespace Gladiator\Http\Controllers\Api;
 
 use Log;
 use Gladiator\Models\User;
+use Illuminate\Http\Request;
 use Gladiator\Models\Contest;
 use Gladiator\Services\Manager;
 use Gladiator\Services\Registrar;
@@ -53,40 +54,13 @@ class UsersController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(UserRequest $request)
+    public function index(Request $request)
     {
-        $user = User::find($request['id']);
+        $query = $this->newQuery(User::class)->with(['waitingRooms', 'competitions']);
+        $filters = $request->query('filter');
+        $query = $this->filter($query, $filters, User::$indexes);
 
-        if (is_null($user)) {
-            return response()->json([]);
-        }
-
-        $contest = $this->getContest($request['campaign_id'], $request['campaign_run_id']);
-
-        if ($contest) {
-            $roomAssignment = $user->waitingRooms()->find($contest->waitingRoom->id);
-
-            // If a user is in a waiting room attach the waitingRoom to the users object
-            if ($roomAssignment) {
-                $user->setAttribute('roomAssignment', $roomAssignment);
-            }
-
-            $competitionAssignment = $this->manager->findUserInCompetition($contest, $user->northstar_id);
-
-            // If a user is in a competition for a given contest attach the competition to the users object
-            if ($competitionAssignment) {
-                $user->setAttribute('competitionAssignment', $competitionAssignment);
-            }
-
-            return $this->item($user);
-        } else {
-            return response()->json([
-                'error' => [
-                    'code' => 404,
-                    'message' => 'Contest Not Found',
-                ],
-            ]);
-        }
+        return $this->paginatedCollection($query, $request);
     }
 
     /**
