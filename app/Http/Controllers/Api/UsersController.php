@@ -56,8 +56,33 @@ class UsersController extends ApiController
      */
     public function index(Request $request)
     {
-        $query = $this->newQuery(User::class)->with(['waitingRooms', 'competitions']);
+        $query = $this->newQuery(User::class);
         $filters = $request->query('filter');
+
+        if (array_key_exists('campaign_id', $filters)) {
+            $contests = Contest::where('campaign_id', $filters['campaign_id'])->get();
+
+            $query = $query->with(['waitingRooms' => function ($query) use ($filters, $contests) {
+                $query->wherein('contest_id', $contests->pluck('id'));
+            }]);
+
+            $query = $query->with(['competitions' => function ($query) use ($filters, $contests) {
+                $query->wherein('contest_id', $contests->pluck('id'));
+            }]);
+        }
+
+        if (array_key_exists('campaign_run_id', $filters)) {
+            $contests = Contest::where('campaign_run_id', $filters['campaign_run_id'])->get();
+
+            $query = $query->with(['waitingRooms' => function ($query) use ($filters, $contests) {
+                $query->wherein('contest_id', $contests->pluck('id'));
+            }]);
+
+            $query = $query->with(['competitions' => function ($query) use ($filters, $contests) {
+                $query->wherein('contest_id', $contests->pluck('id'));
+            }]);
+        }
+
         $query = $this->filter($query, $filters, User::$indexes);
 
         return $this->paginatedCollection($query, $request);
