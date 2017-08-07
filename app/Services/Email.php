@@ -201,6 +201,8 @@ class Email
     {
         $leaderboard = $this->competition->activity['active'];
 
+        $leaderboard = array_slice($leaderboard, 0, 100);
+
         // @TEMP - Convert the NorthstarUser objects that make up the leaderboard array into smaller arrays with just the information we need to display in the email. This is a hacky way of getting around an issue where we can't pass serialized objects to the message view through the mail queue.
         $entryArray = [];
 
