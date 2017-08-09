@@ -103,7 +103,7 @@ class ApiController extends BaseController
             $transformer = $this->transformer;
         }
 
-        $pages = (int) $request->query('limit', 20);
+        $pages = (int) $request->query('limit', 1);
         $paginator = $query->paginate(min($pages, 100));
 
         $queryParams = array_diff_key($request->query(), array_flip(['page']));
