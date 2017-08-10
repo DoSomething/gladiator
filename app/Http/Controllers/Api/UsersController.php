@@ -60,26 +60,30 @@ class UsersController extends ApiController
         $filters = $request->query('filter');
 
         if (array_key_exists('campaign_id', $filters)) {
-            $contests = Contest::where('campaign_id', $filters['campaign_id'])->get();
+            $campaignIds = explode(',', $filters['campaign_id']);
 
-            $query = $query->with(['waitingRooms' => function ($query) use ($filters, $contests) {
-                $query->wherein('contest_id', $contests->pluck('id'));
-            }]);
+            $contests = Contest::wherein('campaign_id', $campaignIds)->get();
 
-            $query = $query->with(['competitions' => function ($query) use ($filters, $contests) {
-                $query->wherein('contest_id', $contests->pluck('id'));
+            $query = $query->with([
+                'waitingRooms' => function ($query) use ($filters, $contests) {
+                    $query->wherein('contest_id', $contests->pluck('id')->all());
+                },
+                'competitions' => function ($query) use ($filters, $contests) {
+                    $query->wherein('contest_id', $contests->pluck('id')->all());
             }]);
         }
 
         if (array_key_exists('campaign_run_id', $filters)) {
-            $contests = Contest::where('campaign_run_id', $filters['campaign_run_id'])->get();
+            $campaignRunIds = explode(',', $filters['campaign_run_id']);
 
-            $query = $query->with(['waitingRooms' => function ($query) use ($filters, $contests) {
-                $query->wherein('contest_id', $contests->pluck('id'));
-            }]);
+            $contests = Contest::wherein('campaign_run_id', $campaignRunIds)->get();
 
-            $query = $query->with(['competitions' => function ($query) use ($filters, $contests) {
-                $query->wherein('contest_id', $contests->pluck('id'));
+            $query = $query->with([
+                'waitingRooms' => function ($query) use ($filters, $contests) {
+                    $query->wherein('contest_id', $contests->pluck('id')->all());
+                },
+                'competitions' => function ($query) use ($filters, $contests) {
+                    $query->wherein('contest_id', $contests->pluck('id')->all());
             }]);
         }
 
