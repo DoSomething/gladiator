@@ -32,11 +32,11 @@ class UnsubscribeController extends ApiController
         if (! $query->first()) {
             return response()->json(['message' => 'There was an error processing that request.'], 500, [], JSON_UNESCAPED_SLASHES);
         } elseif ($query->first()->unsubscribed) {
-            return response()->json(['message' => 'User already unsubscribed'], 422, [], JSON_UNESCAPED_SLASHES);
+            return response()->json(['message' => 'User already unsubscribed.'], 200, [], JSON_UNESCAPED_SLASHES);
         } else {
             $query->update(['unsubscribed' => 1]);
 
-            return response()->json(['message' => 'success'], 200, [], JSON_UNESCAPED_SLASHES);
+            return response()->json(['message' => 'Successfully unsubscribed.'], 200, [], JSON_UNESCAPED_SLASHES);
         }
     }
 }
