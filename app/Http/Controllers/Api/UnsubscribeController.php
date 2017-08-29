@@ -2,6 +2,7 @@
 
 namespace Gladiator\Http\Controllers\Api;
 
+use DB;
 use Gladiator\Models\Competition;
 use Gladiator\Http\Requests\UnsubscribeRequest;
 
@@ -23,14 +24,19 @@ class UnsubscribeController extends ApiController
      */
     public function unsubscribe(UnsubscribeRequest $request)
     {
-        $competition = Competition::find($request->input('competition_id'));
+        $query = DB::table('competition_user')->where([
+            ['northstar_id', '=', $request->input('northstar_id')],
+            ['competition_id', '=', $request->input('competition_id')],
+        ]);
 
-        $unsubscribed = $competition->unsubscribe($request->input('northstar_id'));
-
-        if ($unsubscribed) {
-            return response()->json(['message' =>'success'], 200, [], JSON_UNESCAPED_SLASHES);
+        if (! $query->first()) {
+            return response()->json(['message' => 'There was an error processing that request.'], 500, [], JSON_UNESCAPED_SLASHES);
+        } elseif ($query->first()->unsubscribed) {
+            return response()->json(['message' => 'User already unsubscribed'], 422, [], JSON_UNESCAPED_SLASHES);
         } else {
-            return response()->json(['message' =>'error'], 500, [], JSON_UNESCAPED_SLASHES);
+            $query->update(['unsubscribed' => 1]);
+
+            return response()->json(['message' => 'success'], 200, [], JSON_UNESCAPED_SLASHES);
         }
     }
 }
