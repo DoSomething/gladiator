@@ -96,8 +96,8 @@ class Catalog
                 // If the last row quantity equals this rows quantity, just increment.
                 if ($user->reportback['quantity'] === $users[$index - 1]->reportback['quantity']) {
                     $increment++;
-                // Otherwise apply the increment to the rank and reset it back to 1.
                 } else {
+                // Otherwise apply the increment to the rank and reset it back to 1.
                     $rank += $increment;
                     $increment = 1;
                 }

@@ -26,7 +26,7 @@ class UnsubscribeController extends ApiController
     {
         $query = DB::table('competition_user')->where([
             ['northstar_id', '=', $request->input('northstar_id')],
-            ['competition_id', '=', $request->input('competition_id')]
+            ['competition_id', '=', $request->input('competition_id')],
         ]);
 
         if (!$query->first()) {
