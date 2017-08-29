@@ -3,8 +3,8 @@
 use Gladiator\Models\User;
 use Illuminate\Database\Seeder;
 use Gladiator\Models\WaitingRoom;
+use DoSomething\Gateway\Northstar;
 use Illuminate\Support\Facades\Artisan;
-use Gladiator\Services\Northstar\Northstar;
 
 class UserTableSeeder extends Seeder
 {
