@@ -33,8 +33,8 @@ $factory->define(Contest::class, function (Generator $faker) {
     $campaign = $phoenix->getCampaign($campaignIds[array_rand($campaignIds)]);
 
     return [
-        'campaign_id' => $campaign->id,
-        'campaign_run_id' => $campaign->campaign_runs->current->en->id,
+        'campaign_id' => $campaign['data']['id'],
+        'campaign_run_id' => $campaign['data']['campaign_runs']['current']['en']['id'],
         'sender_email' => $faker->safeEmail(),
         'sender_name' => $faker->name(),
     ];
