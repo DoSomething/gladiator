@@ -97,7 +97,7 @@ class Catalog
                 if ($user->reportback['quantity'] === $users[$index - 1]->reportback['quantity']) {
                     $increment++;
                 } else {
-                // Otherwise apply the increment to the rank and reset it back to 1.
+                    // Otherwise apply the increment to the rank and reset it back to 1.
                     $rank += $increment;
                     $increment = 1;
                 }

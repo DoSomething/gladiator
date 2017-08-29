@@ -29,7 +29,7 @@ class UnsubscribeController extends ApiController
             ['competition_id', '=', $request->input('competition_id')],
         ]);
 
-        if (!$query->first()) {
+        if (! $query->first()) {
             return response()->json(['message' => 'There was an error processing that request.'], 500, [], JSON_UNESCAPED_SLASHES);
         } elseif ($query->first()->unsubscribed) {
             return response()->json(['message' => 'User already unsubscribed'], 422, [], JSON_UNESCAPED_SLASHES);
