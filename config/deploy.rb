@@ -19,7 +19,7 @@ set :use_sudo, false
 set :repository, "."
 set :scm, :none
 set :deploy_via, :copy
-set :keep_releases, 1
+set :keep_releases, 5
 
 ssh_options[:keys] = [ENV["CAP_PRIVATE_KEY"]]
 
