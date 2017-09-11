@@ -81,7 +81,7 @@ Route::group(['prefix' => 'api/v1'], function () {
     Route::post('unsubscribe', 'Api\UnsubscribeController@unsubscribe');
 });
 
-Route::group(['prefix' => 'api/v2'], function () {
+Route::group(['middleware' => ['api'], 'prefix' => 'api/v2'], function () {
     Route::get('/', function () {
         return 'Gladiator API version 2';
     });
