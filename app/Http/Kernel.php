@@ -32,6 +32,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+            \Gladiator\Http\Middleware\AddContentLength::class,
             'throttle:60,1',
         ],
     ];
