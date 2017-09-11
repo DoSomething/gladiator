@@ -3,6 +3,7 @@
 namespace Gladiator\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Str;
 
 class AddContentLength
 {
@@ -16,7 +17,7 @@ class AddContentLength
     public function handle($request, Closure $next)
     {
         $response = $next($request);
-        $response->header('Content-Length', strlen(serialize($response)));
+        $response->header('Content-Length', Str::length($response->getContent()));
 
         return $response;
     }
